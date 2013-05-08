@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0, maximum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<title>AVTOSOLA</title>
+	
+	<link rel="stylesheet" href="jquery.mobile-1.3.1.min.css" />
+	<link rel="stylesheet" href="jquery.mobile.structure-1.3.0.css" />
+	<link rel="stylesheet" href="jquery.mobile.theme-1.3.0.css" />
+	<link rel="stylesheet" href="ztl.min.css" />
+	
+	<script charset="utf-8" src="cordova-2.2.0.js"></script>
+	<script charset="utf-8" src="jquery-1.8.3.min.js"></script>
+	<script charset="utf-8" src="jquery.mobile-1.3.0.js"></script>
+	<script charset="utf-8" src="jquery.imagemapster.min.js"></script>
+	<script charset="utf-8" src="db/db.js"></script>
+
+	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+	<script charset="utf-8">
+		var regija    = -1;
+		var program   = -1;
+		var kraj      = -1;
+		var pe        = -1;
+		var db        = null;
+		var map       = null;
+		var remote_db = ""; //remote temp content
+		var local_db  = 0;  //do we have local upgrade file
+
+		function select(id) {
+			repaint_map(id);
+			$('select#sr').val(id);
+			$('select#sr').selectmenu("refresh", true);
+		}
+
+		function select_map() {
+			repaint_map($('select#sr').val());
+		}
+
+		function repaint_map(id) {
+			$('#slo').attr("src", "./slo/"+id+"_slo.png");
+			$('img#slo').width($("div#zero").width()-40); //padding
+			$('#slo').mapster({scaleMap: true});
+			//$('img#slo').mapster('resize', $("div#zero").width()-40, 0, 0);
+		}
+
+		function show() {
+			regija = $('select#sr').val();
+		}
+
+		function select_btn(id) {
+			//kraji glede na regijo
+
+			//izjema za centere -- to je se bug k ce klikens na svv prikaze vse
+			if (id == "5") {
+				$("h1#title_one").html("Vse regije");
+				regija = 0;
+			}
+			program = id;
+			db.transaction(queryDB3, errorCB);
+		}
+
+		function select_k(id) {
+			//enote glede na kraj
+			kraj = id;
+			db.transaction(queryDB4, errorCB);	
+		}
+
+		function select_pe(id) {
+			pe = id;
+		}
+
+		function send() {
+			var ime     = $("input#ime").val();
+			var priimek = $("input#priimek").val();
+			var email   = $("input#email").val();
+			var telefon = $("input#telefon").val();
+
+			$.ajax({
+				type: "POST",
+				url: "http://kbp.vigred.com/blaz/avtosola/subscribe.php",
+				data: ({poslovnaenota_id: pe, program_id: program, ime: ime, priimek: priimek, email: email, telefon: telefon}),
+				success: function(data) {
+					$("p#form").html("Hvala, vaš vpis je bil uspešno oddan.");  	
+				}
+			});
+		}
+
+		function load_aux_db() {
+			window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
+				fileSystem.root.getFile("Avtosola/db.js", null, function(fileEntry) {
+					fileEntry.file(readAsText, fail);
+				}, fail);
+			} , null); 
+		}
+
+		function readAsText(file) {
+        	var reader = new FileReader();
+        	reader.onloadend = function(evt) {
+            	eval(evt.target.result);
+            	db.transaction(populateDB, errorCB);
+            	
+            	//akcija updejt
+				db.transaction(queryDB2, errorCB);
+				
+            	//console.log(evt.target.result);
+        	};
+        	reader.readAsText(file);
+    	}
+
+		document.addEventListener("deviceready", function() {
+	        $(document).bind("pagechange", onPageChange);
+			$('img#slo').width($("div#zero").width()-40); //padding
+			$('#slo').mapster({scaleMap: true});
+
+			//do we have net?
+			if (!isConnected()) {
+				$("div#zero_noconn").show();
+			} else {
+				$("div#zero_noconn").hide();
+			}
+
+			//akcija
+			db = window.openDatabase("Database", "1.0", "avtosola", 200000);
+			//do we have new db
+			window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
+				fileSystem.root.getFile("Avtosola/db.js", null, function(fileEntry) {
+					local_db = 1;
+				}, fail);
+			} , null); 
+
+			if (local_db == 0) {
+				db.transaction(populateDB, errorCB);
+			} else {
+				load_aux_db();
+			}
+
+			//drapdown
+			db.transaction(queryDB1, errorCB);
+
+			//akcija
+			db.transaction(queryDB2, errorCB);
+
+			//prealod map images
+			var my_images = ['./slo/0_slo.png','./slo/1_slo.png','./slo/2_slo.png','./slo/3_slo.png','./slo/4_slo.png','./slo/5_slo.png','./slo/6_slo.png','./slo/7_slo.png','./slo/8_slo.png','./slo/9_slo.png','./slo/10_slo.png','./slo/11_slo.png','./slo/12_slo.png'];
+			preload_images(my_images);
+	 	}, true);
+
+		//Function to preload images
+		function preload_images(images_array) {
+			$(images_array).each(function () {
+				$('<img />').attr('src',this).appendTo('body').css('display','none');
+			});
+		}
+
+		function queryDB1(tx) {
+		    tx.executeSql("SELECT * FROM regije", [], function(tx, results) {
+		    	var len = results.rows.length;
+		    	var r   = new Array();
+		    	for (var i=0; i<len; i++) {
+		    		r[i] = results.rows.item(i);
+				}
+
+				$('select#sr').append(new Option("Vse regije", 0, true));
+				for (var i=0;i<r.length;i++) {
+					$('select#sr').append(new Option(r[i].regija, r[i].regija_id, false));
+				}
+				$('select#sr').val(0);
+				$('select#sr').selectmenu("refresh", true);
+
+		    } , errorCB);
+		}
+
+		//page one title
+		function queryDB1a(tx) {
+			if (regija > 0) {
+			    tx.executeSql("SELECT * FROM regije WHERE regija_id = "+regija, [], function(tx, results) {
+			    	var len = results.rows.length;
+			    	var r   = new Array();
+			    	for (var i=0; i<len; i++) {
+			    		r[i] = results.rows.item(i);
+					}
+
+					$("h1#title_one").html(r[0].regija);
+					$("h1#title_one").trigger("create");
+			    } , errorCB);
+			} else {
+				$("h1#title_one").html("Vse regije");
+			}
+		}
+
+		function queryDB2(tx) {
+		    tx.executeSql("SELECT * FROM akcije JOIN poslovneenote ON akcije.poslovnaenota_id = poslovneenote.poslovnaenota_id JOIN podjetja ON poslovneenote.podjetje_id = podjetja.podjetje_id ORDER BY sort_order DESC, akcija_id ASC LIMIT 1", [], function(tx, results) {
+		    	var len = results.rows.length;
+		    	var r   = new Array();
+		    	for (var i=0; i<len; i++) {
+		    		r[i] = results.rows.item(i);
+				}
+				$("p#akcija").html("<a href='#two' onClick='select_pe("+r[0].poslovnaenota_id+")' data-transition='slide' data-theme='a'><b>"+r[0].podjetje+", "+r[0].poslovnaenota+"</b><br />" + r[0].akcija+"</a>");
+
+				$("p#akcija").trigger("create");
+
+		    } , errorCB);
+		}
+
+		//pokazemo kraje
+		function queryDB3(tx) {
+			if (regija == 0) {			
+				sql = "SELECT * FROM kraji JOIN poslovneenote ON kraji.kraj_id = poslovneenote.kraj_id JOIN podjetja ON (podjetja.podjetje_id = poslovneenote.podjetje_id) JOIN poslovneenote_programi ON (poslovneenote.poslovnaenota_id = poslovneenote_programi.poslovnaenota_id AND poslovneenote_programi.program_id = "+ program +") GROUP BY poslovneenote.kraj_id ORDER BY kraj";
+			} else {
+				sql = "SELECT * FROM kraji JOIN poslovneenote ON kraji.kraj_id = poslovneenote.kraj_id JOIN podjetja ON (podjetja.podjetje_id = poslovneenote.podjetje_id) JOIN poslovneenote_programi ON (poslovneenote.poslovnaenota_id = poslovneenote_programi.poslovnaenota_id AND poslovneenote_programi.program_id = "+ program +") WHERE regija_id = "+ regija +" GROUP BY poslovneenote.kraj_id ORDER BY kraj";
+			}
+
+		    tx.executeSql(sql, [], function(tx, results) {
+		    	var len = results.rows.length;
+		    	var r   = new Array();
+		    	for (var i=0; i<len; i++) {
+		    		r[i] = results.rows.item(i);
+				}
+
+				//zbrisemo kraje
+				$("ul#kl").empty();
+
+				//zbrisemo ponudnik
+				$("ul#tl").empty();
+
+				for (var i=0;i<r.length;i++) {
+					$("ul#kl").append("<li id='k_"+r[i].kraj_id+"' onClick='select_k("+r[i].kraj_id+")'><a href='#'>"+r[i].kraj+"</a></li>");
+				}
+
+				$("ul#kl").listview('refresh');
+				$("ul#tl").listview('refresh');
+
+		    } , errorCB);
+		}
+
+		//prikazemo ponudnike
+		function queryDB4(tx) {
+			sql = "SELECT * FROM poslovneenote JOIN podjetja ON poslovneenote.podjetje_id = podjetja.podjetje_id JOIN poslovneenote_programi ON (poslovneenote.poslovnaenota_id = poslovneenote_programi.poslovnaenota_id AND poslovneenote_programi.program_id = "+ program +") WHERE kraj_id = "+kraj+" ORDER BY podjetje, poslovnaenota";
+
+		    tx.executeSql(sql, [], function(tx, results) {
+		    	var len = results.rows.length;
+		    	var r   = new Array();
+		    	for (var i=0; i<len; i++) {
+		    		r[i] = results.rows.item(i);
+				}
+
+				//zbrisemo kraje
+				//$("ul#kl").empty();
+				$("ul#kl li").each(function(idx, li) {
+    				if ($(li).attr("id") != "k_"+kraj) {
+    					$(li).remove();
+					}
+				});
+
+				//zbrisemo ponudnik
+				$("ul#tl").empty();
+
+				for (var i=0;i<r.length;i++) {
+					$("ul#tl").append("<li><a href='#two' onClick='select_pe("+r[i].poslovnaenota_id+")' data-transition='slide'>"+r[i].podjetje +", "+ r[i].poslovnaenota+"</a></li>");
+				}
+
+				$("ul#kl").listview('refresh');
+				$("ul#tl").listview('refresh');
+		    } , errorCB);
+		}
+
+		//prikazemo pe
+		function queryDB5(tx) {
+			sql = "SELECT * FROM poslovneenote JOIN podjetja ON poslovneenote.podjetje_id = podjetja.podjetje_id WHERE poslovneenote.poslovnaenota_id = "+pe;
+
+		    tx.executeSql(sql, [], function(tx, results) {
+		    	var len = results.rows.length;
+		    	var r   = new Array();
+		    	for (var i=0; i<len; i++) {
+		    		r[i] = results.rows.item(i);
+				}
+
+				$("h1#title_two").html(r[0].podjetje);
+				$("img#details_image").attr("src", "./uploads/"+r[0].file_url)
+				$("h3#detalis_title").html(r[0].poslovnaenota);
+
+				var info = r[0].ulica + "<br />";
+				info    += r[0].postna_stevilka + " " + r[0].posta + "<br />";
+				
+				if (r[0].email.length > 0) {
+					info    += "<img src='./icons/mail.png'> <a href='mailto:"+r[0].email+"'>" + r[0].email + "</a><br />";
+				}
+				
+				if (r[0].www.length > 0) {
+					info    += "<img src='./icons/www.png'>  <a href='"+ r[0].www +"'>" + r[0].www + "</a><br />";
+				}
+				
+				if (r[0].fb.length > 0) {
+					info    += "<img src='./icons/fb.png'>  <a href='"+ r[0].fb +"'>Pojdi na FB stran</a><br />";
+				}
+				
+				if (r[0].telefon.length > 0) {
+					tel = r[0].telefon.split(" ");
+					for (var i=0;i<tel.length;i++) {
+						info    += "<img src='./icons/tel.png'> <a href='tel:"+ tel[i] +"'>" + tel[i] + "</a><br />";	
+					}
+				}
+
+				//stupid workaround
+				$("p#details_info").html(info)
+				if (r[0].uradne_ure == "") {
+					$("p#details_uradneure").html("Trenutno ni vnosa podatkov.");
+				} else {
+					$("p#details_uradneure").html(r[0].uradne_ure);
+				}
+
+				$("p#details_info").trigger("create");
+				$("p#details_uradneure").trigger("create");
+
+				//tecaji
+				db.transaction(queryDB6, errorCB);
+				//akcije
+				db.transaction(queryDB7, errorCB);
+		    } , errorCB);
+		}
+
+		//prikazemo tecaje pe
+		function queryDB6(tx) {
+			sql = "SELECT tecaji.tecaj, tecaji.tecaj_datum, podprogrami.podprogram, programi.program FROM tecaji JOIN podprogrami ON tecaji.podprogram_id = podprogrami.podprogram_id JOIN programi ON podprogrami.program_id = programi.program_id WHERE poslovnaenota_id = "+pe;
+
+		    tx.executeSql(sql, [], function(tx, results) {
+		    	var len = results.rows.length;
+		    	var r   = new Array();
+
+		    	if (len == 0) {
+					$("p#details_tecaji").html("Trenutno ni podatka o tečajih.");
+		    	} else {
+			    	for (var i=0; i<len; i++) {
+			    		r[i] = results.rows.item(i);
+					}
+
+					var details = "";
+					for (var i=0;i<r.length;i++) {
+						details += "<b>" + r[i].podprogram + "</b><br />dne: "+ oblikuj_datum(r[i].tecaj_datum) +"<br /><small>"+r[i].tecaj+"</small><br /><br />";
+					}
+					$("p#details_tecaji").html(details);
+				}
+				$("p#details_tecaji").trigger("create");
+		    } , errorCB);
+		}
+
+		//prikazemo akcije pe
+		function queryDB7(tx) {
+			sql = "SELECT * FROM akcije WHERE poslovnaenota_id = "+pe;
+
+		    tx.executeSql(sql, [], function(tx, results) {
+		    	var len = results.rows.length;
+		    	var r   = new Array();
+
+				if (len == 0) {
+					$("p#details_akcije").html("Trenutno ni vnešenih akcij.");
+				} else {
+			    	for (var i=0; i<len; i++) {
+			    		r[i] = results.rows.item(i);
+					}
+
+					var details = "";
+					for (var i=0;i<r.length;i++) {
+						details += r[i].akcija +"<br /><small>"+ r[i].vsebina +"</small><br /><br />";
+					}
+					$("p#details_akcije").html(details);
+				}
+				$("p#details_akcije").trigger("create");
+		    } , errorCB);
+		}
+
+		//akcije kraji
+		function queryDB8(tx) {
+			sql = "SELECT * FROM kraji JOIN poslovneenote ON kraji.kraj_id = poslovneenote.kraj_id JOIN akcije ON (poslovneenote.poslovnaenota_id = akcije.poslovnaenota_id) GROUP BY poslovneenote.kraj_id ORDER BY kraj";
+
+		    tx.executeSql(sql, [], function(tx, results) {
+		    	var len = results.rows.length;
+		    	var r   = new Array();
+		    	for (var i=0; i<len; i++) {
+		    		r[i] = results.rows.item(i);
+				}
+
+				//zbrisemo kraje
+				$("ul#kla").empty();
+
+				for (var i=0;i<r.length;i++) {
+					$("ul#kla").append("<li id='k_"+r[i].kraj_id+"' onClick='show_akcije("+r[i].kraj_id+")'><a href='#'>"+r[i].kraj+"</a></li>");
+				}
+
+				$("ul#kla").listview('refresh');
+		    } , errorCB);
+		}
+
+		//akcije
+		function queryDB8a(tx) {
+			sql = "SELECT * FROM akcije JOIN poslovneenote ON akcije.poslovnaenota_id = poslovneenote.poslovnaenota_id 	JOIN podjetja ON poslovneenote.podjetje_id = podjetja.podjetje_id JOIN kraji ON (poslovneenote.kraj_id = kraji.kraj_id AND kraji.kraj_id = "+kraj+") ORDER BY akcije.sort_order DESC";
+
+		    tx.executeSql(sql, [], function(tx, results) {
+		    	var len = results.rows.length;
+		    	var r   = new Array();
+
+		    	for (var i=0; i<len; i++) {
+		    		r[i] = results.rows.item(i);
+				}
+
+				$("ul#zero_akcije_list").empty();
+
+				for (var i=0;i<r.length;i++) {
+					$("ul#zero_akcije_list").append("<li><h3><a href='#two' onClick='select_pe("+r[i].poslovnaenota_id+")' data-transition='slide'><b>"+r[i].podjetje+", "+r[i].poslovnaenota+"</b></a></h3><p><b>" + r[i].akcija+"</b><br />"+r[i].vsebina+"</p></li>");
+				}
+				$("ul#zero_akcije_list").listview('refresh');
+
+		    } , errorCB);
+		}
+
+		//tecaji kraji
+		function queryDB9(tx) {
+			sql = "SELECT * FROM kraji JOIN poslovneenote ON kraji.kraj_id = poslovneenote.kraj_id JOIN tecaji ON (poslovneenote.poslovnaenota_id = tecaji.poslovnaenota_id AND tecaji.tecaj_datum >= date('now')) GROUP BY poslovneenote.kraj_id ORDER BY kraj";
+
+		    tx.executeSql(sql, [], function(tx, results) {
+		    	var len = results.rows.length;
+		    	var r   = new Array();
+		    	for (var i=0; i<len; i++) {
+		    		r[i] = results.rows.item(i);
+				}
+
+				//zbrisemo kraje
+				$("ul#klt").empty();
+
+				for (var i=0;i<r.length;i++) {
+					$("ul#klt").append("<li id='k_"+r[i].kraj_id+"' onClick='show_tecaji("+r[i].kraj_id+")'><a href='#'>"+r[i].kraj+"</a></li>");
+				}
+
+				$("ul#klt").listview('refresh');
+		    } , errorCB);
+		}
+
+		//tecaji
+		function queryDB9a(tx) {
+			sql = "SELECT * FROM tecaji JOIN poslovneenote ON (tecaji.poslovnaenota_id = poslovneenote.poslovnaenota_id) JOIN podjetja ON (poslovneenote.podjetje_id = podjetja.podjetje_id) JOIN kraji ON (poslovneenote.kraj_id = kraji.kraj_id AND kraji.kraj_id = "+kraj+") JOIN podprogrami ON (tecaji.podprogram_id = podprogrami.podprogram_id) WHERE tecaji.tecaj_datum >= date('now') ORDER BY tecaji.tecaj_datum ASC";
+
+		    tx.executeSql(sql, [], function(tx, results) {
+		    	var len = results.rows.length;
+		    	var r   = new Array();
+
+		    	for (var i=0; i<len; i++) {
+		    		r[i] = results.rows.item(i);
+				}
+
+				$("ul#zero_tecaji_list").empty();
+
+				for (var i=0;i<r.length;i++) {
+					$("ul#zero_tecaji_list").append("<li><h3><a href='#two' onClick='select_pe("+r[i].poslovnaenota_id+")' data-transition='slide'>"+r[i].podprogram+"</a></h3><p><b>"+r[i].podjetje+", </b>"+r[i].poslovnaenota+"<br />dne: " + oblikuj_datum(r[i].tecaj_datum)+"</p></li>");
+				}
+				$("ul#zero_tecaji_list").listview('refresh');
+		    } , errorCB);
+		}
+
+		//refresh
+		function queryDB11(tx) {
+			$("h4#refresh_msg_1").hide();
+			$("h4#refresh_msg_2").hide();
+			$("h4#refresh_msg_3").hide();
+			$("h4#refresh_msg_4").hide();
+			$("p#refresh_msg_5").html("");
+			$("p#refresh_msg_6").html("");
+			
+			sql = "SELECT id FROM verzija";
+
+		    tx.executeSql(sql, [], function(tx, results) {
+		    	var len = results.rows.length;
+		    	var r   = new Array();
+
+		    	for (var i=0; i<len; i++) {
+		    		r = results.rows.item(i);
+				}
+
+				my_version     = r.id;
+				$("p#refresh_msg_5").html("<small>local db: " + my_version + "&nbsp;</small>");
+				server_version = my_version;
+
+				//get remote version
+				$.get('http://kbp.vigred.com/blaz/avtosola/version.php', function(data) {
+					server_version = data;
+					$("p#refresh_msg_6").html("<small>remote db: " + server_version + "&nbsp;</small>");
+
+					if (server_version == my_version) {
+						$("h4#refresh_msg_1").show();
+					} else {
+						$("h4#refresh_msg_2").show();
+						
+						//write content
+						$.get('http://kbp.vigred.com/blaz/avtosola/db/db.js', function(data) {
+							remote_db = data;
+						
+						    //create folder
+						    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
+						        fileSystem.root.getDirectory("Avtosola", {create: true, exclusive: false}, function(dir){}, fail); 
+						    } , null); 
+						    
+						    //write file
+						    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
+						    	fileSystem.root.getFile("Avtosola/db.js", {create: true, exclusive: false}, gotFileEntry, fail);
+						    }, null);
+						});
+					}
+				}, "json");
+		    } , errorCB);
+		}
+
+		function gotFileEntry(fileEntry) {
+	        fileEntry.createWriter(gotFileWriter, fail);
+	    }
+	
+	    function gotFileWriter(writer) {
+	 		writer.onwrite = function(evt) {
+	        	$("h4#refresh_msg_3").show();
+	        	load_aux_db(); //nalozimo nove podatke
+	    	};
+	    	writer.write(remote_db);
+	    }
+	
+	    function fail(error) {
+	    	$("h4#refresh_msg_4").show();
+	        console.log(error.code);
+	    }
+
+		//zemljevid
+		function queryDB10(tx) {
+			sql = "SELECT * FROM poslovneenote JOIN podjetja ON poslovneenote.podjetje_id = podjetja.podjetje_id";
+
+		    tx.executeSql(sql, [], function(tx, results) {
+		    	var len = results.rows.length;
+		    	var r   = new Array();
+
+		    	for (var i=0; i<len; i++) {
+		    		r[i] = results.rows.item(i);
+				}
+
+				var markers = new Array();
+				var infowindows = new Array();
+				for (var i=0;i<r.length;i++) {
+					if (r[i].x > 0 && r[i].y > 0) {
+						
+
+					var marker = _newGoogleMapsMarker({
+					            _map: map,
+					            _lat: r[i].x,
+					            _lng: r[i].y,
+					            _head: r[i].poslovnaenota,
+					            _data: '<div style="color: #494949">\
+					        <h3>' + r[i].podjetje + '</h3>\
+					        <p>' + r[i].poslovnaenota + '</p>\
+					        <p><a href="#two" onClick="select_pe('+r[i].poslovnaenota_id+')">Dodatne informacije</a></p>\
+					        </div>'
+					        });
+					}
+				}
+		    } , errorCB);
+		}
+
+		function _newGoogleMapsMarker(param) {
+		    var r = new google.maps.Marker({
+		        map: param._map,
+		        position: new google.maps.LatLng(param._lat, param._lng),
+		        title: param._head
+		    });
+		    if (param._data) {
+		        google.maps.event.addListener(r, 'click', function() {
+		            // this -> the marker on which the onclick event is being attached
+		            if (!this.getMap()._infoWindow) {
+		                this.getMap()._infoWindow = new google.maps.InfoWindow();
+		            }
+		            this.getMap()._infoWindow.close();
+		            this.getMap()._infoWindow.setContent(param._data);
+		            this.getMap()._infoWindow.open(this.getMap(), this);
+		        });
+		    }
+		    return r;
+		}
+
+		function show_akcije(kid) {
+
+			//$("ul#kla").empty();
+			//pustimo izbrani kraj
+			$("ul#kla li").each(function(idx, li) {
+				if ($(li).attr("id") != "k_"+kid) {
+					$(li).remove();
+				}
+			});
+			$("ul#kla").listview('refresh');
+
+			$("h4#zero_akcije_info").hide();
+			kraj = kid;
+			db.transaction(queryDB8a, errorCB);
+		}
+
+		function show_tecaji(kid) {
+			//$("ul#klt").empty();
+			$("ul#klt li").each(function(idx, li) {
+				if ($(li).attr("id") != "k_"+kid) {
+					$(li).remove();
+				}
+			});
+			$("ul#klt").listview('refresh');
+			$("h4#zero_tecaji_info").hide();
+			kraj = kid;
+			db.transaction(queryDB9a, errorCB);
+		}
+
+		function populateSuccessCB() {
+		    console.log("db populated");
+		}
+
+		function errorCB(err) {
+			console.log("err");
+			console.log(err.code);
+		    console.log(err);
+		}
+
+	 	function onPageChange(event, data) {
+	 		var page = data.toPage.attr("id");
+	 		var ref  = data.options.fromPage.attr("id");
+
+	 		/*
+	 		console.log(page);
+	 		console.log(ref);
+			*/
+
+	 		if (page == "one" && ref == "zero") {
+				//kam gremo nazaj?
+ 				$("a#two_nazaj").show();
+ 				$("a#two_nazaj_map").hide();
+ 				$("a#two_nazaj_akcije").hide();
+ 				$("a#two_nazaj_tecaji").hide();
+
+	 			//set h1#one_title
+				db.transaction(queryDB1a, errorCB);
+				$("ul#kl").empty();
+				$("ul#kl").listview('refresh');
+				$("ul#tl").empty();
+				$("ul#tl").listview('refresh');
+
+				//avtomatsko kliknemo avtosolo
+				select_btn(1);
+	 		}
+
+	 		if (page == "two") {
+	 			//do we have net?
+				if (!isConnected()) {
+					$("div#two_noconn").show();
+				} else {
+					$("div#two_noconn").hide();
+				}
+	 			db.transaction(queryDB5, errorCB);
+
+	 			//zapremo vse colapsabele in zbrisemo formo 
+	 			$('#two div').filter(function() { return $(this).attr('data-collapsed'); }).each(function() {
+					$(this).trigger( "collapse" );
+				});
+
+	 			$('input#ime').val("");
+	 			$('input#priimek').val("");
+	 			$('input#email').val("");
+	 			$('input#telefon').val("");
+	 		}
+
+	 		if (page == "zero_akcije") {
+	 			$("h4#zero_akcije_info").show();
+	 			//kam gremo nazaj?
+ 				$("a#two_nazaj").hide();
+ 				$("a#two_nazaj_map").hide();
+ 				$("a#two_nazaj_akcije").show();
+ 				$("a#two_nazaj_tecaji").hide();
+
+	 			$("ul#zero_akcije_list").empty();
+	 			$("ul#zero_akcije_list").listview('refresh');
+	 			db.transaction(queryDB8, errorCB);
+	 		}
+
+	 		if (page == "zero_tecaji") {
+	 			$("h4#zero_tecaji_info").show();
+	 			//kam gremo nazaj?
+ 				$("a#two_nazaj").hide();
+ 				$("a#two_nazaj_map").hide();
+ 				$("a#two_nazaj_akcije").hide();
+ 				$("a#two_nazaj_tecaji").show();
+
+	 			$("ul#zero_tecaji_list").empty();
+	 			$("ul#zero_tecaji_list").listview('refresh');
+	 			db.transaction(queryDB9, errorCB);
+	 		}
+
+	 		if (page == "zero_map") {
+	 			//kam gremo nazaj?
+ 				$("a#two_nazaj").hide();
+ 				$("a#two_nazaj_map").show();
+ 				$("a#two_nazaj_akcije").hide();
+ 				$("a#two_nazaj_tecaji").hide();
+
+				if (isConnected()) {
+					$("div#zero_map_noconn").hide();
+				} else {
+				    $("div#zero_map_noconn").show();
+				}
+
+				//samo prvic
+				if (map == null) {
+					var mapOptions = {
+						zoom: 7,
+						center: new google.maps.LatLng(46.15, 15),
+						mapTypeId: google.maps.MapTypeId.ROADMAP
+					}
+
+					//size fix
+					var height = ($(window).height()-$("#zero_map").find('[data-role="header"]').outerHeight()-$("#zero_map").find('[data-role="footer"]').outerHeight());
+	    			$("#map_canvas").height(height);
+	    			$("#map_canvas").width($(window).width());
+
+					map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+
+					//dodamo lokacije na karto
+					db.transaction(queryDB10, errorCB);
+				}
+	 		}
+
+	 		if (page == "zero_refresh") {
+				if (isConnected()) {
+					$("div#zero_refresh_noconn").hide();
+					//ok imamo povezavo preverimo naso lokalno verzijo
+					db.transaction(queryDB11, errorCB);
+
+				} else {
+				    $("div#zero_refresh_noconn").show();
+				}
+	 		}
+		}
+
+		function isConnected() {
+			var networkState = navigator.network.connection.type;
+			if (networkState == Connection.UNKNOWN || networkState == Connection.NONE) {
+				return false;
+			}
+			return true;
+		}
+
+		function oblikuj_datum(d) {
+			datum_ura = d.split(" ");
+			datum     = datum_ura[0].split("-");
+			ura       = datum_ura[1].split(":");
+
+			return datum[2]+"."+datum[1]+"."+datum[0]+" ob "+ura[0]+":"+ura[1];
+		}
+	</script>
+</head>
+<body>
+
+<div data-role="page" id="zero" data-title="VOZNIŠKI IZPIT" data-theme="a">
+	<div data-role="header">
+		<h1>VOZNIŠKI IZPIT</h1>
+	</div><!-- /header -->
+
+	<div data-role="content">	
+		<h4 style="text-align: center">Izberite regijo in preverite kaj vse potrebujete za izpit!</h4>
+		<img id="slo" src="./slo/slo.png" border="0" usemap="#slo" />
+		<map name="slo">
+		<area shape="poly" coords="493,55,577,4,645,123,559,154" onClick="select(1)" nohref="nohref" />
+		<area shape="poly" coords="389,69,386,122,475,189,552,154,482,56" onClick="select(2)" nohref="nohref" />
+		<area shape="poly" coords="380,70,381,132,317,130,250,121,305,58" onClick="select(3)" nohref="nohref" />
+		<area shape="poly" coords="254,128,392,139,468,192,481,243,371,228,367,188,315,178,264,174" onClick="select(4)" nohref="nohref" />
+		<area shape="poly" coords="303,182,361,195,370,248,330,247,279,214" onClick="select(5)" nohref="nohref" />
+		<area shape="poly" coords="379,238,477,250,472,307,416,331,386,266,360,265" onClick="select(6)" nohref="nohref" />
+		<area shape="poly" coords="243,131,238,176,149,251,65,162,70,99,165,123" onClick="select(9)" nohref="nohref" />
+		<area shape="poly" coords="144,283,152,257,249,175,288,189,266,217,324,256,266,260,295,329,230,295" onClick="select(8)" nohref="nohref" />
+		<area shape="poly" coords="61,125,11,169,52,201,22,249,30,300,67,279,128,305,137,286,136,249,56,166" onClick="select(11)" nohref="nohref" />
+		<area shape="poly" coords="403,407,406,324,379,274,278,264,305,340,235,314,243,360,289,405" onClick="select(7)" nohref="nohref" />
+		<area shape="poly" coords="141,291,134,396,238,363,223,304" onClick="select(10)" nohref="nohref" />
+		<area shape="poly" coords="39,303,96,358,32,391,72,410,129,405,131,316,68,289" onClick="select(12)" nohref="nohref" />
+		</map>
+
+		<select id="sr" name="select-choice-min" id="select-choice-min" data-mini="true" onChange="select_map();"></select> 
+		<p><a href="#one" data-theme="a" onClick="show();" data-role="button" data-transition="slide">NAPREJ</a></p>
+
+		<div data-role="collapsible" data-collapsed="false" data-theme="a" data-content-theme="a" data-mini="true" data-expanded-icon="arrow-d" data-collapsed-icon="arrow-r">
+		   <h3>OGLAS</h3>
+		   <p id="akcija"></p>
+		</div>
+
+		<div id="zero_noconn" style="display: none" data-role="collapsible" data-collapsed="true" data-theme="a" data-content-theme="a" data-mini="true" data-expanded-icon="alert" data-collapsed-icon="alert">
+		   <h3>NI INTERNETNE POVEZAVE</h3>
+		   <p>Za točen pregled nad datumi in akcijami, potrebujete internetno povezavo!</p>
+		</div>
+
+	</div><!-- /content -->
+	<div data-role="footer" class="footer-docs" data-theme="b" data-position="fixed">
+		<div data-role="navbar" data-theme="b">
+			<ul>
+				<li><a href="#zero" data-role="button" data-tap-toggle="false" data-icon="home">Domov<br></a></li>
+				<li><a href="#zero_akcije" data-role="button" data-icon="star">Akcije<br></a></li>
+				<li><a href="#zero_tecaji" data-role="button" data-icon="info">Tečaji<br></a></li>
+				<li><a href="#zero_map" data-role="button" data-icon="search">Zemljevid<br></a></li>
+				<li><a href="#zero_refresh" data-role="button" data-icon="refresh">Posodobi<br></a></li>
+			</ul>
+		</div>
+	</div><!-- /footer -->
+</div>
+
+<div data-role="page" id="zero_akcije" data-title="AKCIJE" data-theme="a">
+	<div data-role="header">
+		<h1>AKCIJE</h1>
+	</div><!-- /header -->
+
+	<div data-role="content">
+		<h4 id="zero_akcije_info">Hitri pregled nad akcijami! Izberi si mesto.</h4>
+
+		<div style="clear:both"><br /></div>
+		<ul data-role="listview" id="kla"></ul>
+		<div style="clear:both"><br /><br /></div>
+
+		<ul data-role="listview" id="zero_akcije_list"></ul>
+	</div><!-- /content -->
+
+	<div data-role="footer" class="footer-docs" data-theme="b" data-position="fixed">
+		<div data-role="navbar" data-theme="b">
+			<ul>
+				<li><a href="#zero" data-role="button" data-tap-toggle="false" data-icon="home">Domov<br></a></li>
+				<li><a href="#zero_akcije" data-role="button" data-icon="star">Akcije<br></a></li>
+				<li><a href="#zero_tecaji" data-role="button" data-icon="info">Tečaji<br></a></li>
+				<li><a href="#zero_map" data-role="button" data-icon="search">Zemljevid<br></a></li>
+				<li><a href="#zero_refresh" data-role="button" data-icon="refresh">Posodobi<br></a></li>
+			</ul>
+		</div>
+	</div><!-- /footer -->
+</div>
+
+<div data-role="page" id="zero_tecaji" data-title="TECAJI" data-theme="a">
+	<div data-role="header">
+		<h1>TEČAJI</h1>
+	</div><!-- /header -->
+
+	<div data-role="content">
+		<h4 id="zero_tecaji_info">Hitri pregled nad tečaji! Izberi si mesto.</h4>
+
+		<div style="clear:both"><br /></div>
+		<ul data-role="listview" id="klt"></ul>
+		
+		<div style="clear:both"><br /><br /></div>
+
+		<ul data-role="listview" id="zero_tecaji_list"></ul>
+	</div><!-- /content -->
+
+	<div data-role="footer" class="footer-docs" data-theme="b" data-position="fixed">
+		<div data-role="navbar" data-theme="b">
+			<ul>
+				<li><a href="#zero" data-role="button" data-tap-toggle="false" data-icon="home">Domov<br></a></li>
+				<li><a href="#zero_akcije" data-role="button" data-icon="star">Akcije<br></a></li>
+				<li><a href="#zero_tecaji" data-role="button" data-icon="info">Tečaji<br></a></li>
+				<li><a href="#zero_map" data-role="button" data-icon="search">Zemljevid<br></a></li>
+				<li><a href="#zero_refresh" data-role="button" data-icon="refresh">Posodobi<br></a></li>
+			</ul>
+		</div>
+	</div><!-- /footer -->
+</div>
+
+<div data-role="page" id="zero_map" data-title="ZEMLJEVID" data-theme="a">
+	<div data-role="header">
+		<h1>ZEMLJEVID</h1>
+	</div><!-- /header -->
+
+	<div data-role="content" style="padding:0;">
+        <div id="map_canvas" style="width:300px; height:300px;"></div>
+	</div><!-- /content -->
+
+	<div id="zero_map_noconn" style="display: none" data-role="collapsible" data-collapsed="true" data-theme="a" data-content-theme="a" data-mini="true" data-expanded-icon="alert" data-collapsed-icon="alert">
+	   <h3>NI INTERNETNE POVEZAVE</h3>
+	   <p>Za prikaz zemljevida potrebujete internetno povezavo.</p>
+	</div>
+
+	<div data-role="footer" class="footer-docs" data-theme="b" data-position="fixed">
+		<div data-role="navbar" data-theme="b">
+			<ul>
+				<li><a href="#zero" data-role="button" data-tap-toggle="false" data-icon="home">Domov<br></a></li>
+				<li><a href="#zero_akcije" data-role="button" data-icon="star">Akcije<br></a></li>
+				<li><a href="#zero_tecaji" data-role="button" data-icon="info">Tečaji<br></a></li>
+				<li><a href="#zero_map" data-role="button" data-icon="search">Zemljevid<br></a></li>
+				<li><a href="#zero_refresh" data-role="button" data-icon="refresh">Posodobi<br></a></li>
+			</ul>
+		</div>
+	</div><!-- /footer -->
+</div>
+
+<div data-role="page" id="zero_refresh" data-title="POSODOBI" data-theme="a">
+	<div data-role="header">
+		<h1>POSODOBI</h1>
+	</div><!-- /header -->
+
+	<br /><br />
+	<h4 id="refresh_msg_1" style="text-align: center; display: none">Nameščene imate aktualne podatke</h4>
+	<h4 id="refresh_msg_2" style="text-align: center; display: none">Posodbljanje v teku....</h4>
+	<h4 id="refresh_msg_3" style="text-align: center; display: none">Posodbljanje končano</h4>
+	<h4 id="refresh_msg_4" style="text-align: center; display: none">Napaka pri posodabljanju - poskusite kasneje.</h4>
+	<br /><br />
+	<!--
+	<p id="refresh_msg_5" style="text-align: right"></p>
+	<p id="refresh_msg_6" style="text-align: right"></p>
+	-->
+	<div id="zero_refresh_noconn" style="display: none" data-role="collapsible" data-collapsed="true" data-theme="a" data-content-theme="a" data-mini="true" data-expanded-icon="alert" data-collapsed-icon="alert">
+	   <h3>NI INTERNETNE POVEZAVE</h3>
+	   <p>Za posodobitev potrebujete internetno povezavo.</p>
+	</div>
+
+	<div data-role="footer" class="footer-docs" data-theme="b" data-position="fixed">
+		<div data-role="navbar" data-theme="b">
+			<ul>
+				<li><a href="#zero" data-role="button" data-tap-toggle="false" data-icon="home">Domov<br></a></li>
+				<li><a href="#zero_akcije" data-role="button" data-icon="star">Akcije<br></a></li>
+				<li><a href="#zero_tecaji" data-role="button" data-icon="info">Tečaji<br></a></li>
+				<li><a href="#zero_map" data-role="button" data-icon="search">Zemljevid<br></a></li>
+				<li><a href="#zero_refresh" data-role="button" data-icon="refresh">Posodobi<br></a></li>
+			</ul>
+		</div>
+	</div><!-- /footer -->
+</div>
+
+<div data-role="page" id="one" data-theme="a">
+	<div data-role="header">
+		<h1 id="title_one">REGIJA</h1>
+	</div><!-- /header -->
+
+	<div data-role="content">	
+		<div>
+			<div style="width:100%; margin 10px; float:left"><button id="btn1" onClick="select_btn(1)">Šola vožnje</button></div>
+			<div style="width:100%; margin 10px; float:left"><button id="btn1" onClick="select_btn(5)">Centri varne vožnje</button></div>
+		</div>
+
+		<div style="clear:both"><br /></div>
+
+		<ul data-role="listview" id="kl"></ul>
+
+		<div style="clear:both"><br /><br /></div>
+
+		<ul data-role="listview" id="tl"></ul>
+
+		<div style="clear:both"><br /></div>
+		<br />
+		
+		<a href="#zero" data-direction="reverse" data-role="button" data-icon="arrow-l" data-transition="slide">Nazaj</a></p>
+	</div><!-- /content -->
+
+	<div data-role="footer" class="footer-docs" data-theme="b" data-position="fixed">
+		<div data-role="navbar" data-theme="b">
+			<ul>
+				<li><a href="#zero" data-role="button" data-tap-toggle="false" data-icon="home">Domov<br></a></li>
+				<li><a href="#zero_akcije" data-role="button" data-icon="star">Akcije<br></a></li>
+				<li><a href="#zero_tecaji" data-role="button" data-icon="info">Tečaji<br></a></li>
+				<li><a href="#zero_map" data-role="button" data-icon="search">Zemljevid<br></a></li>
+				<li><a href="#zero_refresh" data-role="button" data-icon="refresh">Posodobi<br></a></li>
+			</ul>
+		</div>
+	</div><!-- /footer -->
+</div>
+
+<div data-role="page" id="two" data-theme="a">
+	<div data-role="header">
+		<h1 id="title_two">POSLOVNA ENOTA</h1>
+	</div><!-- /header -->
+
+	<div data-role="content">	
+		<img id="details_image" src="./uploads/empty.jpg" width="100%" style="align:center">
+		<h3 id="detalis_title"></h3>
+		<p id="details_info"></p>
+
+		<div data-role="collapsible" data-collapsed="true" data-theme="a" data-content-theme="a" data-mini="true" data-expanded-icon="arrow-d" data-collapsed-icon="arrow-r">
+		   <h3>Uradne ure</h3>
+		   <p id="details_uradneure"></p>
+		</div>
+
+		<div data-role="collapsible" data-collapsed="true" data-theme="a" data-content-theme="a" data-mini="true" data-expanded-icon="arrow-d" data-collapsed-icon="arrow-r">
+		   <h3>Tečaji</h3>
+		   <p id="details_tecaji"></p>
+		</div>
+
+		<div data-role="collapsible" data-collapsed="true" data-theme="a" data-content-theme="a" data-mini="true" data-expanded-icon="arrow-d" data-collapsed-icon="arrow-r">
+		   <h3>Akcije</h3>
+		   <p id="details_akcije"></p>
+		</div>
+
+	<div id="two_noconn" style="display: none" data-role="collapsible" data-collapsed="true" data-theme="a" data-content-theme="a" data-mini="true" data-expanded-icon="alert" data-collapsed-icon="alert">
+	   <h3>NI INTERNETNE POVEZAVE</h3>
+	   <p>Za prijavo potrebujete povezavo z internetom.</p>
+	</div>
+
+		<div data-role="collapsible" data-collapsed="true" data-theme="a" data-content-theme="a" data-expanded-icon="arrow-d" data-collapsed-icon="arrow-r">
+			<h3>Evidenčni vpis</h3>
+			<p id="form">
+				<label for="ime">Ime:</label>
+				<input type="text" name="ime" id="ime" />
+				<br />
+				<label for="priimek">Priimek:</label>
+				<input type="text" name="priimek" id="priimek" />
+				<br />
+				<label for="email">Email:</label>
+				<input type="text" name="email" id="email" />
+				<br />
+				<label for="telefon">Gsm:</label>
+				<input type="text" name="telefon" id="telefon" />
+				<br />
+				<button type="submit" data-theme="a" onClick="send();">Prijava</button>
+			</p>
+		</div>
+		<a id="two_nazaj"        href="#one"         data-direction="reverse" data-role="button" data-icon="arrow-l" data-transition="slide"                     >Nazaj</a>
+		<a id="two_nazaj_map"    href="#zero_map"    data-direction="reverse" data-role="button" data-icon="arrow-l" data-transition="slide" style="display:none">Nazaj na zemljevid</a>
+		<a id="two_nazaj_akcije" href="#zero_akcije" data-direction="reverse" data-role="button" data-icon="arrow-l" data-transition="slide" style="display:none">Nazaj na akcije</a>
+		<a id="two_nazaj_tecaji" href="#zero_tecaji" data-direction="reverse" data-role="button" data-icon="arrow-l" data-transition="slide" style="display:none">Nazaj na tečaje</a>
+
+		<a href="#zero" data-direction="reverse" data-role="button" data-icon="arrow-l" data-transition="slide">Domov</a></p>
+	</div><!-- /content -->
+
+	<div data-role="footer" class="footer-docs" data-theme="b" data-position="fixed">
+		<div data-role="navbar" data-theme="b">
+			<ul>
+				<li><a href="#zero" data-role="button" data-tap-toggle="false" data-icon="home">MyVisit<br></a></li>
+				<li><a href="#zero_akcije" data-role="button" data-icon="star">Vodič<br></a></li>
+				<li><a href="#zero_tecaji" data-role="button" data-icon="info">Vsebina<br></a></li>
+				<li><a href="#zero_map" data-role="button" data-icon="search">Zemljevid<br></a></li>
+				<li><a href="#zero_refresh" data-role="button" data-icon="refresh">Nastavitve<br></a></li>
+			</ul>
+		</div>
+	</div><!-- /footer -->
+</div>
+
+</body>
+</html>
