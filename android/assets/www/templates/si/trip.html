@@ -1,0 +1,51 @@
+<script id="tpl_trip" type="text/html">
+<div data-role="page" id="trip" data-theme="a">
+	<div data-role="header">
+		<h1><div class="ztl_header">{{title}}</div></h1>
+	</div>
+	<div data-role="content" class="ztl_content">
+		<div class="ztl_navigate_events">
+			<div class="ztl_navigate_events_left"><</div>
+			<div class="ztl_navigate_events_right">></div>
+			<img class="ztl_content_image" src="./uploads/images/{{content_image}}" style="width:100%;">
+		</div>
+		<div class="ztl_datails_info">
+			{{#map}} 
+				<div class="ztl_map">map</div>
+			{{/map}}
+
+			{{#distance}} 
+				<div class="ztl_distance">{{distance}} km</div>
+			{{/distance}}
+			
+			{{#gps}} 
+				<div class="ztl_gps">gps</div>
+			{{/gps}}
+			
+			{{#sound}} 
+				<div class="ztl_sound">sound</div>
+			{{/sound}}
+			
+			{{#calendar}} 
+				<div class="ztl_calendar">{{calendar}}</div>
+			{{/calendar}}
+			
+			{{#time}} 
+				<div class="ztl_watch">{{time}}</div>
+			{{/time}}
+		</div>
+		<div class="ztl_details_content">{{content}}</div>
+	</div>
+	<div data-role="footer" class="footer-docs" data-theme="b" data-position="fixed">
+		<div data-role="navbar" data-theme="b">
+			<ul>
+				<li><a href="#" data-role="button" data-tap-toggle="false" data-icon="home">MyVisit<br></a></li>
+				<li><a href="#" data-role="button" data-icon="star">Vodi<br></a></li>
+				<li><a href="#" data-role="button" data-icon="info">Vsebina<br></a></li>
+				<li><a href="#" data-role="button" data-icon="search">Zemljevid<br></a></li>
+				<li><a href="#" data-role="button" data-icon="refresh">Nastavitve<br></a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+</script>
