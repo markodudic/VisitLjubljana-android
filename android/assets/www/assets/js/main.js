@@ -91,13 +91,17 @@ function load_page(template, div, data, transition, reverse) {
 				changeHash: false
 			});
 			
-			//odstranim ostale dive
-			var loaded_divs = $('body').find('.ztl_remove_from_page');
-			loaded_divs.each(function() {
-				if (this.id != div) {
-					$('body').remove(this);
-				}
-			});
+			remove_old_divs(div);
+		}
+	});
+}
+
+
+function remove_old_divs(div) {
+	var loaded_divs = $('body').find('.ztl_remove_from_page');
+	loaded_divs.each(function() {
+		if (this.id != div) {
+			$('body').remove(this);
 		}
 	});
 }
