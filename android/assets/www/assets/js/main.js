@@ -1,17 +1,23 @@
 var template_root = 'templates/';
 var template_lang = 'si/';
+
 var active_menu	  = 0;
-var settings	  = null;
+
+var settings	  = new Object();
+
 var db_type	  	  = 1;
+var settings_type = 1;
 var swipe		  = 0;
 var current		  = 0;
+var local_db	  = 0;
 
-$(document).ready(function() {
-	document.addEventListener("deviceready", on_device_ready, true);
-	
+document.addEventListener("deviceready", on_device_ready, false);
+
+function on_device_ready() {
 	$('body').on( 'swipeleft', swipe_left_handler );
 	$('body').on( 'swiperight', swipe_right_handler );
-});
+	load_settings();
+}
 
 function swipe_left_handler(event) {
 	if (swipe == 1) {
@@ -57,10 +63,6 @@ function swipe_right_handler(event) {
 			load_page(template_lang+'trip.html', 'div_trip', trips.items[j], 'slide', true);
 		}
 	}
-}
-
-function on_device_ready() {
-	load_settings();
 }
 
 function load_page(template, div, data, transition, reverse) {
@@ -110,10 +112,15 @@ function select_language(id) {
 	settings.id_lang = id;
 
 	console.log(JSON.stringify(settings));
-	//za device bom pol, ko bom mel prikljuceno
-	
-	//nalozim glavni menu
-	load_page(template_lang+'main_menu.html', 'main_menu', null, 'fade', false);
+	console.log(db_type);
+
+	if (settings_type == 1) {
+		//nalozim glavni menu
+		load_page(template_lang+'main_menu.html', 'main_menu', null, 'fade', false);
+	} else {
+		console.log('shrani mobilno');
+		save_mobile_settings();
+	}
 } 
 
 function load_trips() {
