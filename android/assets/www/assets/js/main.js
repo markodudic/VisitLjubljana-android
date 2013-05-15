@@ -3,10 +3,8 @@ var template_lang = 'si/';
 var active_menu	  = 0;
 var settings	  = null;
 var db_type	  	  = 1;
-
-var prev_loaded   = 0;
-var curr_loaded   = 0;
-var next_loaded   = 0;
+var swipe		  = 0;
+var current		  = 0;
 
 $(document).ready(function() {
 	document.addEventListener("deviceready", on_device_ready, true);
@@ -16,19 +14,56 @@ $(document).ready(function() {
 });
 
 function swipe_left_handler(event) {
-	console.log(event);
+	if (swipe == 1) {
+		if (db_type == 1) {
+			var j = 0;
+			var items = trips.items;
+
+			for (i=0; i<items.length; i++) {
+				if (items[i]['id'] == current) {
+					j = i-1;
+				}
+			}
+			
+			if (j == -1) {
+				j = items.length-1;
+			}
+			
+			current = items[j]['id'];
+			
+			load_page(template_lang+'trip.html', 'div_trip', trips.items[j], 'slide', false);
+		}
+	}
 }
 
 function swipe_right_handler(event) {
-	console.log(event);
+	if (swipe == 1) {
+		if (db_type == 1) {
+			var j = 0;
+			var items = trips.items;
+
+			for (i=0; i<items.length; i++) {
+				if (items[i]['id'] == current) {
+					j = i+1;
+				}
+			}
+			
+			if (j == items.length) {
+				j = 0;
+			}
+			
+			current = items[j]['id'];
+			
+			load_page(template_lang+'trip.html', 'div_trip', trips.items[j], 'slide', true);
+		}
+	}
 }
 
 function on_device_ready() {
 	load_settings();
 }
 
-function load_page(template, div, data, transition, reverse, swipe) {
-	console.log("swipe"+swipe);
+function load_page(template, div, data, transition, reverse) {
 	$.ajax({
 		type:"GET",
 		url:template_root+template,
@@ -43,7 +78,11 @@ function load_page(template, div, data, transition, reverse, swipe) {
 			} else {
 				var html = res;
 			}
-			
+
+			if (swipe == 1) {
+				div = div+"_"+data['id'];
+			}
+
 			$('body').append(html).trigger('create');
 			
 			$.mobile.changePage( "#"+div, {
@@ -52,9 +91,13 @@ function load_page(template, div, data, transition, reverse, swipe) {
 				changeHash: false
 			});
 			
-			console.log(prev_loaded);
-			console.log(curr_loaded);
-			console.log(next_loaded);
+			//odstranim ostale dive
+			var loaded_divs = $('body').find('.ztl_remove_from_page');
+			loaded_divs.each(function() {
+				if (this.id != div) {
+					$('body').remove(this);
+				}
+			});
 		}
 	});
 }
@@ -66,7 +109,7 @@ function select_language(id) {
 	//za device bom pol, ko bom mel prikljuceno
 	
 	//nalozim glavni menu
-	load_page(template_lang+'main_menu.html', 'main_menu', null, 'fade', false, 0);
+	load_page(template_lang+'main_menu.html', 'main_menu', null, 'fade', false);
 } 
 
 function load_trips() {
