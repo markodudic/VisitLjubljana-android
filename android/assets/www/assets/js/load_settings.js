@@ -2,23 +2,44 @@ function load_settings() {
 	swipe = 0;
 	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
 		load_mobile();
-		//mrn prikljucit tablco
 	} else {
 		load_desktop();
 	}
 }
 
 function load_mobile() {
-	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
-		console.log(fileSystem);
-		fileSystem.root.getFile("ztl/settings.txt", null, function(fileEntry) {
-			fileEntry.file(readAsText, fail);
-		}, fail);
-	} , null); 
+	 window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
+}
+
+ function gotFS(fileSystem) {
+	console.log(fileSystem);
+	fileSystem.root.getFile("ztl/settings.txt", {create: true, exclusive: false}, gotFileEntry, fail);
+	
+}
+
+function gotFileEntry(fileEntry) {
+	console.log(fileEntry);
+	fileEntry.createWriter(gotFileWriter, fail);
+}
+
+function gotFileWriter(writer) {
+	writer.onwriteend = function(evt) {
+		console.log("contents of file now 'some sample text'");
+		writer.truncate(11);  
+		writer.onwriteend = function(evt) {
+			console.log("contents of file now 'some sample'");
+			writer.seek(4);
+			writer.write(" different text");
+			writer.onwriteend = function(evt){
+				console.log("contents of file now 'some different text'");
+			}
+		};
+	};
+	writer.write("some sample text");
 }
 
 function fail(error) {
-	console.log(error.code);
+	console.log("error code: "+error.code);
 }
 
 function load_desktop() {
@@ -29,6 +50,7 @@ function load_desktop() {
 		async:false,
 		dataType: 'json',
 		success:function(resp){
+			console.log(resp);
 			settings = resp;
 		}
 	});
