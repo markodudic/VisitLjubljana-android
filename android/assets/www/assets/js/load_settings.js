@@ -1,6 +1,7 @@
 function load_settings() {
+	swipe = 0;
 	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
-		//load_mobile();
+		load_mobile();
 		//mrn prikljucit tablco
 	} else {
 		load_desktop();
@@ -33,9 +34,8 @@ function load_desktop() {
 	});
 
 	if (settings.id_lang == 0) {
-		load_page('select_language.html', 'select_language', null, 'fade', false, 0);
+		load_page('select_language.html', 'select_language', null, 'fade', false);
 	} else {
-		console.log('nalozi prvo stran');
-		load_page(template_lang+'main_menu.html', 'main_menu', null, 'fade', false, 0);
+		load_page(template_lang+'main_menu.html', 'main_menu', null, 'fade', false);
 	}
 }
