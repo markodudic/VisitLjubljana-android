@@ -158,3 +158,5 @@
 	color:#ffffff;
 	opacity:10%;
 }
+
+#sortable { list-style-type: none; margin: 0; padding: 0; width: 100%; }

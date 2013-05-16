@@ -3,45 +3,47 @@
 	<div data-role="header">
 		<h1>trips</h1>
 	</div>
-	<div data-role="content" data-theme="a">	
+	<div data-role="content" data-theme="a" id="sortable">
 	{{#items}}
-		<div class="ztl_list_item type_{{type}}">
-			<div class="ztl_list_image">
-				<img src="./uploads/images/{{title_image}}" style="width:100%;">
-			</div>
-			<div class="ztl_list_content">
-				<div class="ztl_delete">X</div>
-				<a href="#" onClick="load_trip_content({{id}}, 'fade', true)" style="text-decoration:none; color:#000000; font-weight:normal;">
-					<span class="ztl_list_header">{{title}}</span><br>
-					{{short_description}}
-				</a>
-			</div>
-			<div class="ztl_list_info type_{{type}}">
-				{{#map}} 
-					<div class="ztl_map">map</div>
-				{{/map}}
+		<li>
+			<div class="ztl_list_item type_{{type}}" id="ztl_trips_item_{{id}}">
+				<div class="ztl_list_image">
+					<img src="./uploads/images/{{title_image}}" style="width:100%;">
+				</div>
+				<div class="ztl_list_content">
+					<div class="ztl_delete" onClick="remove_trip_from_list({{id}});">X</div>
+					<a href="#" onClick="load_trip_content({{id}}, 'fade', true)" style="text-decoration:none; color:#000000; font-weight:normal;">
+						<span class="ztl_list_header">{{title}}</span><br>
+						{{short_description}}
+					</a>
+				</div>
+				<div class="ztl_list_info type_{{type}}">
+					{{#map}} 
+						<div class="ztl_map">map</div>
+					{{/map}}
 
-				{{#distance}} 
-					<div class="ztl_distance">{{distance}} km</div>
-				{{/distance}}
-				
-				{{#gps}} 
-					<div class="ztl_gps">gps</div>
-				{{/gps}}
-				
-				{{#sound}} 
-					<div class="ztl_sound">sound</div>
-				{{/sound}}
-				
-				{{#calendar}} 
-					<div class="ztl_calendar">{{calendar}}</div>
-				{{/calendar}}
-				
-				{{#time}} 
-					<div class="ztl_watch">{{time}}</div>
-				{{/time}}
+					{{#distance}} 
+						<div class="ztl_distance">{{distance}} km</div>
+					{{/distance}}
+					
+					{{#gps}} 
+						<div class="ztl_gps">gps</div>
+					{{/gps}}
+					
+					{{#sound}} 
+						<div class="ztl_sound">sound</div>
+					{{/sound}}
+					
+					{{#calendar}} 
+						<div class="ztl_calendar">{{calendar}}</div>
+					{{/calendar}}
+					
+					{{#time}} 
+						<div class="ztl_watch">{{time}}</div>
+					{{/time}}
+				</div>
 			</div>
-		</div>
+		</li>
 	{{/items}}
 	</div>
 	<div data-role="footer" class="footer-docs" data-theme="b" data-position="fixed">
