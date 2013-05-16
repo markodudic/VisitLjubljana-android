@@ -11,6 +11,8 @@ var swipe		  = 0;
 var current		  = 0;
 var local_db	  = 0;
 
+var footer		  = "";
+
 document.addEventListener("deviceready", on_device_ready, false);
 
 function on_device_ready() {
@@ -66,6 +68,10 @@ function swipe_right_handler(event) {
 }
 
 function load_page(template, div, data, transition, reverse) {
+	if (footer == "") {
+		load_footer();
+	}
+
 	$.ajax({
 		type:"GET",
 		url:template_root+template,
@@ -74,12 +80,14 @@ function load_page(template, div, data, transition, reverse) {
 		dataType: 'html',
 		success:function(temp){
 			var res = $(temp).filter('#tpl_'+div).html();
-			
+
 			if (data != null) {
 				var html = Mustache.to_html(res, data);
 			} else {
 				var html = res;
 			}
+
+			html = html.replace('[[[ztl_footer]]]', footer);
 
 			if (swipe == 1) {
 				div = div+"_"+data['id'];
@@ -98,6 +106,18 @@ function load_page(template, div, data, transition, reverse) {
 	});
 }
 
+function load_footer() {
+	$.ajax({
+		type:"GET",
+		url:template_root+template_lang+"ztl_footer.html",
+		cache:false,
+		async:false,
+		dataType: 'html',
+		success:function(temp){
+			footer = $(temp).filter('#tpl_ztl_footer').html();
+		}
+	});
+}
 
 function remove_old_divs(div) {
 	var loaded_divs = $('body').find('.ztl_remove_from_page');
