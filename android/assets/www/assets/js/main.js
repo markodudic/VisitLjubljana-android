@@ -18,6 +18,7 @@ document.addEventListener("deviceready", on_device_ready, false);
 function on_device_ready() {
 	$('body').on( 'swipeleft', swipe_left_handler );
 	$('body').on( 'swiperight', swipe_right_handler );
+	
 	load_settings();
 }
 
@@ -68,6 +69,7 @@ function swipe_right_handler(event) {
 }
 
 function load_page(template, div, data, transition, reverse) {
+	console.clear();
 	if (footer == "") {
 		load_footer();
 	}
@@ -94,11 +96,13 @@ function load_page(template, div, data, transition, reverse) {
 			}
 
 			$('body').append(html).trigger('create');
+			$("#sortable").sortable();
+			$("#sortable").disableSelection();
 			
 			$.mobile.changePage( "#"+div, {
 				transition: transition,
 				reverse: reverse,
-				changeHash: false
+				changeHash: false,
 			});
 			
 			remove_old_divs(div);
