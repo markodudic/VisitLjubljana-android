@@ -69,7 +69,6 @@ function swipe_right_handler(event) {
 }
 
 function load_page(template, div, data, transition, reverse) {
-	console.clear();
 	if (footer == "") {
 		load_footer();
 	}
@@ -96,7 +95,10 @@ function load_page(template, div, data, transition, reverse) {
 			}
 
 			$('body').append(html).trigger('create');
-			$("#sortable").sortable();
+			
+			//$('#sortable').sortable();
+			
+			$('#sortable').sortable();
 			$("#sortable").disableSelection();
 			
 			$.mobile.changePage( "#"+div, {
