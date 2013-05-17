@@ -89,6 +89,7 @@ function readAsText(file) {
 			load_page('select_language.html', 'select_language', null, 'fade', false);
 		} else {
 			console.log('nastavitve pravilne in nalozene');
+			settings = tmp;
 			load_page(template_lang+'main_menu.html', 'main_menu', null, 'fade', false);
 		}
 	};
