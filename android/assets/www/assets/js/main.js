@@ -94,10 +94,8 @@ function load_page(template, div, data, transition, reverse) {
 				div = div+"_"+data['id'];
 			}
 
-			$('body').append(html).trigger('create');
-			
-			//$('#sortable').sortable();
-			
+			$('body').append(html).trigger('create');;
+
 			$('#sortable').sortable();
 			$("#sortable").disableSelection();
 			
@@ -152,5 +150,12 @@ function select_language(id) {
 function load_trips() {
 	$.getScript('./assets/js/trips.js', function () {
         load_trips();
+    });
+}
+
+function edit_settings() {
+	console.log("edit_settings");
+	$.getScript('./assets/js/application_settings.js', function () {
+        load_current_settings();
     });
 }

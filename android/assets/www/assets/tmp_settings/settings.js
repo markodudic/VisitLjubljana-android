@@ -1,1 +1,1 @@
-{ "id_lang":1}
+{ "id_lang":1, "reminder":1}
