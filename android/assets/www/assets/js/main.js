@@ -81,7 +81,7 @@ function load_page(template, div, data, transition, reverse) {
 		dataType: 'html',
 		success:function(temp){
 			var res = $(temp).filter('#tpl_'+div).html();
-
+			
 			if (data != null) {
 				var html = Mustache.to_html(res, data);
 			} else {
