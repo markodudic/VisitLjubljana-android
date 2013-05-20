@@ -1,16 +1,13 @@
 var template_root = 'templates/';
 var template_lang = 'si/';
-
 var active_menu	  = 0;
-
 var settings	  = new Object();
-
+var db 			  = null;
 var db_type	  	  = 1;
 var settings_type = 1;
 var swipe		  = 0;
 var current		  = 0;
 var local_db	  = 0;
-
 var footer		  = "";
 
 document.addEventListener("deviceready", on_device_ready, false);

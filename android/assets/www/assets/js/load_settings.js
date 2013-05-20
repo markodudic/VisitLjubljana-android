@@ -6,7 +6,20 @@ function load_settings() {
 	} else {
 		settings_type = 1;
 		load_desktop();
+		
+		$.getScript('./assets/tmp_settings/db.js', function () {
+			console.log('local storagage loaded');
+			
+			db = window.openDatabase("Database", "1.0", "ztl", 200000);
+			db.transaction(populateDB, errorCB);
+		});
 	}
+}
+
+function errorCB(err) {
+	console.log("err");
+	console.log(err.code);
+	console.log(err);
 }
 
 function load_mobile() {
