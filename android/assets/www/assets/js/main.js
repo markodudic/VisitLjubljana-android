@@ -10,7 +10,9 @@ var current		  = 0;
 var local_db	  = 0;
 var footer		  = "";
 var my_media 	  = null;
+var media_timer   = null;
 
+var file = "uploads/mp3/mp3_test.mp3";
 
 document.addEventListener("deviceready", on_device_ready, false);
 
@@ -104,6 +106,13 @@ function load_page(template, div, data, transition, reverse) {
 				changeHash: false,
 			});
 			
+			
+			//ce so karte inicializiram skripto
+			console.log("div: "+div);
+			if (div == "show_map") {
+				show_map();
+			}
+			
 			remove_old_divs(div);
 		}
 	});
@@ -160,18 +169,33 @@ function edit_settings() {
 }
 
 function play_location_sound() {
-	console.log("play_locastion_sound");
+	console.log("play_location_sound");
 	console.log(my_media);
 	
 	if (my_media != null) {
 		console.log("stop");
 		my_media.stop();
-		my_media = null;
+		my_media.release();
+		
+		my_media 	= null;
+		media_timer = null;
+		
 	} else {
-		var file = "uploads/mp3/mp3_test.mp3";
 		console.log("start");
 		$.getScript('./assets/js/play_media_file.js', function () {
-			play_file(file);
+			
+			load_media_file(file);
 		});
 	}
+}
+
+function load_map() {
+	console.log("load_map");
+	
+	
+	$.getScript('./assets/js/map.js', function () {
+		var c_1 = 0;
+		var c_2 = 0;
+		load_map(c_1, c_2);
+	});
 }
