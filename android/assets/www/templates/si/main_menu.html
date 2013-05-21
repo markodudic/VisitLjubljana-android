@@ -15,15 +15,26 @@
 			<div class="ui-block-b"><button type="button" data-theme="a">ZNAMENITOSTI</button></div>	   
 		</div>
 		<div class="ui-grid-a">
-			<div class="ui-block-a"><button type="button" data-theme="a" onClick="play_location_sound();">ZABAVA</button></div>
-			<div class="ui-block-b"><button type="button" data-theme="a">NAKUPOVANJE</button></div>	   
+			<div class="ui-block-a"><button type="button" data-theme="a" onClick="play_location_sound();">ZABAV - mp3 custom</button></div>
+			<div class="ui-block-b">
+				<a href="http://kbp.vigred.com/blaz/ztl/uploads/mp3/mp3_test.mp3" data-role="button" data-inline="true">NAKUP - mp3 native</a>
+			</div>	   
 		</div>
 		<div class="ui-grid-a">
-			<div class="ui-block-a"><button type="button" data-theme="a">NARAVA / AKTIVNI ODDIH</button></div>
+			<div class="ui-block-a"><button type="button" data-theme="a" onClick="load_map();">NARAVA -- karte</button></div>
 			<div class="ui-block-b"><button type="button" data-theme="a">KULINARIKA</button></div>	   
 		</div>
 		<div class="ui-grid-solo">
 			<div class="ui-block-a"><button type="v" data-theme="a" onClick="edit_settings();">NASTANITVE</button></div>
+		</div>
+		<!--media player test-->
+		<div id="media_player">
+			<br>
+			<input type="range" name="time-slider" id="time-slider" value="0" min="0" max="302" data-highlight="true" />
+			<br><br>
+			<a href="#" title="Play" onClick="play();">Play</a> | 
+			<a href="#" title="Pause" onClick="pause();">Pause</a> | 
+			<a href="#" title="Stop" onClick="stop();">Stop</a> |
 		</div>
 	</div>
 	<div data-role="footer" class="footer-docs" data-theme="b" data-position="fixed">
