@@ -97,15 +97,10 @@ function load_page(template, div, data, transition, reverse) {
 
 			$('body').append(html).trigger('create');;
 
+			/*
 			$('#sortable').sortable();
 			$("#sortable").disableSelection();
-			
-			$.mobile.changePage( "#"+div, {
-				transition: transition,
-				reverse: reverse,
-				changeHash: false,
-			});
-			
+			*/
 			
 			//ce so karte inicializiram skripto
 			console.log("div: "+div);
@@ -113,7 +108,13 @@ function load_page(template, div, data, transition, reverse) {
 				show_map();
 			}
 			
-			remove_old_divs(div);
+			$.mobile.changePage( "#"+div, {
+				transition: transition,
+				reverse: reverse,
+				changeHash: false,
+			});
+			
+			//remove_old_divs(div);
 		}
 	});
 }

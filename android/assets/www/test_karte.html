@@ -1,0 +1,90 @@
+<!DOCTYPE html> 
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<title>Ztl mobile flow SVN</title> 
+	<!--style-->
+	
+
+	<link rel="stylesheet" href="assets/css/jquery.mobile-1.3.1.css" />
+	<link rel="stylesheet" href="assets/css/ztl.css"/>
+	<link rel="stylesheet" href="assets/css/ztl_extend.css"/>
+
+	<!--library js-->
+	<script src="assets/js/cordova-2.5.0.js"></script>
+	<script src="assets/js/jquery-1.9.1.js"></script>
+	<script src="assets/js/jquery.mobile-1.3.1.js"></script>
+	<script src="assets/js/OpenLayers.js"></script>
+	<script src="assets/js/OpenLayers.mobile.js"></script>
+	<script src="assets/js/OpenStreetMap.js"></script>
+	
+	<script type="text/javascript">
+	document.addEventListener("deviceready", init, false);
+// Start position for the map (hardcoded here for simplicity)
+            var lat=46.052327;
+            var lon=14.506416;
+            var zoom=14;
+ 
+        var map; //complex object of type OpenLayers.Map
+ 
+        //Initialise the 'map' object
+        function init() {
+ 
+            map = new OpenLayers.Map ("map", {
+                controls:[
+                    new OpenLayers.Control.Navigation(),
+                    new OpenLayers.Control.PanZoomBar()
+                   ],
+                maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34),
+                maxResolution: 156543.0339,
+                numZoomLevels: 19,
+                units: 'm',
+                projection: new OpenLayers.Projection("EPSG:900913"),
+                displayProjection: new OpenLayers.Projection("EPSG:4326")
+            } );
+ 
+            //layerMapnik = new OpenLayers.Layer.OSM.Mapnik("Mapnik");
+            //layerMapnik.setOpacity(0.4);
+            //map.addLayer(layerMapnik); 
+ 
+            //layerCycleMap = new OpenLayers.Layer.OSM.CycleMap("CycleMap");
+            //layerCycleMap.setOpacity(0.4);
+            //map.addLayer(layerCycleMap);
+ 
+            // This is the layer that uses the locally stored tiles
+            var newLayer = new OpenLayers.Layer.OSM("Local Tiles", "Tiles/${z}/${x}/${y}.png", {numZoomLevels: 19, alpha: true, isBaseLayer: true});
+            map.addLayer(newLayer);
+			// This is the end of the layer
+ 
+ 	            //var switcherControl = new OpenLayers.Control.LayerSwitcher();
+	            //map.addControl(switcherControl);
+	            //switcherControl.maximizeControl();
+ 
+            if( ! map.getCenter() ){
+                var lonLat = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
+                map.setCenter (lonLat, zoom);
+            }
+			
+			console.log(map);
+        }
+		
+		$(document).ready(function() {
+		 init();
+		});
+    </script>
+</head> 
+<body>
+<div data-role="page" id="show_map" data-theme="a" class="ztl_remove_from_page">
+	<div data-role="header" data-position="fixed">
+		<h1><div class="ztl_header">Karta test</div></h1>
+	</div>
+	<div data-role="content" class="ztl_content">
+		<div style="width:100%; height:100%" id="map"></div>
+	</div>
+	<div data-role="footer" class="footer-docs" data-theme="b" data-position="fixed">
+		karta footer
+	</div>
+</div>
+</body>
+</html>
