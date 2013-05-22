@@ -1,3 +1,4 @@
+
 // API key for http://openlayers.org. Please get your own at
 // http://bingmapsportal.com/ and use that instead.
 var apiKey = "AqTGBsziZHIJYYxgivLBf0hVdrAk9mWO5cQcb8Yux8sW5M8c8opEC2lZqKR1ZZXf";
@@ -13,7 +14,7 @@ var init = function (onSelectFeatureFunction) {
 
     var sprintersLayer = new OpenLayers.Layer.Vector("Sprinters", {
         styleMap: new OpenLayers.StyleMap({
-            externalGraphic: "img/mobile-loc.png",
+            externalGraphic: "assets/map/images/marker-blue.png",
             graphicOpacity: 1.0,
             graphicWidth: 16,
             graphicHeight: 26,
@@ -156,7 +157,9 @@ var init = function (onSelectFeatureFunction) {
                 { "type": "Feature", "geometry": {"type": "Point", "coordinates": [1717430.147101, 5954568.7127565]},
                     "properties": {"Name": "Andreas Hocevar", "Country":"Austria", "City":"Graz"}},
                 { "type": "Feature", "geometry": {"type": "Point", "coordinates": [-12362007.067301,5729082.2365672]},
-                    "properties": {"Name": "Tim Schaub", "Country":"United States of America", "City":"Bozeman"}}
+                    "properties": {"Name": "Tim Schaub", "Country":"United States of America", "City":"Bozeman"}},
+				{ "type": "Feature", "geometry": {"type": "Point", "coordinates": [46.055692, 14.507489]},
+                    "properties": {"Name": "Central Hotel Ljubljana", "Country":"Slovenia", "City":"Ljubljana"}}
             ]
         };
 
