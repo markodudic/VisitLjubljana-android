@@ -189,14 +189,3 @@ function play_location_sound() {
 		});
 	}
 }
-
-function load_map() {
-	console.log("load_map");
-	
-	
-	$.getScript('./assets/js/map.js', function () {
-		var c_1 = 0;
-		var c_2 = 0;
-		load_map(c_1, c_2);
-	});
-}
