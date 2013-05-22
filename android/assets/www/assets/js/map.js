@@ -12,7 +12,7 @@ function load_map(c_1, c_2) {
 function show_map() {
 	console.log(lon);
 
-	map = new OpenLayers.Map ("map", {
+	map = new OpenLayers.Map ("ztl_map", {
 		controls:[
 			new OpenLayers.Control.Navigation(),
 			new OpenLayers.Control.PanZoomBar(),
@@ -50,4 +50,6 @@ function show_map() {
 		var lonLat = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
 		map.setCenter (lonLat, zoom);
 	}
+	
+	console.log(map);
 }
