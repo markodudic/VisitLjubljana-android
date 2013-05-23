@@ -28,6 +28,12 @@
 	width:100%;
 }
 
+.grey_line {
+	background-color:#555555; 
+	height:4px; 
+	width:100%;
+}
+
 .header_title {
 	float:left;
 	padding:7px 0px 0px 25px;
@@ -161,9 +167,32 @@
 	background-color:#000000;
 	opacity:0.5;
 }
+
 .ztl_item_title_text {
 	padding:6px 0px 0px 93px;
 	position:absolute;
 	height:30px;
 	width:100%;
+}
+
+.ztl_item_details {
+	color:#555555;
+	position:relative;
+	font-weight:bold;
+	margin: 20px 0px 0px 0px;
+	padding:0px 18px 0px 20px;
+}
+
+.ztl_item_distance{
+	font-size:18px;
+	color:#ffffff;
+	font-weight:bold;
+	position: absolute; 
+	bottom: 0; 
+	right: 0;
+	padding:0px 15px 15px 0px;
+}
+
+.ztl_item_details_title{
+	font-size:18px;
 }
