@@ -12,6 +12,8 @@
 
 .ztl_list_li {
 	list-style-type: none;
+	padding:0;
+	margin:0;
 }
 
 .red_line {
@@ -54,39 +56,29 @@
 	background-repeat:repeat-x;
 	width:100%;
 	height:11px;
-	opacity:0.1;
 }
 
 .ztl_content {
 	width:100%;
-	padding:0; 
-	margin:0;
+	margin:0; 
+	padding:85px 0px 70px 0px;
 }
 
 .ztl_list_item {
 	width:100%;
+	height:100%;
+	padding:0;
+	margin:0;
+	position:relative;
 }
 
 .ztl_list_image {
 	width:35%;
 	float:left;
-	
 }
-
-.img_crop {
-	width:480px;
-	overflow:hidden;
-    position:relative;
-}
-
-.img_crop img {width: 35%; 
-	margin: -50 0 0 -50; 
-}
-
-
 
 .ztl_list_content {
-	width:64%;
+	width:63%;
 	float:right;
 }
 
@@ -95,10 +87,83 @@
 	font-weight:bold;
 	font-size:16px;
 	padding:15px 0px 0px 0px;
+	width:100%;
 }
 
 .ztl_list_content_text{
 	color:#999999;
 	font-size:14px;
-	padding:15px 0px 0px 0px;
+	padding:10px 0px 0px 0px;
+	width:100%;
+}
+
+.ztl_distance{
+	font-size:14px;
+	color:#ffffff;
+	font-weight:bold;
+	position: absolute; 
+	bottom: 0; 
+	right: 0;
+	padding:0px 15px 15px 0px;
+}
+
+.ztl_star{
+	font-size:14px;
+	color:#ffffff;
+	font-weight:bold;
+	position: absolute; 
+	bottom: 0; 
+	left: 0;
+	padding:0px 0px 15px 37%;
+}
+
+.ztl_item_buttons {
+	position:relative;
+	margin: 90px 0px 0px 0px;
+}
+
+.ztl_item_myvisit_button{
+	background-image:url('ztl_images/button_red.png');
+	background-repeat:repeat-x;
+	width:45%;
+	height:48px;
+	font-size:18px;
+	color:#ffffff;
+	font-weight:bold;
+	position: absolute; 
+	bottom: 0; 
+	right: 0;
+	margin:0px 15px 15px 0px;
+	padding-top:15px;
+	text-align:center;
+}
+
+.ztl_item_map_button{
+	background-image:url('ztl_images/button_red.png');
+	background-repeat:repeat-x;
+	width:45%;
+	height:48px;
+	font-size:18px;
+	color:#ffffff;
+	font-weight:bold;
+	position: absolute; 
+	bottom: 0; 
+	left: 0;
+	margin:0px 0px 15px 15px;
+	padding-top:15px;
+	text-align:center;
+}
+
+.ztl_item_shadow {
+	position:absolute;
+	height:30px;
+	width:100%;
+	background-color:#000000;
+	opacity:0.5;
+}
+.ztl_item_title_text {
+	padding:6px 0px 0px 93px;
+	position:absolute;
+	height:30px;
+	width:100%;
 }

@@ -1,40 +1,32 @@
 <script id="tpl_div_trip" type="text/html">
 <div data-role="page" id="div_trip_{{id}}" data-theme="a" class="ztl_remove_from_page">
 	<div data-role="header">
-		<h1><div class="ztl_header">{{title}}</div></h1>
+		<div data-role="header" data-position="fixed">
+			<div class="red_line"></div><br>
+			<div class="header_back"></div>
+			<div class="header_title">{{title}}</div>
+			<div class="header_dots"></div>
+			<div style="clear:both;"></div>
+			<div class="header_shadow"></div>
+	</div>
 	</div>
 	<div data-role="content" class="ztl_content">
 		<div class="ztl_navigate_events">
-			<div class="ztl_navigate_events_left"><</div>
-			<div class="ztl_navigate_events_right">></div>
-			<img class="ztl_content_image" src="./uploads/images/{{content_image}}" style="width:100%;">
+			<div class="ztl_item_shadow"></div>
+			<div class="ztl_item_title_text">
+				<img src="assets/css/ztl_images/star.png">
+				<img src="assets/css/ztl_images/star.png">
+				<img src="assets/css/ztl_images/star.png">
+			</div>
+			<div class="ztl_item_details_image">
+				<img class="ztl_content_image" src="./uploads/images/{{content_image}}" style="width:100%;">
+			</div>
+			<div style="clear:both;"></div>
+			<div class="ztl_item_buttons">
+				<div class="ztl_item_map_button">ZEMLJEVID</div>
+				<div class="ztl_item_myvisit_button">MYVISIT</div>
+			</div>
 		</div>
-		<div class="ztl_datails_info">
-			{{#map}} 
-				<div class="ztl_map">map</div>
-			{{/map}}
-
-			{{#distance}} 
-				<div class="ztl_distance">{{distance}} km</div>
-			{{/distance}}
-			
-			{{#gps}} 
-				<div class="ztl_gps">gps</div>
-			{{/gps}}
-			
-			{{#sound}} 
-				<div class="ztl_sound">sound</div>
-			{{/sound}}
-			
-			{{#calendar}} 
-				<div class="ztl_calendar">{{calendar}}</div>
-			{{/calendar}}
-			
-			{{#time}} 
-				<div class="ztl_watch">{{time}}</div>
-			{{/time}}
-		</div>
-		<div class="ztl_details_content">{{content}}</div>
 	</div>
 	<div data-role="footer" class="footer-docs" data-theme="b" data-position="fixed">
 		[[[ztl_footer]]]
