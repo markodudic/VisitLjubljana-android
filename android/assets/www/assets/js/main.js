@@ -12,7 +12,8 @@ var footer		  = "";
 var my_media 	  = null;
 var media_timer   = null;
 
-var file = "uploads/mp3/mp3_test.mp3";
+var file = "/android_asset/www/uploads/mp3/mp3_test.mp3";
+//var file = "http://kbp.vigred.com/blaz/ztl/uploads/mp3/mp3_test.mp3";
 
 document.addEventListener("deviceready", on_device_ready, false);
 
@@ -171,7 +172,7 @@ function edit_settings() {
 
 function play_location_sound() {
 	console.log("play_location_sound");
-	console.log(my_media);
+	console.log("my media "+my_media);
 	
 	if (my_media != null) {
 		console.log("stop");

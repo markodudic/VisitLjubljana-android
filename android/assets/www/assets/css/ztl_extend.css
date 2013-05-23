@@ -160,3 +160,8 @@
 }
 
 #sortable { list-style-type: none; margin: 0; padding: 0; width: 100%; }
+
+.ui-mobile .ui-page .ui-slider-input,
+.ui-mobile .ui-dialog .ui-slider-input {
+    display : none;
+}
