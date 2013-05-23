@@ -26,3 +26,7 @@ function remove_trip_from_list(id) {
 	console.log('tu prozim se funkcijo, ki ga zbrise iz local storage');
 	$('#ztl_trips_item_'+id).remove();
 }
+
+function load_trip_map() {
+	console.log("load_trip_map");
+}
