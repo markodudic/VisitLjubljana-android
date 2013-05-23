@@ -1,0 +1,95 @@
+<html>
+<head>
+    <title>OSM Local Tiles</title>
+    <link rel="stylesheet" href="assets/css/style.css" type="text/css" />
+    <!-- bring in the OpenLayers javascript library
+         (here we bring it from the remote site, but you could
+         easily serve up this javascript yourself) -->
+    <script src="assets/js/OpenLayers.js"></script>
+ 
+    <!-- bring in the OpenStreetMap OpenLayers layers.
+         Using this hosted file will make sure we are kept up
+         to date with any necessary changes -->
+    <script src="assets/js/OpenStreetMap.js"></script>
+    
+    <script src="assets/js/proj4js-combined.js"></script> 
+ 
+    <script type="text/javascript">
+// Start position for the map (hardcoded here for simplicity)
+        var lon=14.502659555300653;
+        var lat=46.05274563698125;
+        var x=461514.86;
+        var y=101558.77;
+        var zoom=13;
+ 
+        var map; //complex object of type OpenLayers.Map
+ 
+        //Initialise the 'map' object
+        function init() {
+ 
+            map = new OpenLayers.Map ("map", {
+                controls:[
+                    new OpenLayers.Control.Navigation(),
+                    new OpenLayers.Control.PanZoomBar(),
+                    //new OpenLayers.Control.Permalink(),
+                    //new OpenLayers.Control.ScaleLine({geodesic: true}),
+                    //new OpenLayers.Control.Permalink('permalink'),
+                    new OpenLayers.Control.MousePosition(),                    
+                    //new OpenLayers.Control.Attribution()
+                    ],
+                maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34),
+                //maxExtent: new OpenLayers.Bounds(14.415974525557411,46.00122022512717,14.589344585043893,46.104271048835329),
+                //maxExtent: new OpenLayers.Bounds(454765.00,95877.78,468252.27,107247.12),
+                //maxExtent: new OpenLayers.Bounds(95877.78,454765.00,107247.12,468252.27),
+                maxResolution: 156543.0339,
+                numZoomLevels: 5,
+                //units: 'degrees',
+                projection: new OpenLayers.Projection("EPSG:900913"),
+                displayProjection: new OpenLayers.Projection("EPSG:4326")
+            } );
+            /*layerMapnik = new OpenLayers.Layer.OSM.Mapnik("Mapnik");
+            layerMapnik.setOpacity(0.4);
+            map.addLayer(layerMapnik); 
+ 
+            layerCycleMap = new OpenLayers.Layer.OSM.CycleMap("CycleMap");
+            layerCycleMap.setOpacity(0.4);
+            map.addLayer(layerCycleMap);
+ */
+            // This is the layer that uses the locally stored tiles
+            var newLayer = new OpenLayers.Layer.OSM("Local Tiles", "Tiles/${z}/${x}/${y}.png", {numZoomLevels: 19, alpha: true, isBaseLayer: true});
+            map.addLayer(newLayer);
+			// This is the end of the layer
+ 
+ 	            /*var switcherControl = new OpenLayers.Control.LayerSwitcher();
+	            map.addControl(switcherControl);
+	            switcherControl.maximizeControl();*/
+ 
+            if( ! map.getCenter() ){
+            	alert(map.getProjectionObject());
+            	//var lonLat = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
+            	var lonLat = new OpenLayers.LonLat(x, y).transform(new OpenLayers.Projection("EPSG:2170"), map.getProjectionObject());
+            	alert(lonLat);
+            	map.setCenter (lonLat, zoom);
+            }
+	            
+	        //proj4js
+            var source = new Proj4js.Proj('EPSG:2170');
+            var dest = new Proj4js.Proj('EPSG:900913');
+            var p = new Proj4js.Point(x, y);
+            Proj4js.transform(source, dest, p);
+            
+            alert(p.x+"-"+p.y);
+        }
+ 
+    </script>
+</head>
+ 
+<!-- body.onload is called once the page is loaded (call the 'init' function) -->
+<body onload="init();">
+ 
+    <!-- define a DIV into which the map will appear. Make it take up the whole window -->
+    <div style="width:100%; height:100%" id="map"></div>
+ 
+</body>
+ 
+</html>
