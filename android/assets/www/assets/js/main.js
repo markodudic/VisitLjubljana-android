@@ -124,6 +124,10 @@ function load_page(template, div, data, transition, reverse) {
 			$('.img_crop').attr('height', img_height+'px');
 			$('.img_crop').attr('width', img_width+'px');
 			
+			$('.ztl_items_image').attr('height', (img_height*1.1)+'px');
+			$('.ztl_items_image').attr('width', (img_width*1.1)+'px');
+	
+			
 			console.log(window_width);
 			console.log(img_height);
 			console.log(img_width);
