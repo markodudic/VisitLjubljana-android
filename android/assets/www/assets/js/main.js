@@ -12,8 +12,8 @@ var footer		  = "";
 var my_media 	  = null;
 var media_timer   = null;
 
-var file = "/android_asset/www/uploads/mp3/mp3_test.mp3";
-//var file = "http://kbp.vigred.com/blaz/ztl/uploads/mp3/mp3_test.mp3";
+//var file = "/android_asset/www/uploads/mp3/mp3_test.mp3";
+var file = "uploads/mp3/mp3_test.mp3";
 
 document.addEventListener("deviceready", on_device_ready, false);
 

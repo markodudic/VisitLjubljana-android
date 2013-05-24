@@ -214,7 +214,7 @@ a.ui-link-inherit {
 .ui-icon-searchfield:after {
 	background-color: #000000 /*{global-icon-color}*/;
 	background-color: transparent /*{global-icon-disc}*/;
-	background-image: url(images/icons-18-white.png) /*{global-icon-set}*/;
+	background-image: url(images/icons-18-black.png) /*{global-icon-set}*/;
 	background-repeat: no-repeat;
 	-webkit-border-radius: 				9px;
 	border-radius: 						9px;

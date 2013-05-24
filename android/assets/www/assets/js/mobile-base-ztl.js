@@ -8,7 +8,7 @@ var map;
 
 var lat=46.052327;
 var lon=14.506416;
-var zoom=13;
+var zoom=14;
 
 var init = function (onSelectFeatureFunction) {
 

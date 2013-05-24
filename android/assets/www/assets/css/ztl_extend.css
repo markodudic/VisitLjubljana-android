@@ -142,6 +142,7 @@
 	margin:0px 15px 15px 0px;
 	padding-top:15px;
 	text-align:center;
+	text-decoration:none;
 }
 
 .ztl_item_map_button{
@@ -158,6 +159,7 @@
 	margin:0px 0px 15px 15px;
 	padding-top:15px;
 	text-align:center;
+	text-decoration:none;
 }
 
 .ztl_item_shadow {
@@ -195,4 +197,8 @@
 
 .ztl_item_details_title{
 	font-size:18px;
+}
+
+#media_player {
+	text-align:center;
 }
