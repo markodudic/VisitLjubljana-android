@@ -36,7 +36,8 @@
 
 .header_title {
 	float:left;
-	padding:0px 0px 0px 25px;
+	padding:0px 0px 2px 25px;
+	font-size:20px;
 }
 
 .header_back {
@@ -119,8 +120,8 @@
 
 .ztl_list_header{
 	color:#ffffff;
-	font-family: 'robotobold_condensed';
-	font-size:16px;
+	font-family: 'robotocondensed';
+	font-size:20px;
 	padding:10px 0px 0px 0px;
 	width:100%;
 }
@@ -128,28 +129,28 @@
 .ztl_list_content_text{
 	color:#999999;
 	font-size:14px;
-	padding:10px 0px 0px 0px;
+	padding:5px 0px 0px 0px;
 	width:100%;
 }
 
 .ztl_distance{
-	font-size:14px;
+	font-size:16px;
 	color:#ffffff;
-	 font-family: 'robotobold_condensed';
+	 font-family: 'robotocondensed';
 	position: absolute; 
 	bottom: 0; 
 	right: 0;
-	padding:0px 15px 10px 0px;
+	padding:0px 15px 5px 0px;
 }
 
 .ztl_star{
 	font-size:14px;
 	color:#ffffff;
-	font-family: 'robotobold_condensed';
+	font-family: 'robotocondensed';
 	position: absolute; 
 	bottom: 0; 
 	left: 0;
-	padding:0px 0px 10px 37%;
+	padding:0px 0px 5px 37%;
 }
 
 .ztl_item_buttons {
@@ -164,7 +165,7 @@
 	height:36px;
 	font-size:18px;
 	color:#ffffff;
-	font-family: 'robotobold_condensed';
+	font-family: 'robotoboldcondensed';
 	position: absolute; 
 	bottom: 0; 
 	right: 0;
@@ -181,7 +182,7 @@
 	height:36px;
 	font-size:18px;
 	color:#ffffff;
-	font-family: 'robotobold_condensed';
+	font-family: 'robotoboldcondensed';
 	position: absolute; 
 	bottom: 0; 
 	left: 0;
@@ -216,7 +217,7 @@
 .ztl_item_distance{
 	font-size:18px;
 	color:#ffffff;
-	font-family: 'robotobold_condensed';
+	font-family: 'robotocondensed';
 	position: absolute; 
 	bottom: 0; 
 	right: 0;
@@ -232,4 +233,3 @@
 }
 
 .img_crop { width: 126px; height: 104px; overflow: hidden; }
-.img_crop img { width: 800px; height: 533px; margin: -300px 0 0 -100px; }

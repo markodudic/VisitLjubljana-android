@@ -1,0 +1,36 @@
+SEZNAM:
+2. zgornji meni je predebel.
+3. slika ni enake velikosti. Slike morajo biti kropane, razmerja višina/širina se ne sme podreti.
+4. spodnji meni previsok
+6. manjka senca spodnjega menija
+7. seznam ne sme biti loèen od zgornjega menija
+8. med elementi v seznamu je samo en pixel razmaka
+9. fonti povsod napaèni
+
+DETAJL:
+2. zgonji meni je predebel.
+4. slika ni enake velikosti
+5. gumbi preveliki. Napis zemljevid ima èrto spodaj.
+6. spodnji meni previsok
+7. manjka senca spodnjega menija
+9. pri scrollu se prikazuje neka vsebina med spodnjim menijem in koncem zaslona. najbrz meni ni pozicioniran cit do konca zaslona
+10. fonti povsod napaèni
+
+
+ZEMLJEVID
+
+1. manjka zgornji meni
+2. manjka spodnji meni
+3. manjkajo zoom gumbi
+4. zbrisati nastavitev control
+        new OpenLayers.Control.Permalink(),
+	new OpenLayers.Control.ScaleLine({geodesic: true}),
+	new OpenLayers.Control.Permalink('permalink'),
+	new OpenLayers.Control.MousePosition(),                    
+	new OpenLayers.Control.Attribution()
+
+
+SPLOŠNO
+
+- prikaz seznama POI-jev èe klikneš na gumb vsebina v glavnem meniju
+- na emulatorju na verziji SDK 10, se zgornji in spodnji div scrollata skupaj z vsebino
