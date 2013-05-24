@@ -119,7 +119,7 @@
 
 .ztl_list_header{
 	color:#ffffff;
-	font-family: 'robotobold';
+	font-family: 'robotobold_condensed';
 	font-size:16px;
 	padding:10px 0px 0px 0px;
 	width:100%;
@@ -135,7 +135,7 @@
 .ztl_distance{
 	font-size:14px;
 	color:#ffffff;
-	 font-family: 'robotobold';
+	 font-family: 'robotobold_condensed';
 	position: absolute; 
 	bottom: 0; 
 	right: 0;
@@ -145,7 +145,7 @@
 .ztl_star{
 	font-size:14px;
 	color:#ffffff;
-	font-family: 'robotobold';
+	font-family: 'robotobold_condensed';
 	position: absolute; 
 	bottom: 0; 
 	left: 0;
@@ -154,39 +154,39 @@
 
 .ztl_item_buttons {
 	position:relative;
-	margin: 90px 0px 0px 0px;
+	margin: 50px 0px 0px 0px;
 }
 
 .ztl_item_myvisit_button{
-	background-image:url('ztl_images/button_red.png');
+	background-image:url('ztl_images/button_red_1.png');
 	background-repeat:repeat-x;
 	width:45%;
-	height:48px;
+	height:36px;
 	font-size:18px;
 	color:#ffffff;
-	font-family: 'robotobold';
+	font-family: 'robotobold_condensed';
 	position: absolute; 
 	bottom: 0; 
 	right: 0;
-	margin:0px 15px 15px 0px;
-	padding-top:12px;
+	padding-top:7px;
+	margin:0px 15px 0px 0px;
 	text-align:center;
 	text-decoration:none;
 }
 
 .ztl_item_map_button{
-	background-image:url('ztl_images/button_red.png');
+	background-image:url('ztl_images/button_red_1.png');
 	background-repeat:repeat-x;
 	width:45%;
-	height:48px;
+	height:36px;
 	font-size:18px;
 	color:#ffffff;
-	font-family: 'robotobold';
+	font-family: 'robotobold_condensed';
 	position: absolute; 
 	bottom: 0; 
 	left: 0;
-	margin:0px 0px 15px 15px;
-	padding-top:12px;
+	padding-top:7px;
+	margin:0px 0px 0px 15px;
 	text-align:center;
 	text-decoration:none;
 }
@@ -200,7 +200,7 @@
 }
 
 .ztl_item_title_text {
-	padding:6px 0px 0px 93px;
+	padding:6px 0px 0px 80px;
 	position:absolute;
 	height:30px;
 	width:100%;
@@ -209,7 +209,6 @@
 .ztl_item_details {
 	color:#555555;
 	position:relative;
-	font-family: 'robotobold';
 	margin: 20px 0px 0px 0px;
 	padding:0px 18px 0px 20px;
 }
@@ -217,7 +216,7 @@
 .ztl_item_distance{
 	font-size:18px;
 	color:#ffffff;
-	font-family: 'robotobold';
+	font-family: 'robotobold_condensed';
 	position: absolute; 
 	bottom: 0; 
 	right: 0;
