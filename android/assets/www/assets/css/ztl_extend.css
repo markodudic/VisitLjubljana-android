@@ -14,8 +14,6 @@
 	list-style-type: none;
 	padding:0;
 	margin:0;
-	/*samo zacasno za 24.5.*/
-	height:130px;
 }
 
 .red_line {
@@ -38,9 +36,23 @@
 
 .header_title {
 	float:left;
-	padding:5px 0px 0px 25px;
+	padding:0px 0px 0px 25px;
 }
 
+.header_back {
+	float:left;
+	background-image:url('ztl_images/back_arrow_2.png');
+	background-repeat:no-repeat;
+	height:25px;
+	width:33px;
+	margin:0px 0px 0px 25px;
+}
+
+.header_space {
+	height:10px;
+}
+
+/*
 .header_back {
 	float:left;
 	background-image:url('ztl_images/back_arrow_1.png');
@@ -49,27 +61,42 @@
 	width:43px;
 	margin:0px 0px 0px 25px;
 }
+*/
 
+
+.header_dots {
+	float:right;
+	background-image:url('ztl_images/dots_1.png');
+	background-repeat:no-repeat;
+	height:22px;
+	width:6px;
+	padding:0px 25px 0px 0px;
+}
+ /*
 .header_dots {
 	float:right;
 	background-image:url('ztl_images/dots.png');
 	background-repeat:no-repeat;
 	height:28px;
 	width:8px;
-	padding:10px 25px 10px 0px;
+	padding:0px 25px 0px 0px;
 }
+*/
 
 .header_shadow {
+	/*
 	background-image:url('ztl_images/shadow.png');
 	background-repeat:repeat-x;
 	width:100%;
 	height:11px;
+	*/
 }
 
 .ztl_content {
 	width:100%;
 	margin:0; 
-	padding:85px 0px 70px 0px;
+	/*padding:85px 0px 70px 0px;*/
+	padding:50px 0px 70px 0px;
 }
 
 .ztl_list_item {
@@ -94,7 +121,7 @@
 	color:#ffffff;
 	font-family: 'robotobold';
 	font-size:16px;
-	padding:15px 0px 0px 0px;
+	padding:10px 0px 0px 0px;
 	width:100%;
 }
 
@@ -204,3 +231,6 @@
 #media_player {
 	text-align:center;
 }
+
+.img_crop { width: 126px; height: 104px; overflow: hidden; }
+.img_crop img { width: 800px; height: 533px; margin: -300px 0 0 -100px; }
