@@ -12,6 +12,11 @@ var footer		  = "";
 var my_media 	  = null;
 var media_timer   = null;
 
+var window_width = $(window).width();
+
+var img_width   = window_width*0.35;
+var img_height  = ((window_width*14)/17)*0.35;
+
 var file = "/android_asset/www/uploads/mp3/mp3_test.mp3";
 //var file = "uploads/mp3/mp3_test.mp3";
 
@@ -22,6 +27,7 @@ function on_device_ready() {
 	$('body').on( 'swiperight', swipe_right_handler );
 	
 	load_settings();
+	console.log(img_height);
 }
 
 function swipe_left_handler(event) {
@@ -115,11 +121,12 @@ function load_page(template, div, data, transition, reverse) {
 				changeHash: false,
 			});
 			
-			console.log($('.img_crop').width());
-			console.log($('.img_crop').height());
+			$('.img_crop').attr('height', img_height+'px');
+			$('.img_crop').attr('width', img_width+'px');
 			
-			console.log($('.ztl_list_li').width());
-			console.log($('.ztl_list_li').height());
+			console.log(window_width);
+			console.log(img_height);
+			console.log(img_width);
 			
 			//remove_old_divs(div);
 		}

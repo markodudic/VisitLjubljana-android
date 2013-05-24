@@ -1,11 +1,13 @@
 <script id="tpl_trips" type="text/html">
 <div data-role="page" id="trips" data-theme="a" class="ztl_remove_from_page">
 	<div data-role="header" data-position="fixed">
-			<div class="red_line"></div><br>
+			<div class="red_line"></div>
+			<div class="header_space"></div>
 			<div class="header_back"></div>
 			<div class="header_title">NASTANITVE</div>
 			<div class="header_dots"></div>
 			<div style="clear:both;"></div>
+			<div class="header_space"></div>
 			<div class="header_shadow"></div>
 	</div>
 	<div data-role="content" data-theme="a" class="ztl_content">
@@ -15,7 +17,7 @@
 				<div class="ztl_list_image">
 					<div class="img_crop">
 						<a href="#" onClick="load_trip_content({{id}}, 'fade', true)" style="text-decoration:none; color:#000000; font-weight:normal;">
-							<img class="ztl_items_image" src="./uploads/images/{{content_image}}" style="width:100%; height:125px;">
+							<img class="ztl_items_image" src="./uploads/images/{{content_image}}">
 						</a>
 					</div>
 				</div>
