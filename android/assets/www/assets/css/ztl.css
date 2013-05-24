@@ -35,6 +35,28 @@
 
 }
 
+@font-face {
+    font-family: 'robotobold_condensed';
+    src: url('fonts/roboto-boldcondensed-webfont.eot');
+    src: url('fonts/roboto-boldcondensed-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/roboto-boldcondensed-webfont.woff') format('woff'),
+         url('fonts/roboto-boldcondensed-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'robotocondensed';
+    src: url('fonts/roboto-condensed-webfont.eot');
+    src: url('fonts/roboto-condensed-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/roboto-condensed-webfont.woff') format('woff'),
+         url('fonts/roboto-condensed-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
 .ui-bar-a {
 	border: 1px solid #222222 /*{a-bar-border}*/;
 	background: #222222 /*{a-bar-background-color}*/;
@@ -69,7 +91,7 @@
 .ui-bar-a select,
 .ui-bar-a textarea,
 .ui-bar-a button {
-	 font-family: robotoregular, Helvetica, Arial, sans-serif /*{global-font-family}*/;
+	 font-family: robotocondensed, robotoregular, Helvetica, Arial, sans-serif /*{global-font-family}*/;
 }
 .ui-body-a,
 .ui-overlay-a {
