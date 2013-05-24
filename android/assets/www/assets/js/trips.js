@@ -27,6 +27,6 @@ function remove_trip_from_list(id) {
 	$('#ztl_trips_item_'+id).remove();
 }
 
-function load_trip_map() {
-	console.log("load_trip_map");
+function play_sound() {
+	console.log('play_sound');
 }

@@ -1,0 +1,41 @@
+<!DOCTYPE html> 
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<title>Ztl mobile flow SVN</title> 
+	<!--style-->
+	<!--style-->
+	
+	<link rel="stylesheet" href="assets/css/jquery.mobile-1.3.1.css" />
+	<link rel="stylesheet" href="assets/css/ztl.css"/>
+	<link rel="stylesheet" href="assets/css/ztl_extend.css"/>
+	
+	<!--library js-->
+	<script src="assets/js/cordova-2.5.0.js"></script>
+	<script src="assets/js/jquery-1.9.1.js"></script>
+	<script src="assets/js/jquery.mobile-1.3.1.js"></script>
+	
+	<link rel="stylesheet" href="assets/css/style.mobile.css"/>
+	<link rel="stylesheet" href="assets/css/style.mobile-jq.css"/>
+	
+	<script src="assets/js/OpenLayers.mobile.js"></script>
+	<script src="assets/js/mobile-base-ztl.js"></script>
+	<script src="assets/js/mobile-jq.js"></script>
+</head> 
+<body>
+	<div data-role="page" id="mappage">
+		<div data-role="header" data-theme="d">
+			<h1>Play Media</h1>
+		</div>
+		<div data-role="content">
+			<div id="media_player">
+				<input type="range" name="time-slider" id="time-slider" value="0" min="0" max="189" data-highlight="true" />
+				
+				<a href="#" data-role="button" data-icon="arrow-r" data-iconpos="notext" data-theme="c" data-inline="true" onClick="play();">Play</a>
+				<a href="#" data-role="button" data-icon="grid" data-iconpos="notext" data-theme="c" data-inline="true" onClick="pause();">Pause</a>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
