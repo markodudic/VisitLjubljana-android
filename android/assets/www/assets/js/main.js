@@ -12,8 +12,8 @@ var footer		  = "";
 var my_media 	  = null;
 var media_timer   = null;
 
-//var file = "/android_asset/www/uploads/mp3/mp3_test.mp3";
-var file = "uploads/mp3/mp3_test.mp3";
+var file = "/android_asset/www/uploads/mp3/mp3_test.mp3";
+//var file = "uploads/mp3/mp3_test.mp3";
 
 document.addEventListener("deviceready", on_device_ready, false);
 
@@ -114,6 +114,12 @@ function load_page(template, div, data, transition, reverse) {
 				reverse: reverse,
 				changeHash: false,
 			});
+			
+			console.log($('.img_crop').width());
+			console.log($('.img_crop').height());
+			
+			console.log($('.ztl_list_li').width());
+			console.log($('.ztl_list_li').height());
 			
 			//remove_old_divs(div);
 		}
