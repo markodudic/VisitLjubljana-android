@@ -1,8 +1,17 @@
 <script id="tpl_main_menu" type="text/html">
 <div data-role="page" id="main_menu" data-theme="a" class="ztl_remove_from_page">
 	<div data-role="header">
-		<h1>Vsebina</h1>
-	</div>
+		<div class="header_placeholder">
+			<div class="red_line"></div>
+				<div class="header_space"></div>
+				<div class="header_back"></div>
+				<div class="header_title">Vsebina</div>
+				<div class="header_dots"></div>
+				<div style="clear:both;"></div>
+				<div class="header_space"></div>
+			</div>
+			<div class="header_shadow"></div>
+		</div>
 	<div data-role="content" data-theme="a">	
 		<div class="ui-grid-solo">
 			<div class="ui-block-a"><button type="v" data-theme="a" onClick="load_trips();">PREDLOGI IZLETOV</button></div>
@@ -37,8 +46,11 @@
 		</div>
 		
 	</div>
-	<div data-role="footer" class="footer-docs" data-theme="b" data-position="fixed">
-		[[[ztl_footer]]]
+	<div data-role="footer" class="footer-docs" data-theme="a" data-position="fixed">
+		<div class="footer_shadow"></div>
+		<div class="header_placeholder">
+			[[[ztl_footer]]]
+		</div>
 	</div>
 </div>
 </script>

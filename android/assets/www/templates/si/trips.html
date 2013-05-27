@@ -1,21 +1,25 @@
 <script id="tpl_trips" type="text/html">
 <div data-role="page" id="trips" data-theme="a" class="ztl_remove_from_page">
 	<div data-role="header" data-position="fixed">
-			<div class="red_line"></div>
-			<div class="header_space"></div>
-			<div class="header_back"></div>
-			<div class="header_title">NASTANITVE</div>
-			<div class="header_dots"></div>
-			<div style="clear:both;"></div>
-			<div class="header_space"></div>
+			<div class="header_placeholder">
+				<div class="red_line"></div>
+				<div class="header_space"></div>
+				<div class="header_back"></div>
+				<div class="header_title">NASTANITVE</div>
+				<div class="header_dots"></div>
+				<div style="clear:both;"></div>
+				<div class="header_space"></div>
+			</div>
 			<div class="header_shadow"></div>
 	</div>
+	
 	<div data-role="content" data-theme="a" class="ztl_content">
+	
 	{{#items}}
 		<li class="ztl_list_li">
 			<div class="ztl_list_item" id="ztl_trips_item_{{id}}">
 				<div class="ztl_list_image">
-					<div class="img_crop">
+					<div class="ztl_list_img_crop">
 						<a href="#" onClick="load_trip_content({{id}}, 'fade', true)" style="text-decoration:none; color:#000000; font-weight:normal;">
 							<img class="ztl_items_image" src="./uploads/images/{{content_image}}">
 						</a>
@@ -42,8 +46,11 @@
 		</li>
 	{{/items}}
 	</div>
-	<div data-role="footer" class="footer-docs" data-theme="b" data-position="fixed">
-		[[[ztl_footer]]]
+	<div data-role="footer" class="footer-docs" data-theme="a" data-position="fixed">
+		<div class="footer_shadow"></div>
+		<div class="header_placeholder">
+			[[[ztl_footer]]]
+		</div>
 	</div>
 </div>
 </script>

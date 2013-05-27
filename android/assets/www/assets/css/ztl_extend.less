@@ -1,0 +1,43 @@
+@window_width:unit(`$(window).width()`, px);
+@window_height:unit(`$(window).height()`, px);
+
+/*
+@window_width:unit(`$(document).width()`, px);
+@window_height:unit(`$(document).height()`, px);
+*/
+
+.ztl_list_img_crop { 
+  width: @window_width * 0.35;
+  height: @window_width * 0.35 * 14 / 17;
+  overflow: hidden;
+}
+
+.ztl_items_image {
+	width: @window_width * 0.35 * 1.1;
+	height: @window_width * 0.35 * 14 / 17 * 1.1;
+}
+
+.ztl_list_image {
+	width: @window_width * 0.35;
+	float:left;
+}
+
+.ztl_list_content {
+	width:@window_width * 0.63;
+	float:right;
+}
+
+.ztl_details_img_crop{
+	width: @window_width;
+	height: @window_width * 0.542; /*260/480*/
+	overflow: hidden;
+}
+
+.ztl_details_image{
+	width:@window_width;
+}
+
+.ztl_item_buttons {
+    position:relative;
+    margin: @window_width*0.125 0px 0px 0px; /*60/480*/
+}
