@@ -1950,7 +1950,7 @@ div.ui-mobile-viewport { overflow-x: hidden; }
 }
 .ui-header-fixed {
 	top: -1px;
-	padding-top: 1px;
+	padding-top: 0px;
 }
 .ui-header-fixed.ui-fixed-hidden {
 	top: 0;
@@ -1958,7 +1958,7 @@ div.ui-mobile-viewport { overflow-x: hidden; }
 }
 .ui-footer-fixed {
 	bottom: -1px;
-	padding-bottom: 1px;
+	padding-bottom: 0px;
 }
 .ui-footer-fixed.ui-fixed-hidden {
 	bottom: 0;

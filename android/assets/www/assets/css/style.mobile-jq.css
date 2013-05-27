@@ -7,16 +7,11 @@ body {
 .ui-content {
     padding: 0;
 }
-.ui-footer {
-    text-align: center;
-    padding: 5px 0;
-}
+
 .portrait, .portrait #mappage {
     min-height: 0;
 }
-/*.portrait, .portrait .ui-page{*/
-    /*min-height: 0;*/
-/*}*/
+
 #mappage, #mappage .ui-content, #map {
     width: 100%;
     height: 100%;
@@ -31,10 +26,11 @@ body {
     bottom: 70px;
     left: 10px;
     z-index: 1000;
+	background-color:#d3d3d3;
 }
 #navigation .ui-btn-icon-notext {
     display: block;
-    padding: 7px 6px 7px 8px;
+    padding: 7px 7px 7px 7px;
 }
 #title, #tags, #shortdesc {
     display: none;

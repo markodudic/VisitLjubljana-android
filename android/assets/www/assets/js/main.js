@@ -16,6 +16,7 @@ var window_width = $(window).width();
 
 var img_width   = window_width*0.35;
 var img_height  = ((window_width*14)/17)*0.35;
+var ztl_content_width = window_width - img_width;
 
 var file = "/android_asset/www/uploads/mp3/mp3_test.mp3";
 //var file = "uploads/mp3/mp3_test.mp3";
@@ -26,8 +27,9 @@ function on_device_ready() {
 	$('body').on( 'swipeleft', swipe_left_handler );
 	$('body').on( 'swiperight', swipe_right_handler );
 	
+	console.log(less);
+	
 	load_settings();
-	console.log(img_height);
 }
 
 function swipe_left_handler(event) {
@@ -120,19 +122,8 @@ function load_page(template, div, data, transition, reverse) {
 				reverse: reverse,
 				changeHash: false,
 			});
-			
-			$('.img_crop').attr('height', img_height+'px');
-			$('.img_crop').attr('width', img_width+'px');
-			
-			$('.ztl_items_image').attr('height', (img_height*1.1)+'px');
-			$('.ztl_items_image').attr('width', (img_width*1.1)+'px');
-	
-			
-			console.log(window_width);
-			console.log(img_height);
-			console.log(img_width);
-			
-			//remove_old_divs(div);
+
+			remove_old_divs(div);
 		}
 	});
 }

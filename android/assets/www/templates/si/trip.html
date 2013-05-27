@@ -2,15 +2,17 @@
 <div data-role="page" id="div_trip_{{id}}" data-theme="a" class="ztl_remove_from_page">
 	<div data-role="header">
 		<div data-role="header" data-position="fixed">
-			<div class="red_line"></div>
-			<div class="header_space"></div>
-			<div class="header_back"></div>
-			<div class="header_title">{{title}}</div>
-			<div class="header_dots"></div>
-			<div style="clear:both;"></div>
-			<div class="header_space"></div>
+			<div class="header_placeholder">
+				<div class="red_line"></div>
+				<div class="header_space"></div>
+				<div class="header_back"></div>
+				<div class="header_title">{{title}}</div>
+				<div class="header_dots"></div>
+				<div style="clear:both;"></div>
+				<div class="header_space"></div>
+			</div>
 			<div class="header_shadow"></div>
-	</div>
+		</div>
 	</div>
 	<div data-role="content" class="ztl_content">
 		<div class="ztl_navigate_events">
@@ -21,8 +23,8 @@
 				<img src="assets/css/ztl_images/star.png">
 			</div>
 			<div class="ztl_item_details_image">
-				<div class="crop">
-					<img class="ztl_content_image" src="./uploads/images/{{content_image}}" style="width:100%; height:195px;">
+				<div class="ztl_details_img_crop">
+					<img class="ztl_details_image" src="./uploads/images/{{content_image}}">
 				</div>
 			</div>
 			<div style="clear:both;"></div>
@@ -46,8 +48,11 @@
 			</div>
 		</div>
 	</div>
-	<div data-role="footer" class="footer-docs" data-theme="b" data-position="fixed">
-		[[[ztl_footer]]]
+	<div data-role="footer" class="footer-docs" data-theme="a" data-position="fixed">
+		<div class="footer_shadow"></div>
+		<div class="header_placeholder">
+			[[[ztl_footer]]]
+		</div>
 	</div>
 </div>
 </script>
