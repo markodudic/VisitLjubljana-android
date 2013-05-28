@@ -6,15 +6,16 @@
 @window_height:unit(`$(document).height()`, px);
 */
 
+/*slika na seznamu*/
+.ztl_items_image {
+	width: @window_width * 0.35 * 1.1;
+	height: @window_width * 0.35 * 14 / 17 * 1.1;
+}
+
 .ztl_list_img_crop { 
   width: @window_width * 0.35;
   height: @window_width * 0.35 * 14 / 17;
   overflow: hidden;
-}
-
-.ztl_items_image {
-	width: @window_width * 0.35 * 1.1;
-	height: @window_width * 0.35 * 14 / 17 * 1.1;
 }
 
 .ztl_list_image {
@@ -22,11 +23,13 @@
 	float:left;
 }
 
+/*seznam vsebina*/
 .ztl_list_content {
 	width:@window_width * 0.63;
 	float:right;
 }
 
+/*slika na detajlih*/
 .ztl_details_img_crop{
 	width: @window_width;
 	height: @window_width * 0.542; /*260/480*/
@@ -37,7 +40,46 @@
 	width:@window_width;
 }
 
+/*gumbi detajl*/
 .ztl_item_buttons {
     position:relative;
     margin: @window_width*0.125 0px 0px 0px; /*60/480*/
+}
+
+.ztl_red_button {
+	background: rgb(237,28,36); /* Old browsers */
+	background: -moz-linear-gradient(top,  rgba(237,28,36,1) 0%, rgba(237,28,36,1) 50%, rgba(210,20,27,1) 50%, rgba(210,20,27,1) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(237,28,36,1)), color-stop(50%,rgba(237,28,36,1)), color-stop(50%,rgba(210,20,27,1)), color-stop(100%,rgba(210,20,27,1))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  rgba(237,28,36,1) 0%,rgba(237,28,36,1) 50%,rgba(210,20,27,1) 50%,rgba(210,20,27,1) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  rgba(237,28,36,1) 0%,rgba(237,28,36,1) 50%,rgba(210,20,27,1) 50%,rgba(210,20,27,1) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  rgba(237,28,36,1) 0%,rgba(237,28,36,1) 50%,rgba(210,20,27,1) 50%,rgba(210,20,27,1) 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  rgba(237,28,36,1) 0%,rgba(237,28,36,1) 50%,rgba(210,20,27,1) 50%,rgba(210,20,27,1) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ed1c24', endColorstr='#d2141b',GradientType=0 ); /* IE6-9 */
+	width:@window_width*0.43;
+    height:@window_width*0.10; /*@window_width*0.43*48/206*/
+	text-align:center;
+	line-height:@window_width*0.10;
+}
+
+.ztl_item_right_button{
+    font-size:18px;
+    color:#ffffff;
+    font-family: 'robotoboldcondensed';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.ztl_item_left_button{
+    font-size:18px;
+    color:#ffffff;
+    font-family: 'robotoboldcondensed';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.ztl_item_content_padding{
+	margin-left:@window_width * 0.0521;
+	margin-right:@window_width * 0.0521;
 }

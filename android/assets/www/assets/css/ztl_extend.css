@@ -137,40 +137,6 @@
     padding:0px 0px 5px 37%;
 }
 
-.ztl_item_myvisit_button{
-    background-image:url('ztl_images/button_red_1.png');
-    background-repeat:repeat-x;
-    width:45%;
-    height:36px;
-    font-size:18px;
-    color:#ffffff;
-    font-family: 'robotoboldcondensed';
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    padding-top:7px;
-    margin:0px 15px 0px 0px;
-    text-align:center;
-    text-decoration:none;
-}
-
-.ztl_item_map_button{
-    background-image:url('ztl_images/button_red_1.png');
-    background-repeat:repeat-x;
-    width:45%;
-    height:36px;
-    font-size:18px;
-    color:#ffffff;
-    font-family: 'robotoboldcondensed';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    padding-top:7px;
-    margin:0px 0px 0px 15px;
-    text-align:center;
-    text-decoration:none;
-}
-
 .ztl_item_shadow {
     position:absolute;
     height:30px;
@@ -190,7 +156,6 @@
     color:#555555;
     position:relative;
     margin: 20px 0px 0px 0px;
-    padding:0px 18px 0px 20px;
 }
 
 .ztl_item_distance{
