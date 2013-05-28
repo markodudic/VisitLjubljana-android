@@ -29,7 +29,13 @@ function on_device_ready() {
 	
 	console.log(less);
 	
-	load_settings();
+	if (window.location.hash == "#poi_list") {
+		load_trips();
+	} else {
+		load_settings();	
+	}
+	
+	load_settings();	
 }
 
 function swipe_left_handler(event) {
@@ -79,6 +85,7 @@ function swipe_right_handler(event) {
 }
 
 function load_page(template, div, data, transition, reverse) {
+	console.log("load div: "+div);
 	if (footer == "") {
 		load_footer();
 	}
@@ -166,6 +173,7 @@ function select_language(id) {
 } 
 
 function load_trips() {
+	console.log("load_trips");
 	$.getScript('./assets/js/trips.js', function () {
         load_trips();
     });

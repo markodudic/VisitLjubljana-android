@@ -1,12 +1,17 @@
 var trips = null;
 swipe = 0;
 function load_trips() {
+	swipe = 0;
+	console.log('load trips 2');
+	console.log(template_lang);
 	if (db_type == 1) {
 		$.getJSON("./assets/tmp_settings/ztl_db.json", function(res) {
 			trips = res;
+			console.log('nalozi tripe');
+			console.log(res);
 			load_page(template_lang+'trips.html', 'trips', res, 'fade', false);
 		});
-	}
+	} 
 }
 
 function load_trip_content(id, transition, reverse) {
