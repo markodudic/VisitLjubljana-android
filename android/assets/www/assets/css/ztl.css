@@ -58,7 +58,7 @@
 }
 
 .ui-bar-a {
-	border: 1px solid transparent /*{a-bar-border}*/;
+	border: 0px solid transparent /*{a-bar-border}*/;
 	background: transparent /*{a-bar-background-color}*/;
 	color: #ffffff /*{a-bar-color}*/;
 	font-weight: bold;
@@ -95,7 +95,7 @@
 }
 .ui-body-a,
 .ui-overlay-a {
-	border: 1px solid #333333 /*{a-body-border}*/;
+	border: 0px solid #333333 /*{a-body-border}*/;
 	color: #ffffff /*{a-body-color}*/;
 	text-shadow: 0 /*{a-body-shadow-x}*/ 0 /*{a-body-shadow-y}*/ 0 /*{a-body-shadow-radius}*/ #ffffff /*{a-body-shadow-color}*/;
 	background: #333333 /*{a-body-background-color}*/;
