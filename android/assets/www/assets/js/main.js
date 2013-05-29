@@ -9,6 +9,7 @@ var swipe		  = 0;
 var current		  = 0;
 var local_db	  = 0;
 var footer		  = "";
+var media		  = "";
 var my_media 	  = null;
 var media_timer   = null;
 
@@ -18,8 +19,8 @@ var img_width   = window_width*0.35;
 var img_height  = ((window_width*14)/17)*0.35;
 var ztl_content_width = window_width - img_width;
 
-//var file = "/android_asset/www/uploads/mp3/mp3_test.mp3";
-var file = "uploads/mp3/mp3_test.mp3";
+var file = "/android_asset/www/uploads/mp3/mp3_test.mp3";
+//var file = "uploads/mp3/mp3_test.mp3";
 
 document.addEventListener("deviceready", on_device_ready, false);
 
@@ -85,11 +86,14 @@ function swipe_right_handler(event) {
 }
 
 function load_page(template, div, data, transition, reverse) {
-	console.log("load div: "+div);
 	if (footer == "") {
 		load_footer();
 	}
 
+	if (media == "") {
+		load_media();
+	}
+	
 	$.ajax({
 		type:"GET",
 		url:template_root+template,
@@ -106,13 +110,16 @@ function load_page(template, div, data, transition, reverse) {
 			}
 
 			html = html.replace('[[[ztl_footer]]]', footer);
-
+			
 			if (swipe == 1) {
 				div = div+"_"+data['id'];
 			}
 
-			$('body').append(html).trigger('create');;
+			//$('body').append(html);
+			$('body').append(html).trigger('create');
 
+			$("#media_payer").html(media);
+			
 			/*
 			$('#sortable').sortable();
 			$("#sortable").disableSelection();
@@ -144,6 +151,20 @@ function load_footer() {
 		dataType: 'html',
 		success:function(temp){
 			footer = $(temp).filter('#tpl_ztl_footer').html();
+		}
+	});
+}
+
+function load_media() {
+	console.log("load_media");
+	$.ajax({
+		type:"GET",
+		url:template_root+template_lang+"ztl_media_player.html",
+		cache:false,
+		async:false,
+		dataType: 'html',
+		success:function(temp){
+			media = $(temp).filter('#tpl_ztl_media_player').html();
 		}
 	});
 }
@@ -187,6 +208,7 @@ function edit_settings() {
 }
 
 function play_location_sound() {
+	swipe = 0;
 	console.log("play_location_sound");
 	console.log("my media "+my_media);
 	
