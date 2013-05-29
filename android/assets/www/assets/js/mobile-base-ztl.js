@@ -54,7 +54,7 @@ var init = function (onSelectFeatureFunction) {
         numZoomLevels: 18,
         tileManager: new OpenLayers.TileManager(),
         controls: [
-            new OpenLayers.Control.Attribution(),
+            //new OpenLayers.Control.Attribution(),
             new OpenLayers.Control.TouchNavigation({
                 dragPanOptions: {
                     enableKinetic: true
