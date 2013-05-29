@@ -12,6 +12,25 @@ body {
     min-height: 0;
 }
 
+.ui-icon,
+.ui-icon-searchfield:after {
+	background-color: #000000 /*{global-icon-color}*/;
+	background-color: transparent /*{global-icon-disc}*/;
+	background-image: url(images/icons-18-white.png) /*{global-icon-set}*/;
+	background-repeat: no-repeat;
+	-webkit-border-radius: 				9px;
+	border-radius: 						9px;
+}
+/* Alt icon color
+-----------------------------------------------------------------------------------------------------------*/
+.ui-icon-alt .ui-icon,
+.ui-icon-alt .ui-icon-searchfield:after {
+	background-color: 						#fff;
+	background-color: 						rgba(255,255,255,.3);
+	background-image: url(images/icons-18-white.png);
+	background-repeat: no-repeat;
+}
+
 #mappage, #mappage .ui-content, #map {
     width: 100%;
     height: 100%;
@@ -26,7 +45,7 @@ body {
     bottom: 70px;
     left: 10px;
     z-index: 1000;
-	background-color:#d3d3d3;
+	background-color:#222222;
 }
 #navigation .ui-btn-icon-notext {
     display: block;

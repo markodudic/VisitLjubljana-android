@@ -18,8 +18,8 @@ var img_width   = window_width*0.35;
 var img_height  = ((window_width*14)/17)*0.35;
 var ztl_content_width = window_width - img_width;
 
-var file = "/android_asset/www/uploads/mp3/mp3_test.mp3";
-//var file = "uploads/mp3/mp3_test.mp3";
+//var file = "/android_asset/www/uploads/mp3/mp3_test.mp3";
+var file = "uploads/mp3/mp3_test.mp3";
 
 document.addEventListener("deviceready", on_device_ready, false);
 
