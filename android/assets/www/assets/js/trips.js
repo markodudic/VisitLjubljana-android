@@ -14,6 +14,19 @@ function load_trips() {
 	} 
 }
 
+function load_trips_benchmark() {
+	swipe = 0;
+	console.log(template_lang);
+	if (db_type == 1) {
+		$.getJSON("./assets/tmp_settings/ztl_db.json", function(res) {
+			trips = res;
+			console.log('nalozi tripe');
+			console.log(res);
+			load_page(template_lang+'trips_benchmark.html', 'trips', res, 'fade', false);
+		});
+	} 
+}
+
 function load_trip_content(id, transition, reverse) {
 	if (db_type == 1) {
 		//dobim izbran object

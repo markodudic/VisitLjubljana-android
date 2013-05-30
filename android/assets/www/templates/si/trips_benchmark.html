@@ -1,0 +1,31 @@
+<script id="tpl_trips" type="text/html">
+<div data-role="page" id="trips" data-theme="a" class="ztl_remove_from_page">
+	<div data-role="header" data-position="fixed">
+			<div class="header_placeholder">
+				<div class="red_line"></div>
+				<div class="header_space"></div>
+				<div class="header_back"></div>
+				<div class="header_title">NASTANITVE</div>
+				<div class="header_dots"></div>
+				<div style="clear:both;"></div>
+				<div class="header_space"></div>
+			</div>
+			<div class="header_shadow"></div>
+	</div>
+	<div data-role="content" data-theme="a" class="ztl_content">
+	{{#items}}
+		<li class="ztl_list_li">
+			<div class="ztl_list_item" id="ztl_trips_item_{{id}}">
+				ztl_trips_item_{{id}}
+			</div>
+		</li>
+	{{/items}}
+	</div>
+	<div data-role="footer" class="footer-docs" data-theme="a" data-position="fixed">
+		<div class="footer_shadow"></div>
+		<div class="header_placeholder">
+			[[[ztl_footer]]]
+		</div>
+	</div>
+</div>
+</script>
