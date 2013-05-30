@@ -1,4 +1,4 @@
-function populateDB(tx) {
+function populateDB_ztl_poi(tx) {
 	tx.executeSql('DROP TABLE IF EXISTS ztl_poi');
 	tx.executeSql('CREATE TABLE IF NOT EXISTS ztl_poi (id,title,address,post_number,post,phone,email,www,coord_x,coord_y,turisticna_kartica,ljubljana_quality,recommended_map,image)');
 	tx.executeSql('INSERT INTO ztl_poi (id,title,address,post_number,post,phone,email,www,coord_x,coord_y,turisticna_kartica,ljubljana_quality,recommended_map,image) VALUES (603,"Župnijska cerkev sv. Petra","",0,"","+386 (0)51 688 705: +386 (0)31 385 123","","",0.000000000000000,0.000000000000000,0,0,0,"6811_08.jpg")');
