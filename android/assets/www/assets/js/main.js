@@ -200,6 +200,13 @@ function load_trips() {
     });
 }
 
+function load_trips_benchmark() {
+	console.log("load_trips_benchmark");
+	$.getScript('./assets/js/trips.js', function () {
+        load_trips_benchmark();
+    });
+}
+
 function edit_settings() {
 	console.log("edit_settings");
 	$.getScript('./assets/js/application_settings.js', function () {
