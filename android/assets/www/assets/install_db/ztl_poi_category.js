@@ -1,4 +1,4 @@
-function populateDB(tx) {
+function populateDB_ztl_poi_category(tx) {
 	tx.executeSql('DROP TABLE IF EXISTS ztl_poi_category');
 	tx.executeSql('CREATE TABLE IF NOT EXISTS ztl_poi_category (id_poi,id_category)');
 	tx.executeSql('INSERT INTO ztl_poi_category (id_poi,id_category) VALUES (520,437)');

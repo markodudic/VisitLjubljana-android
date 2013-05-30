@@ -1,4 +1,4 @@
-function populateDB(tx) {
+function populateDB_ztl_category(tx) {
 	tx.executeSql('DROP TABLE IF EXISTS ztl_category');
 	tx.executeSql('CREATE TABLE IF NOT EXISTS ztl_category (id,title)');
 	tx.executeSql('INSERT INTO ztl_category (id,title) VALUES (363,"Afriška kuhinja")');

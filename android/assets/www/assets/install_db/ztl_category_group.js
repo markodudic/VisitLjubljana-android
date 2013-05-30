@@ -1,4 +1,4 @@
-function populateDB(tx) {
+function populateDB_ztl_category_group(tx) {
 	tx.executeSql('DROP TABLE IF EXISTS ztl_category_group');
 	tx.executeSql('CREATE TABLE IF NOT EXISTS ztl_category_group (id_category,id_group)');
 	tx.executeSql('INSERT INTO ztl_category_group (id_category,id_group) VALUES (364,227)');

@@ -1,4 +1,4 @@
-function populateDB(tx) {
+function populateDB_ztl_group(tx) {
 	tx.executeSql('DROP TABLE IF EXISTS ztl_group');
 	tx.executeSql('CREATE TABLE IF NOT EXISTS ztl_group (id,title)');
 	tx.executeSql('INSERT INTO ztl_group (id,title) VALUES (215,"Nastanitve")');
