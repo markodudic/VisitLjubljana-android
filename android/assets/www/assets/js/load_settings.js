@@ -79,8 +79,12 @@ function tmp_db(id) {
 }
 
 function queryDB(tx) {
-	console.log(group);
-    tx.executeSql('SELECT * FROM ztl_poi ORDER BY RANDOM()', [], querySuccess, errorCB);
+	console.log("group: "+group);
+	
+	var query = 'SELECT zp.* FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category WHERE zcg.id_group = '+group;
+	
+	console.log(query);
+    tx.executeSql(query, [], querySuccess, errorCB);
 }
 
 function querySuccess(tx, results) {
@@ -208,6 +212,8 @@ function load_desktop() {
 		}
 	});
 
+	settings.id_lang = 0;
+	
 	if (settings.id_lang == 0) {
 		load_page('select_language.html', 'select_language', null, 'fade', false);
 	} else {

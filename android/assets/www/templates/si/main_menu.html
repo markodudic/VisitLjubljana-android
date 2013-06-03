@@ -3,43 +3,37 @@
 	<div data-role="header">
 		<div class="header_placeholder">
 			<div class="red_line"></div>
-				<div class="header_space"></div>
-				<div class="header_back"></div>
-				<div class="header_title">Vsebina</div>
-				<div class="header_dots"></div>
-				<div style="clear:both;"></div>
-				<div class="header_space"></div>
-			</div>
-			<div class="header_shadow"></div>
+			<div class="header_title_menu">VSEBINE</div>
 		</div>
-	<div data-role="content" data-theme="a">	
-		<div class="ui-grid-solo">
-			<div class="ui-block-a"><button type="v" data-theme="e" onClick="load_trips();">PREDLOGI IZLETOV</button></div>
+		<div class="header_shadow"></div>
+	</div>
+	<div data-role="content" data-theme="a" class="ztl_content ztl_main_menu">	
+		<div class="ui-grid-solo" style="height:260px;">
+			<div class="ui-block-a"><img src="assets/css/ztl_images/main_menu/get_inspired.jpg" onClick="load_trips();"></div>
+		</div>	
+		<div class="ui-grid-a" style="height:170px;">
+			<div class="ui-block-a "><img src="assets/css/ztl_images/main_menu/prireditve.jpg" onClick="tmp_db(218);"></div>
+			<div class="ui-block-b "><img src="assets/css/ztl_images/main_menu/znamenitosti.jpg" onClick="tmp_db(217);"></div>	   
 		</div>
-		<div class="ui-grid-solo">
-			<div class="ui-block-a"><button type="v" data-theme="e" onClick="load_trips_benchmark();">INFO ZA OBISKOVALCE</button></div>
+		<div class="ui-grid-solo" style="height:260px;">
+			<div class="ui-block-a"><img src="assets/css/ztl_images/main_menu/kulinarika.jpg" onClick="tmp_db(219);"></div>
+		</div>	
+		<div class="ui-grid-a" style="height:170px;">
+			<div class="ui-block-a"><img src="assets/css/ztl_images/main_menu/info.jpg" onClick="tmp_db(222);"></div>
+			<div class="ui-block-b"><img src="assets/css/ztl_images/main_menu/ogledi.jpg" onClick="tmp_db(220);"></div>	   
 		</div>
-		<div class="ui-grid-a">
-			<div class="ui-block-a"><button type="button" data-theme="e" onClick="tmp_db(1);">PRIREDITVE</button></div>
-			<div class="ui-block-b"><button type="button" data-theme="e" onClick="tmp_db(2);">ZNAMENITOSTI</button></div>	   
+		<div class="ui-grid-solo" style="height:260px;">
+			<div class="ui-block-a"><img src="assets/css/ztl_images/main_menu/nastanitve.jpg" onClick="tmp_db(219);"></div>
+		</div>	
+		<div class="ui-grid-a" style="height:170px;">
+			<div class="ui-block-a"><img src="assets/css/ztl_images/main_menu/zabava.jpg" onClick="tmp_db(222);"></div>
+			<div class="ui-block-b"><img src="assets/css/ztl_images/main_menu/nakupovanje.jpg" onClick="tmp_db(218);"></div>	   
 		</div>
-		<div class="ui-grid-a">
-			<div class="ui-block-a"><button type="button" data-theme="e" onClick="tmp_db(3);">ZABAVA</button></div>
-			<div class="ui-block-b"><button type="button" data-theme="e" onClick="tmp_db(4);">NAKUP</button></div>	   
-		</div>
-		<div class="ui-grid-a">
-			<div class="ui-block-a"><button type="button" data-theme="e" onClick="tmp_db(5);">NARAVA</button></div>
-			<div class="ui-block-b"><button type="button" data-theme="e" onClick="tmp_db(6);">KULINARIKA</button></div>	 
-		</div>
+		<!--
 		<div class="ui-grid-solo">
 			<div class="ui-block-a"><button type="v" data-theme="e" onClick="edit_settings();">NASTANITVE</button></div>
 		</div>	
-	</div>
-	<div data-role="footer" class="footer-docs" data-theme="a" data-position="fixed">
-		<div class="footer_shadow"></div>
-		<div class="header_placeholder">
-			[[[ztl_footer]]]
-		</div>
+		-->
 	</div>
 </div>
 </script>
