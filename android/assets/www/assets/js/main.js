@@ -250,7 +250,7 @@ function load_page(template, div, data, transition, reverse) {
 					      var dim = RocknCoder.Dimensions.getContent();
 					      $("#horizontalWrapper").css('height', dim.height);
 					      $("#verticalWrapper").css('height', dim.height);
-					      myScroll = new iScroll('verticalWrapper');
+					      myScroll = new iScroll('verticalWrapper', { hScrollbar: false, vScrollbar: false} );
 					    },
 					    pagehide:function () {
 					      myScroll.destroy();
