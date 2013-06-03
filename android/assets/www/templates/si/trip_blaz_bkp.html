@@ -1,6 +1,5 @@
 <script id="tpl_trips" type="text/html">
-<div data-role="page" id="trips" data-theme="a" class="ztl_remove_from_page" data-rockncoder-jspage="trips">
-	<div data-role="header" data-position="fixed">
+	<header data-role="header" data-position="fixed">
 			<div class="header_placeholder">
 				<div class="red_line"></div>
 				<div class="header_space"></div>
@@ -11,12 +10,12 @@
 				<div class="header_space"></div>
 			</div>
 			<div class="header_shadow"></div>
-	</div>
-	
-	<div data-role="content" data-theme="a" class="ztl_content">
-	<div id="verticalWrapper">
-	<div id="verticalScroller">
-	
+	</header>
+
+	<section data-role="content" class="scroller">
+		<div id="verticalWrapper" >
+			<div id="verticalScroller">
+				<ul>
 	{{#items}}
 		<li class="ztl_list_li">
 			<div class="ztl_list_item" id="ztl_trips_item_{{id}}">
@@ -46,17 +45,16 @@
 			<div style="clear:both;"></div>
 			<div class="black_line"></div>
 		</li>
-	
 	{{/items}}
-	</div>
-	</div>
-	</div>
-	
-	<div data-role="footer" class="footer-docs" data-theme="a" data-position="fixed">
+				</ul>
+			</div>
+		</div>
+	</section>
+
+	<footer data-role="footer" data-position="fixed">
 		<div class="footer_shadow"></div>
 		<div class="header_placeholder">
 			[[[ztl_footer]]]
 		</div>
-	</div>
-</div>
+	</footer>
 </script>

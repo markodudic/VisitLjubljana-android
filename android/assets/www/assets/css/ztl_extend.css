@@ -173,21 +173,21 @@
 
 @media (min-width: 321px) and (max-width: 360px){
     .ztl_content {
-        padding-top: 45px;
+        padding-top: 44px;
         padding-bottom: 52px;
     }
 }
 
 @media (min-width: 361px) and (max-width: 599px) {
     .ztl_content {
-        padding-top: 45px;
+        padding-top: 44px;
         padding-bottom: 55px;
     }
 }
 
 @media (min-width: 600px){
     .ztl_content {
-        padding-top: 45px;
+        padding-top: 44px;
         padding-bottom: 55px;
     }
 }
