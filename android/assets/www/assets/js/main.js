@@ -13,6 +13,10 @@ var media		  = "";
 var my_media 	  = null;
 var media_timer   = null;
 
+var db = null;
+
+var trips   = null;
+
 var window_width = $(window).width();
 
 var img_width   = window_width*0.35;
@@ -25,6 +29,8 @@ var file = "/android_asset/www/uploads/mp3/mp3_test.mp3";
 document.addEventListener("deviceready", on_device_ready, false);
 
 function on_device_ready() {
+	db = window.sqlitePlugin.openDatabase("Database", "1.0", "ztl", -1);
+
 	$('body').on( 'swipeleft', swipe_left_handler );
 	$('body').on( 'swiperight', swipe_right_handler );
 	
@@ -85,6 +91,54 @@ function swipe_right_handler(event) {
 	}
 }
 
+/*
+function swipe_left_handler(event) {
+	if (swipe == 1) {
+		if (db_type == 1) {
+			var j = 0;
+			var items = trips.items;
+
+			for (i=0; i<items.length; i++) {
+				if (items[i]['id'] == current) {
+					j = i-1;
+				}
+			}
+			
+			if (j == -1) {
+				j = items.length-1;
+			}
+			
+			current = items[j]['id'];
+			
+			load_page(template_lang+'trip.html', 'div_trip', trips.items[j], 'slide', false);
+		}
+	}
+}
+
+function swipe_right_handler(event) {
+	if (swipe == 1) {
+		if (db_type == 1) {
+			var j = 0;
+			var items = trips.items;
+
+			for (i=0; i<items.length; i++) {
+				if (items[i]['id'] == current) {
+					j = i+1;
+				}
+			}
+			
+			if (j == items.length) {
+				j = 0;
+			}
+			
+			current = items[j]['id'];
+			
+			load_page(template_lang+'trip.html', 'div_trip', trips.items[j], 'slide', true);
+		}
+	}
+}
+*/
+
 function load_page(template, div, data, transition, reverse) {
 	if (footer == "") {
 		load_footer();
@@ -137,7 +191,69 @@ function load_page(template, div, data, transition, reverse) {
 				changeHash: false,
 			});
 
-			remove_old_divs(div);
+			if (div == "trips") {
+
+				// create our own namespace
+				var RocknCoder = RocknCoder || {};
+				RocknCoder.Pages = RocknCoder.Pages || {};
+
+				RocknCoder.Pages.Kernel = function (event) {
+				  var that = this,
+				    eventType = event.type,
+				    pageName = $(this).attr("data-rockncoder-jspage");
+				  if (RocknCoder && RocknCoder.Pages && pageName && RocknCoder.Pages[pageName] && RocknCoder.Pages[pageName][eventType]) {
+				    RocknCoder.Pages[pageName][eventType].call(that);
+				  }
+				};
+
+				RocknCoder.Pages.Events = (function () {
+				  $("div[data-rockncoder-jspage]").on(
+				    'pagebeforecreate pagecreate pagebeforeload pagebeforeshow pageshow pagebeforechange pagechange pagebeforehide pagehide pageinit',
+				    RocknCoder.Pages.Kernel
+				  );
+				}());
+
+				RocknCoder.Dimensions = (function () {
+					  var width, height, headerHeight, footerHeight, contentHeight,
+						isIPhone = (/iphone/gi).test(navigator.appVersion),
+						iPhoneHeight = (isIPhone ? 60 : 0);
+					  return {
+						init:function () {
+						  width = $(window).width();
+						  height = $(window).height();
+						  headerHeight = $("header", $.mobile.activePage).height();
+						  footerHeight = $("footer", $.mobile.activePage).height();
+						  contentHeight = height - headerHeight - footerHeight + iPhoneHeight;
+						},
+						getContent:function () {
+						  return {
+							width:width,
+							height:contentHeight
+						  };
+						}
+					  };
+					}());				
+				
+				RocknCoder.Pages.trips = (function () {
+					  var myScroll;
+					  return {
+					    pageshow:function () {
+					      RocknCoder.Dimensions.init();
+					      // determine the height dynamically
+					      var dim = RocknCoder.Dimensions.getContent();
+					      $("#horizontalWrapper").css('height', dim.height);
+					      $("#verticalWrapper").css('height', dim.height);
+					      myScroll = new iScroll('verticalWrapper', {hScrollbar: false, vScrollbar: false, momentum: true});
+					    },
+					    pagehide:function () {
+					      myScroll.destroy();
+					      myScroll = null;
+					    }
+					  };
+					}());
+			}
+			
+			//remove_old_divs(div);
 		}
 	});
 }

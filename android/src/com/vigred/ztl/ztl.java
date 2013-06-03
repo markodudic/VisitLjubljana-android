@@ -20,6 +20,7 @@
 package com.vigred.ztl;
 
 import android.os.Bundle;
+
 import org.apache.cordova.*;
 
 public class ztl extends DroidGap
@@ -31,6 +32,9 @@ public class ztl extends DroidGap
         // Set by <content src="index.html" /> in config.xml
         super.loadUrl(Config.getStartUrl());
         //super.loadUrl("file:///android_asset/www/index.html")
+        
+        appView.setVerticalScrollBarEnabled(false);
+        appView.setHorizontalScrollBarEnabled(false);
+       
     }
 }
-

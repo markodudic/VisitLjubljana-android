@@ -14,23 +14,25 @@
 /* A
 -----------------------------------------------------------------------------------------------------------*/
 @font-face {
-    font-family: 'robotobold';
-	 src: url(fonts/roboto-bold-webfont.ttf);
-}
-
-@font-face {
-    font-family: 'robotoregular';
-	 src: url(fonts/roboto-regular-webfont.ttf);
-}
-
-@font-face {
     font-family: 'robotobold_condensed';
-	 src: url(fonts/roboto-boldcondensed-webfont.ttf);
+    src: url('fonts/roboto-boldcondensed-webfont.eot');
+    src: url('fonts/roboto-boldcondensed-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/roboto-boldcondensed-webfont.woff') format('woff'),
+         url('fonts/roboto-boldcondensed-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+
 }
 
 @font-face {
     font-family: 'robotocondensed';
-	 src: url(fonts/roboto-condensed-webfont.ttf);
+    src: url('fonts/roboto-condensed-webfont.eot');
+    src: url('fonts/roboto-condensed-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/roboto-condensed-webfont.woff') format('woff'),
+         url('fonts/roboto-condensed-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+
 }
 
 .ui-bar-a {
@@ -67,7 +69,7 @@
 .ui-bar-a select,
 .ui-bar-a textarea,
 .ui-bar-a button {
-	 font-family: robotocondensed, robotoregular, Helvetica, Arial, sans-serif /*{global-font-family}*/;
+	 font-family: robotocondensed, Helvetica, Arial, sans-serif /*{global-font-family}*/;
 }
 .ui-body-a,
 .ui-overlay-a {

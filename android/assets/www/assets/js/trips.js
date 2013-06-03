@@ -1,4 +1,5 @@
-var trips = null;
+//var trips   = null;
+var trip_id = 0;
 swipe = 0;
 function load_trips() {
 	swipe = 0;
@@ -28,6 +29,39 @@ function load_trips_benchmark() {
 }
 
 function load_trip_content(id, transition, reverse) {
+	console.log("id   "+id);
+	trip_id = id;
+	console.log("trip id  "+trip_id);
+	console.log("load_trip_content");
+	db.transaction(load_trip_query, errorCB);
+}
+
+function load_trip_query(tx) {
+	console.log("trip id  "+trip_id);
+	console.log("SELECT * FROM ztl_poi WHERE id='"+trip_id+"'");
+	console.log(trip_id);
+    tx.executeSql("SELECT * FROM ztl_poi WHERE id="+trip_id, [], load_trip_success, errorCB);
+}
+
+
+function load_trip_success(tx, results) {
+    console.log("load_trip_success  ok");
+    console.log(JSON.stringify(results));
+    
+    var res = {};
+    res.items = [];
+    	
+    res.items[0] = results.rows.item(0);
+
+    swipe 	= 1;
+	current = trip_id;
+	
+	console.log(JSON.stringify(res));
+	load_page(template_lang+'trip.html', 'div_trip', res.items[0], 'fade', true);
+}
+
+/*
+function load_trip_content(id, transition, reverse) {
 	if (db_type == 1) {
 		//dobim izbran object
 		for (i=0; i<trips.items.length; i++) {
@@ -39,6 +73,7 @@ function load_trip_content(id, transition, reverse) {
 		}
 	}
 }
+*/
 
 function remove_trip_from_list(id) {
 	console.log('tu prozim se funkcijo, ki ga zbrise iz local storage');

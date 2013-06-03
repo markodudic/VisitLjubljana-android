@@ -1,6 +1,9 @@
 function load_settings() {
 	swipe = 0;
 	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
+		
+		check_db();
+
 		settings_type = 2;
 		load_mobile();
 	} else {
@@ -10,10 +13,87 @@ function load_settings() {
 		$.getScript('./assets/tmp_settings/db.js', function () {
 			console.log('local storagage loaded');
 			
-			db = window.openDatabase("Database", "1.0", "ztl", 200000);
+			//db = window.openDatabase("Database", "1.0", "ztl", 200000);
 			db.transaction(populateDB, errorCB);
 		});
 	}
+}
+
+function check_db() {
+	db.transaction(check_db_query, errorCB);
+}
+
+function check_db_query(tx) {
+    tx.executeSql("SELECT name FROM sqlite_master WHERE type='table' AND name='ztl_poi'", [], check_db_success, errorCB);
+}
+
+
+function check_db_success(tx, results) {
+    console.log("database ok");
+    console.log(JSON.stringify(results));
+    
+    console.log(results.rows.length);
+    
+    if (results.rows.length != 1) {
+    	populate_db_firstime();
+    }
+}
+
+function populate_db_firstime() {
+	$.getScript('./assets/install_db/ztl_category.js', function () {
+		console.log('ztl_category local storagage loaded');
+
+		db.transaction(populateDB_ztl_category, errorCB);
+	});
+
+	$.getScript('./assets/install_db/ztl_category_group.js', function () {
+		console.log('ztl_category_group.js local storagage loaded');
+		
+		db.transaction(populateDB_ztl_category_group, errorCB);
+	});
+
+	$.getScript('./assets/install_db/ztl_group.js', function () {
+		console.log('ztl_group.js local storagage loaded');
+		
+		db.transaction(populateDB_ztl_group, errorCB);
+	});
+
+	$.getScript('./assets/install_db/ztl_poi.js', function () {
+		console.log('ztl_poi.js local storagage loaded');
+		
+		db.transaction(populateDB_ztl_poi, errorCB);
+	});
+
+	$.getScript('./assets/install_db/ztl_poi_category.js', function () {
+		console.log('ztl_poi_category.js local storagage loaded');
+
+		db.transaction(populateDB_ztl_poi_category, errorCB);
+	});
+}
+
+function tmp_db() {
+	$.getScript('./assets/js/trips.js', function () {
+		db.transaction(queryDB, errorCB);
+    });
+}
+
+function queryDB(tx) {
+    tx.executeSql('SELECT * FROM ztl_poi', [], querySuccess, errorCB);
+}
+
+function querySuccess(tx, results) {
+    var res = {};
+    res.items = [];
+    var len = results.rows.length;
+    //console.log("DEMO table: " + len + " rows found.");
+    for (var i=0; i<200; i++){
+    	//console.log("Row = " + i + " ID = " + results.rows.item(i).id + " Data =  " + results.rows.item(i).title);
+    	res.items[i] = results.rows.item(i);
+    }
+     
+    trips = res;
+    console.log(JSON.stringify(res));  
+    load_page(template_lang+'trips.html', 'trips', res, 'fade', false);
 }
 
 function errorCB(err) {
