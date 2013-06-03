@@ -29,9 +29,8 @@ public class ztl extends DroidGap
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        // Set by <content src="index.html" /> in config.xml
+        super.setIntegerProperty("splashscreen", R.drawable.welcome);
         super.loadUrl(Config.getStartUrl());
-        //super.loadUrl("file:///android_asset/www/index.html")
         
         appView.setVerticalScrollBarEnabled(false);
         appView.setHorizontalScrollBarEnabled(false);

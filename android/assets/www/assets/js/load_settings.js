@@ -71,14 +71,16 @@ function populate_db_firstime() {
 	});
 }
 
-function tmp_db() {
+function tmp_db(id) {
+	group = id;
 	$.getScript('./assets/js/trips.js', function () {
 		db.transaction(queryDB, errorCB);
     });
 }
 
 function queryDB(tx) {
-    tx.executeSql('SELECT * FROM ztl_poi', [], querySuccess, errorCB);
+	console.log(group);
+    tx.executeSql('SELECT * FROM ztl_poi ORDER BY RANDOM()', [], querySuccess, errorCB);
 }
 
 function querySuccess(tx, results) {

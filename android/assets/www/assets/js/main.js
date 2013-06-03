@@ -13,7 +13,8 @@ var media		  = "";
 var my_media 	  = null;
 var media_timer   = null;
 
-var db = null;
+var db 		= null;
+var group 	= 0;
 
 var trips   = null;
 
@@ -29,6 +30,7 @@ var file = "/android_asset/www/uploads/mp3/mp3_test.mp3";
 document.addEventListener("deviceready", on_device_ready, false);
 
 function on_device_ready() {
+	navigator.splashscreen.show();
 	db = window.sqlitePlugin.openDatabase("Database", "1.0", "ztl", -1);
 
 	$('body').on( 'swipeleft', swipe_left_handler );
@@ -43,6 +45,11 @@ function on_device_ready() {
 	}
 	
 	load_settings();	
+}
+
+function load_main_screen() {
+	console.log("load_main_screen");
+	load_page(template_lang+'main_menu.html', 'main_menu', null, 'fade', false);
 }
 
 function swipe_left_handler(event) {
@@ -243,7 +250,7 @@ function load_page(template, div, data, transition, reverse) {
 					      var dim = RocknCoder.Dimensions.getContent();
 					      $("#horizontalWrapper").css('height', dim.height);
 					      $("#verticalWrapper").css('height', dim.height);
-					      myScroll = new iScroll('verticalWrapper', {hScrollbar: false, vScrollbar: false, momentum: true});
+					      myScroll = new iScroll('verticalWrapper');
 					    },
 					    pagehide:function () {
 					      myScroll.destroy();
