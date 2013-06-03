@@ -69,7 +69,7 @@
 .ui-bar-a select,
 .ui-bar-a textarea,
 .ui-bar-a button {
-	 font-family: robotocondensed, Helvetica, Arial, sans-serif /*{global-font-family}*/;
+	 font-family: robotocondensed, robotoregular, Helvetica, Arial, sans-serif /*{global-font-family}*/;
 }
 .ui-body-a,
 .ui-overlay-a {
