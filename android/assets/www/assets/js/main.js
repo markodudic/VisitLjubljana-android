@@ -13,10 +13,11 @@ var media		  = "";
 var my_media 	  = null;
 var media_timer   = null;
 
-var db 		= null;
-var group 	= 0;
+var db 			  = null;
+var group 		  = 0;
 
-var trips   = null;
+var trips   	  = null;
+var main_menu     = null;
 
 var window_width = $(window).width();
 
@@ -35,21 +36,19 @@ function on_device_ready() {
 
 	$('body').on( 'swipeleft', swipe_left_handler );
 	$('body').on( 'swiperight', swipe_right_handler );
-	
-	console.log(less);
-	
+
 	if (window.location.hash == "#poi_list") {
 		load_trips();
 	} else {
 		load_settings();	
 	}
-	
+
 	load_settings();	
 }
 
 function load_main_screen() {
 	console.log("load_main_screen");
-	load_page(template_lang+'main_menu.html', 'main_menu', null, 'fade', false);
+	load_page(template_lang+'main_menu.html', 'main_menu', main_menu, 'fade', false);
 }
 
 function swipe_left_handler(event) {
@@ -154,7 +153,7 @@ function load_page(template, div, data, transition, reverse) {
 	if (media == "") {
 		load_media();
 	}
-	
+
 	$.ajax({
 		type:"GET",
 		url:template_root+template,
@@ -162,6 +161,13 @@ function load_page(template, div, data, transition, reverse) {
 		async:false,
 		dataType: 'html',
 		success:function(temp){
+			
+			var extra_div_id = "";
+			if (div == 'trips') {
+				extra_div_id = "_"+group;
+				data.extra_div_id = group;
+			}
+			
 			var res = $(temp).filter('#tpl_'+div).html();
 			
 			if (data != null) {
@@ -192,77 +198,124 @@ function load_page(template, div, data, transition, reverse) {
 				show_map();
 			}
 			
-			$.mobile.changePage( "#"+div, {
+			$.mobile.changePage( "#"+div+extra_div_id, {
 				transition: transition,
 				reverse: reverse,
 				changeHash: false,
 			});
 
 			if (div == "trips") {
-
-				// create our own namespace
-				var RocknCoder = RocknCoder || {};
-				RocknCoder.Pages = RocknCoder.Pages || {};
-
-				RocknCoder.Pages.Kernel = function (event) {
-				  var that = this,
-				    eventType = event.type,
-				    pageName = $(this).attr("data-rockncoder-jspage");
-				  if (RocknCoder && RocknCoder.Pages && pageName && RocknCoder.Pages[pageName] && RocknCoder.Pages[pageName][eventType]) {
-				    RocknCoder.Pages[pageName][eventType].call(that);
-				  }
-				};
-
-				RocknCoder.Pages.Events = (function () {
-				  $("div[data-rockncoder-jspage]").on(
-				    'pagebeforecreate pagecreate pagebeforeload pagebeforeshow pageshow pagebeforechange pagechange pagebeforehide pagehide pageinit',
-				    RocknCoder.Pages.Kernel
-				  );
-				}());
-
-				RocknCoder.Dimensions = (function () {
-					  var width, height, headerHeight, footerHeight, contentHeight,
-						isIPhone = (/iphone/gi).test(navigator.appVersion),
-						iPhoneHeight = (isIPhone ? 60 : 0);
-					  return {
-						init:function () {
-						  width = $(window).width();
-						  height = $(window).height();
-						  headerHeight = $("header", $.mobile.activePage).height();
-						  footerHeight = $("footer", $.mobile.activePage).height();
-						  contentHeight = height - headerHeight - footerHeight + iPhoneHeight;
-						},
-						getContent:function () {
-						  return {
-							width:width,
-							height:contentHeight
-						  };
-						}
-					  };
-					}());				
-				
-				RocknCoder.Pages.trips = (function () {
-					  var myScroll;
-					  return {
-					    pageshow:function () {
-					      RocknCoder.Dimensions.init();
-					      // determine the height dynamically
-					      var dim = RocknCoder.Dimensions.getContent();
-					      $("#horizontalWrapper").css('height', dim.height);
-					      $("#verticalWrapper").css('height', dim.height);
-					      myScroll = new iScroll('verticalWrapper', { hScrollbar: false, vScrollbar: false} );
-					    },
-					    pagehide:function () {
-					      myScroll.destroy();
-					      myScroll = null;
-					    }
-					  };
-					}());
+				i_scroll("trips");
+			} else if (div == "trip") {
+				i_scroll("trip");
+			} else if (div == "main_menu") {
+				i_scroll("main_menu");
 			}
-			
 			//remove_old_divs(div);
 		}
 	});
+}
+
+function i_scroll(div_id) {
+	console.log("iscroll> "+div_id);
+
+	// create our own namespace
+	var RocknCoder = RocknCoder || {};
+	RocknCoder.Pages = RocknCoder.Pages || {};
+
+	RocknCoder.Pages.Kernel = function (event) {
+	  var that = this,
+	    eventType = event.type,
+	    pageName = $(this).attr("data-rockncoder-jspage");
+	  if (RocknCoder && RocknCoder.Pages && pageName && RocknCoder.Pages[pageName] && RocknCoder.Pages[pageName][eventType]) {
+	    RocknCoder.Pages[pageName][eventType].call(that);
+	  }
+	};
+
+	RocknCoder.Pages.Events = (function () {
+	  $("div[data-rockncoder-jspage]").on(
+	    'pagebeforecreate pagecreate pagebeforeload pagebeforeshow pageshow pagebeforechange pagechange pagebeforehide pagehide pageinit',
+	    RocknCoder.Pages.Kernel
+	  );
+	}());
+
+	RocknCoder.Dimensions = (function () {
+	  var width, height, headerHeight, footerHeight, contentHeight,
+		isIPhone = (/iphone/gi).test(navigator.appVersion),
+		iPhoneHeight = (isIPhone ? 60 : 0);
+	  return {
+		init:function () {
+		  width = $(window).width();
+		  height = $(window).height();
+		  headerHeight = $("header", $.mobile.activePage).height();
+		  footerHeight = $("footer", $.mobile.activePage).height();
+		  contentHeight = height - headerHeight - footerHeight + iPhoneHeight;
+		},
+		getContent:function () {
+		  return {
+			width:width,
+			height:contentHeight
+		  };
+		}
+	  };
+	}());				
+
+
+	if (div_id == "trips") {
+		RocknCoder.Pages.trips = (function () {
+		  var myScroll;
+		  return {
+		    pageshow:function () {
+		      RocknCoder.Dimensions.init();
+		      // determine the height dynamically
+		      var dim = RocknCoder.Dimensions.getContent();
+		      $("#verticalWrapper").css('height', dim.height);
+		      myScroll = new iScroll('verticalWrapper', { hScrollbar: false, vScrollbar: false} );
+		      console.log("iscroll> ****");
+		    },
+		    pagehide:function () {
+		      myScroll.destroy();
+		      myScroll = null;
+		    }
+		  };
+		}());
+	} else if (div_id == "trip") {
+		RocknCoder.Pages.trip = (function () {
+		  var myScroll;
+		  return {
+		    pageshow:function () {
+		      RocknCoder.Dimensions.init();
+		      // determine the height dynamically
+		      var dim = RocknCoder.Dimensions.getContent();
+		      $("#verticalWrapper").css('height', dim.height);
+		      myScroll = new iScroll('verticalWrapper', { hScrollbar: false, vScrollbar: false} );
+		      console.log("iscroll> ****");
+		    },
+		    pagehide:function () {
+		      myScroll.destroy();
+		      myScroll = null;
+		    }
+		  };
+		}());
+	} else if (div_id == "main_menu") {
+		RocknCoder.Pages.main_menu = (function () {
+		  var myScroll;
+		  return {
+		    pageshow:function () {
+		      RocknCoder.Dimensions.init();
+		      // determine the height dynamically
+		      var dim = RocknCoder.Dimensions.getContent();
+		      $("#verticalWrapper").css('height', dim.height);
+		      myScroll = new iScroll('verticalWrapper', { hScrollbar: false, vScrollbar: false} );
+		      console.log("iscroll> ****");
+		    },
+		    pagehide:function () {
+		      myScroll.destroy();
+		      myScroll = null;
+		    }
+		  };
+		}());
+	}
 }
 
 function load_footer() {
@@ -309,7 +362,7 @@ function select_language(id) {
 
 	if (settings_type == 1) {
 		//nalozim glavni menu
-		load_page(template_lang+'main_menu.html', 'main_menu', null, 'fade', false);
+		load_page(template_lang+'main_menu.html', 'main_menu', main_menu, 'fade', false);
 	} else {
 		console.log('shrani mobilno');
 		save_mobile_settings();

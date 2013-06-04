@@ -69,6 +69,12 @@ function populate_db_firstime() {
 
 		db.transaction(populateDB_ztl_poi_category, errorCB);
 	});
+	
+	$.getScript('./assets/install_db/ztl_poi_translation.js', function () {
+		console.log('ztl_poi_translation.js local storagage loaded');
+
+		db.transaction(populateDB_ztl_poi_translation, errorCB);
+	});
 }
 
 function tmp_db(id) {
@@ -81,7 +87,7 @@ function tmp_db(id) {
 function queryDB(tx) {
 	console.log("group: "+group);
 	
-	var query = 'SELECT zp.* FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category WHERE zcg.id_group = '+group;
+	var query = 'SELECT zp.*, zpt.* FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id WHERE zcg.id_group = '+group+' AND zpt.id_language = '+settings.id_lang+' GROUP BY zp.id';
 	
 	console.log(query);
     tx.executeSql(query, [], querySuccess, errorCB);
@@ -92,13 +98,13 @@ function querySuccess(tx, results) {
     res.items = [];
     var len = results.rows.length;
     //console.log("DEMO table: " + len + " rows found.");
-    for (var i=0; i<200; i++){
+    for (var i=0; i<len; i++){
     	//console.log("Row = " + i + " ID = " + results.rows.item(i).id + " Data =  " + results.rows.item(i).title);
     	res.items[i] = results.rows.item(i);
     }
      
     trips = res;
-    console.log(JSON.stringify(res));  
+    console.log("podatki osvezeni");
     load_page(template_lang+'trips.html', 'trips', res, 'fade', false);
 }
 
@@ -117,6 +123,9 @@ function load_mobile() {
 			local_db = 1;
 		}, fail);
 	} , null); 
+
+	local_db = 0;
+
 
 	if (local_db == 1) {
 		console.log('fajl obstaja');
@@ -189,7 +198,7 @@ function readAsText(file) {
 		} else {
 			console.log('nastavitve pravilne in nalozene');
 			settings = tmp;
-			load_page(template_lang+'main_menu.html', 'main_menu', null, 'fade', false);
+			load_page(template_lang+'main_menu.html', 'main_menu', main_menu, 'fade', false);
 		}
 	};
 	reader.readAsText(file);
@@ -209,14 +218,20 @@ function load_desktop() {
 		dataType: 'json',
 		success:function(resp){
 			settings = resp;
+			load_main_menu();
 		}
 	});
-
-	settings.id_lang = 0;
 	
 	if (settings.id_lang == 0) {
 		load_page('select_language.html', 'select_language', null, 'fade', false);
 	} else {
-		load_page(template_lang+'main_menu.html', 'main_menu', null, 'fade', false);
+		load_page(template_lang+'main_menu.html', 'main_menu', main_menu, 'fade', false);
 	}
+}
+
+function load_main_menu() {
+	var language_index = settings.id_lang - 1;
+	
+	main_menu = settings.language_menu[language_index];
+	console.log(main_menu);
 }

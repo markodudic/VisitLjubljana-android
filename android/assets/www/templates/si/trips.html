@@ -1,5 +1,5 @@
 <script id="tpl_trips" type="text/html">
-<div data-role="page" id="trips" data-theme="a" class="ztl_remove_from_page" data-rockncoder-jspage="trips">
+<div data-role="page" id="trips_{{extra_div_id}}" data-theme="a" class="ztl_remove_from_page" data-rockncoder-jspage="trips">
 	<div data-role="header" data-position="fixed">
 			<div class="header_placeholder">
 				<div class="red_line"></div>
@@ -32,7 +32,7 @@
 							<div class="ztl_list_header">{{title}}</div>
 						</a>
 						<a href="#" onClick="load_trip_content({{id}}, 'fade', true)" style="text-decoration:none; color:#000000; font-weight:normal;">
-							<div class="ztl_list_content_text">{{short_description}}</div>
+							<div class="ztl_list_content_text">{{phone}}</div>
 						</a>
 						<div class="ztl_content_info_left"></div>
 						<div class="ztl_star">
