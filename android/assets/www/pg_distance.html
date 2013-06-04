@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Device Properties Example</title>
+
+	 <meta name="viewport" content="width=device-width, initial-scale=1"> 
+    <script src="assets/js/proj4js-combined.js"></script>
+	 <script src="assets/js/cordova-2.7.0.js"></script>
+	
+    <script type="text/javascript" charset="utf-8">
+
+    // Wait for Cordova to load
+    //
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    var watchID = null;
+    var source = null;
+    var dest = null;
+
+    // Cordova is ready
+    //
+    function onDeviceReady() {
+        Proj4js.defs["EPSG:4326"] = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs";
+        Proj4js.defs["EPSG:31469"] = "+proj=tmerc +lat_0=0 +lon_0=15 +k=1 +x_0=5500000 +y_0=0 +ellps=bessel +datum=potsdam +units=m +no_defs";
+        source = new Proj4js.Proj('EPSG:4326');    //source coordinates will be in Longitude/Latitude
+        dest = new Proj4js.Proj('EPSG:31469');		//GK
+
+        //timeout pomeni kolk casa caka na novo pozicijo, enableHighAccuracy ali naj uporabi gps ali samo wifi
+        var options = { timeout: 30000, enableHighAccuracy: true };
+        watchID = navigator.geolocation.watchPosition(onSuccess, onError, options);
+    }
+
+    //podatki POI-ja
+    var lon2=455290.599999999976717;
+    var lat2=97903.600000000005821;
+
+    
+    // onSuccess Geolocation
+    //
+    function onSuccess(position) {
+    	  var element = document.getElementById('geolocation');
+        element.innerHTML = 'Latitude: '  + position.coords.latitude      + '<br />' +
+                            'Longitude: ' + position.coords.longitude     + '<br />' +
+                            '<hr />'      + element.innerHTML;
+
+       console.log("lat="+position.coords.latitude);
+       console.log("lon="+position.coords.longitude);
+       
+       var p = new Proj4js.Point(position.coords.longitude, position.coords.latitude); 
+       Proj4js.transform(source, dest, p);  
+       var px=p.x-5000000;
+       var py=p.y-5000000;
+       console.log(px+"-"+py+"-"+lon2+"-"+lat2);
+
+       element.innerHTML = 'Distance: '  + lineDistance(px, py, lon2, lat2)     + ' meters<br />' +
+        								'<hr />'      + element.innerHTML;
+        								
+    }
+
+    // onError Callback receives a PositionError object
+    //
+    function onError(error) {
+        alert('code: '    + error.code    + '\n' +
+              'message: ' + error.message + '\n');
+    }
+
+    
+    function lineDistance( p1x, p1y, p2x, p2y )
+    {
+      var xs = p2x - p1x;
+      xs = xs * xs;
+     
+      var ys = p2y - p1y;
+      ys = ys * ys;
+     
+      return Math.floor(Math.sqrt( xs + ys ));
+    }
+
+
+
+
+    </script>
+  </head>
+  <body>
+    <p id="geolocation">Watching geolocation....</p>
+  </body>
+</html>
