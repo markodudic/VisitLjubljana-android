@@ -8,15 +8,20 @@ var map;
 
 var lat=46.052327;
 var lon=14.506416;
-var zoom=14;
+var zoom=13;
 
 var init = function (onSelectFeatureFunction) {
 
     var vector = new OpenLayers.Layer.Vector("Vector Layer", {});
+	Proj4js.defs["EPSG:900913"]= "+title=GoogleMercator +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs";
+    Proj4js.defs["EPSG:31469"] = "+proj=tmerc +lat_0=0 +lon_0=15 +k=1 +x_0=5500000 +y_0=0 +ellps=bessel +datum=potsdam +units=m +no_defs";
+    source = new Proj4js.Proj('EPSG:31469');
+    dest = new Proj4js.Proj('EPSG:900913');
 
     var sprintersLayer = new OpenLayers.Layer.Vector("Sprinters", {
         styleMap: new OpenLayers.StyleMap({
-            externalGraphic: "assets/map/images/marker-blue.png",
+        	projection: "EPSG:900913",
+        	externalGraphic: "assets/map/images/marker-blue.png",
             graphicOpacity: 1.0,
             graphicWidth: 16,
             graphicHeight: 26,
@@ -46,15 +51,12 @@ var init = function (onSelectFeatureFunction) {
     });
 	
 	
-	
     // create map
     map = new OpenLayers.Map({
         div: "map",
         theme: null,
-        numZoomLevels: 18,
         tileManager: new OpenLayers.TileManager(),
         controls: [
-            new OpenLayers.Control.Attribution(),
             new OpenLayers.Control.TouchNavigation({
                 dragPanOptions: {
                     enableKinetic: true
@@ -64,22 +66,17 @@ var init = function (onSelectFeatureFunction) {
             selectControl
         ],
         layers: [
-            new OpenLayers.Layer.OSM("Local Tiles", "assets/map/tiles/${z}/${x}/${y}.png", {numZoomLevels: 19, alpha: true, isBaseLayer: true}),
+            new OpenLayers.Layer.OSM("Local Tiles", "assets/map/tiles/${z}/${x}/${y}.png", {zoomOffset:13,resolutions: [19.1092570678711,9.55462853393555,4.77731426696777,2.38865713348389,1.19432856674194], alpha: true, isBaseLayer: true}),
             vector,
             sprintersLayer
         ],
-        zoom: zoom,
-		maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34),
-		maxResolution: 156543.0339,
-		numZoomLevels: 19,
+        //zoom: zoom,
+		//maxExtent: new OpenLayers.Bounds(1607429.6936506156, 5781678.581444382, 1623213.8244484803, 5794133.482254154),
+		//maxResolution: "auto",
+		//numZoomLevels: 5,
 		units: 'm'
     });
 
-	/*
-	var newLayer = new OpenLayers.Layer.OSM("Local Tiles", "assets/map/tiles/${z}/${x}/${y}.png", {numZoomLevels: 19, alpha: true, isBaseLayer: true});
-	map.addLayer(newLayer);
-	*/
-	
 
 	if( ! map.getCenter() ){
 		var lonLat = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
@@ -93,6 +90,7 @@ var init = function (onSelectFeatureFunction) {
         strokeColor: '#f00',
         strokeOpacity: 0.6
     };
+    
     geolocate.events.register("locationupdated", this, function(e) {
         vector.removeAllFeatures();
         vector.addFeatures([
@@ -122,19 +120,41 @@ var init = function (onSelectFeatureFunction) {
     });
 
     function getFeatures() {
-        var features = {
+    	//var points = new Array(new Array(461871, 101451));
+    	var points = new Array(new Array(461972, 101050));
+    	var features = new Array();
+    	
+    	for (var i=0;i<points.length;i++) {
+            //na koordinatePOI-ja iz baze se doda 5.000.000 zato da bo v projekciji GK zona 5 oz. EPSG:31469	
+    		//ne vem zakaj ampak koordinate po transformaciji strizejo za -350 in 550. GK koordinate so ok.
+	    	var point = transform (points[i][0]+4999750, points[i][1]+5000550);
+	    	var feature = {	  "type": "Feature", 
+				              "geometry": {"type": "Point", 
+			       	  		   				"coordinates": [point.lon, point.lat]},
+			       	  		   "properties": {"Name": "Central Hotel Ljubljana", 
+						       	  			   "Country":"Slovenia", 
+						       	  			   "City":"Ljubljana"}
+	        }
+	    	features.push(feature);
+    	}
+    	
+    	var features = {
             "type": "FeatureCollection",
-            "features": [
-                { "type": "Feature", "geometry": {"type": "Point", "coordinates": [1717430.147101, 5954568.7127565]},
-                    "properties": {"Name": "Central Hotel Ljubljana", "Country":"Slovenia", "City":"Ljubljana"}},
-				 { "type": "Feature", "geometry": {"type": "Point", "coordinates": [1614430.147101, 5788068.7127565]},
-                    "properties": {"Name": "Central Hotel Ljubljana", "Country":"Slovenia", "City":"Ljubljana"}}
-            ]
+            "features": features
         };
 
         var reader = new OpenLayers.Format.GeoJSON();
 
         return reader.read(features);
+    }
+    
+    function transform (lon, lat) {
+        var p = new Proj4js.Point(lon, lat); 
+        Proj4js.transform(source, dest, p);  
+        var point = new Object();
+        point["lat"] = p.y;
+        point["lon"] = p.x;
+        return point;
     }
 
 };
