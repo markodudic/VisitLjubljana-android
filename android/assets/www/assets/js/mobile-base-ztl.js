@@ -66,7 +66,11 @@ var init = function (onSelectFeatureFunction) {
             selectControl
         ],
         layers: [
-            new OpenLayers.Layer.OSM("Local Tiles", "assets/map/tiles/${z}/${x}/${y}.png", {zoomOffset:13,resolutions: [19.1092570678711,9.55462853393555,4.77731426696777,2.38865713348389,1.19432856674194], alpha: true, isBaseLayer: true}),
+            new OpenLayers.Layer.OSM("Local Tiles", "assets/map/tiles/${z}/${x}/${y}.png", 
+            			{zoomOffset:13,
+            			resolutions: [19.1092570678711,9.55462853393555,4.77731426696777,2.38865713348389,1.19432856674194], 
+            			alpha: true, 
+            			isBaseLayer: true}),
             vector,
             sprintersLayer
         ],
