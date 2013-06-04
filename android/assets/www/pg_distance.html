@@ -20,7 +20,11 @@
     // Cordova is ready
     //
     function onDeviceReady() {
-        Proj4js.defs["EPSG:4326"] = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs";
+        //WGS84
+    	  Proj4js.defs["EPSG:4326"] = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs";
+        //GOOGLE
+        Proj4js.defs["EPSG:900913"]= "+title=GoogleMercator +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs";
+        //GK
         Proj4js.defs["EPSG:31469"] = "+proj=tmerc +lat_0=0 +lon_0=15 +k=1 +x_0=5500000 +y_0=0 +ellps=bessel +datum=potsdam +units=m +no_defs";
         source = new Proj4js.Proj('EPSG:4326');    //source coordinates will be in Longitude/Latitude
         dest = new Proj4js.Proj('EPSG:31469');		//GK
