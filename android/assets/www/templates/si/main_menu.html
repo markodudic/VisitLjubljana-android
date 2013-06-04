@@ -1,39 +1,77 @@
 <script id="tpl_main_menu" type="text/html">
-<div data-role="page" id="main_menu" data-theme="a" class="ztl_remove_from_page">
-	<div data-role="header">
+<div data-role="page" id="main_menu" data-theme="a" class="ztl_remove_from_page" data-rockncoder-jspage="main_menu">
+	<div data-role="header" data-position="fixed">
 		<div class="header_placeholder">
 			<div class="red_line"></div>
-			<div class="header_title_menu">VSEBINE</div>
+			<div class="header_title_menu">{{title}}</div>
 		</div>
 		<div class="header_shadow"></div>
 	</div>
+
 	<div data-role="content" data-theme="a" class="ztl_content ztl_main_menu">	
-		<div class="ui-grid-solo" style="height:260px;">
-			<div class="ui-block-a"><img src="assets/css/ztl_images/main_menu/get_inspired.jpg" onClick="load_trips();"></div>
+	<div id="verticalWrapper">
+	<div id="verticalScroller">
+
+		<div class="ui-grid-solo ztl_height_260" >
+			<div class="ui-block-a ztl_height_260" style="position:relative; background-image:url('assets/css/ztl_images/main_menu/get_inspired.jpg');" onClick="tmp_db(217);">
+				<div class="ztl_main_menu_text">
+					{{img1}}
+				</div>
+			</div>
 		</div>	
-		<div class="ui-grid-a" style="height:170px;">
-			<div class="ui-block-a "><img src="assets/css/ztl_images/main_menu/prireditve.jpg" onClick="tmp_db(218);"></div>
-			<div class="ui-block-b "><img src="assets/css/ztl_images/main_menu/znamenitosti.jpg" onClick="tmp_db(217);"></div>	   
+		<div class="ui-grid-a ztl_height_170" >
+			<div class="ui-block-a ztl_height_170" style="position:relative; background-image:url('assets/css/ztl_images/main_menu/prireditve.jpg');" onClick="tmp_db(0);">
+				<div class="ztl_main_menu_text">
+					{{img2}}
+				</div>
+			</div>
+			<div class="ui-block-b ztl_height_170" style="position:relative; background-image:url('assets/css/ztl_images/main_menu/znamenitosti.jpg');" onClick="tmp_db(217);">
+				<div class="ztl_main_menu_text">
+					{{img3}}
+				</div>
+			</div>
 		</div>
-		<div class="ui-grid-solo" style="height:260px;">
-			<div class="ui-block-a"><img src="assets/css/ztl_images/main_menu/kulinarika.jpg" onClick="tmp_db(219);"></div>
-		</div>	
-		<div class="ui-grid-a" style="height:170px;">
-			<div class="ui-block-a"><img src="assets/css/ztl_images/main_menu/info.jpg" onClick="tmp_db(222);"></div>
-			<div class="ui-block-b"><img src="assets/css/ztl_images/main_menu/ogledi.jpg" onClick="tmp_db(220);"></div>	   
+		<div class="ui-grid-solo ztl_height_260" style="position:relative; background-image:url('assets/css/ztl_images/main_menu/kulinarika.jpg');" onClick="tmp_db(219);" >
+			<div class="ztl_main_menu_text">
+				{{img4}}
+			</div>
 		</div>
-		<div class="ui-grid-solo" style="height:260px;">
-			<div class="ui-block-a"><img src="assets/css/ztl_images/main_menu/nastanitve.jpg" onClick="tmp_db(219);"></div>
-		</div>	
-		<div class="ui-grid-a" style="height:170px;">
-			<div class="ui-block-a"><img src="assets/css/ztl_images/main_menu/zabava.jpg" onClick="tmp_db(222);"></div>
-			<div class="ui-block-b"><img src="assets/css/ztl_images/main_menu/nakupovanje.jpg" onClick="tmp_db(218);"></div>	   
+		<div class="ui-grid-a ztl_height_170" >
+			<div class="ui-block-a ztl_height_170" style="position:relative; background-image:url('assets/css/ztl_images/main_menu/info.jpg');" onClick="tmp_db(224);">
+				<div class="ztl_main_menu_text">
+					{{img5}}
+				</div>
+			</div>
+			<div class="ui-block-b ztl_height_170" style="position:relative; background-image:url('assets/css/ztl_images/main_menu/ogledi.jpg');" onClick="tmp_db(0);">
+				<div class="ztl_main_menu_text">
+					{{img6}}
+				</div>
+			</div>
+		</div>
+		<div class="ui-grid-solo ztl_height_260" style="position:relative; background-image:url('assets/css/ztl_images/main_menu/nastanitve.jpg');" onClick="tmp_db(215);" >
+			<div class="ztl_main_menu_text">
+				{{img7}}
+			</div>
+		</div>
+		<div class="ui-grid-a ztl_height_170" >
+			<div class="ui-block-a ztl_height_170" style="position:relative; background-image:url('assets/css/ztl_images/main_menu/zabava.jpg');" onClick="tmp_db(222);">
+				<div class="ztl_main_menu_text">
+					{{img8}}
+				</div>
+			</div>
+			<div class="ui-block-b ztl_height_170" style="position:relative; background-image:url('assets/css/ztl_images/main_menu/nakupovanje.jpg');" onClick="tmp_db(220);">
+				<div class="ztl_main_menu_text">
+					{{img9}}
+				</div>
+			</div>
 		</div>
 		<!--
 		<div class="ui-grid-solo">
 			<div class="ui-block-a"><button type="v" data-theme="e" onClick="edit_settings();">NASTANITVE</button></div>
 		</div>	
 		-->
+	</div>
+	</div>
 	</div>
 </div>
 </script>
