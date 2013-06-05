@@ -21,15 +21,18 @@
 		<div class="ztl_navigate_events">
 			<div class="ztl_item_shadow"></div>
 			<div class="ztl_item_title_text">
-				<img src="assets/css/ztl_images/star.png" class="img_star">
-				<img src="assets/css/ztl_images/star.png" class="img_star">
-				<img src="assets/css/ztl_images/star.png" class="img_star">
+				<img src="assets/css/ztl_images/star_{{star}}.png" class="img_star">
 			</div>
+			{{#image}}
 			<div class="ztl_item_details_image">
 				<div class="ztl_details_img_crop">
 					<img class="ztl_details_image" src="./uploads/images/{{image}}">
 				</div>
 			</div>
+			{{/image}}
+			{{^image}}
+				<div style="padding-top:40px;">&nbsp;</div>
+			{{/image}}
 			<div style="clear:both;"></div>
 			<div class="ztl_item_content_padding">
 				<div class="ztl_item_buttons">
@@ -42,14 +45,25 @@
 				<div style="clear:both;"></div>
 				<div class="ztl_item_details">
 					<div class="ztl_item_details_title">NASLOV</div>
-					<div class="ztl_item_distance">{{distance}} km</div>
+					<div class="ztl_item_distance">{{distance}}</div>
 					<div style="clear:both;"></div>
 					<div class="grey_line" style="margin-top:10px;"></div>
 				</div>
 				<div style="clear:both;"></div>
 				<div class="ztl_item_details ztl_item_details_text">
-					{{phone}}
-					{{&content}}<br>
+					{{address}}, {{post_number}} {{post}}<br><br>
+					{{#phone}}
+						<div class="red"><img src="assets/css/ztl_images/ztl_phone.jpg" style="height:20px;"> {{phone}}</div>
+						<br>
+					{{/phone}}
+					{{#email}}
+						<div class="red"><img src="assets/css/ztl_images/ztl_mail.jpg" style="height:20px;"> {{email}}</div>
+						<br>
+					{{/email}}
+					{{#www}}
+						<div class="red"><img src="assets/css/ztl_images/ztl_mouse.jpg" style="height:20px;"> {{www}}</div>
+					{{/www}}
+					<br><br>opis ni na voljo....
 				</div>
 			</div>
 		</div>

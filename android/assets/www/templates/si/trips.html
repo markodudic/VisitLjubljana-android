@@ -5,7 +5,7 @@
 				<div class="red_line"></div>
 				<div class="header_space"></div>
 				<div class="header_back" onClick="load_main_screen();"></div>
-				<div class="header_title" onClick="load_main_screen();">NASTANITVE</div>
+				<div class="header_title" onClick="load_main_screen();">{{page_title}}</div>
 				<div class="header_dots"></div>
 				<div style="clear:both;"></div>
 				<div class="header_space"></div>
@@ -32,15 +32,13 @@
 							<div class="ztl_list_header">{{title}}</div>
 						</a>
 						<a href="#" onClick="load_trip_content({{id}}, 'fade', true)" style="text-decoration:none; color:#000000; font-weight:normal;">
-							<div class="ztl_list_content_text">{{phone}}</div>
+							<div class="ztl_list_content_text">{{address}}, {{post_number}} {{post}}</div>
 						</a>
 						<div class="ztl_content_info_left"></div>
 						<div class="ztl_star">
-							<img src="assets/css/ztl_images/star.png" class="img_star">
-							<img src="assets/css/ztl_images/star.png" class="img_star">
-							<img src="assets/css/ztl_images/star.png" class="img_star">
+							<img src="assets/css/ztl_images/star_{{star}}.png" class="img_star">
 						</div>
-						<div class="ztl_distance">{{distance}} km</div>
+						<div class="ztl_distance"><div id="ztl_distance_value_{{id}}"></div></div>
 				</div>
 			</div>
 			<div style="clear:both;"></div>

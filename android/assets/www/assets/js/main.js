@@ -17,6 +17,7 @@ var db 			  = null;
 var group 		  = 0;
 
 var trips   	  = null;
+var trips_title   = "";
 var main_menu     = null;
 
 var window_width = $(window).width();
@@ -164,8 +165,11 @@ function load_page(template, div, data, transition, reverse) {
 			
 			var extra_div_id = "";
 			if (div == 'trips') {
-				extra_div_id = "_"+group;
-				data.extra_div_id = group;
+				console.log(group);
+				
+				extra_div_id 		= "_"+group;
+				data.extra_div_id 	= group;
+				data.page_title 	= trips_title;
 			}
 			
 			var res = $(temp).filter('#tpl_'+div).html();
@@ -179,7 +183,9 @@ function load_page(template, div, data, transition, reverse) {
 			html = html.replace('[[[ztl_footer]]]', footer);
 			
 			if (swipe == 1) {
-				div = div+"_"+data['id'];
+				if (div != "main_menu") {
+					div = div+"_"+data['id'];
+				}
 			}
 
 			//$('body').append(html);
@@ -211,6 +217,7 @@ function load_page(template, div, data, transition, reverse) {
 			} else if (div == "main_menu") {
 				i_scroll("main_menu");
 			}
+			
 			//remove_old_divs(div);
 		}
 	});

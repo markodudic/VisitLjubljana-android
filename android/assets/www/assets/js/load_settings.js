@@ -77,17 +77,27 @@ function populate_db_firstime() {
 	});
 }
 
-function tmp_db(id) {
-	group = id;
-	$.getScript('./assets/js/trips.js', function () {
-		db.transaction(queryDB, errorCB);
-    });
+function tmp_db(id, trips_menu_id) {
+	console.log();
+	
+	trips_title = main_menu['img'+trips_menu_id];
+	
+	if (id == 0) {
+		alert('menu nima nastavljenih vsebin');
+		//load_main_screen();
+	} else {
+		group = id;
+		
+		$.getScript('./assets/js/trips.js', function () {
+			db.transaction(queryDB, errorCB);
+		});
+    }
 }
 
 function queryDB(tx) {
 	console.log("group: "+group);
 	
-	var query = 'SELECT zp.*, zpt.* FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id WHERE zcg.id_group = '+group+' AND zpt.id_language = '+settings.id_lang+' GROUP BY zp.id';
+	var query = 'SELECT zp.*, zpt.title FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id WHERE zcg.id_group = '+group+' AND zpt.id_language = '+settings.id_lang+' GROUP BY zp.id';
 	
 	console.log(query);
     tx.executeSql(query, [], querySuccess, errorCB);
@@ -124,9 +134,6 @@ function load_mobile() {
 		}, fail);
 	} , null); 
 
-	local_db = 0;
-
-
 	if (local_db == 1) {
 		console.log('fajl obstaja');
 		load_moblie_settings();
@@ -160,11 +167,12 @@ function gotFileEntry(fileEntry) {
 function gotFileWriter(writer) {
 	console.log('nalagam writer');
 	console.log(writer);
-
+	console.log(JSON.stringify(settings));
+	
 	writer.onwrite = function(evt) {
+		load_main_menu();
 		load_moblie_settings(); 
 	};
-
 	writer.write(JSON.stringify(settings));
 }
 
@@ -198,6 +206,7 @@ function readAsText(file) {
 		} else {
 			console.log('nastavitve pravilne in nalozene');
 			settings = tmp;
+			load_main_menu();
 			load_page(template_lang+'main_menu.html', 'main_menu', main_menu, 'fade', false);
 		}
 	};
@@ -229,9 +238,16 @@ function load_desktop() {
 	}
 }
 
+function load_settings_page(){
+	load_page('select_language.html', 'select_language', null, 'fade', false);
+}
+
 function load_main_menu() {
 	var language_index = settings.id_lang - 1;
 	
-	main_menu = settings.language_menu[language_index];
+	main_menu = lang.language_menu[language_index];
+	
+	console.log("*********************************************");
+	console.log(JSON.stringify(main_menu));
 	console.log(main_menu);
 }
