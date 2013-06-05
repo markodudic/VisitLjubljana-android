@@ -124,8 +124,7 @@ var init = function (onSelectFeatureFunction) {
     });
 
     function getFeatures() {
-    	//var points = new Array(new Array(461871, 101451));
-    	var points = new Array(new Array(461972, 101050));
+    	var points = new Array(new Array(461972, 101050), new Array(461871, 101451));
     	var features = new Array();
     	
     	for (var i=0;i<points.length;i++) {
