@@ -31,7 +31,7 @@
         dest = new Proj4js.Proj('EPSG:31469');	//GK
 
         //timeout pomeni kolk casa caka na novo pozicijo, enableHighAccuracy ali naj uporabi gps ali samo wifi
-        var options = { timeout: 30000, enableHighAccuracy: false };
+        var options = { timeout: 30000, enableHighAccuracy: true };
         navigator.geolocation.getCurrentPosition(onSuccess, onError);
         watchID = navigator.geolocation.watchPosition(onSuccess, onError, options);
     }
