@@ -13,6 +13,9 @@
     var watchID = null;
     var source = null;
     var dest = null;
+    var correctionX = 4999750;
+    var correctionY = 5000550;
+    var minDistance = 10;
 	var pOld = new Proj4js.Point(0,0);
 	
     //podatki POI-ja
@@ -43,10 +46,10 @@
        
        //preverim èe se je lokacija spremenila saj za 10m
        console.log(Math.abs(p.x - pOld.x));
-       if ((Math.abs(p.x - pOld.x) > 10) || (Math.abs(p.y - pOld.y) > 10)) {
+       if ((Math.abs(p.x - pOld.x) > minDistance) || (Math.abs(p.y - pOld.y) > minDistance)) {
 	       pOld = p;
-	       var px=p.x-4999750;
-	       var py=p.y-5000550;
+	       var px=p.x-correctionX;
+	       var py=p.y-correctionY;
 	       
 	       curr.innerHTML = 'x: '  + px + '; ' +  'y: ' + py;
 	       for (var i=0;i<points.length;i++) {
