@@ -174,6 +174,7 @@ function gotFileWriter(writer) {
 		load_moblie_settings(); 
 	};
 	writer.write(JSON.stringify(settings));
+	document.location.href="index.html";
 }
 
 function save_mobile_settings() {
