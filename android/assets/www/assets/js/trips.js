@@ -40,7 +40,9 @@ function load_trip_query(tx) {
 	console.log("trip id  "+trip_id);
 	console.log("SELECT * FROM ztl_poi WHERE id='"+trip_id+"'");
 	console.log(trip_id);
-    tx.executeSql("SELECT * FROM ztl_poi WHERE id="+trip_id, [], load_trip_success, errorCB);
+	var query = 'SELECT zp.*, zpt.title, zcg.id_group FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id WHERE zcg.id_group = '+group+' AND zp.id = '+trip_id+' AND zpt.id_language = '+settings.id_lang+' GROUP BY zp.id';
+    //tx.executeSql("SELECT * FROM ztl_poi WHERE id="+trip_id, [], load_trip_success, errorCB);
+    tx.executeSql(query, [], load_trip_success, errorCB);
 }
 
 

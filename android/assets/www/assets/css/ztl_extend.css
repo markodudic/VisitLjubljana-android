@@ -24,7 +24,7 @@
 
 .red {
     color:#ed1c24;
-    font-size:20px;
+    font-size:1.0em;
 }
 
 .black_line {
@@ -55,6 +55,7 @@
 .header_title_menu {
 	padding:10px 0px 5px 15px;
 	height:25px;
+	text-transform:uppercase;
 }
 
 .header_space {
@@ -153,12 +154,12 @@
 }
 
 .ztl_item_details_title{
-    font-size:1.1em;
+    font-size:0.9em;
 }
 
 .ztl_item_details_text {
 	color:#ffffff; 
-	font-size:1.2em;
+	font-size:1.0em;
 }
 
 #media_player {
