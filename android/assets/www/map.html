@@ -5,16 +5,18 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1"> 
 	<title>Ztl mobile flow SVN</title> 
 	<!--style-->
-	<!--style-->
-	
 	<link rel="stylesheet" href="assets/css/jquery.mobile-1.3.1.css" />
 	<link rel="stylesheet" href="assets/css/ztl.css"/>
 	<link rel="stylesheet" href="assets/css/ztl_extend.css"/>
+	
+	<link rel="stylesheet/less" type="text/css" href="assets/css/ztl_extend.less" />
 	
 	<!--library js-->
 	<script src="assets/js/cordova-2.7.0.js"></script>
 	<script src="assets/js/jquery-1.6.4.min.js"></script>
 	<script src="assets/js/jquery.mobile-1.0.1.min.js"></script>
+	
+	<script src="assets/js/less-1.3.3.js"></script>
 	
 	<link rel="stylesheet" href="assets/css/style.mobile.css"/>
 	<link rel="stylesheet" href="assets/css/style.mobile-jq.css"/>
@@ -22,7 +24,7 @@
 	<script src="assets/js/OpenLayers.mobile.js"></script>
 	<script src="assets/js/mobile-base-ztl.js"></script>
 	<script src="assets/js/mobile-jq.js"></script>
-    <script src="assets/js/proj4js-combined.js"></script>
+	<script src="assets/js/proj4js-combined.js"></script>
 </head> 
 <body>
 	<div data-role="page" id="mappage">
@@ -31,8 +33,8 @@
 				<div class="header_placeholder">
 					<div class="red_line"></div>
 					<div class="header_space"></div>
-					<div class="header_back" onClick="load_main_screen();"></div>
-					<div class="header_title" onClick="load_main_screen();">Map</div>
+					<div class="header_back"></div>
+					<div class="header_title" onclick="location.href='index.html'">Map</div>
 					<div class="header_dots"></div>
 					<div style="clear:both;"></div>
 					<div class="header_space"></div>
@@ -53,7 +55,7 @@
 					<ul>
 						<li><a href="#" data-role="button"><img src="assets/css/ztl_images/icon_1.png" style="width:25px;"></a></li>
 						<li><a href="#" data-role="button" data-rel="dialog" data-transition="pop" onClick="alert('dela samo, ko si na izbranem poi-u');"><img src="assets/css/ztl_images/icon_2.png" style="width:25px;"></a></li>
-						<li><a href="index.html#poi_list" data-role="link" data-ajax="false" data-role="button"><img src="assets/css/ztl_images/icon_3.png" style="width:25px;"></a></li>
+						<li><a href="index.html" data-role="link" data-ajax="false" data-role="button"><img src="assets/css/ztl_images/icon_3.png" style="width:25px;"></a></li>
 						<li><a href="map.html#mappage" data-role="link" data-ajax="false" data-role="button"><img src="assets/css/ztl_images/icon_4.png" style="width:25px;"></a></li>
 						<li><a href="#" data-role="button"><img src="assets/css/ztl_images/icon_5.png" style="width:25px;"></a></li>
 					</ul>

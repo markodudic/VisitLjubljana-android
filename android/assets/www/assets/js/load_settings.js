@@ -1,3 +1,4 @@
+var tmi = 0;
 function load_settings() {
 	swipe = 0;
 	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
@@ -80,7 +81,11 @@ function populate_db_firstime() {
 function tmp_db(id, trips_menu_id) {
 	console.log();
 	
-	trips_title = main_menu['img'+trips_menu_id];
+	if (trips_menu_id > 0) {
+		tmi = trips_menu_id
+	}
+	
+	trips_title = main_menu['img'+tmi];
 	
 	if (id == 0) {
 		alert('menu nima nastavljenih vsebin');
@@ -97,7 +102,7 @@ function tmp_db(id, trips_menu_id) {
 function queryDB(tx) {
 	console.log("group: "+group);
 	
-	var query = 'SELECT zp.*, zpt.title FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id WHERE zcg.id_group = '+group+' AND zpt.id_language = '+settings.id_lang+' GROUP BY zp.id';
+	var query = 'SELECT zp.*, zpt.title, zcg.id_group FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id WHERE zcg.id_group = '+group+' AND zpt.id_language = '+settings.id_lang+' GROUP BY zp.id';
 	
 	console.log(query);
     tx.executeSql(query, [], querySuccess, errorCB);
