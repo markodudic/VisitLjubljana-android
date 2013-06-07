@@ -62,7 +62,7 @@ function on_device_ready() {
 
 	load_settings();
 	init_gps();
-	navigator splaschscreen.hide();
+	navigator.splaschscreen.hide();
 }
 
 var watchID = null;
