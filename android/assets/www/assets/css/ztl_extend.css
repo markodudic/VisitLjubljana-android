@@ -177,6 +177,13 @@
         padding-top: 40px;
         padding-bottom: 50px;
     }
+    
+    .ztl_select_language {
+		width: 100%;
+		margin-top: 20px;
+		margin-left:15px;
+		margin-right:15px;
+	}
 }
 
 @media (min-width: 321px) and (max-width: 360px){
@@ -184,6 +191,13 @@
         padding-top: 44px;
         padding-bottom: 52px;
     }
+    
+    .ztl_select_language {
+		width: 100%;
+		margin-top: 45px;
+		margin-left:15px;
+		margin-right:15px;
+	}
 }
 
 @media (min-width: 361px) and (max-width: 599px) {
@@ -191,6 +205,13 @@
         padding-top: 44px;
         padding-bottom: 55px;
     }
+    
+    .ztl_select_language {
+		width: 100%;
+		margin-top: 45px;
+		margin-left:15px;
+		margin-right:15px;
+	}
 }
 
 @media (min-width: 600px){
@@ -198,6 +219,13 @@
         padding-top: 44px;
         padding-bottom: 55px;
     }
+    
+    .ztl_select_language {
+		width: 100%;
+		margin-top: 70px;
+		margin-left:15px;
+		margin-right:15px;
+	}
 }
 
 .ztl_main_menu {

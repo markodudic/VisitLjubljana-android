@@ -182,6 +182,12 @@ function get_poi_data() {
 }
 
 function load_poi_query(tx) {
+    /*dokler da nimamo vsebin pofejkam hash za drugi menu*/
+    console.log("hash   "+hash);
+    if (hash == "mappage") {
+        hash = 645;
+    }
+    
     var query = 'SELECT zp.* FROM ztl_poi zp WHERE zp.id = '+hash;
     tx.executeSql(query, [], load_poi_success, errorCB);
 }
@@ -200,4 +206,10 @@ function errorCB(err) {
     console.log("err");
     console.log(err.code);
     console.log(err);
+}
+
+function back_to_content() {
+    console.log("go back");
+    console.log("index.html#go_to_content_"+hash);
+    window.location.href="index.html#go-to-content_"+hash;
 }
