@@ -12,8 +12,12 @@ var zoom=13;
 var correctionX = 4999750;
 var correctionY = 5000550;
 
-var init = function (onSelectFeatureFunction) {
+var pts = null;
+var db = null;
 
+var init = function (onSelectFeatureFunction) {
+    db = window.sqlitePlugin.openDatabase("Database", "1.0", "ztl", -1);
+    get_poi_data();
     var vector = new OpenLayers.Layer.Vector("Vector Layer", {});
 	Proj4js.defs["EPSG:900913"]= "+title=GoogleMercator +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs";
     Proj4js.defs["EPSG:31469"] = "+proj=tmerc +lat_0=0 +lon_0=15 +k=1 +x_0=5500000 +y_0=0 +ellps=bessel +datum=potsdam +units=m +no_defs";
@@ -126,9 +130,18 @@ var init = function (onSelectFeatureFunction) {
     });
 
     function getFeatures() {
-    	var points = new Array(new Array(461972, 101050), new Array(461871, 101451));
+        console.log("get features");
+    	var points = new Array(pts);
     	var features = new Array();
     	
+        //marko tu so koordinate array points je bil prej array arrayev ... tudi zdaj ga tako vracam ... a pogledas zakaj ne izrise pointa
+        console.log('********************* --- koordinate poi-a --- ***************************');
+        console.log(JSON.stringify(points));
+        console.log(points[0]);
+        console.log("tocka x:"+points[0][0]);
+        console.log("tocka y:"+points[0][1]);
+        console.log('********************* --- koordinate poi-a --- ***************************');
+
     	for (var i=0;i<points.length;i++) {
             //na koordinatePOI-ja iz baze se doda 5.000.000 zato da bo v projekciji GK zona 5 oz. EPSG:31469	
     		//ne vem zakaj ampak koordinate po transformaciji strizejo za -350 in 550. GK koordinate so ok.
@@ -163,3 +176,28 @@ var init = function (onSelectFeatureFunction) {
     }
 
 };
+
+function get_poi_data() {
+    db.transaction(load_poi_query, errorCB);
+}
+
+function load_poi_query(tx) {
+    var query = 'SELECT zp.* FROM ztl_poi zp WHERE zp.id = '+hash;
+    tx.executeSql(query, [], load_poi_success, errorCB);
+}
+
+function load_poi_success(tx, results) {
+    console.log("load_trip_success  ok");
+    console.log(JSON.stringify(results));
+
+    var tmp = results.rows.item(0);
+
+    pts = new Array(tmp.coord_x, tmp.coord_y);
+    console.log(JSON.stringify(pts));
+}
+
+function errorCB(err) {
+    console.log("err");
+    console.log(err.code);
+    console.log(err);
+}
