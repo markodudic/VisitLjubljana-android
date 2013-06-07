@@ -145,7 +145,7 @@ var init = function (onSelectFeatureFunction) {
     	for (var i=0;i<points.length;i++) {
             //na koordinatePOI-ja iz baze se doda 5.000.000 zato da bo v projekciji GK zona 5 oz. EPSG:31469	
     		//ne vem zakaj ampak koordinate po transformaciji strizejo za -350 in 550. GK koordinate so ok.
-	    	var point = transform (points[i][0]+correctionX, points[i][1]+correctionY);
+	    	var point = transform (parseFloat(points[i][0])+correctionX, parseFloat(points[i][1])+correctionY);
 	    	var feature = {	  "type": "Feature", 
 				              "geometry": {"type": "Point", 
 			       	  		   				"coordinates": [point.lon, point.lat]},
