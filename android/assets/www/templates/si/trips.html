@@ -23,7 +23,12 @@
 				<div class="ztl_list_image">
 					<div class="ztl_list_img_crop">
 						<a href="#" onClick="load_trip_content({{id}}, 'fade', true)" style="text-decoration:none; color:#000000; font-weight:normal;">
-							<img class="ztl_items_image" src="./uploads/thumbs/{{image}}">
+							{{#image}}
+								<img class="ztl_items_image" src="./uploads/thumbs/{{image}}">
+							{{/image}}
+							{{^image}}
+								<img class="ztl_items_image" src="./uploads/noimage.png">
+							{{/image}}
 						</a>
 					</div>
 				</div>

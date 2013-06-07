@@ -1,4 +1,8 @@
 // Start with the map page
+console.log("poi data poi data poi data");
+var hash = window.location.hash;
+hash = hash.replace(/^.*?#/,'');
+
 window.location.replace(window.location.href.split("#")[0] + "#mappage");
 
 var selectedFeature = null;
