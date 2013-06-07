@@ -32,21 +32,37 @@ var file = "/android_asset/www/uploads/mp3/mp3_test.mp3";
 document.addEventListener("deviceready", on_device_ready, false);
 
 function on_device_ready() {
+	console.log("device ready");
 	navigator.splashscreen.show();
 	db = window.sqlitePlugin.openDatabase("Database", "1.0", "ztl", -1);
 
 	$('body').on( 'swipeleft', swipe_left_handler );
 	$('body').on( 'swiperight', swipe_right_handler );
 
+	
 	if (window.location.hash == "#poi_list") {
 		load_trips();
 	} else {
 		load_settings();	
 	}
 
+	var hash_string = window.location.hash;
+	hash_string = hash_string.split("_");
+	console.log("hash string:"+hash_string);
+	
+	/*
+	if (hash_string[1] > 0) {
+		console.log("nalozi vsebino");
+		$.getScript('./assets/js/trips.js', function () {
+			console.log("nalozi vsebino content");
+	        load_trip_content(hash_string[1] , 'fade', false);
+	    });
+	}
+	*/
+
 	load_settings();
 	init_gps();
-	navigator.splashscreen.hide();
+	navigator splaschscreen.hide();
 }
 
 var watchID = null;
@@ -98,17 +114,17 @@ function onSuccess_gps(position) {
 }
 
 function lineDistance( p1x, p1y, p2x, p2y ) {
-	var xs = p2x - p1x;
-	xs = xs * xs;
-	var ys = p2y - p1y;
-	ys = ys * ys;
-	//return Math.round( (Math.floor(Math.sqrt( xs + ys )/1000)) * 10 ) / 10;
-	var num = Math.sqrt( xs + ys )/1000;
-	//num = Math.round(num*Math.pow(10,1))/Math.pow(10,1);
-	if (num > 1)
-		return num.toFixed(1);
-	else
-		return num.toFixed(3);
+       var xs = p2x - p1x;
+       xs = xs * xs;
+       var ys = p2y - p1y;
+       ys = ys * ys;
+       //return Math.round( (Math.floor(Math.sqrt( xs + ys )/1000)) * 10 ) / 10;
+       var num = Math.sqrt( xs + ys )/1000;
+       //num = Math.round(num*Math.pow(10,1))/Math.pow(10,1);
+       if (num > 1)
+               return num.toFixed(1);
+       else
+               return num.toFixed(3);
 }
 
 function load_main_screen() {
@@ -255,20 +271,25 @@ function load_page(template, div, data, transition, reverse) {
 			//$('body').append(html);
 			$('body').append(html).trigger('create');
 
-			$("#media_payer").html(media);
+			//$("#media_payer").html(media);
 			
 			/*
 			$('#sortable').sortable();
 			$("#sortable").disableSelection();
 			*/
 			
+
+
 			//ce so karte inicializiram skripto
 			console.log("div: "+div);
 			if (div == "show_map") {
 				show_map();
 			}
 			
-			$.mobile.changePage( "#"+div+extra_div_id, {
+
+			console.log("redirect here #"+div+extra_div_id);
+
+			$.mobile.changePage("#"+div+extra_div_id, {
 				transition: transition,
 				reverse: reverse,
 				changeHash: false,
@@ -283,7 +304,7 @@ function load_page(template, div, data, transition, reverse) {
 			}
 			
 			navigator.geolocation.getCurrentPosition(onSuccess_gps, onError_gps);
-			//remove_old_divs(div);
+			remove_old_divs(div);
 		}
 	});
 }
