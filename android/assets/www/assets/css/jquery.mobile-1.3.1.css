@@ -1164,22 +1164,12 @@ div.ui-mobile-viewport { overflow-x: hidden; }
 .ui-page-pre-in {
 	opacity: 0;
 }
-.in {
-	-webkit-animation-timing-function: ease-out;
-	-webkit-animation-duration: 350ms;
-	-moz-animation-timing-function: ease-out;
-	-moz-animation-duration: 350ms;
-	animation-timing-function: ease-out;
-	animation-duration: 350ms;
+
+.in, .out {
+    -webkit-animation-timing-function: ease-in-out;
+    -webkit-animation-duration: 100ms !important;
 }
-.out {
-	-webkit-animation-timing-function: ease-in;
-	-webkit-animation-duration: 225ms;
-	-moz-animation-timing-function: ease-in;
-	-moz-animation-duration: 225ms;
-	animation-timing-function: ease-in;
-	animation-duration: 225ms;
-}
+
 @-webkit-keyframes fadein {
     from { opacity: 0; }
     to { opacity: 1; }

@@ -29,17 +29,19 @@ var ztl_content_width = window_width - img_width;
 var file = "/android_asset/www/uploads/mp3/mp3_test.mp3";
 //var file = "uploads/mp3/mp3_test.mp3";
 
-document.addEventListener("deviceready", on_device_ready, false);
 
+document.addEventListener("deviceready", on_device_ready, false);
+navigator.splashscreen.show();
 function on_device_ready() {
 	console.log("device ready");
-	navigator.splashscreen.show();
+
 	db = window.sqlitePlugin.openDatabase("Database", "1.0", "ztl", -1);
 
 	$('body').on( 'swipeleft', swipe_left_handler );
 	$('body').on( 'swiperight', swipe_right_handler );
 
 	
+	/*
 	if (window.location.hash == "#poi_list") {
 		load_trips();
 	} else {
@@ -178,55 +180,9 @@ function swipe_right_handler(event) {
 	}
 }
 
-/*
-function swipe_left_handler(event) {
-	if (swipe == 1) {
-		if (db_type == 1) {
-			var j = 0;
-			var items = trips.items;
-
-			for (i=0; i<items.length; i++) {
-				if (items[i]['id'] == current) {
-					j = i-1;
-				}
-			}
-			
-			if (j == -1) {
-				j = items.length-1;
-			}
-			
-			current = items[j]['id'];
-			
-			load_page(template_lang+'trip.html', 'div_trip', trips.items[j], 'slide', false);
-		}
-	}
-}
-
-function swipe_right_handler(event) {
-	if (swipe == 1) {
-		if (db_type == 1) {
-			var j = 0;
-			var items = trips.items;
-
-			for (i=0; i<items.length; i++) {
-				if (items[i]['id'] == current) {
-					j = i+1;
-				}
-			}
-			
-			if (j == items.length) {
-				j = 0;
-			}
-			
-			current = items[j]['id'];
-			
-			load_page(template_lang+'trip.html', 'div_trip', trips.items[j], 'slide', true);
-		}
-	}
-}
-*/
-
 function load_page(template, div, data, transition, reverse) {
+	console.log("loading page");
+
 	if (footer == "") {
 		load_footer();
 	}
@@ -272,13 +228,6 @@ function load_page(template, div, data, transition, reverse) {
 			$('body').append(html).trigger('create');
 
 			//$("#media_payer").html(media);
-			
-			/*
-			$('#sortable').sortable();
-			$("#sortable").disableSelection();
-			*/
-			
-
 
 			//ce so karte inicializiram skripto
 			console.log("div: "+div);
@@ -310,8 +259,6 @@ function load_page(template, div, data, transition, reverse) {
 }
 
 function i_scroll(div_id) {
-	console.log("iscroll> "+div_id);
-
 	// create our own namespace
 	var RocknCoder = RocknCoder || {};
 	RocknCoder.Pages = RocknCoder.Pages || {};
