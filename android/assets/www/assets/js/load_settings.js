@@ -1,5 +1,6 @@
 var tmi = 0;
 function load_settings() {
+	console.log("load settings1");
 	swipe = 0;
 	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
 		
