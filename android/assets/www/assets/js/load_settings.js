@@ -214,6 +214,7 @@ function readAsText(file) {
 			console.log('nastavitve pravilne in nalozene');
 			settings = tmp;
 			load_main_menu();
+			swipe = 0;
 			load_page(template_lang+'main_menu.html', 'main_menu', main_menu, 'fade', false);
 		}
 	};
@@ -241,6 +242,7 @@ function load_desktop() {
 	if (settings.id_lang == 0) {
 		load_page('select_language.html', 'select_language', null, 'fade', false);
 	} else {
+		swipe = 0;
 		load_page(template_lang+'main_menu.html', 'main_menu', main_menu, 'fade', false);
 	}
 }

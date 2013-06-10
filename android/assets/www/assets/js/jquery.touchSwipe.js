@@ -963,25 +963,7 @@
 							}
 							break;
 	
-						case UP:
-							//Trigger the event
-					        $element.trigger('swipeUp', [direction, distance, duration, fingerCount]);
-					
-					        //Fire the callback
-							if (options.swipeUp) {
-								ret = options.swipeUp.call($element, event, direction, distance, duration, fingerCount);
-							}
-							break;
-	
-						case DOWN:
-							//Trigger the event
-					        $element.trigger('swipeDown', [direction, distance, duration, fingerCount]);
-					
-					        //Fire the callback
-							if (options.swipeDown) {
-								ret = options.swipeDown.call($element, event, direction, distance, duration, fingerCount);
-							}
-							break;
+						
 					}
 				}
 			}
@@ -1207,17 +1189,7 @@
 						}
 						break;
 
-					case UP:
-						if ((options.swipeUp && auto) || (!auto && options.allowPageScroll != VERTICAL)) {
-							jqEvent.preventDefault();
-						}
-						break;
-
-					case DOWN:
-						if ((options.swipeDown && auto) || (!auto && options.allowPageScroll != VERTICAL)) {
-							jqEvent.preventDefault();
-						}
-						break;
+					
 				}
 			}
 
