@@ -32,10 +32,9 @@ var file = "/android_asset/www/uploads/mp3/mp3_test.mp3";
 
 
 document.addEventListener("deviceready", on_device_ready, false);
-//navigator.splashscreen.show();
-
 
 function on_device_ready() {
+	navigator.splashscreen.show();
 	console.log("device ready");
 	db = window.sqlitePlugin.openDatabase("Database", "1.0", "ztl", -1);
 
@@ -43,7 +42,7 @@ function on_device_ready() {
 		//Enable swiping...
 		$("body").swipe( {
 		//Generic swipe handler for all directions
-		swipe:function(event, direction, distance, duration, fingerCount) {
+		swipe:function(swipe, direction, distance, duration, fingerCount) {
 			console.log("You swiped " + direction );  
 
 			if (direction == "left") {
@@ -53,8 +52,10 @@ function on_device_ready() {
 		  }
 		},
 		//Default is 75px, set to 0 for demo so any distance triggers swipe
-			threshold:150,
-			allowPageScroll:"vertical"
+			threshold:100,
+			allowPageScroll:"vertical",
+			swipeUp: false,
+			swipeDown: false,
 		});
 	});
 
@@ -153,6 +154,7 @@ function lineDistance( p1x, p1y, p2x, p2y ) {
 
 function load_main_screen() {
 	console.log("load_main_screen");
+	swipe = 0;
 	load_page(template_lang+'main_menu.html', 'main_menu', main_menu, 'fade', false);
 }
 
@@ -250,16 +252,9 @@ function load_page(template, div, data, transition, reverse) {
 				}
 				$("body").swipe("enable");
 			} else {
-
 				$("body").swipe("disable");
 			}
 
-
-			//$('body').append(html);
-			//$('body').append(html).trigger('create');
-
-			//console.log(html);
-			
 
 			//$("#media_payer").html(media);
 
@@ -269,19 +264,8 @@ function load_page(template, div, data, transition, reverse) {
 				show_map();
 			}
 
-			/*
-			console.log("redirect here #"+div+extra_div_id);
 
-			$.mobile.changePage("#"+div+extra_div_id, {
-				transition: transition,
-				reverse: reverse,
-				changeHash: false,
-			});
-
-			
-			*/
-			
-			/*borut temp iscrol je treba dodat verzijo za jq in ne jqm
+			/*			
 			if (div == "trips") {
 				i_scroll("trips");
 			} else if (div == "trip") {
@@ -305,10 +289,16 @@ function animate_div(div, transition, reverse) {
 	console.log("nalozen div: *********************");
 	console.log("nalozen div: izbran div      :"+div);
 	
-	//$("#"+div).slideDown();
-	
+	if (transition == "slide") {
+		$("body").swipe("disable");
+		$("#"+div).hide();
 
-	
+		if (reverse == true) {
+			 $("#"+div).show("slide", { direction: "left" }, 400, function() {$("body").swipe("enable");}); 
+		} else {
+			 $("#"+div).show("slide", { direction: "right" }, 400, function() {$("body").swipe("enable");}); 
+		}
+	}
 
 	remove_old_divs(div);
 }
@@ -356,8 +346,12 @@ function i_scroll(div_id) {
 		init:function () {
 		  width = $(window).width();
 		  height = $(window).height();
-		  headerHeight = $("header", $.mobile.activePage).height();
-		  footerHeight = $("footer", $.mobile.activePage).height();
+		  //headerHeight = $("header", $.mobile.activePage).height();
+		  //footerHeight = $("footer", $.mobile.activePage).height();
+		  
+		  headerHeight = 0;
+		  footerHeight = 0;
+
 		  contentHeight = height - headerHeight - footerHeight + iPhoneHeight;
 		},
 		getContent:function () {
@@ -380,7 +374,7 @@ function i_scroll(div_id) {
 		      var dim = RocknCoder.Dimensions.getContent();
 		      $("#verticalWrapper").css('height', dim.height);
 		      myScroll = new iScroll('verticalWrapper', { hScrollbar: false, vScrollbar: false} );
-		      console.log("iscroll> ****");
+		      console.log("iscroll> trips****");
 		    },
 		    pagehide:function () {
 		      myScroll.destroy();
@@ -397,8 +391,11 @@ function i_scroll(div_id) {
 		      // determine the height dynamically
 		      var dim = RocknCoder.Dimensions.getContent();
 		      $("#verticalWrapper").css('height', dim.height);
+		      
+		      //myScroll = new iScroll('verticalWrapper', { hScrollbar: false, vScrollbar: false} );
 		      myScroll = new iScroll('verticalWrapper', { hScrollbar: false, vScrollbar: false} );
-		      console.log("iscroll> ****");
+		      
+		      console.log("iscroll> trip****");
 		    },
 		    pagehide:function () {
 		      myScroll.destroy();
@@ -407,6 +404,7 @@ function i_scroll(div_id) {
 		  };
 		}());
 	} else if (div_id == "main_menu") {
+		console.log("iscroll> main menu start****");
 		RocknCoder.Pages.main_menu = (function () {
 		  var myScroll;
 		  return {
@@ -416,7 +414,8 @@ function i_scroll(div_id) {
 		      var dim = RocknCoder.Dimensions.getContent();
 		      $("#verticalWrapper").css('height', dim.height);
 		      myScroll = new iScroll('verticalWrapper', { hScrollbar: false, vScrollbar: false} );
-		      console.log("iscroll> ****");
+		      
+		      console.log("iscroll> main menu****");
 		    },
 		    pagehide:function () {
 		      myScroll.destroy();
@@ -462,6 +461,7 @@ function select_language(id) {
 
 	if (settings_type == 1) {
 		//nalozim glavni menu
+		swipe = 0;
 		load_page(template_lang+'main_menu.html', 'main_menu', main_menu, 'fade', false);
 	} else {
 		console.log('shrani mobilno');
