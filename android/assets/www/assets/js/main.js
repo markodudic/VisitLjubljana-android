@@ -111,7 +111,7 @@ function init_gps() {
     //timeout pomeni kolk casa caka na novo pozicijo, enableHighAccuracy ali naj uporabi gps ali samo wifi
     var options = { timeout: 10000, enableHighAccuracy: true };
     navigator.geolocation.getCurrentPosition(onSuccess_gps, onError_gps);
-    //watchID = navigator.geolocation.watchPosition(onSuccess_gps, onError_gps, options);
+    watchID = navigator.geolocation.watchPosition(onSuccess_gps, onError_gps, options);
 }
 
 function onError_gps(error) {
@@ -119,23 +119,24 @@ function onError_gps(error) {
 }
 
 function onSuccess_gps(position) {
-	console.log("work gps");
-
+	if (position==undefined) return;
+	console.log("work gps="+position.coords.longitude+":"+position.coords.latitude);
+	
     var p = new Proj4js.Point(position.coords.longitude, position.coords.latitude); 
     Proj4js.transform(source, dest, p);  
     
 	//gremo crez vse elemente na pregledu, ki imajo kooridinate
-	$('input[name^="ztl_cord_"]').each(function( index ) {
-		var geo_stuff = $(this).val().split("#");
-	    //if ((Math.abs(p.x - pOld.x) > minDistance) || (Math.abs(p.y - pOld.y) > minDistance)) {
-		       pOld = p;
+    if ((Math.abs(p.x - pOld.x) > minDistance) || (Math.abs(p.y - pOld.y) > minDistance)) {
+    	   $('input[name^="ztl_cord_"]').each(function( index ) {
+        	   pOld = p;
+    		   var geo_stuff = $(this).val().split("#");
 		       var px=p.x-correctionX;
 		       var py=p.y-correctionY;
 		       if (geo_stuff[1] != "0" || geo_stuff[2] != "0") {
 		    	   $("div#ztl_distance_value_"+geo_stuff[0]).html(lineDistance(px, py, geo_stuff[1], geo_stuff[2])+" km");
 		       }
-	    //}
-	});
+    	   }); 
+    }
 }
 
 function lineDistance( p1x, p1y, p2x, p2y ) {
@@ -274,9 +275,9 @@ function load_page(template, div, data, transition, reverse) {
 				i_scroll("main_menu");
 			}
 			*/
-
-			//borut temp zakomentiram racunanje razdalje
-			//navigator.geolocation.getCurrentPosition(onSuccess_gps, onError_gps);
+			
+			pOld = new Proj4js.Point(0,0);
+			navigator.geolocation.getCurrentPosition(onSuccess_gps, onError_gps);
 			
 			animate_div(div+extra_div_id, transition, reverse);
 		}
