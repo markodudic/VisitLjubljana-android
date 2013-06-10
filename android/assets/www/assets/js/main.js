@@ -30,17 +30,38 @@ var file = "/android_asset/www/uploads/mp3/mp3_test.mp3";
 //var file = "uploads/mp3/mp3_test.mp3";
 
 
+
 document.addEventListener("deviceready", on_device_ready, false);
-navigator.splashscreen.show();
+//navigator.splashscreen.show();
+
+
 function on_device_ready() {
 	console.log("device ready");
-
 	db = window.sqlitePlugin.openDatabase("Database", "1.0", "ztl", -1);
 
-	$('body').on( 'swipeleft', swipe_left_handler );
-	$('body').on( 'swiperight', swipe_right_handler );
+	$(function() {      
+		//Enable swiping...
+		$("body").swipe( {
+		//Generic swipe handler for all directions
+		swipe:function(event, direction, distance, duration, fingerCount) {
+			console.log("You swiped " + direction );  
 
-	
+			if (direction == "left") {
+				swipe_left_handler();
+			} else if (direction == "right") {
+				swipe_right_handler();
+		  }
+		},
+		//Default is 75px, set to 0 for demo so any distance triggers swipe
+			threshold:150,
+			allowPageScroll:"vertical"
+		});
+	});
+
+	$("body").swipe("disable");
+	//$('body').on( 'swipeleft', swipe_left_handler );
+	//$('body').on( 'swiperight', swipe_right_handler );
+
 	/*
 	if (window.location.hash == "#poi_list") {
 		load_trips();
@@ -64,8 +85,9 @@ function on_device_ready() {
 
 	load_settings();
 	init_gps();
-	navigator.splaschscreen.hide();
+	//navigator.splaschscreen.hide();
 }
+
 
 var watchID = null;
 var source  = null;
@@ -217,15 +239,27 @@ function load_page(template, div, data, transition, reverse) {
 			}
 
 			html = html.replace('[[[ztl_footer]]]', footer);
+						
+			$('body').append(html);
 			
 			if (swipe == 1) {
 				if (div != "main_menu") {
 					div = div+"_"+data['id'];
+
+					console.log("slide left/right");
 				}
+				$("body").swipe("enable");
+			} else {
+
+				$("body").swipe("disable");
 			}
 
+
 			//$('body').append(html);
-			$('body').append(html).trigger('create');
+			//$('body').append(html).trigger('create');
+
+			//console.log(html);
+			
 
 			//$("#media_payer").html(media);
 
@@ -234,8 +268,8 @@ function load_page(template, div, data, transition, reverse) {
 			if (div == "show_map") {
 				show_map();
 			}
-			
 
+			/*
 			console.log("redirect here #"+div+extra_div_id);
 
 			$.mobile.changePage("#"+div+extra_div_id, {
@@ -244,6 +278,10 @@ function load_page(template, div, data, transition, reverse) {
 				changeHash: false,
 			});
 
+			
+			*/
+			
+			/*borut temp iscrol je treba dodat verzijo za jq in ne jqm
 			if (div == "trips") {
 				i_scroll("trips");
 			} else if (div == "trip") {
@@ -251,11 +289,42 @@ function load_page(template, div, data, transition, reverse) {
 			} else if (div == "main_menu") {
 				i_scroll("main_menu");
 			}
+			*/
+
+			//borut temp zakomentiram racunanje razdalje
+			//navigator.geolocation.getCurrentPosition(onSuccess_gps, onError_gps);
 			
-			navigator.geolocation.getCurrentPosition(onSuccess_gps, onError_gps);
-			remove_old_divs(div);
+			animate_div(div+extra_div_id, transition, reverse);
 		}
 	});
+}
+
+function animate_div(div, transition, reverse) {
+	
+	console.log("remove_old_divs");
+	console.log("nalozen div: *********************");
+	console.log("nalozen div: izbran div      :"+div);
+	
+	//$("#"+div).slideDown();
+	
+
+	
+
+	remove_old_divs(div);
+}
+
+function remove_old_divs(div) {
+	var loaded_divs = $('body').find('.ztl_remove_from_page');
+	loaded_divs.each(function() {
+		console.log("nalozen div: "+this.id);
+		console.log(this);
+		if (this.id != div) {
+			console.log("nalozen div: ------------- odstrani ----------------- "+this.id);
+			$(this).remove(); 
+		}
+	});
+
+	console.log("nalozen div: *********************");
 }
 
 function i_scroll(div_id) {
@@ -381,15 +450,6 @@ function load_media() {
 		dataType: 'html',
 		success:function(temp){
 			media = $(temp).filter('#tpl_ztl_media_player').html();
-		}
-	});
-}
-
-function remove_old_divs(div) {
-	var loaded_divs = $('body').find('.ztl_remove_from_page');
-	loaded_divs.each(function() {
-		if (this.id != div) {
-			$('body').remove(this);
 		}
 	});
 }
