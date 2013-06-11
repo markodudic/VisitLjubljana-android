@@ -177,20 +177,27 @@ a:active {text-decoration:none;}
 }
 
 .ztl_distance{
-    font-size:1em;
+    font-size:1.2em;
     color:#ffffff;
     font-family: 'robotocondensed';
     position: absolute;
     bottom: 0;
     right: 0;
-    padding:0px 15px 5px 0px;
+    padding:5px 10px 0px 0px;
 }
 
 .ztl_distance_poi {
     font-family: 'robotocondensed';
-     font-size:1.2em;
-     padding-right: 8%;
+    font-size:1.2em;
+    padding-right: 4%;
 }
+
+.ztl_distance_arrow_img {
+    padding-top: 10px;
+    height:20px;
+}
+
+
 .ztl_star{
     font-size:1em;
     color:#ffffff;

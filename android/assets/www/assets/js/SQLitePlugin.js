@@ -87,7 +87,7 @@
   SQLitePluginTransactionCB = {};
   SQLitePluginTransactionCB.queryCompleteCallback = function(transId, queryId, result) {
     var query, x;
-    console.log("SQLitePluginTransaction.queryCompleteCallback");
+    //console.log("SQLitePluginTransaction.queryCompleteCallback");
     query = null;
     for (x in transaction_queue[transId]) {
       if (transaction_queue[transId][x]["query_id"] === queryId) {
@@ -161,7 +161,7 @@
   };
   SQLitePluginTransaction.prototype.executeSql = function(sql, values, success, error) {
     var errorcb, successcb, txself;
-    console.log("SQLitePluginTransaction.prototype.executeSql");
+    //console.log("SQLitePluginTransaction.prototype.executeSql");
     errorcb = void 0;
     successcb = void 0;
     txself = void 0;
@@ -171,7 +171,7 @@
       console.log("success not null:" + sql);
       successcb = function(execres) {
         var res, saveres;
-        console.log("executeSql callback:" + JSON.stringify(execres));
+        //console.log("executeSql callback:" + JSON.stringify(execres));
         res = void 0;
         saveres = void 0;
         saveres = execres;
@@ -188,7 +188,7 @@
         return success(txself, res);
       };
     } else {
-      console.log("success NULL:" + sql);
+      //console.log("success NULL:" + sql);
     }
     errorcb = null;
     if (error) {
@@ -196,7 +196,7 @@
         return error(txself, res);
       };
     }
-    console.log("executeSql - add_to_transaction" + sql);
+    //console.log("executeSql - add_to_transaction" + sql);
     this.add_to_transaction(this.trans_id, sql, values, successcb, errorcb);
   };
   SQLitePluginTransaction.prototype.complete = function(success, error) {
