@@ -30,8 +30,8 @@ body {
     padding:0;
     margin:0;
     font-family:'robotocondensed';
-    background-color:#3c3c3c;
-    width:320px;
+    /*background-color:#3c3c3c;*/
+    background-color:#303030;
 }
 
 a:link {text-decoration:none;}
@@ -186,6 +186,11 @@ a:active {text-decoration:none;}
     padding:0px 15px 5px 0px;
 }
 
+.ztl_distance_poi {
+    font-family: 'robotocondensed';
+     font-size:1.2em;
+     padding-right: 8%;
+}
 .ztl_star{
     font-size:1em;
     color:#ffffff;
@@ -301,6 +306,23 @@ a:active {text-decoration:none;}
 	padding:0px;
 	margin:0px;
 }
+
+
+.sound_img {
+    text-align: right;
+    float:left;
+    padding-top:6px;
+    width:40%;
+}
+
+.sound_txt {
+    padding:0;
+    margin:0;
+    text-align: left;
+    width:60%;
+    float:left;
+}
+
 
 .ui-slider { position: relative; text-align: left; }
 .ui-slider .ui-slider-handle { position: absolute; z-index: 2; width: 1.2em; height: 1.2em; cursor: default; background-color:red;}

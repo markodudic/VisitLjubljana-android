@@ -24,6 +24,15 @@
 				<img src="assets/css/ztl_images/star_{{star}}.png" class="img_star">
 			</div>
 			{{#image}}
+			
+			<div class="ztl_img_distance_container">
+				<div class="ztl_distance_img">
+					<img src="assets/css/ztl_images/ztl_distance.jpg" style="height:20px;">
+					&nbsp;&nbsp;<div class="ztl_distance ztl_distance_poi"><div id="ztl_distance_value_{{id}}"></div></div>
+				</div>
+			</div>
+			<input type="hidden" name="ztl_cord_{{id}}" value="{{id}}#{{coord_x}}#{{coord_y}}">
+
 			<div class="ztl_item_details_image">
 				<div class="ztl_details_img_crop">
 					<img class="ztl_details_image" src="./uploads/images/{{image}}">
@@ -43,10 +52,17 @@
 				</div>
 				<br>
 				<div style="clear:both;"></div>
+				{{#sound}}
+					<div class="ztl_grey_button">
+						<div class="sound_img">
+							<img src="assets/css/ztl_images/ztl_sound.png" style="height:27px;">
+						</div> 
+						<div class="sound_txt">&nbsp;&nbsp;&nbsp;GLASOVNI VODIč</div>
+					</div>
+				{{/sound}}
 				<div class="ztl_item_details">
 					<div class="ztl_item_details_title">NASLOV</div>
-					<div class="ztl_distance"><div id="ztl_distance_value_{{id}}"></div></div>
-					<input type="hidden" name="ztl_cord_{{id}}" value="{{id}}#{{coord_x}}#{{coord_y}}">
+					<div class="ztl_distance">&nbsp;</div>
 					<div style="clear:both;"></div>
 					<div class="grey_line" style="margin-top:10px;"></div>
 				</div>
