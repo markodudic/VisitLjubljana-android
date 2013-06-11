@@ -319,14 +319,14 @@ a:active {text-decoration:none;}
     text-align: right;
     float:left;
     padding-top:6px;
-    width:40%;
+    width:30%;
 }
 
 .sound_txt {
     padding:0;
-    margin:0;
+	 margin-left:5%;
     text-align: left;
-    width:60%;
+    width:65%;
     float:left;
 }
 
