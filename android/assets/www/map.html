@@ -7,25 +7,29 @@
 	<!--style-->
 	<link rel="stylesheet" href="assets/css/jquery.mobile-1.3.1.css" />
 	<link rel="stylesheet" href="assets/css/ztl.css"/>
+	
+	<!--<link rel="stylesheet" href="assets/css/popup.css"/>-->
+	
 	<link rel="stylesheet" href="assets/css/ztl_extend.css"/>
-	
 	<link rel="stylesheet/less" type="text/css" href="assets/css/ztl_extend.less" />
-	
-	<!--library js-->
-	<script src="assets/js/cordova-2.7.0.js"></script>
-	<script src="assets/js/jquery-1.6.4.min.js"></script>
-	<script src="assets/js/jquery.mobile-1.0.1.min.js"></script>
-	<script type="text/javascript" charset="utf-8" src="assets/js/SQLitePlugin.js"></script>
-	
-	<script src="assets/js/less-1.3.3.js"></script>
-	
 	<link rel="stylesheet" href="assets/css/style.mobile.css"/>
 	<link rel="stylesheet" href="assets/css/style.mobile-jq.css"/>
+
+	<!--library js-->
+	<script src="assets/js/lib/cordova-2.7.0.js"></script>
+	<script src="assets/js/lib/jquery-1.6.4.min.js"></script>
+	<script src="assets/js/lib/proj4js-combined.js"></script>
+	<script src="assets/js/lib/jquery.mobile-1.0.1.min.js"></script>
+	<script type="text/javascript" charset="utf-8" src="assets/js/lib/SQLitePlugin.js"></script>
+	<script src="assets/js/lib/OpenLayers.mobile.js"></script>
+	<script src="assets/js/lib/less-1.3.3.js"></script>
 	
-	<script src="assets/js/OpenLayers.mobile.js"></script>
-	<script src="assets/js/mobile-base-ztl.js"></script>
-	<script src="assets/js/mobile-jq.js"></script>
-	<script src="assets/js/proj4js-combined.js"></script>
+	<!--custom js-->
+	<script src="assets/js/custom/global_variables.js"></script>
+	<script src="assets/js/custom/mobile-base-ztl.js"></script>
+	<script src="assets/js/custom/mobile-jq.js"></script>
+	<script src="assets/js/custom/sql.js"></script>
+	<script src="assets/js/custom/gps.js"></script>
 </head> 
 <body>
 	<div data-role="page" id="mappage">
@@ -43,10 +47,26 @@
 				<div class="header_shadow"></div>
 		</div>
 		<div data-role="content">
-			<div id="map"></div>
-				<div id="navigation" data-role="controlgroup" data-type="vertical">
-				<a href="#" data-role="button" data-icon="plus" id="plus" data-iconpos="notext"></a>
-				<a href="#" data-role="button" data-icon="minus" id="minus" data-iconpos="notext"></a>
+
+			<div id="map" style="z-index:0"></div>
+			<div class="txt_popup">
+					<div class="popup_left">
+						<div id="poi_title"></div>
+						<div id="poi_address"></div>
+					</div>
+					<div class="popup_right">
+						<div id="poi_distance"><div class="ztl_distance ztl_distance_poi"><div id="ztl_distance_value_{{id}}"></div>5km</div></div>
+						<input type="hidden" name="ztl_cord_{{id}}" value="{{id}}#{{coord_x}}#{{coord_y}}">
+						
+						<div id="poi_icons">
+							<br><br>
+							<img src="assets/map/images/map_info.png">
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							<img src="assets/map/images/map_direction.png"></div>
+					</div>
+			</div>					
+			<div id="navigation" style="background-color: transparent;">
+				<img id="plus" src="assets/map/images/map_plus.png"><img id="minus" src="assets/map/images/map_minus.png"><img id="my_location"src="assets/map/images/map_location.png">
 			</div>
 		</div>
 		<div data-role="footer" class="footer-docs" data-theme="a" data-position="fixed">

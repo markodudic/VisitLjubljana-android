@@ -260,6 +260,13 @@ a:active {text-decoration:none;}
 		margin-left:15px;
 		margin-right:15px;
 	}
+
+    .txt_popup {
+        width:320px;
+        height:200px;
+        top:200px;
+        left:100px;
+    }
 }
 
 @media (min-width: 321px) and (max-width: 360px){
@@ -274,6 +281,14 @@ a:active {text-decoration:none;}
 		margin-left:15px;
 		margin-right:15px;
 	}
+
+    .txt_popup {
+        width:320px;
+        height:200px;
+        top:100px;
+        background-size: 320px;
+        left:20px;
+    }
 }
 
 @media (min-width: 361px) and (max-width: 599px) {
@@ -288,6 +303,13 @@ a:active {text-decoration:none;}
 		margin-left:15px;
 		margin-right:15px;
 	}
+
+    .txt_popup {
+        width:550px;
+        height:200px;
+        top:210px;
+        left:95px;
+    }
 }
 
 @media (min-width: 600px){
@@ -302,6 +324,13 @@ a:active {text-decoration:none;}
 		margin-left:15px;
 		margin-right:15px;
 	}
+
+    .txt_popup {
+        width:580px;
+        height:200px;
+        top:200px;
+        left:100px;
+    }
 }
 
 .ztl_main_menu {
@@ -330,6 +359,24 @@ a:active {text-decoration:none;}
     float:left;
 }
 
+div.poi_title {
+    font-size:20px;
+}
+
+div.poi_address {
+    padding-top:20px;
+    color:#555555;
+}
+
+.popup_left {
+    float:left;
+    width:60%;   
+}
+
+.popup_right {
+    float:right;
+    width:40%;
+}
 
 .ui-slider { position: relative; text-align: left; }
 .ui-slider .ui-slider-handle { position: absolute; z-index: 2; width: 1.2em; height: 1.2em; cursor: default; background-color:red;}
