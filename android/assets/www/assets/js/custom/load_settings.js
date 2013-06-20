@@ -22,7 +22,16 @@ function load_settings() {
 }
 
 
-function load_pois(id, trips_menu_id) {
+function load_pois(id, trips_menu_id, save_history) {
+	//shrani v localhost
+	if (save_history == 1)  {
+		var history_string = "fun--load_pois--"+id+"__"+trips_menu_id;
+		add_to_history(history_string);
+	}
+
+	console.log("local id "+id);
+	console.log("local trips_menu_id "+trips_menu_id);
+
 	if (trips_menu_id > 0) {
 		tmi = trips_menu_id;
 	}
@@ -128,7 +137,12 @@ function readAsText(file) {
 			settings = tmp;
 			load_main_menu();
 			swipe = 0;
-			load_page(template_lang+'main_menu.html', 'main_menu', main_menu, 'fade', false);
+
+			if (backstep == 1) {
+				go_back();
+			} else {
+				load_page(template_lang+'main_menu.html', 'main_menu', main_menu, 'fade', false);
+			}
 		}
 	};
 	reader.readAsText(file);

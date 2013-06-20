@@ -14,6 +14,7 @@ var trips   	  = null;
 var trips_title   = "";
 var main_menu     = null;
 var swipe		  = 0;
+var backstep	  = 0;
 
 //iscroll
 var myScroll;
@@ -21,6 +22,14 @@ var myScroll;
 document.addEventListener("deviceready", on_device_ready, false);
 
 function on_device_ready() {
+	var hash = window.location.hash;
+	hash = hash.replace(/^.*?#/,'');
+
+	if (hash == "go_back") {
+		backstep = 1;
+	}
+
+	document.addEventListener("backbutton", go_back, true);
 	navigator.splashscreen.show();
 	
 	db 		= window.sqlitePlugin.openDatabase("Database", "1.0", "ztl", -1);
@@ -28,10 +37,28 @@ function on_device_ready() {
 	
 	load_settings();
 	init_gps();
+
+	//localStorage.clear();
+	
+	console.log("******************aaaaaaaaaaaaaaaaaaa*********************************");
+	if (localStorage.getItem(localStorage.key('first_run')) == null) {
+		console.log("local storage cleared tole sm!!!");
+
+		localStorage.clear();
+		localStorage.setItem('history', JSON.stringify(tmp_history));
+		localStorage.setItem('first_run', 0);
+	}
+	console.log("******************bbbbbbbbbbbbbbbbbbbb*********************************");
 }
 
-function load_main_screen() {
+function load_main_screen(save_history) {
 	console.log("load_main_screen");
+	//shrani v localhost
+	if (save_history == 1) {
+		var history_string = "fun--load_main_screen--empty";
+		add_to_history(history_string);
+	}
+
 	swipe = 0;
 	load_page(template_lang+'main_menu.html', 'main_menu', main_menu, 'fade', false);
 }
@@ -84,7 +111,7 @@ function swipe_right_handler(event) {
 
 function load_page(template, div, data, transition, reverse) {
 	console.log("loading page");
-
+	console.log("aaaaaaaaaaaaaaaaaaa      "+div);
 	if (footer == "") {
 		load_footer();
 	}
@@ -108,6 +135,10 @@ function load_page(template, div, data, transition, reverse) {
 				data.page_title 	= trips_title;
 			}
 			
+			if (div == 'div_trip') {
+				data.tmi = tmi;
+			}
+
 			var res = $(temp).filter('#tpl_'+div).html();
 			
 			if (data != null) {
