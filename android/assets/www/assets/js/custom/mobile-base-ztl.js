@@ -22,8 +22,12 @@ var current_position_xy = new Array('462704.999999999941792', '104070.0000000000
 
 document.addEventListener("deviceready", on_device_ready, false);
 function on_device_ready() {
+    document.addEventListener("backbutton", back_to_content, true);
     pOld = new Proj4js.Point(0,0);
     //init_gps();
+
+
+    add_to_history("map.html");
 }
 
 OpenLayers.Control.Click = OpenLayers.Class(OpenLayers.Control, {                
@@ -292,9 +296,7 @@ function load_trip_content(id) {
 }
 
 function back_to_content() {
-    console.log("go back");
-    console.log("index.html#go_to_content_"+hash);
-    window.location.href="index.html#go-to-content_"+hash;
+    window.location.href = "index.html#go_back";
 }
 
 function load_moblie_settings() {

@@ -32,3 +32,5 @@ var db = null;
 var settings		= new Object();
 var template_root 	= 'templates/';
 var template_lang 	= 'si/';
+
+var tmp_history = ["fun--load_main_screen--empty"];
