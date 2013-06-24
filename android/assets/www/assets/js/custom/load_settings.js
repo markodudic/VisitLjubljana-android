@@ -4,7 +4,7 @@ function load_settings() {
 	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
 		settings_type 		= 2;
 		
-		var tmp_query 		= "SELECT name FROM sqlite_master WHERE type='table' AND name='ztl_poi'";
+		var tmp_query 		= "SELECT name FROM sqlite_master WHERE type='table' AND name='ztl_updates'";
 		var tmp_callback	= "check_db_success";
 			
 		generate_query(tmp_query, tmp_callback);
@@ -51,6 +51,38 @@ function load_pois(id, trips_menu_id, save_history) {
     }
 }
 
+function load_events(save_history) {
+	swipe = 0;
+	if (save_history == 1)  {
+		var history_string = "fun--load_events--empty";
+		add_to_history(history_string);
+	}
+
+	trips_title = main_menu['img2'];
+
+
+	//top 3 eventi
+	var tmp_query 	 = "SELECT e.id, et.title FROM ztl_event e LEFT JOIN ztl_event_translation et ON et.id_event = e.id WHERE et.id_language = "+settings.id_lang+" LIMIT 3";
+	var tmp_callback = "top_events_success";
+	generate_query(tmp_query, tmp_callback);
+
+	var tmp_query 	 = "SELECT e.id, et.title FROM ztl_event e LEFT JOIN ztl_event_translation et ON et.id_event = e.id WHERE et.id_language = "+settings.id_lang+" AND e.id > 26187 ";
+	var tmp_callback = "events_success";
+	generate_query(tmp_query, tmp_callback);
+
+}
+
+function load_tours(save_history)  {
+	swipe = 0;
+	if (save_history == 1)  {
+		var history_string = "fun--load_tours--empty";
+		add_to_history(history_string);
+	}
+
+	var tmp_query 	 = "SELECT t.id, tt.title, tt.short_description FROM ztl_tour t LEFT JOIN ztl_tour_translation tt ON tt.id_tour = t.id WHERE tt.id_language = "+settings.id_lang;
+	var tmp_callback = "tour_success";
+	generate_query(tmp_query, tmp_callback);
+}
 
 function load_mobile() {
 	console.log('nalagam mobilno');
