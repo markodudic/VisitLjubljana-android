@@ -24,7 +24,6 @@ var img_height  = ((window_width*14)/17)*0.35;
 var ztl_content_width = window_width - img_width;
 */
 
-
 //db
 var db = null;
 

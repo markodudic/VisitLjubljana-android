@@ -3,6 +3,8 @@ function add_to_history(history_string) {
 	
 	history.push(history_string);
 	localStorage.setItem('history', JSON.stringify(history));
+
+	console.log(JSON.stringify(history));
 }
 
 function local_storage_load() {
@@ -21,6 +23,7 @@ function go_back() {
 	console.log(history);
 
 	if (history.length > 1) {
+		view_main_menu	= 0;
 		var history = local_storage_load();
 		var go_to 	= history[history.length-2];
 		
@@ -58,23 +61,35 @@ function go_back() {
 				load_main_screen(0);
 			}
 
+			if (go_to[1] == "load_voice_guide") {
+				load_voice_guide(0);
+			}
+
 			if (go_to[1] == "load_trip_content") {
 				console.log(go_to[1] +" --- "+ params[0] + "++++" +params[1]+ "++++" +params[2]);
 				console.log("back -----" + backstep);
 				
 				slide = 1;
 				
+				var tmp_transition = false;
+				if (params[2] == "true") {
+					tmp_transition = true;
+				}
+
 				if (backstep == 1) {
 					$.getScript('./assets/js/custom/trips.js', function () {
-						load_trip_content(params[0],params[1],params[2],0);					
+						load_trip_content(params[0],params[1],tmp_transition,0);					
 					});
 				} else {
-					load_trip_content(params[0],params[1],params[2],0);
+					load_trip_content(params[0],params[1],tmp_transition,0);
 				}			
-			}
+			}		
 		}
 
 	} else {
-		load_main_screen(0);
+		if (main_menu == 0) {
+			view_main_menu = 1;
+			load_main_screen(0);
+		}
 	}
 }

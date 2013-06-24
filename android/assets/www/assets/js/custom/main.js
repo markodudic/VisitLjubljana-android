@@ -16,6 +16,15 @@ var main_menu     = null;
 var swipe		  = 0;
 var backstep	  = 0;
 
+//voice guide
+var voice_guide   = 0;
+
+//history
+var view_main_menu = 1;
+
+//events
+var top_events 	= null;
+
 //iscroll
 var myScroll;
 
@@ -27,10 +36,11 @@ function on_device_ready() {
 
 	if (hash == "go_back") {
 		backstep = 1;
+	} else {
+		navigator.splashscreen.show();
 	}
 
 	document.addEventListener("backbutton", go_back, true);
-	navigator.splashscreen.show();
 	
 	db 		= window.sqlitePlugin.openDatabase("Database", "1.0", "ztl", -1);
 	pOld 	= new Proj4js.Point(0,0);
@@ -49,6 +59,8 @@ function on_device_ready() {
 		localStorage.setItem('first_run', 0);
 	}
 	console.log("******************bbbbbbbbbbbbbbbbbbbb*********************************");
+
+	console.log(main_menu);
 }
 
 function load_main_screen(save_history) {
@@ -81,6 +93,7 @@ function swipe_left_handler(event) {
 			
 			current = items[j]['id'];
 			
+			save_swipe_history(trips.items[j]['id'], true);
 			load_page(template_lang+'trip.html', 'div_trip', trips.items[j], 'slide', false);
 		}
 	}
@@ -103,15 +116,29 @@ function swipe_right_handler(event) {
 			}
 			
 			current = items[j]['id'];
-			
+
+			save_swipe_history(trips.items[j]['id'], true);
 			load_page(template_lang+'trip.html', 'div_trip', trips.items[j], 'slide', true);
 		}
 	}
 }
 
+function save_swipe_history(index, direction) {
+	console.log("save_swipe_history");
+
+	if (direction == true) {
+		direction = false;
+	} else {
+		direction = true;
+	}
+
+	var history_string = "fun--load_trip_content--"+index+"__slide__"+direction;
+	add_to_history(history_string);
+}
+
+
 function load_page(template, div, data, transition, reverse) {
 	console.log("loading page");
-	console.log("aaaaaaaaaaaaaaaaaaa      "+div);
 	if (footer == "") {
 		load_footer();
 	}
@@ -127,16 +154,39 @@ function load_page(template, div, data, transition, reverse) {
 		async:false,
 		dataType: 'html',
 		success:function(temp){
-			
+			var menu_icon 	 = 3;
 			var extra_div_id = "";
+			
 			if (div == 'trips') {
 				extra_div_id 		= "_"+group;
 				data.extra_div_id 	= group;
 				data.page_title 	= trips_title;
 			}
+
+			if (div == 'events') {
+				data.page_title 	= trips_title;
+			}
 			
+			console.log(data);
+			console.log(JSON.stringify(data));
+
+			console.log("voice_guide :"+voice_guide);
+			
+			if (voice_guide == 1)  {
+				extra_div_id 		= "_voice_guide";
+				data.extra_div_id 	= "voice_guide";
+				data.page_title 	= voice_guide_translation[settings.id_lang];
+				
+				menu_icon 	= 2;
+				voice_guide = 0;
+			}
+
 			if (div == 'div_trip') {
 				data.tmi = tmi;
+			}
+
+			if (div == 'main_menu') {
+				view_main_menu = 1;
 			}
 
 			var res = $(temp).filter('#tpl_'+div).html();
@@ -148,9 +198,17 @@ function load_page(template, div, data, transition, reverse) {
 			}
 
 			html = html.replace('[[[ztl_footer]]]', footer);
-						
+
 			$('body').append(html);
-			
+
+
+			console.log(menu_icon);
+			console.log('#icon_'+menu_icon);
+			console.log("assets/css/ztl_images/icon_"+menu_icon+"_red.png"); 
+
+			$('.icon_'+menu_icon).attr("src","assets/css/ztl_images/icon_"+menu_icon+"_red.png");
+
+
 			if (swipe == 1) {
 				if (div != "main_menu") {
 					div = div+"_"+data['id'];
@@ -167,7 +225,8 @@ function load_page(template, div, data, transition, reverse) {
 			if (div == "show_map") {
 				show_map();
 			}
-
+			console.log("navigacija : "+div+extra_div_id + "---" + transition +"---"+ reverse);
+			
 			if (div != "trips") {
 				i_scroll(div);
 			}
@@ -175,6 +234,12 @@ function load_page(template, div, data, transition, reverse) {
 			pOld = new Proj4js.Point(0,0);
 			navigator.geolocation.getCurrentPosition(onSuccess_gps, onError_gps);
 			
+			console.log("navigacija");
+			console.log(div+extra_div_id);
+			console.log(transition);
+			console.log(reverse);
+
+			console.log("navigacija : "+div+extra_div_id + "---" + transition +"---"+ reverse);
 			animate_div(div+extra_div_id, transition, reverse);
 		}
 	});
