@@ -5,6 +5,19 @@ function update_db() {
 	generate_query(tmp_query, tmp_callback);
 }
 
+var updt_finished = 0;
+function is_updt_finished() {
+	updt_finished++;
+	
+	//vsi updejti
+	if (updt_finished == 3) {
+		var today     = new Date();
+		var sql_today = today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate()+" "+today.getHours()+":"+today.getMinutes()+":"+today.getSeconds();
+		var sql       = "UPDATE ztl_updates SET last_update = '"+sql_today+"' WHERE id_language = "+settings.id_lang;
+		db.transaction(function(tx) {tx.executeSql(sql, [], function(tx, res) {});});
+	}
+}
+
 function check_update_success(results) {
 	
 	var lang_code = "en";
@@ -23,9 +36,7 @@ function check_update_success(results) {
 	db.transaction(function(tx) {
 	    tx.executeSql("select id from ztl_poi;", [], function(tx, res) {
 	        for (var i=0; i<res.rows.length; i++) {
-	        	if (i < 10) {
-	        		pois[i] = res.rows.item(i).id;
-	        	}
+        		pois[i] = res.rows.item(i).id;
 	        }
 
 	        update_poi('http://www.visitljubljana.com/'+lang_code+'/mobile_app/poi.json?datemodified='+results.rows.item(0).last_update, pois);
@@ -36,10 +47,12 @@ function check_update_success(results) {
 }
 
 function update_poi(url, pois) {
-	console.log("update DB " +  url);
 	url = url+'&pois='+pois.join(",");
+	console.log("update DB " +  url);
 	$.ajax( {
 		url : url,
+		//type: "POST",
+		//data: {pois: pois.join(",")},
 		dataType : 'json',
 		beforeSend : function(xhr) {
 	          xhr.setRequestHeader("Authorization", "Basic RWlqdTN6YW86dXRoMWplaUY=");
@@ -57,6 +70,102 @@ function update_poi(url, pois) {
 }
 
 function handle_poi(data) {
+	handle_poi_deleted(data['deleted']);
+	handle_poi_groups(data['groups']);
+	handle_poi_categories(data['categories']);
+	handle_poi_new(data['pois']);
+}
+
+function handle_poi_deleted(data) {
+	db.transaction(function(tx) {
+		var sql = "";
+		for (var i = 0; i < data.length; i++) {
+			sql = "DELETE FROM ztl_poi WHERE id = "+data[i];
+			console.log(sql);
+			tx.executeSql(sql, [], function(tx, res) {});
+		}
+	});
+}
+
+function handle_poi_groups(data) {
+	db.transaction(function(tx) {
+		var sql = "";
+		for (var i = 0; i < data.length; i++) {
+			sql = "INSERT OR REPLACE INTO ztl_group (id, id_language, title, record_status) VALUES ("+data[i].id+", "+settings.id_lang+", '"+addslashes(data[i].title)+"', 1)";
+			console.log(sql);
+			tx.executeSql(sql, [], function(tx, res) {});
+		}
+	});
+}
+
+function handle_poi_categories(data) {
+	db.transaction(function(tx) {
+		var sql = "";
+		for (var i = 0; i < data.length; i++) {
+			sql = "INSERT OR REPLACE INTO ztl_category (id, id_language, title, record_status) VALUES ("+data[i].id+", "+settings.id_lang+", '"+addslashes(data[i].title)+"', 1)";
+			console.log(sql);
+			tx.executeSql(sql, [], function(tx, res) {});
+			
+			//dolocene kategorije niso v nobeni grupi
+			if (data[i].groups != null) {
+				for (var j = 0; j < data[i].groups.length; j++) {
+					sql = "INSERT OR REPLACE INTO ztl_category_group (id_category, id_group) VALUES ("+data[i].id+", "+data[i].groups[j]+")";
+					console.log(sql);
+					tx.executeSql(sql, [], function(tx, res) {});
+				}
+			}
+		}
+	});
+}
+
+function handle_poi_new(data) {
+	db.transaction(function(tx) {
+		var sql = "";
+		for (var i = 0; i < data.length; i++) {
+			sql = "INSERT OR REPLACE INTO ztl_poi (id, address, post_number, post, phone, email, www, coord_x, coord_y, turisticna_kartica, ljubljana_quality, recomended_map, image, star, sound, record_status, from_db) ";
+			sql+= "VALUES ("+data[i].id+", '"+addslashes(data[i].address)+"', "+data[i].postNumber+",'"+addslashes(data[i].post)+"','"+addslashes(data[i].phone)+"', ";
+			sql+= "'"+addslashes(data[i].email)+"', '"+addslashes(data[i].www)+"', '"+data[i].coord.x+"', '"+data[i].coord.y+"', '"+addslashes(data[i].turisticna_kartica)+"', '"+addslashes(data[i].ljubljanaQuality)+"', ";
+			sql+= "'"+data[i].recommended_map+"', '"+data[i].images+"', '"+data[i].star+"', '"+data[i].sound+"', 1, 0);";
+			console.log(sql);
+			tx.executeSql(sql, [], function(tx, res) {});
+			
+			sql = "INSERT OR REPLACE INTO ztl_poi_translation (id_poi, id_language, title, description) ";
+			sql+= "VALUES ("+data[i].id+",  "+settings.id_lang+", '"+addslashes(data[i].title)+"', '"+addslashes(data[i].description)+"');";
+			console.log(sql);
+			tx.executeSql(sql, [], function(tx, res) {});
+			
+			for (var j = 0; j < data[i].cats.length; j++) {
+				sql = "INSERT OR REPLACE INTO ztl_poi_category (id_poi, id_category) VALUES ("+data[i].id+", "+data[i].cats[j]+")";
+				console.log(sql);
+				tx.executeSql(sql, [], function(tx, res) {});
+			}
+		}
+		
+		tx.executeSql('select count(*) as cnt from ztl_category;', [], function(tx, res) {
+			console.log('+1 >>>>>>>>>> ztl_category res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+		});
+
+		tx.executeSql('select count(*) as cnt from ztl_group;', [], function(tx, res) {
+			console.log('+2 >>>>>>>>>> ztl_group res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+		});
+
+		tx.executeSql('select count(*) as cnt from ztl_category_group;', [], function(tx, res) {
+			console.log('+3 >>>>>>>>>> ztl_category_group res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+		});
+
+		tx.executeSql('select count(*) as cnt from ztl_poi;', [], function(tx, res) {
+			console.log('+4 >>>>>>>>>> ztl_poi res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+		});
+
+		tx.executeSql('select count(*) as cnt from ztl_poi_category;', [], function(tx, res) {
+			console.log('+5 >>>>>>>>>> ztl_poi_category res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+		});
+
+		tx.executeSql('select count(*) as cnt from ztl_poi_translation;', [], function(tx, res) {
+			console.log('+6 >>>>>>>>>> ztl_poi_translation res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+		});
+		is_updt_finished();
+	});		
 }
 
 function update_event(url) {
@@ -126,23 +235,24 @@ function handle_event(data) {
 		}
 
 		tx.executeSql('select count(*) as cnt from ztl_event;', [], function(tx, res) {
-			console.log('+8 >>>>>>>>>> ztl_event res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+			console.log('+11 >>>>>>>>>> ztl_event res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
 		});
 		tx.executeSql('select count(*) as cnt from ztl_event_translation;', [], function(tx, res) {
-			console.log('+9 >>>>>>>>>> ztl_event_translation res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+			console.log('+12 >>>>>>>>>> ztl_event_translation res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
 		});
 		tx.executeSql('select count(*) as cnt from ztl_event_pricing;', [], function(tx, res) {
-			console.log('+10 >>>>>>>>>> ztl_event_pricing res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+			console.log('+13 >>>>>>>>>> ztl_event_pricing res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
 		});
 		tx.executeSql('select count(*) as cnt from ztl_event_timetable;', [], function(tx, res) {
-			console.log('+11 >>>>>>>>>> ztl_event_timetable res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+			console.log('+14 >>>>>>>>>> ztl_event_timetable res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
 		});
 		tx.executeSql('select count(*) as cnt from ztl_event_category;', [], function(tx, res) {
-			console.log('+12 >>>>>>>>>> ztl_event_category res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+			console.log('+15 >>>>>>>>>> ztl_event_category res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
 		});
 		tx.executeSql('select count(*) as cnt from ztl_event_event_category;', [], function(tx, res) {
-			console.log('+13 >>>>>>>>>> ztl_event_event_category res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+			console.log('+16 >>>>>>>>>> ztl_event_event_category res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
 		});
+		is_updt_finished();
 	});	
 }
 
@@ -193,17 +303,18 @@ function handle_tour(data) {
 		}
 	
 		tx.executeSql('select count(*) as cnt from ztl_tour;', [], function(tx, res) {
-			console.log('+14 >>>>>>>>>> ztl_tour res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+			console.log('+21 >>>>>>>>>> ztl_tour res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
 		});
 		tx.executeSql('select count(*) as cnt from ztl_tour_translation;', [], function(tx, res) {
-			console.log('+15 >>>>>>>>>> ztl_tour_translation res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+			console.log('+22 >>>>>>>>>> ztl_tour_translation res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
 		});
 		tx.executeSql('select count(*) as cnt from ztl_tour_chaters;', [], function(tx, res) {
-			console.log('+16 >>>>>>>>>> ztl_tour_chaters res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+			console.log('+23 >>>>>>>>>> ztl_tour_chaters res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
 		});
 		tx.executeSql('select count(*) as cnt from ztl_tour_images;', [], function(tx, res) {
-			console.log('+17 >>>>>>>>>> ztl_tour_images res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+			console.log('+24 >>>>>>>>>> ztl_tour_images res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
 		});
+		is_updt_finished();
 	});	
 	
 	//images
