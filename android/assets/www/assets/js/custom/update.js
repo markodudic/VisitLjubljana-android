@@ -40,8 +40,8 @@ function check_update_success(results) {
 	        }
 
 	        //update_poi('http://www.visitljubljana.com/'+lang_code+'/mobile_app/poi.json?datemodified='+results.rows.item(0).last_update, pois);
-	        //update_event('http://www.visitljubljana.com/'+lang_code+'/mobile_app/event.json?datemodified='+results.rows.item(0).last_update);
-	        //update_tour('http://www.visitljubljana.com/'+lang_code+'/mobile_app/tour.json'); //?datemodified='+results.rows.item(0).last_update
+	        update_event('http://www.visitljubljana.com/'+lang_code+'/mobile_app/event.json?datemodified='+results.rows.item(0).last_update);
+	        update_tour('http://www.visitljubljana.com/'+lang_code+'/mobile_app/tour.json'); //?datemodified='+results.rows.item(0).last_update
 	    });
 	});
 }
@@ -171,7 +171,7 @@ function handle_poi_new(data) {
 }
 
 function update_event(url) {
-	console.log("dogodki --- update DB " +  url);
+	console.log("update DB " +  url);
 	$.ajax( {
 		url : url,
 		dataType : 'json',
@@ -214,11 +214,7 @@ function handle_event(data) {
 	        	if (knowntypes.indexOf(data[i].types[j].id) == -1) {
 	        		knowntypes.push(data[i].types[j].id);
 	        		var sql = "INSERT INTO ztl_event_category (id, id_language, name) VALUES ("+data[i].types[j].id+", "+settings.id_lang+", '"+addslashes(data[i].types[j].name)+"')";
-	        		
-	        		console.log(sql);
-
 	        		tx.executeSql(sql, [], function(tx, res) {});
-
 	        	}
         		var sql = "INSERT INTO ztl_event_event_category (id_event, id_event_category) VALUES ("+data[i].id+", "+data[i].types[j].id+")";
         		tx.executeSql(sql, [], function(tx, res) {});
