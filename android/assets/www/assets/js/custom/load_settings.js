@@ -66,14 +66,13 @@ function load_events(save_history) {
 		add_to_history(history_string);
 	}
 
+	load_event_type();
+
 	trips_title = main_menu['img2'];
 
-	
 	var tmp_query    = "SELECT e.id, et.title, ett.venue_id, ett.date, p.coord_x, p.coord_y, ett.venue as poi_title, p.image FROM ztl_event e LEFT JOIN ztl_event_translation et ON et.id_event = e.id LEFT JOIN  ztl_event_timetable ett ON ett.id_event = e.id LEFT JOIN ztl_poi p ON p.id = ett.venue_id WHERE et.id_language = "+settings.id_lang+" GROUP BY e.id ORDER BY e.id";
     var tmp_callback = "events_success";
     generate_query(tmp_query, tmp_callback);
-
-	load_event_type();
 }
 
 function load_tours(save_history)  {

@@ -190,6 +190,12 @@ function load_page(template, div, data, transition, reverse) {
 
 			if (div == 'events') {
 				data.page_title 	= trips_title;
+				$('body').html("");
+			}
+
+			if (div == 'filtered_events') {
+				data.page_title 	= trips_title;
+				$('body').html("");
 			}
 			 
 			if (div == 'event') {
@@ -280,7 +286,7 @@ function load_page(template, div, data, transition, reverse) {
 			pOld = new Proj4js.Point(0,0);
 			navigator.geolocation.getCurrentPosition(onSuccess_gps, onError_gps);
 			
-			console.log("zagon -- navigacija : "+div+extra_div_id + "---" + transition +"---"+ reverse);
+			console.log("dogodki -- navigacija : "+div+extra_div_id + "---" + transition +"---"+ reverse);
 			animate_div(div+extra_div_id, transition, reverse);
 
 			current_div 	= div+extra_div_id;

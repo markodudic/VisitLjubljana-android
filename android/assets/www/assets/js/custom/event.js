@@ -11,12 +11,22 @@ function event_filter_toggle() {
 	$(".ztl_content").toggle();
 	$(".header").toggle();
 	$(".footer").toggle();
+
+	if ($('.event_filter').is(':visible')) {
+		console.log("dogodki --- event_filter is visible");
+	} else {
+		console.log("dogodki --- event_filter is hidden");
+	}
 }
 
 function load_event_type() {
+	console.log("dogodki --- nalozi kategorije dogodkov");
+
 	var tmp_query 	 = "SELECT id, name FROM ztl_event_category e WHERE e.id_language = "+settings.id_lang+" GROUP BY id, name";
 	var tmp_callback = "event_category_success";
 	generate_query(tmp_query, tmp_callback);
+
+	console.log("dogodki --- nalagam tipe dogodkov");
 }
 
 
@@ -25,6 +35,9 @@ function filter_events()  {
 	console.log($('#ztl_trip_filter_date_from').val());
 	console.log($('#ztl_trip_filter_date_to').val());
 	console.log("*****************************************");
+
+	event_date_from = "";
+	event_date_to 	= "";
 
 	if ($('#ztl_trip_filter_date_from').val() != '') {
 		event_date_from = $('#ztl_trip_filter_date_from').val().split(" ");
@@ -41,9 +54,6 @@ function filter_events()  {
 	}
 
 	event_filter_toggle();
-	load_event_type();
-
-
 
 	var tmp_query 	 = "SELECT name FROM ztl_event_category e WHERE e.id_language = "+settings.id_lang+" AND id = "+$('#event_type').val()+" GROUP BY name";
 	var tmp_callback = "event_category_title_success";
