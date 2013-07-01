@@ -14,9 +14,6 @@ function load_settings() {
 		var tmp_callback	= "check_db_success";
 			
 		generate_query(tmp_query, tmp_callback);
-
-		//load_mobile();
-
 	} else {
 		settings_type = 1;
 		load_desktop();
@@ -98,33 +95,30 @@ function load_mobile() {
 	
 	//preverim, ce je fajl ze bil kreiran
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
-		fileSystem.root.getFile("ztl/settings.json", null, function(fileEntry) {
+		fileSystem.root.getFile("Android/data/com.vigred.ztl/settings.json", null, function(fileEntry) {
 			local_db = 1;
 		}, fail);
 	} , null); 
 
 	if (local_db == 1) {
-		console.log('fajl obstaja');
+		console.log('zagon -- fajl obstaja');
 		load_moblie_settings();
 	} else {
-		console.log('fajl ne obstaja');
+		console.log('zagon -- fajl ne obstaja');
 		create_file();
 	}
 }
 
 function create_file() {
 	console.log('zagon -- nalagam create');
-	//create folder
-    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
-        fileSystem.root.getDirectory("ztl", {create: true, exclusive: false}, function(dir){}, fail); 
-    } , null); 
-    
-    //write file
-    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
-    	fileSystem.root.getFile("ztl/settings.json", {create: true, exclusive: false}, gotFileEntry, fail);
-    }, null);
 
-    load_page('select_language.html', 'select_language', null, 'fade', false);
+    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
+        fileSystem.root.getDirectory("Android/data/com.vigred.ztl", {create: true, exclusive: false}, function(dir){}, fail); 
+    } , null); 
+
+    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
+    	fileSystem.root.getFile("Android/data/com.vigred.ztl/settings.json", {create: true, exclusive: false}, gotFileEntry, fail);
+    }, null);
 }
 
 function gotFileEntry(fileEntry) {
@@ -143,13 +137,12 @@ function gotFileWriter(writer) {
 		load_moblie_settings(); 
 	};
 	writer.write(JSON.stringify(settings));
-	document.location.href="index.html";
 }
 
 function save_mobile_settings() {
 	console.log('save_mobile_settings');
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
-    	fileSystem.root.getFile("ztl/settings.json", {create: true, exclusive: false}, gotFileEntry, fail);
+    	fileSystem.root.getFile("Android/data/com.vigred.ztl/settings.json", {create: true, exclusive: false}, gotFileEntry, fail);
     }, null);
     load_moblie_settings();
 }
@@ -157,7 +150,7 @@ function save_mobile_settings() {
 function load_moblie_settings() {
 	console.log('nalagam mobilne nastavitve');
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
-		fileSystem.root.getFile("ztl/settings.json", null, function(fileEntry) {
+		fileSystem.root.getFile("Android/data/com.vigred.ztl/settings.json", null, function(fileEntry) {
 			fileEntry.file(readAsText, fail);
 		}, fail);
 	} , null); 
@@ -181,9 +174,7 @@ function readAsText(file) {
 
 			
 			if (skip_update == 0) {
-				if (update_running == 0) {
-					check_updates();
-				}
+				check_updates();
 			}
 
 			if (backstep == 1) {
@@ -214,11 +205,14 @@ function fail(error) {
 }
 
 function check_updates() {
+	console.log("check updates");
+
 	var tmp_query    = "SELECT count(id) AS nr FROM ztl_event";
     var tmp_callback = "count_ztl_event_success";
-    //generate_query(tmp_query, tmp_callback);
+    generate_query(tmp_query, tmp_callback);
 }
 
+/*
 function load_desktop() {
 	$.ajax({
 		type:"GET",
@@ -240,6 +234,7 @@ function load_desktop() {
 		load_page(template_lang+'main_menu.html', 'main_menu', main_menu, 'fade', false);
 	}
 }
+*/
 
 function load_settings_page(){
 	swipe = 0;
