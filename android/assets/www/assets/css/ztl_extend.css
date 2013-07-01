@@ -209,6 +209,16 @@ a:active {text-decoration:none;}
     padding:0px 0px 5px 0px;
 }
 
+.ztl_event_filter{
+    font-size:1em;
+    color:#ffffff;
+    font-family: 'robotocondensed';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding:0px 0px 0px 0px;
+}
+
 .ztl_item_details {
     color:#555555;
     position:relative;

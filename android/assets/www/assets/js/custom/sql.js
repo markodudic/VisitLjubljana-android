@@ -119,18 +119,27 @@ function events_success(results) {
 	data.top_events_2 	= res.top_items[2];
 	
 	data.items 			= res.items;
+	data.categories 	= event_type;
+
+	console.log("dogodki --- "+JSON.stringify(data));
+
 	load_page(template_lang+'events.html', 'events', data, 'fade', false);
 }
 
 function event_category_success(results) {
+	console.log("dogodki --- query ok");
+
 	var len = results.rows.length;
-    	
+    
+    console.log("dogodki --- poizvedba "+ query);
+	console.log("dogodki --- kategorije "+ JSON.stringify(results));
+
     for (var i=0; i<len; i++){
-    	$('#event_type').append($("<option/>", {
-	        value: results.rows.item(i).id,
-	        text: results.rows.item(i).name
-	    }));
+    	console.log("dogodki ---- "+JSON.stringify(results.rows.item(i)));
+    	event_type[i] = results.rows.item(i);
     }
+
+    console.log("dogodki --- kategorije eventov" + JSON.stringify(event_type));
 }
 
 function event_category_title_success(results) {
@@ -145,7 +154,19 @@ function filter_events_success(results) {
     	res.items[i] = results.rows.item(i);
     }
 
-    res.page_title = event_title+" "+event_date_from+"-"+event_date_to;
+    res.page_sub_title 		= event_title;
+
+
+    res.page_sub_title_date	= event_date_from;
+    
+    if (event_date_to != "") {
+    	res.page_sub_title_date = res.page_sub_title_date +"-"+event_date_to;
+    }
+
+    res.categories 	   		= event_type;
+
+    console.log("dogodki --- events_filtered.html");
+
     load_page(template_lang+'events_filtered.html', 'filtered_events', res, 'fade', false);
 }
 
