@@ -419,15 +419,17 @@ function dprun(t) {
 	//var myNewDate = Date.parse(currentField.val()) || new Date();
 	var myNewDate = new Date();
 	// Same handling for iPhone and Android
+	
 	window.plugins.datePicker.show({
-	   date : myNewDate,
-	   mode : 'date', // date or time or blank for both
-	   allowOldDates : true
-	}, function(returnDate) {
-	   var newDate = new Date(returnDate);
-	   currentField.val(newDate.toString("dd/MMM/yyyy"));
-	        currentField.blur();
-	});	
+		date : myNewDate,
+		mode : 'date', // date or time or blank for both
+		allowOldDates : false
+		}, function(returnDate) {
+			//var newDate = new Date(returnDate);
+			//currentField.val(newDate.toString("dd/MMM/yyyy"));
+			currentField.val(returnDate);
+			currentField.blur();
+		});	
 }
 
 function play_location_sound() {
