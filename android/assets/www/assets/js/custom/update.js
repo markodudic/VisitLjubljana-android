@@ -39,9 +39,9 @@ function check_update_success(results) {
         		pois[i] = res.rows.item(i).id;
 	        }
 
-	        update_poi('http://www.visitljubljana.com/'+lang_code+'/mobile_app/poi.json?datemodified='+results.rows.item(0).last_update, pois);
-	        update_event('http://www.visitljubljana.com/'+lang_code+'/mobile_app/event.json?datemodified='+results.rows.item(0).last_update);
-	        update_tour('http://www.visitljubljana.com/'+lang_code+'/mobile_app/tour.json'); //?datemodified='+results.rows.item(0).last_update
+	        //update_poi('http://www.visitljubljana.com/'+lang_code+'/mobile_app/poi.json?datemodified='+results.rows.item(0).last_update, pois);
+	        //update_event('http://www.visitljubljana.com/'+lang_code+'/mobile_app/event.json?datemodified='+results.rows.item(0).last_update);
+	        //update_tour('http://www.visitljubljana.com/'+lang_code+'/mobile_app/tour.json'); //?datemodified='+results.rows.item(0).last_update
 	    });
 	});
 }
@@ -81,7 +81,7 @@ function handle_poi_deleted(data) {
 		var sql = "";
 		for (var i = 0; i < data.length; i++) {
 			sql = "DELETE FROM ztl_poi WHERE id = "+data[i];
-			console.log(sql);
+			//console.log(sql);
 			tx.executeSql(sql, [], function(tx, res) {});
 		}
 	});
@@ -92,7 +92,7 @@ function handle_poi_groups(data) {
 		var sql = "";
 		for (var i = 0; i < data.length; i++) {
 			sql = "INSERT OR REPLACE INTO ztl_group (id, id_language, title, record_status) VALUES ("+data[i].id+", "+settings.id_lang+", '"+addslashes(data[i].title)+"', 1)";
-			console.log(sql);
+			//console.log(sql);
 			tx.executeSql(sql, [], function(tx, res) {});
 		}
 	});
@@ -103,14 +103,14 @@ function handle_poi_categories(data) {
 		var sql = "";
 		for (var i = 0; i < data.length; i++) {
 			sql = "INSERT OR REPLACE INTO ztl_category (id, id_language, title, record_status) VALUES ("+data[i].id+", "+settings.id_lang+", '"+addslashes(data[i].title)+"', 1)";
-			console.log(sql);
+			//console.log(sql);
 			tx.executeSql(sql, [], function(tx, res) {});
 			
 			//dolocene kategorije niso v nobeni grupi
 			if (data[i].groups != null) {
 				for (var j = 0; j < data[i].groups.length; j++) {
 					sql = "INSERT OR REPLACE INTO ztl_category_group (id_category, id_group) VALUES ("+data[i].id+", "+data[i].groups[j]+")";
-					console.log(sql);
+					//console.log(sql);
 					tx.executeSql(sql, [], function(tx, res) {});
 				}
 			}
@@ -122,22 +122,24 @@ function handle_poi_new(data) {
 	db.transaction(function(tx) {
 		var sql = "";
 		for (var i = 0; i < data.length; i++) {
-			sql = "INSERT OR REPLACE INTO ztl_poi (id, address, post_number, post, phone, email, www, coord_x, coord_y, turisticna_kartica, ljubljana_quality, recomended_map, image, star, sound, record_status, from_db) ";
+			sql = "INSERT OR REPLACE INTO ztl_poi (id, address, post_number, post, phone, email, www, coord_x, coord_y, turisticna_kartica, ljubljana_quality, recommended_map, image, star, sound, record_status, from_db) ";
 			sql+= "VALUES ("+data[i].id+", '"+addslashes(data[i].address)+"', "+data[i].postNumber+",'"+addslashes(data[i].post)+"','"+addslashes(data[i].phone)+"', ";
 			sql+= "'"+addslashes(data[i].email)+"', '"+addslashes(data[i].www)+"', '"+data[i].coord.x+"', '"+data[i].coord.y+"', '"+addslashes(data[i].turisticna_kartica)+"', '"+addslashes(data[i].ljubljanaQuality)+"', ";
 			sql+= "'"+data[i].recommended_map+"', '"+data[i].images+"', '"+data[i].star+"', '"+data[i].sound+"', 1, 0);";
-			console.log(sql);
+			//console.log(sql);
 			tx.executeSql(sql, [], function(tx, res) {});
 			
 			sql = "INSERT OR REPLACE INTO ztl_poi_translation (id_poi, id_language, title, description) ";
 			sql+= "VALUES ("+data[i].id+",  "+settings.id_lang+", '"+addslashes(data[i].title)+"', '"+addslashes(data[i].description)+"');";
-			console.log(sql);
+			//console.log(sql);
 			tx.executeSql(sql, [], function(tx, res) {});
 			
-			for (var j = 0; j < data[i].cats.length; j++) {
-				sql = "INSERT OR REPLACE INTO ztl_poi_category (id_poi, id_category) VALUES ("+data[i].id+", "+data[i].cats[j]+")";
-				console.log(sql);
-				tx.executeSql(sql, [], function(tx, res) {});
+			if (data[i].cats != null) {
+				for (var j = 0; j < data[i].cats.length; j++) {
+					sql = "INSERT OR REPLACE INTO ztl_poi_category (id_poi, id_category) VALUES ("+data[i].id+", "+data[i].cats[j]+")";
+					//console.log(sql);
+					tx.executeSql(sql, [], function(tx, res) {});
+				}
 			}
 		}
 		
@@ -200,12 +202,12 @@ function handle_event(data) {
 	db.transaction(function(tx) {
 		var sql = "";
 		for (var i = 0; i < data.length; i++) {
-			console.log(JSON.stringify(data[i]));
+			//console.log(JSON.stringify(data[i]));
 			sql = "INSERT INTO ztl_event (id) VALUES ("+data[i].id+")";
-			console.log(sql);
+			//console.log(sql);
 			tx.executeSql(sql, [], function(tx, res) {});
 			sql = "INSERT INTO ztl_event_translation (id_event, id_language, title, intro, description) VALUES ("+data[i].id+", "+settings.id_lang+", '"+addslashes(data[i].title)+"', '"+addslashes(data[i].intro)+"', '"+addslashes(data[i].description)+"')";
-			console.log(sql);
+			//console.log(sql);
 			tx.executeSql(sql, [], function(tx, res) {});
 			
 			for(var j = 0; j < data[i].types.length; j++) {
@@ -356,7 +358,7 @@ function readFiles() {
     			
 				//shranemo novo pot datoteke v bazo, neglede na to ali obstaja ali ne
     			var updt_sql = 'update ztl_tour_images set image = "'+dlPath+'" where id_tour='+res.rows.item(i).id_tour+' and tour_idx='+res.rows.item(i).tour_idx+';';
-    			console.log(updt_sql);
+    			//console.log(updt_sql);
 				tx.executeSql(updt_sql, [], function(tx, res) {	});	
 
 	        	
@@ -364,7 +366,7 @@ function readFiles() {
 	        	if (knownfiles.indexOf(filename) == -1) {
         			var ft = new FileTransfer();
         			ft.download(url, dlPath, function() {
-        				console.log("new local file "+dlPath);
+        				//console.log("new local file "+dlPath);
         			}, onFSError);
     			}
 	        }
