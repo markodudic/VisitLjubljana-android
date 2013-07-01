@@ -299,6 +299,14 @@ function back_to_content() {
     window.location.href = "index.html#go_back";
 }
 
+function load_voice_guide() {
+    window.location.href = "index.html#voice_guide";
+}
+
+function load_lang_settings() {
+    window.location.href = "index.html#lang_settings";
+}
+
 function load_moblie_settings() {
     console.log('nalagam mobilne nastavitve');
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {

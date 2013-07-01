@@ -30,7 +30,7 @@ public class ztl extends DroidGap
     {
         super.onCreate(savedInstanceState);
         super.setIntegerProperty("splashscreen", R.drawable.welcome);
-        super.loadUrl(Config.getStartUrl());
+        super.loadUrl(Config.getStartUrl(), 10000);
         
         appView.setVerticalScrollBarEnabled(false);
         appView.setHorizontalScrollBarEnabled(false);

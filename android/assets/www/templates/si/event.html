@@ -1,0 +1,91 @@
+<script id="tpl_event" type="text/html">
+<div data-role="page" id="event_{{item.id}}" data-theme="a" class="ztl_remove_from_page" data-rockncoder-jspage="event" style="overflow:hidden;">
+	<div class="header">
+		<div class="header_placeholder">
+			<div class="red_line"></div>
+			<div class="header_space"></div>
+			<div class="header_back" onClick="load_events()"></div>
+			<div class="header_title" onClick="load_events()">{{item.title}}</div>
+			<div class="header_dots"></div>
+			<div style="clear:both;"></div>
+			<div class="header_space"></div>
+		</div>
+		<div class="header_shadow"></div>
+	</div>
+	
+	<div data-role="content" class="ztl_content ztl_content_extra">
+	
+	<div id="verticalWrapper">
+	<div id="verticalScroller">
+
+		<div class="ztl_navigate_events">
+			<div class="ztl_item_shadow"></div>
+			{{#item.image}}
+			<div class="ztl_img_distance_container">
+				<div class="ztl_distance_img">
+					<img class="ztl_distance_arrow_img" src="assets/css/ztl_images/ztl_distance.jpg" >
+					<div class="ztl_distance ztl_distance_poi"><div id="ztl_distance_value_{{item.id}}"></div></div>
+				</div>
+			</div>
+			<input type="hidden" name="ztl_cord_{{item.id}}" value="{{item.id}}#{{item.coord_x}}#{{item.coord_y}}">
+
+			<div class="ztl_item_details_image">
+				<div class="ztl_details_img_crop">
+					<img class="ztl_details_image" src="./uploads/images/{{item.image}}">
+				</div>
+			</div>
+			{{/item.image}}
+			{{^item.image}}
+				<div style="padding-top:40px;">&nbsp;</div>
+			{{/item.image}}
+			<div style="clear:both;"></div>
+			<div class="ztl_item_content_padding">
+				<div class="ztl_item_buttons">
+					<a href="map.html#{{id}}" data-role="link" data-ajax="false" style="text-decoration:none;">
+						<div class="ztl_red_button ztl_item_left_button">ZEMLJEVID</div>
+					</a>
+					<a href="#" style="text-decoration:none;">
+						<div class="ztl_red_button ztl_item_right_button">MYVISIT</div>
+					</a>
+				</div>
+				<br>
+				{{#sound}}
+				<div onClick="play_voice_guide({{id}});" class="ztl_grey_button" style="position:relative;">
+					<div class="sound_img">
+						<img src="assets/css/ztl_images/ztl_sound.png" style="height:27px;">
+					</div> 
+					<div class="sound_txt">GLASOVNI VODIČ</div>
+				</div>
+				{{/sound}}
+				<div class="ztl_item_details">
+					<div class="ztl_item_details_title">NASLOV</div>
+					<div class="ztl_distance">&nbsp;</div>
+					<div style="clear:both;"></div>
+					<div class="grey_line" style="margin-top:10px;"></div>
+					{{& item.intro}}
+					<br><br>
+					{{& item.description}}
+					<br><br>
+					{{#venue}}
+						{{date}}<br>{{venue}}<br>
+					{{/venue}}
+					<br><br>
+					{{#pricing}}
+						{{ticket_type}}: {{price}} EUR<br>
+					{{/pricing}}
+					<br><br><br>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+
+	</div>
+	<div class="footer">
+		<div class="footer_shadow"></div>
+		<div class="header_placeholder">
+			[[[ztl_footer]]]
+		</div>
+	</div>
+</div>
+</script>

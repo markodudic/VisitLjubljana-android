@@ -1,3 +1,9 @@
+//events filter
+var date_from      = "";
+var date_to 	   = "";
+var event_category = 0;
+
+
 var tmi = 0;
 function load_settings() {
 	swipe = 0;
@@ -9,7 +15,8 @@ function load_settings() {
 			
 		generate_query(tmp_query, tmp_callback);
 
-		load_mobile();
+		//load_mobile();
+
 	} else {
 		settings_type = 1;
 		load_desktop();
@@ -52,6 +59,10 @@ function load_pois(id, trips_menu_id, save_history) {
 }
 
 function load_events(save_history) {
+	date_from      = "";
+	date_to 	   = "";
+	event_category = 0;
+	
 	swipe = 0;
 	if (save_history == 1)  {
 		var history_string = "fun--load_events--empty";
@@ -60,32 +71,30 @@ function load_events(save_history) {
 
 	trips_title = main_menu['img2'];
 
+	
+	var tmp_query    = "SELECT e.id, et.title, ett.venue_id, ett.date, p.coord_x, p.coord_y, ett.venue as poi_title, p.image FROM ztl_event e LEFT JOIN ztl_event_translation et ON et.id_event = e.id LEFT JOIN  ztl_event_timetable ett ON ett.id_event = e.id LEFT JOIN ztl_poi p ON p.id = ett.venue_id WHERE et.id_language = "+settings.id_lang+" GROUP BY e.id ORDER BY e.id";
+    var tmp_callback = "events_success";
+    generate_query(tmp_query, tmp_callback);
 
-	//top 3 eventi
-	var tmp_query 	 = "SELECT e.id, et.title FROM ztl_event e LEFT JOIN ztl_event_translation et ON et.id_event = e.id WHERE et.id_language = "+settings.id_lang+" LIMIT 3";
-	var tmp_callback = "top_events_success";
-	generate_query(tmp_query, tmp_callback);
-
-	var tmp_query 	 = "SELECT e.id, et.title FROM ztl_event e LEFT JOIN ztl_event_translation et ON et.id_event = e.id WHERE et.id_language = "+settings.id_lang+" AND e.id > 26187 ";
-	var tmp_callback = "events_success";
-	generate_query(tmp_query, tmp_callback);
-
+	load_event_type();
 }
 
 function load_tours(save_history)  {
-	swipe = 0;
-	if (save_history == 1)  {
-		var history_string = "fun--load_tours--empty";
-		add_to_history(history_string);
-	}
+    swipe = 0;
+    if (save_history == 1)  {
+        var history_string = "fun--load_tours--empty";
+        add_to_history(history_string);
+    }
 
-	var tmp_query 	 = "SELECT t.id, tt.title, tt.short_description FROM ztl_tour t LEFT JOIN ztl_tour_translation tt ON tt.id_tour = t.id WHERE tt.id_language = "+settings.id_lang;
-	var tmp_callback = "tour_success";
-	generate_query(tmp_query, tmp_callback);
+    trips_title = main_menu['img6'];
+
+    var tmp_query      = "SELECT t.id, tt.title, tt.short_description, ti.image FROM ztl_tour t LEFT JOIN ztl_tour_translation tt ON tt.id_tour = t.id LEFT JOIN ztl_tour_images ti ON t.id = ti.id_tour WHERE tt.id_language = "+settings.id_lang+" GROUP BY t.id";
+    var tmp_callback = "tour_success";
+    generate_query(tmp_query, tmp_callback);
 }
 
 function load_mobile() {
-	console.log('nalagam mobilno');
+	console.log('zagon --- nalagam mobilno');
 	
 	//preverim, ce je fajl ze bil kreiran
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
@@ -104,7 +113,7 @@ function load_mobile() {
 }
 
 function create_file() {
-	console.log('nalagam create');
+	console.log('zagon -- nalagam create');
 	//create folder
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
         fileSystem.root.getDirectory("ztl", {create: true, exclusive: false}, function(dir){}, fail); 
@@ -170,12 +179,29 @@ function readAsText(file) {
 			load_main_menu();
 			swipe = 0;
 
+			
+			if (skip_update == 0) {
+				if (update_running == 0) {
+					check_updates();
+				}
+			}
+
 			if (backstep == 1) {
 				go_back();
 			} else {
-				load_page(template_lang+'main_menu.html', 'main_menu', main_menu, 'fade', false);
+				localStorage.clear();
+
+				if (menu_select_lang == 1) {
+					load_page('select_language.html', 'select_language', null, 'fade', false);
+				} else {
+					load_page(template_lang+'main_menu.html', 'main_menu', main_menu, 'fade', false);
+				}
 			}
 		}
+
+		console.log("zagon --- jezik id" + settings.id_lang);
+
+		menu_select_lang = 0;
 	};
 	reader.readAsText(file);
 
@@ -185,6 +211,12 @@ function readAsText(file) {
 function fail(error) {
 	console.log('nalagam error');
 	console.log("error code: "+error.code);
+}
+
+function check_updates() {
+	var tmp_query    = "SELECT count(id) AS nr FROM ztl_event";
+    var tmp_callback = "count_ztl_event_success";
+    //generate_query(tmp_query, tmp_callback);
 }
 
 function load_desktop() {
@@ -201,6 +233,7 @@ function load_desktop() {
 	});
 	
 	if (settings.id_lang == 0) {
+		swipe = 0;
 		load_page('select_language.html', 'select_language', null, 'fade', false);
 	} else {
 		swipe = 0;
@@ -209,6 +242,7 @@ function load_desktop() {
 }
 
 function load_settings_page(){
+	swipe = 0;
 	load_page('select_language.html', 'select_language', null, 'fade', false);
 }
 

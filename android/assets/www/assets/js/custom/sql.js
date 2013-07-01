@@ -12,11 +12,6 @@ function generate_query(q, cb) {
 
 
 function db_query(tx) {
-	console.log("db_query");
-
-	console.log(query);
-	console.log(callback);
-
     tx.executeSql(query, [], db_success, errorCB);
 }
 
@@ -29,8 +24,12 @@ function db_success (tx, results) {
 function check_db_success(results) {
 	console.log(JSON.stringify(results));
     if (results.rows.length != 1) {
-    	console.log("polnim bazo");
+    	console.log("zagon --- polnim bazo");
     	populate_db_firstime();
+	} else {
+		console.log("zagon --- berem nastavitve");
+
+		//load_mobile();
 	}
 }
 
@@ -79,34 +78,99 @@ function load_map_poi_data_success(results) {
     poi_data = results.rows.item(0);
 }
 
-function top_events_success(results) {
-	var res = {};
-    res.items = [];
-    var len = results.rows.length;
-    for (var i=0; i<len; i++){
-    	res.items[i] = results.rows.item(i);
-    }
-
-	top_events = res.items;
-}
-
+//eventi
 function events_success(results) {
-	var res = {};
-    res.items = [];
-    var len = results.rows.length;
+	var res 	  = {};
+    res.items 	  = [];
+    res.top_items = [];
+    var len 	  = results.rows.length;
+
+    var k = 0;
     for (var i=0; i<len; i++){
-    	res.items[i] = results.rows.item(i);
+    	if (i<3) {
+    		res.top_items[i] = results.rows.item(i);
+    	} else  {
+    		res.items[k] = results.rows.item(i);
+    		k++;
+    	}
     }
 
     var data 			= {};
-	data.top_events_0 	= top_events[0];
-	data.top_events_1 	= top_events[1];
-	data.top_events_2 	= top_events[2];
+    
+	data.top_events_0 	= res.top_items[0];
+	data.top_events_1 	= res.top_items[1];
+	data.top_events_2 	= res.top_items[2];
+	
 	data.items 			= res.items;
-
 	load_page(template_lang+'events.html', 'events', data, 'fade', false);
 }
 
+function event_category_success(results) {
+	var len = results.rows.length;
+    	
+    for (var i=0; i<len; i++){
+    	$('#event_type').append($("<option/>", {
+	        value: results.rows.item(i).id,
+	        text: results.rows.item(i).name
+	    }));
+    }
+}
+
+function event_category_title_success(results) {
+	event_title = results.rows.item(0).name;
+}
+
+function filter_events_success(results) {
+	var res = {};
+    res.items = [];
+    var len = results.rows.length;
+    for (var i=0; i<len; i++){
+    	res.items[i] = results.rows.item(i);
+    }
+
+    res.page_title = event_title+" "+event_date_from+"-"+event_date_to;
+    load_page(template_lang+'events_filtered.html', 'filtered_events', res, 'fade', false);
+}
+
+//event
+function load_event_success(results) {
+	tmp_event_data.item = results.rows.item(0)
+
+	var tmp_query 	 = "SELECT ep.ticket_type, ep.price FROM ztl_event_pricing ep WHERE ep.id_event = "+results.rows.item(0).id+" AND ep.id_language = "+settings.id_lang;
+	var tmp_callback = "load_event_pricing_success";
+	generate_query(tmp_query, tmp_callback);
+}
+
+function load_event_pricing_success(results) {
+	tmp_event_data.pricing = [];
+
+	var len = results.rows.length;
+	for (var i=0; i<len; i++){
+    	tmp_event_data.pricing[i] = results.rows.item(i);
+    }
+
+    var id_event = tmp_event_data.item.id;
+
+    var tmp_query 	 = "SELECT et.venue, et.date FROM ztl_event_timetable et WHERE et.id_event = "+id_event;
+	var tmp_callback = "load_event_venue_success";
+	generate_query(tmp_query, tmp_callback);
+}
+
+function load_event_venue_success(results) {
+	tmp_event_data.venue = [];
+
+	var len = results.rows.length;
+	for (var i=0; i<len; i++){
+    	tmp_event_data.venue[i] = results.rows.item(i);
+    }
+
+    console.log(tmp_event_data);
+    console.log(JSON.stringify(tmp_event_data));
+
+    load_page(template_lang+'event.html', 'event', tmp_event_data, 'fade', false);
+}
+
+//touri
 function tour_success(results) {
 	var res = {};
     res.items = [];
@@ -116,6 +180,60 @@ function tour_success(results) {
     }
 
     load_page(template_lang+'tours.html', 'tours', res, 'fade', false);
+}
+
+//tour
+function load_tour_success(results) {
+	tmp_tours_data.item = results.rows.item(0);
+
+	var tmp_query = "SELECT ti.image FROM ztl_tour_images ti WHERE ti.id_tour = "+tmp_tours_data.item.id+" ORDER BY ti.tour_idx";
+	var tmp_callback = "tour_images_success";
+    generate_query(tmp_query, tmp_callback);
+
+
+}
+
+function tour_images_success(results) {
+	tmp_tours_data.images = [];
+	tmp_tours_data.main_image = results.rows.item(0).image;
+
+	var len = results.rows.length;
+	for (var i=0; i<len; i++){
+    	tmp_tours_data.images[i] = results.rows.item(i);
+    }
+
+
+
+    var id_tour = tmp_tours_data.item.id;
+
+    var tmp_query 	 = " SELECT tc.title, tc.content FROM ztl_tour_chaters tc WHERE tc.id_tour = "+id_tour+" AND tc.id_language = "+settings.id_lang+" GROUP BY  tc.title, tc.content ORDER BY tc.tour_idx";
+	var tmp_callback = "tour_charters_success";
+	generate_query(tmp_query, tmp_callback);
+}
+
+function tour_charters_success(results) {
+	tmp_tours_data.charters = [];
+
+	var len = results.rows.length;
+	for (var i=0; i<len; i++){
+    	tmp_tours_data.charters[i] = results.rows.item(i);
+    }
+
+    console.log(tmp_tours_data);
+    console.log(JSON.stringify(tmp_tours_data));
+
+    load_page(template_lang+'tour.html', 'tour', tmp_tours_data, 'fade', false);
+}
+
+function count_ztl_event_success(results) {
+	console.log("event check");
+	console.log(results.rows.item(0));
+	console.log(JSON.stringify(results.rows.item(0).nr));
+
+	if (results.rows.item(0).nr == 0)  {
+		console.log("update events and trips");
+		update_db();
+	}
 }
 
 //sql error
@@ -216,6 +334,16 @@ function populate_db_firstime() {
 			});
 		});
 	});
+
+	$.getScript('./assets/install_db/ztl_event_timetable.js', function () {
+		db.transaction(populateDB_ztl_event_timetable, errorCB, function(tx) {
+			db.transaction(function(tx) {
+				tx.executeSql('select count(*) as cnt from ztl_event_timetable;', [], function(tx, res) {
+					console.log('8 >>>>>>>>>> ztl_event_translation res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+				});
+			});
+		});
+	});
 	
 	$.getScript('./assets/install_db/ztl_event_pricing.js', function () {
 		db.transaction(populateDB_ztl_event_pricing, errorCB, function(tx) {
@@ -296,4 +424,38 @@ function populate_db_firstime() {
 			});
 		});
 	});
+
+	$.getScript('./assets/install_db/ztl_idx.js', function () {
+        db.transaction(populateDB_ztl_tour_images, errorCB, function(tx) {
+            console.log('99 >>>>>>>>>> ztl_idx');
+
+            console.log("zagon --- nalagam nastavitve po insertu");
+			load_mobile();
+
+            //to naj se pol odstrani
+            tmp_update_sound();
+        });
+    });
+}
+
+/*samo 1x povozim sound, da nebo 300 pojev v glasovnem vodicu --- ko bo urejen atribut v eportu se lahk zbrise*/
+function tmp_update_sound() {
+	var tmp_query 		= "UPDATE ztl_poi SET sound = ''";
+	var tmp_callback	= "tmp_sound_update_success";
+			
+	generate_query(tmp_query, tmp_callback);
+
+	console.log("update sound: vse na 0:"+tmp_query);
+}
+
+function tmp_sound_update_success(results) {
+	var tmp_query 		= "UPDATE ztl_poi SET sound = 'sound' WHERE id IN (546, 538, 645, 652, 672, 606, 578, 586, 582, 1760, 1761, 1762, 1773, 1774)";
+	var tmp_callback	= "tmp_sound_set_update_success";
+
+	generate_query(tmp_query, tmp_callback);
+	console.log("update sound: nekaj na sound:"+tmp_query);
+}
+
+function tmp_sound_set_update_success(results) {
+	console.log("update sound: poi sound pofejkan");
 }

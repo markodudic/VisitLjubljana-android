@@ -20,24 +20,41 @@ var backstep	  = 0;
 var voice_guide   = 0;
 
 //history
-var view_main_menu = 1;
-
-//events
-var top_events 	= null;
+var view_main_menu 	= 1;
+var current_div		= "";
 
 //iscroll
 var myScroll;
 
+//skip update
+var skip_update 	 = 0;
+var menu_select_lang = 0;
+var update_running 	 = 0;
+
 document.addEventListener("deviceready", on_device_ready, false);
 
 function on_device_ready() {
+	console.log("zagon -- skripte nalozene");
 	var hash = window.location.hash;
 	hash = hash.replace(/^.*?#/,'');
 
+	
 	if (hash == "go_back") {
-		backstep = 1;
+		backstep 	= 1;
+		skip_update = 1;
+	} else if (hash == "voice_guide") {
+		$.getScript('./assets/js/custom/trips.js', function () {
+	        skip_update = 1;
+	        load_voice_guide(1);
+	    });	
+	} else if (hash == "lang_settings") {
+		swipe 			 = 0;
+		settings		 = new Object();
+		skip_update 	 = 1;
+		menu_select_lang = 1;
 	} else {
 		navigator.splashscreen.show();
+		skip_update = 0;
 	}
 
 	document.addEventListener("backbutton", go_back, true);
@@ -45,12 +62,12 @@ function on_device_ready() {
 	db 		= window.sqlitePlugin.openDatabase("Database", "1.0", "ztl", -1);
 	pOld 	= new Proj4js.Point(0,0);
 	
+
 	load_settings();
 	init_gps();
 
 	//localStorage.clear();
-	
-	console.log("******************aaaaaaaaaaaaaaaaaaa*********************************");
+
 	if (localStorage.getItem(localStorage.key('first_run')) == null) {
 		console.log("local storage cleared tole sm!!!");
 
@@ -58,9 +75,6 @@ function on_device_ready() {
 		localStorage.setItem('history', JSON.stringify(tmp_history));
 		localStorage.setItem('first_run', 0);
 	}
-	console.log("******************bbbbbbbbbbbbbbbbbbbb*********************************");
-
-	console.log(main_menu);
 }
 
 function load_main_screen(save_history) {
@@ -138,7 +152,7 @@ function save_swipe_history(index, direction) {
 
 
 function load_page(template, div, data, transition, reverse) {
-	console.log("loading page");
+	console.log("zagon --- loading page");
 	if (footer == "") {
 		load_footer();
 	}
@@ -167,11 +181,16 @@ function load_page(template, div, data, transition, reverse) {
 				data.page_title 	= trips_title;
 			}
 			
-			console.log(data);
-			console.log(JSON.stringify(data));
+			if (div == 'event') {
+				extra_div_id = "_"+data.item.id;
+			}
 
-			console.log("voice_guide :"+voice_guide);
+			if (div == 'tour') {
+				extra_div_id = "_"+data.item.id;
+			}
 			
+			console.log("voice_guide :" + voice_guide);
+
 			if (voice_guide == 1)  {
 				extra_div_id 		= "_voice_guide";
 				data.extra_div_id 	= "voice_guide";
@@ -199,12 +218,15 @@ function load_page(template, div, data, transition, reverse) {
 
 			html = html.replace('[[[ztl_footer]]]', footer);
 
-			$('body').append(html);
+			console.log("navigacija "+div+"---"+current_div); 
 
-
-			console.log(menu_icon);
-			console.log('#icon_'+menu_icon);
-			console.log("assets/css/ztl_images/icon_"+menu_icon+"_red.png"); 
+			if (div == "main_menu") {
+				if (current_div != "main_menu") {
+					$('body').append(html);
+				}
+			} else {
+				$('body').append(html);
+			}
 
 			$('.icon_'+menu_icon).attr("src","assets/css/ztl_images/icon_"+menu_icon+"_red.png");
 
@@ -225,22 +247,18 @@ function load_page(template, div, data, transition, reverse) {
 			if (div == "show_map") {
 				show_map();
 			}
-			console.log("navigacija : "+div+extra_div_id + "---" + transition +"---"+ reverse);
 			
-			if (div != "trips") {
-				i_scroll(div);
+			if ((div != "trips") && (div != "select_language")) {
+				i_scroll(div+extra_div_id);
 			}
 			
 			pOld = new Proj4js.Point(0,0);
 			navigator.geolocation.getCurrentPosition(onSuccess_gps, onError_gps);
 			
-			console.log("navigacija");
-			console.log(div+extra_div_id);
-			console.log(transition);
-			console.log(reverse);
-
-			console.log("navigacija : "+div+extra_div_id + "---" + transition +"---"+ reverse);
+			console.log("zagon -- navigacija : "+div+extra_div_id + "---" + transition +"---"+ reverse);
 			animate_div(div+extra_div_id, transition, reverse);
+
+			current_div 	= div+extra_div_id;
 		}
 	});
 }
@@ -294,7 +312,7 @@ function select_language(id) {
 		swipe = 0;
 		load_page(template_lang+'main_menu.html', 'main_menu', main_menu, 'fade', false);
 	} else {
-		console.log('shrani mobilno');
+		console.log('zagon -- shrani mobilno');
 		save_mobile_settings();
 	}
 } 
@@ -325,6 +343,23 @@ function load_media() {
 			media = $(temp).filter('#tpl_ztl_media_player').html();
 		}
 	});
+}
+
+function dprun(t) {
+	console.log("DATEPICKER");
+	var currentField = $(t);
+	//var myNewDate = Date.parse(currentField.val()) || new Date();
+	var myNewDate = new Date();
+	// Same handling for iPhone and Android
+	window.plugins.datePicker.show({
+	   date : myNewDate,
+	   mode : 'date', // date or time or blank for both
+	   allowOldDates : true
+	}, function(returnDate) {
+	   var newDate = new Date(returnDate);
+	   currentField.val(newDate.toString("dd/MMM/yyyy"));
+	        currentField.blur();
+	});	
 }
 
 function play_location_sound() {

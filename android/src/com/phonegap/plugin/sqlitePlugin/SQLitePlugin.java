@@ -20,12 +20,11 @@ import java.util.HashMap;
 import org.apache.cordova.api.CordovaPlugin;
 import org.apache.cordova.api.CallbackContext;
 
-import android.content.Context;
-
 import android.database.Cursor;
 
 import android.database.sqlite.*;
 
+import android.util.Base64;
 import android.util.Log;
 
 public class SQLitePlugin extends CordovaPlugin
@@ -97,7 +96,7 @@ public class SQLitePlugin extends CordovaPlugin
 					queryIDs = new String[len];
 					jsonparams = new JSONArray[len];
 
-					for (int i = 0; i < len; i++) 
+					for (int i = 0; i < len; i++)
 					{
 						a 			= txargs.getJSONObject(i);
 						queries[i] 	= a.getString("query");
@@ -155,7 +154,7 @@ public class SQLitePlugin extends CordovaPlugin
 		if (this.getDatabase(dbname) != null) this.closeDatabase(dbname);
 
 		File dbfile = this.cordova.getActivity().getDatabasePath(dbname + ".db");
-
+		//File dbfile = new File("/mnt/sdcard/Android/data/com.vigred.ztl/"+ dbname + ".db");
 		Log.v("info", "Open sqlite db: " + dbfile.getAbsolutePath());
 
 		SQLiteDatabase mydb = SQLiteDatabase.openOrCreateDatabase(dbfile, null);
@@ -235,6 +234,8 @@ public class SQLitePlugin extends CordovaPlugin
 							myStatement.bindDouble(j + 1, jsonparams[i].getDouble(j));
 						} else if (jsonparams[i].get(j) instanceof Number) {
 							myStatement.bindLong(j + 1, jsonparams[i].getLong(j));
+						} else if (jsonparams[i].isNull(j)) {
+							myStatement.bindNull(j + 1);
 						} else {
 							myStatement.bindString(j + 1, jsonparams[i].getString(j));
 						}
@@ -348,34 +349,7 @@ public class SQLitePlugin extends CordovaPlugin
 					for (int i = 0; i < colCount; ++i) {
 						key = cur.getColumnName(i);
 
-						// for old Android SDK remove lines from HERE:
-						/*
-						if(android.os.Build.VERSION.SDK_INT >= 11)
-						{
-							switch(cur.getType (i))
-							{
-								case Cursor.FIELD_TYPE_NULL:
-									row.put(key, null);
-									break;
-								case Cursor.FIELD_TYPE_INTEGER:
-									row.put(key, cur.getInt(i));
-									break;
-								case Cursor.FIELD_TYPE_FLOAT:
-									row.put(key, cur.getFloat(i));
-									break;
-								case Cursor.FIELD_TYPE_STRING:
-									row.put(key, cur.getString(i));
-									break;
-								case Cursor.FIELD_TYPE_BLOB:
-									row.put(key, cur.getBlob(i));
-									break;
-							}
-						}
-						else // to HERE.
-						{
-						*/
-							row.put(key, cur.getString(i));
-						//}
+						row.put(key, cur.getString(i));
 					}
 
 					fullresult.put(row);
