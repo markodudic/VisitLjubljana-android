@@ -37,6 +37,7 @@
     <preference name="exit-on-suspend" value="false" />
 <plugins>
 	<plugin name="SQLitePlugin" value="com.phonegap.plugin.sqlitePlugin.SQLitePlugin"/>
+	<plugin name="DatePickerPlugin" value="com.phonegap.plugin.DatePickerPlugin"/>
 	<plugin name="GAPlugin" value="com.adobe.plugins.GAPlugin"/>
     <plugin name="App" value="org.apache.cordova.App"/>
     <plugin name="Geolocation" value="org.apache.cordova.GeoBroker"/>
