@@ -37,7 +37,13 @@ function load_pois_success(results) {
 	var res = {};
     res.items = [];
     var len = results.rows.length;
+    var tmp;
     for (var i=0; i<len; i++){
+    	//skrajsam dolzino
+    	tmp = results.rows.item(i).title;
+    	if (tmp.length > max_dolzina_title) {
+    		results.rows.item(i).title = tmp.substring(0,max_dolzina_title)+"...";
+    	}
     	res.items[i] = results.rows.item(i);
     }
 
@@ -85,7 +91,19 @@ function events_success(results) {
     var len 	  = results.rows.length;
 
     var k = 0;
+    var tmp;
     for (var i=0; i<len; i++){
+    	//skrajsam dolzino
+    	tmp = results.rows.item(i).title;
+    	if (tmp.length > max_dolzina_title) {
+    		results.rows.item(i).title = tmp.substring(0,max_dolzina_title)+"...";
+    	}
+    	tmp = results.rows.item(i).poi_title;
+    	if (tmp.length > max_dolzina_poi_title) {
+    		results.rows.item(i).poi_title = tmp.substring(0,max_dolzina_poi_title)+"...";
+    	}
+    	
+    	
     	if (i<3) {
     		res.top_items[i] = results.rows.item(i);
     	} else  {
@@ -174,7 +192,13 @@ function tour_success(results) {
 	var res = {};
     res.items = [];
     var len = results.rows.length;
+    var tmp;
     for (var i=0; i<len; i++){
+    	//skrajsam dolzino
+    	tmp = results.rows.item(i).title;
+    	if (tmp.length > max_dolzina_title) {
+    		results.rows.item(i).title = tmp.substring(0,max_dolzina_title)+"...";
+    	}
     	res.items[i] = results.rows.item(i);
     }
 

@@ -31,6 +31,11 @@ var skip_update 	 = 0;
 var menu_select_lang = 0;
 var update_running 	 = 0;
 
+//text dolzina max
+var max_dolzina_naslov = 25;
+var max_dolzina_poi_title = 30;
+var max_dolzina_title = 50;
+
 document.addEventListener("deviceready", on_device_ready, false);
 
 function on_device_ready() {
@@ -172,6 +177,10 @@ function load_page(template, div, data, transition, reverse) {
 		success:function(temp){
 			var menu_icon 	 = 3;
 			var extra_div_id = "";
+
+			data.map_button 	= map_translation[settings.id_lang];
+			data.guide_button 	= voice_guide_translation_full[settings.id_lang];
+			
 			
 			if (div == 'trips') {
 				extra_div_id 		= "_"+group;
@@ -185,10 +194,16 @@ function load_page(template, div, data, transition, reverse) {
 			 
 			if (div == 'event') {
 				extra_div_id = "_"+data.item.id;
+				if (data.item.title.length>max_dolzina_naslov) {
+					data.item.title=data.item.title.substring(0,max_dolzina_naslov)+"...";
+				}
 			}
 
 			if (div == 'tour') {
 				extra_div_id 		= "_"+data.item.id;
+				if (data.item.title.length>max_dolzina_naslov) {
+					data.item.title=data.item.title.substring(0,max_dolzina_naslov)+"...";
+				}
 			}
 			
 			if (div == 'tours') {
@@ -208,6 +223,9 @@ function load_page(template, div, data, transition, reverse) {
 
 			if (div == 'div_trip') {
 				data.tmi = tmi;
+				if (data.title.length>max_dolzina_naslov) {
+					data.title=data.title.substring(0,max_dolzina_naslov)+"...";
+				}
 			}
 
 			if (div == 'main_menu') {
@@ -215,6 +233,7 @@ function load_page(template, div, data, transition, reverse) {
 			}
 
 			var res = $(temp).filter('#tpl_'+div).html();
+			
 			
 			if (data != null) {
 				var html = Mustache.to_html(res, data);
