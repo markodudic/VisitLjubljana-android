@@ -319,7 +319,7 @@ function doTouchLogic() {
     console.log(duration);
     */
     
-    if (duration > 100 && distance > 100) {
+    if (duration > 75 && distance > 75) {
          if (direction > 0) {
         	 swipe_left_handler();
          } else {
@@ -334,12 +334,11 @@ function animate_div(div, transition, reverse) {
 		$("#"+div).hide();
 
 		if (reverse == true) {
-			$("#"+div).show("slide", { direction: "left" }, 400, function() { /*$("body").swipe("enable");*/ }); 
+			$("#"+div).show("slide", { direction: "left" }, 200, function() { /*$("body").swipe("enable");*/ }); 
 		} else {
-			$("#"+div).show("slide", { direction: "right" }, 400, function() { /*$("body").swipe("enable");*/ }); 
+			$("#"+div).show("slide", { direction: "right" }, 200, function() { /*$("body").swipe("enable");*/ }); 
 		}
 	}
-
 	remove_old_divs(div);
 }
 
@@ -460,7 +459,6 @@ function load_voice_guide(save_history) {
 		var history_string = "fun--load_voice_guide--empty";
 		add_to_history(history_string);
 	}
-
 
 	voice_guide = 1;
 	swipe		= 0;
