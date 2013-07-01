@@ -31,15 +31,16 @@ var skip_update 	 = 0;
 var menu_select_lang = 0;
 var update_running 	 = 0;
 
-
 document.addEventListener("deviceready", on_device_ready, false);
 
 function on_device_ready() {
 	console.log("zagon -- skripte nalozene");
+	
+
 	var hash = window.location.hash;
 	hash = hash.replace(/^.*?#/,'');
 
-	
+
 	if (hash == "go_back") {
 		backstep 	= 1;
 		skip_update = 1;
@@ -57,18 +58,17 @@ function on_device_ready() {
 		navigator.splashscreen.show();
 		skip_update = 0;
 	}
-
+	
 	document.addEventListener("backbutton", go_back, true);
 	
 	db 		= window.sqlitePlugin.openDatabase("Database", "1.0", "ztl", -1);
 	pOld 	= new Proj4js.Point(0,0);
 	
-
+	
 	load_settings();
 	init_gps();
-
+	
 	//localStorage.clear();
-
 	if (localStorage.getItem(localStorage.key('first_run')) == null) {
 		console.log("local storage cleared tole sm!!!");
 
@@ -76,6 +76,7 @@ function on_device_ready() {
 		localStorage.setItem('history', JSON.stringify(tmp_history));
 		localStorage.setItem('first_run', 0);
 	}
+	
 }
 
 function load_main_screen(save_history) {

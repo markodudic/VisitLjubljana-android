@@ -29,7 +29,7 @@ function check_db_success(results) {
 	} else {
 		console.log("zagon --- berem nastavitve");
 
-		//load_mobile();
+		load_mobile();
 	}
 }
 
