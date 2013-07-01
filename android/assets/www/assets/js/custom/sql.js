@@ -238,8 +238,7 @@ function count_ztl_event_success(results) {
 //sql error
 function errorCB(err) {
 	console.log("err");
-	console.log(err.code);
-	console.log(err);
+	console.log(JSON.stringify(err));
 }
 
 //ob prvem zagonu napolni bazo
@@ -318,7 +317,7 @@ function populate_db_firstime() {
 		db.transaction(populateDB_ztl_event, errorCB, function(tx) {
 			db.transaction(function(tx) {
 				tx.executeSql('select count(*) as cnt from ztl_event;', [], function(tx, res) {
-					console.log('7 >>>>>>>>>> ztl_event res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+					console.log('11 >>>>>>>>>> ztl_event res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
 				});
 			});
 		});
@@ -328,7 +327,7 @@ function populate_db_firstime() {
 		db.transaction(populateDB_ztl_event_translation, errorCB, function(tx) {
 			db.transaction(function(tx) {
 				tx.executeSql('select count(*) as cnt from ztl_event_translation;', [], function(tx, res) {
-					console.log('8 >>>>>>>>>> ztl_event_translation res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+					console.log('12 >>>>>>>>>> ztl_event_translation res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
 				});
 			});
 		});
@@ -338,7 +337,7 @@ function populate_db_firstime() {
 		db.transaction(populateDB_ztl_event_timetable, errorCB, function(tx) {
 			db.transaction(function(tx) {
 				tx.executeSql('select count(*) as cnt from ztl_event_timetable;', [], function(tx, res) {
-					console.log('8 >>>>>>>>>> ztl_event_translation res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+					console.log('13 >>>>>>>>>> ztl_event_translation res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
 				});
 			});
 		});
@@ -348,7 +347,7 @@ function populate_db_firstime() {
 		db.transaction(populateDB_ztl_event_pricing, errorCB, function(tx) {
 			db.transaction(function(tx) {
 				tx.executeSql('select count(*) as cnt from ztl_event_pricing;', [], function(tx, res) {
-					console.log('9 >>>>>>>>>> ztl_event_pricing res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+					console.log('14 >>>>>>>>>> ztl_event_pricing res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
 				});
 			});
 		});
@@ -358,7 +357,7 @@ function populate_db_firstime() {
 		db.transaction(populateDB_ztl_event_category, errorCB, function(tx) {
 			db.transaction(function(tx) {
 				tx.executeSql('select count(*) as cnt from ztl_event_category;', [], function(tx, res) {
-					console.log('10 >>>>>>>>>> ztl_event_category res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+					console.log('15 >>>>>>>>>> ztl_event_category res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
 				});
 			});
 		});
@@ -368,7 +367,7 @@ function populate_db_firstime() {
 		db.transaction(populateDB_ztl_event_event_category, errorCB, function(tx) {
 			db.transaction(function(tx) {
 				tx.executeSql('select count(*) as cnt from ztl_event_event_category;', [], function(tx, res) {
-					console.log('11 >>>>>>>>>> ztl_event_event_category res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+					console.log('16 >>>>>>>>>> ztl_event_event_category res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
 				});
 			});
 		});
@@ -378,7 +377,7 @@ function populate_db_firstime() {
 		db.transaction(populateDB_ztl_tour, errorCB, function(tx) {
 			db.transaction(function(tx) {
 				tx.executeSql('select count(*) as cnt from ztl_tour;', [], function(tx, res) {
-					console.log('12 >>>>>>>>>> ztl_tour res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+					console.log('21 >>>>>>>>>> ztl_tour res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
 				});
 			});
 		});
@@ -388,17 +387,7 @@ function populate_db_firstime() {
 		db.transaction(populateDB_ztl_tour_translation, errorCB, function(tx) {
 			db.transaction(function(tx) {
 				tx.executeSql('select count(*) as cnt from ztl_tour_translation;', [], function(tx, res) {
-					console.log('13 >>>>>>>>>> ztl_tour_translation res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
-				});
-			});
-		});
-	});
-	
-	$.getScript('./assets/install_db/ztl_tour.js', function () {
-		db.transaction(populateDB_ztl_tour, errorCB, function(tx) {
-			db.transaction(function(tx) {
-				tx.executeSql('select count(*) as cnt from ztl_tour;', [], function(tx, res) {
-					console.log('14 >>>>>>>>>> ztl_tour res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+					console.log('22 >>>>>>>>>> ztl_tour_translation res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
 				});
 			});
 		});
@@ -408,7 +397,7 @@ function populate_db_firstime() {
 		db.transaction(populateDB_ztl_tour_chaters, errorCB, function(tx) {
 			db.transaction(function(tx) {
 				tx.executeSql('select count(*) as cnt from ztl_tour_chaters;', [], function(tx, res) {
-					console.log('15 >>>>>>>>>> ztl_tour_chaters res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+					console.log('23 >>>>>>>>>> ztl_tour_chaters res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
 				});
 			});
 		});
@@ -418,7 +407,7 @@ function populate_db_firstime() {
 		db.transaction(populateDB_ztl_tour_images, errorCB, function(tx) {
 			db.transaction(function(tx) {
 				tx.executeSql('select count(*) as cnt from ztl_tour_images;', [], function(tx, res) {
-					console.log('16 >>>>>>>>>> ztl_tour_images res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+					console.log('24 >>>>>>>>>> ztl_tour_images res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
 				});
 			});
 		});
