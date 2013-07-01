@@ -310,7 +310,7 @@ function load_lang_settings() {
 function load_moblie_settings() {
     console.log('nalagam mobilne nastavitve');
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
-        fileSystem.root.getFile("ztl/settings.json", null, function(fileEntry) {
+        fileSystem.root.getFile("Android/data/com.vigred.ztl/settings.json", null, function(fileEntry) {
             fileEntry.file(readAsText, fail);
         }, fail);
     } , null); 
