@@ -28,7 +28,6 @@ function check_db_success(results) {
     	populate_db_firstime();
 	} else {
 		console.log("zagon --- berem nastavitve");
-
 		load_mobile();
 	}
 }
@@ -430,7 +429,7 @@ function populate_db_firstime() {
             console.log('99 >>>>>>>>>> ztl_idx');
 
             console.log("zagon --- nalagam nastavitve po insertu");
-			load_mobile();
+            load_mobile();
 
             //to naj se pol odstrani
             tmp_update_sound();

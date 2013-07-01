@@ -67,7 +67,7 @@ function on_device_ready() {
 	
 	load_settings();
 	init_gps();
-	
+
 	//localStorage.clear();
 	if (localStorage.getItem(localStorage.key('first_run')) == null) {
 		console.log("local storage cleared tole sm!!!");
@@ -307,7 +307,11 @@ function load_footer() {
 }
 
 function select_language(id) {
+	console.log("zagon --- izbiram jezik");
+
 	settings.id_lang = id;
+
+	check_updates();
 
 	if (settings_type == 1) {
 		//nalozim glavni menu
