@@ -33,5 +33,5 @@ function populateDB_ztl_tour_images(tx) {
 	tx.executeSql('CREATE UNIQUE INDEX ztl_category__u ON ztl_group (id, id_language);');
 	tx.executeSql('CREATE UNIQUE INDEX ztl_category_group__u ON ztl_category_group (id_category, id_group);');
 	tx.executeSql('CREATE UNIQUE INDEX ztl_poi__u ON ztl_poi (id);');
-	tx.executeSql('CREATE UNIQUE INDEX ztl_poi_translation__u ON ztl_poi_translation (id, id_language);');
+	tx.executeSql('CREATE UNIQUE INDEX ztl_poi_translation__u ON ztl_poi_translation (id_poi, id_language);');
 }
