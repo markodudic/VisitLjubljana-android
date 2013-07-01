@@ -44,6 +44,7 @@ function go_back() {
 		
 		localStorage.setItem('history', JSON.stringify(history));
 
+
 		if (go_to[0] == 'fun') {
 			slide 		= 0;
 			var params 	= "";
@@ -63,6 +64,19 @@ function go_back() {
 
 			if (go_to[1] == "load_voice_guide") {
 				load_voice_guide(0);
+			}
+
+			if (go_to[1] == "load_events") {
+				load_events(0);
+			}
+
+			if (go_to[1] == "load_tours") {
+				load_tours(0);
+			}
+
+
+			if (go_to[1] == "load_tour") {
+				load_tour(params[0], 0);
 			}
 
 			if (go_to[1] == "load_trip_content") {

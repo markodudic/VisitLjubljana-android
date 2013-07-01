@@ -28,8 +28,8 @@ var ztl_content_width = window_width - img_width;
 var db = null;
 
 //settings
-var settings		= new Object();
-var template_root 	= 'templates/';
-var template_lang 	= 'si/';
+var settings			= new Object();
+var template_root 		= 'templates/';
+var template_lang 		= 'si/';
 
 var tmp_history = ["fun--load_main_screen--empty"];

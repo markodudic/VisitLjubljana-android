@@ -378,6 +378,31 @@ div.poi_address {
     width:40%;
 }
 
+.event_date_holder {
+    width:55px; 
+    height:90px; 
+    right:0; 
+    position:absolute;
+    font-family:'robotobold_condensed';
+}
+
+.event_date_holder_top {
+    background-color:#ffffff; 
+    height:55px; 
+    line-height:55px; 
+    text-align:center; 
+    font-size:25px;
+}
+
+.event_date_holder_bottom {
+    background-color:#222222; 
+    height:35px; 
+    line-height:35px; 
+    text-align:center; 
+    font-size:20px; 
+    color:#ffffff;
+}
+
 .ui-slider { position: relative; text-align: left; }
 .ui-slider .ui-slider-handle { position: absolute; z-index: 2; width: 1.2em; height: 1.2em; cursor: default; background-color:red;}
 .ui-slider .ui-slider-range { position: absolute; z-index: 1; font-size: .7em; display: block; border: 0; background-position: 0 0; background-color:red; color:red; border:5px solid red;}

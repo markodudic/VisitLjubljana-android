@@ -2,7 +2,7 @@ var lang ='{"language_menu":[{"title":"Vsebine","img1":"Poiščite navdih","img2
 lang = JSON.parse(lang);
 
 var voice_guide_translation = [];
-voice_guide_translation[1]	= "Glasovni vodic slovensko";
+voice_guide_translation[1]	= "Glasovni vodic";
 voice_guide_translation[2]	= "Glasovni vodic anglesko";
 voice_guide_translation[3]	= "Glasovni vodic nemsko";
 voice_guide_translation[4]	= "Glasovni vodic italijansko";
