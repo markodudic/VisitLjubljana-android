@@ -44,9 +44,11 @@
 							</div>
 						</a>
 						<div class="ztl_content_info_left"></div>
-						<div class="ztl_star">
-							<img src="assets/css/ztl_images/star_{{star}}.png" class="img_star">
-						</div>
+						{{#star}}
+							<div class="ztl_star">
+								<img src="assets/css/ztl_images/star_{{star}}.png" class="img_star">
+							</div>
+						{{/star}}
 						<div class="ztl_distance"><div id="ztl_distance_value_{{id}}"></div></div>
 						<input type="hidden" name="ztl_cord_{{id}}" value="{{id}}#{{coord_x}}#{{coord_y}}">
 				</div>

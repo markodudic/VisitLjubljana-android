@@ -7,3 +7,18 @@ voice_guide_translation[2]	= "Guide";
 voice_guide_translation[3]	= "Führung";
 voice_guide_translation[4]	= "Guida";
 voice_guide_translation[5]	= "Guidage";
+
+var voice_guide_translation_full = [];
+voice_guide_translation_full[1]	= "GLASOVNI VODIČ";
+voice_guide_translation_full[2]	= "VOICE GUIDE";
+voice_guide_translation_full[3]	= "SPRACHFUHRUNG";
+voice_guide_translation_full[4]	= "GUIDA VOCALE";
+voice_guide_translation_full[5]	= "GUIDAGE VOCAL";
+
+
+var map_translation = [];
+map_translation[1]	= "ZEMLJEVID";
+map_translation[2]	= "MAP";
+map_translation[3]	= "MAP";
+map_translation[4]	= "MAPPA";
+map_translation[5]	= "MAP";
