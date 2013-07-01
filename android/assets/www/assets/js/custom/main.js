@@ -31,6 +31,7 @@ var skip_update 	 = 0;
 var menu_select_lang = 0;
 var update_running 	 = 0;
 
+
 document.addEventListener("deviceready", on_device_ready, false);
 
 function on_device_ready() {
