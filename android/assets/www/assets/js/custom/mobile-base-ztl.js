@@ -303,6 +303,11 @@ function load_voice_guide() {
     window.location.href = "index.html#voice_guide";
 }
 
+function load_main_screen() {
+    window.location.href = "index.html#content";
+}
+
+
 function load_lang_settings() {
     window.location.href = "index.html#lang_settings";
 }

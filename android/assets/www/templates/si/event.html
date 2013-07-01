@@ -4,7 +4,7 @@
 		<div class="header_placeholder">
 			<div class="red_line"></div>
 			<div class="header_space"></div>
-			<div class="header_back" onClick="load_events()"></div>
+			<div onClick="load_events()"><img class="header_back"></div>
 			<div class="header_title" onClick="load_events()">{{item.title}}</div>
 			<div class="header_dots"></div>
 			<div style="clear:both;"></div>
@@ -42,7 +42,7 @@
 			<div class="ztl_item_content_padding">
 				<div class="ztl_item_buttons">
 					<a href="map.html#{{id}}" data-role="link" data-ajax="false" style="text-decoration:none;">
-						<div class="ztl_red_button ztl_item_left_button">{{map_button}}</div>
+						<div id="map_button" class="ztl_red_button ztl_item_left_button">{{map_button}}</div>
 					</a>
 					<a href="#" style="text-decoration:none;">
 						<div class="ztl_red_button ztl_item_right_button">MYVISIT</div>
@@ -58,20 +58,33 @@
 				</div>
 				{{/sound}}
 				<div class="ztl_item_details">
-					<div class="ztl_item_details_title">NASLOV</div>
+					<div id="ztl_item_details_title" class="ztl_item_details_title">{{ztl_item_details_title}}</div>
 					<div class="ztl_distance">&nbsp;</div>
 					<div style="clear:both;"></div>
 					<div class="grey_line" style="margin-top:10px;"></div>
-					{{& item.intro}}
-					<br><br>
-					{{& item.description}}
-					<br><br>
+					<br>
+					<div class="ztl_item_details_desc">
+						{{& item.intro}}
+						<br><br>
+						{{& item.description}}
+						<br><br>
+					</div>
 					{{#venue}}
-						{{date}}<br>{{venue}}<br>
+						<div id="ztl_item_details_venue" class="ztl_item_details_title" style="text-transform:uppercase;">{{ztl_item_details_venue}}</div>
+						<div class="grey_line" style="margin-top:10px;"></div>
+						<br>
+						<div class="ztl_item_details_desc">
+							{{date}}<br>{{venue}}<br>
+						</div>
 					{{/venue}}
 					<br><br>
 					{{#pricing}}
-						{{ticket_type}}: {{price}} EUR<br>
+						<div id="ztl_item_details_price" class="ztl_item_details_title" style="text-transform:uppercase;">{{ztl_item_details_price}}</div>
+						<div class="grey_line" style="margin-top:10px;"></div>
+						<br>
+						<div class="ztl_item_details_desc">
+							{{ticket_type}}: {{price}} EUR<br>
+						</div>
 					{{/pricing}}
 					<br><br><br>
 				</div>

@@ -59,6 +59,8 @@ function on_device_ready() {
 		settings		 = new Object();
 		skip_update 	 = 1;
 		menu_select_lang = 1;
+	} else if (hash == "content") {
+		skip_update = 1;
 	} else {
 		navigator.splashscreen.show();
 		skip_update = 0;
@@ -87,10 +89,10 @@ function on_device_ready() {
 function load_main_screen(save_history) {
 	console.log("load_main_screen");
 	//shrani v localhost
-	if (save_history == 1) {
+	/*if (save_history == 1) {
 		var history_string = "fun--load_main_screen--empty";
 		add_to_history(history_string);
-	}
+	}*/
 
 	swipe = 0;
 	load_page(template_lang+'main_menu.html', 'main_menu', main_menu, 'fade', false);
@@ -178,8 +180,14 @@ function load_page(template, div, data, transition, reverse) {
 			var menu_icon 	 = 3;
 			var extra_div_id = "";
 
-			data.map_button 	= map_translation[settings.id_lang];
-			data.guide_button 	= voice_guide_translation_full[settings.id_lang];
+			if (settings.id_lang!=undefined) {
+				data.map_button 	= map_translation[settings.id_lang];
+				data.guide_button 	= voice_guide_translation_full[settings.id_lang];
+				data.ztl_item_details_title = title_translation[settings.id_lang];
+				data.ztl_item_details_description = description_translation[settings.id_lang];
+				data.ztl_item_details_venue = venue_translation[settings.id_lang];
+				data.ztl_item_details_price = price_translation[settings.id_lang];
+			}
 			
 			
 			if (div == 'trips') {
