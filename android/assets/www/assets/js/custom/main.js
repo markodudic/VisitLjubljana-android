@@ -154,7 +154,7 @@ function save_swipe_history(index, direction) {
 
 
 function load_page(template, div, data, transition, reverse) {
-	console.log("zagon --- loading page");
+	console.log("zagon --- loading page: "+trips_title);
 	if (footer == "") {
 		load_footer();
 	}
@@ -182,13 +182,17 @@ function load_page(template, div, data, transition, reverse) {
 			if (div == 'events') {
 				data.page_title 	= trips_title;
 			}
-			
+			 
 			if (div == 'event') {
 				extra_div_id = "_"+data.item.id;
 			}
 
 			if (div == 'tour') {
-				extra_div_id = "_"+data.item.id;
+				extra_div_id 		= "_"+data.item.id;
+			}
+			
+			if (div == 'tours') {
+				data.page_title 	= trips_title;
 			}
 			
 			console.log("voice_guide :" + voice_guide);
@@ -388,4 +392,22 @@ function play_location_sound() {
 			load_media_file(file);
 		});
 	}
+}
+
+
+function load_voice_guide(save_history) {
+	console.log('load_voice_guide');
+	if (save_history == 1)  {
+		var history_string = "fun--load_voice_guide--empty";
+		add_to_history(history_string);
+	}
+
+
+	voice_guide = 1;
+	swipe		= 0;
+
+	var tmp_query 		= "SELECT zp.*, zpt.title, zcg.id_group FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id WHERE zpt.id_language = "+settings.id_lang+" AND sound != '' GROUP BY zp.id";
+	var tmp_callback	= "load_pois_success";
+	
+	generate_query(tmp_query, tmp_callback);
 }
