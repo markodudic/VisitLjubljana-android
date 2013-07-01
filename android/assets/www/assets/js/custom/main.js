@@ -59,8 +59,6 @@ function on_device_ready() {
 		settings		 = new Object();
 		skip_update 	 = 1;
 		menu_select_lang = 1;
-	} else if (hash == "content") {
-		skip_update = 1;
 	} else {
 		navigator.splashscreen.show();
 		skip_update = 0;
@@ -89,16 +87,16 @@ function on_device_ready() {
 function load_main_screen(save_history) {
 	console.log("load_main_screen");
 	//shrani v localhost
-	/*if (save_history == 1) {
+	if (save_history == 1) {
 		var history_string = "fun--load_main_screen--empty";
 		add_to_history(history_string);
-	}*/
+	}
 
 	swipe = 0;
 	load_page(template_lang+'main_menu.html', 'main_menu', main_menu, 'fade', false);
 }
 
-function swipe_left_handler(event) {
+function swipe_left_handler() {
 	if (swipe == 1) {
 		if (db_type == 1) {
 			var j = 0;
@@ -122,7 +120,7 @@ function swipe_left_handler(event) {
 	}
 }
 
-function swipe_right_handler(event) {
+function swipe_right_handler() {
 	if (swipe == 1) {
 		if (db_type == 1) {
 			var j = 0;
@@ -180,14 +178,8 @@ function load_page(template, div, data, transition, reverse) {
 			var menu_icon 	 = 3;
 			var extra_div_id = "";
 
-			if (settings.id_lang!=undefined) {
-				data.map_button 	= map_translation[settings.id_lang];
-				data.guide_button 	= voice_guide_translation_full[settings.id_lang];
-				data.ztl_item_details_title = title_translation[settings.id_lang];
-				data.ztl_item_details_description = description_translation[settings.id_lang];
-				data.ztl_item_details_venue = venue_translation[settings.id_lang];
-				data.ztl_item_details_price = price_translation[settings.id_lang];
-			}
+			data.map_button 	= map_translation[settings.id_lang];
+			data.guide_button 	= voice_guide_translation_full[settings.id_lang];
 			
 			
 			if (div == 'trips') {
@@ -273,12 +265,22 @@ function load_page(template, div, data, transition, reverse) {
 			if (swipe == 1) {
 				if (div != "main_menu") {
 					div = div+"_"+data['id'];
-
-					$("#"+div).swipe({
-					    swipeLeft: function(event, distance, duration, fingerCount) { allowPageScroll:"vertical", swipe_left_handler() },
-					    swipeRight: function(event, distance, duration, fingerCount) { allowPageScroll:"vertical", swipe_right_handler() }
+					
+					$("#"+div).on('touchstart', function(e) {
+					     var d = new Date();
+					     touchStartTime     = d.getTime();
+					     touchStartLocation = e.originalEvent.targetTouches[0].pageX;
 					});
 
+					$("#"+div).on('touchmove', function(e) {
+						touchEndLocation    = e.originalEvent.targetTouches[0].pageX;
+					});
+					
+					$("#"+div).on('touchend', function(e) {
+					     var d = new Date();
+					     touchEndTime       = d.getTime();
+					     doTouchLogic();
+					});
 				}
 			}
 
@@ -302,15 +304,39 @@ function load_page(template, div, data, transition, reverse) {
 	});
 }
 
+var touchStartTime;
+var touchStartLocation;
+var touchEndTime;
+var touchEndLocation;
+
+function doTouchLogic() {
+    var direction = touchStartLocation-touchEndLocation;
+    var distance  = Math.abs(direction);
+    var duration  = touchEndTime - touchStartTime;
+
+    /*
+    console.log(distance);
+    console.log(duration);
+    */
+    
+    if (duration > 100 && distance > 100) {
+         if (direction > 0) {
+        	 swipe_left_handler();
+         } else {
+        	 swipe_right_handler();
+         }
+    }
+}
+
 function animate_div(div, transition, reverse) {
 	if (transition == "slide") {
-		$("body").swipe("disable");
+		//$("body").swipe("disable");
 		$("#"+div).hide();
 
 		if (reverse == true) {
-			 $("#"+div).show("slide", { direction: "left" }, 400, function() {$("body").swipe("enable");}); 
+			$("#"+div).show("slide", { direction: "left" }, 400, function() { /*$("body").swipe("enable");*/ }); 
 		} else {
-			 $("#"+div).show("slide", { direction: "right" }, 400, function() {$("body").swipe("enable");}); 
+			$("#"+div).show("slide", { direction: "right" }, 400, function() { /*$("body").swipe("enable");*/ }); 
 		}
 	}
 
