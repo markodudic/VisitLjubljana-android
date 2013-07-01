@@ -103,13 +103,13 @@ a:active {text-decoration:none;}
 }
 
 .header_back {
-    float:left;
-    background-image:url('ztl_images/back_arrow.png');
-    background-repeat:no-repeat;
-	height:27px;
-    width:16px;
+    float:left; 
+    content:url('ztl_images/back_arrow.png');
+	 height:26px;
+    width:26px;
     margin:0px 0px 0px 25px;
 }
+
 
 .header_title_menu {
 	padding:10px 0px 5px 15px;
@@ -243,6 +243,11 @@ a:active {text-decoration:none;}
 .ztl_item_details_text {
 	color:#ffffff; 
 	font-size:1.15em;
+}
+
+.ztl_item_details_desc{
+	color:#ffffff; 
+	font-size:0.8em;
 }
 
 #media_player {

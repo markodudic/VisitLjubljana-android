@@ -22,3 +22,32 @@ map_translation[2]	= "MAP";
 map_translation[3]	= "MAP";
 map_translation[4]	= "MAPPA";
 map_translation[5]	= "MAP";
+
+var title_translation = [];
+title_translation[1]	= "NASLOV";
+title_translation[2]	= "ADDRESS";
+title_translation[3]	= "ANSCHRIFT";
+title_translation[4]	= "INDIRIZZO";
+title_translation[5]	= "ADRESSE";
+
+var description_translation = [];
+description_translation[1]	= "OPIS";
+description_translation[2]	= "DESCRIPTION";
+description_translation[3]	= "BESCHREIBUNG";
+description_translation[4]	= "DESCRIZIONE";
+description_translation[5]	= "DESCRIPTION";
+
+var venue_translation = [];
+venue_translation[1]	= "LOKACIJA";
+venue_translation[2]	= "VENUE";
+venue_translation[3]	= "VENUE";
+venue_translation[4]	= "VENUE";
+venue_translation[5]	= "VENUE";
+
+
+var price_translation = [];
+price_translation[1]	= "CENA";
+price_translation[2]	= "PRICE";
+price_translation[3]	= "PREIS";
+price_translation[4]	= "PREZZO";
+price_translation[5]	= "PRIX";

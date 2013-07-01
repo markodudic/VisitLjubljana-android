@@ -32,7 +32,7 @@ function onSuccess_gps(position) {
     		   var geo_stuff = $(this).val().split("#");
     		   var px=p.x-correctionX;
 		       var py=p.y-correctionY;
-		       if (geo_stuff[1] != "0" || geo_stuff[2] != "0") {
+		       if (geo_stuff[1] != "0" && geo_stuff[2] != "0" && geo_stuff[1] != "" && geo_stuff[2] != "" && geo_stuff[1] != undefined  && geo_stuff[2] != undefined ) {
 		    	   $("div.ztl_img_distance_container").show();
 		    	   $("div#map_button").attr('class','ztl_red_button ztl_item_left_button');;
 		    	   $("div#ztl_distance_value_"+geo_stuff[0]).html(lineDistance(px, py, geo_stuff[1], geo_stuff[2])+" km");

@@ -4,7 +4,7 @@
 		<div class="header_placeholder">
 			<div class="red_line"></div>
 			<div class="header_space"></div>
-			<div class="header_back" onClick="load_tours()"></div>
+			<div onClick="load_tours()"><img class="header_back"></div>
 			<div class="header_title" onClick="load_tours()">{{& item.title}}</div>
 			<div class="header_dots"></div>
 			<div style="clear:both;"></div>
@@ -58,19 +58,25 @@
 				</div>
 				{{/sound}}
 				<div class="ztl_item_details">
-					<div class="ztl_item_details_title">OPIS</div>
+					<div id="ztl_item_details_description" class="ztl_item_details_title">{{ztl_item_details_description}}</div>
 					<div class="ztl_distance">&nbsp;</div>
 					<div style="clear:both;"></div>
 					<div class="grey_line" style="margin-top:10px;"></div>
-					{{& item.short_description}}
-					<br><br>
-					{{& item.long_description}}
-					<br><br>
+					<br>
+					<div class="ztl_item_details_desc">
+						{{& item.short_description}}
+						<br><br>
+						{{& item.long_description}}
+					</div>
+					<br>
 					{{#charters}}
 						<div class="ztl_item_details_title" style="text-transform:uppercase;">{{& title}}</div>
 						<div class="grey_line" style="margin-top:10px;"></div>
-						{{& content}}
-						<br><br>
+						<br>
+						<div class="ztl_item_details_desc">
+							{{& content}}
+						</div>
+						<br>
 					{{/charters}}
 					<br>
 				</div>
