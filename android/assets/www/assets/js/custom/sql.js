@@ -160,13 +160,12 @@ function filter_events_success(results) {
     res.page_sub_title_date	= event_date_from;
     
     if (event_date_to != "") {
-    	res.page_sub_title_date = res.page_sub_title_date +"-"+event_date_to;
+    	res.page_sub_title_date = res.page_sub_title_date +" - "+event_date_to;
     }
 
-    res.categories 	   		= event_type;
-
-    console.log("dogodki --- events_filtered.html");
-
+    res.categories 	= event_type;
+    trips 			= res;
+    
     load_page(template_lang+'events_filtered.html', 'filtered_events', res, 'fade', false);
 }
 

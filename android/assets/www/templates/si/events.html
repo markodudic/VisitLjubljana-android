@@ -25,6 +25,7 @@
 				<div class="ui-grid-solo" >
 					<div class="ui-block-a">
 						<select id="event_type" class="ztl_event_type_select">
+							<option value="0">Izberi kategorijo</option>
 							{{#categories}}
 								<option value="{{id}}">{{name}}</option>
 							{{/categories}}
@@ -32,6 +33,7 @@
 						<br><br>
 					</div>
 				</div>	
+				<div class="ui-grid-a" >
 					<div class="ui-block-a">
 						<input type="text" id="ztl_trip_filter_date_from" class="ztl_event_search_field" onClick="dprun(this)" >
 						<input type="hidden" id="ztl_trip_filter_date_from_hidden">
@@ -41,7 +43,6 @@
 						<input type="hidden" id="ztl_trip_filter_date_to_hidden">
 					</div>
 				</div>
-
 				<div class="ui-grid-a" >
 					<div class="ui-block-a">
 						&nbsp;
@@ -51,7 +52,6 @@
 						<div class="ztl_red_button ztl_event_search_button" onClick="filter_events();">POTRDI</div>
 					</div>
 				</div>
-
 			</div>
 		</div>
 	</div>
