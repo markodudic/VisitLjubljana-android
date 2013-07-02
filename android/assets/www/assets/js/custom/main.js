@@ -461,22 +461,29 @@ function load_media() {
 }
 
 function dprun(t) {
-	console.log("DATEPICKER");
 	var currentField = $(t);
+	var hiddenField  = $("#"+currentField.attr("id")+"_hidden");
 	//var myNewDate = Date.parse(currentField.val()) || new Date();
 	var myNewDate = new Date();
-	// Same handling for iPhone and Android
-	
 	window.plugins.datePicker.show({
 		date : myNewDate,
 		mode : 'date', // date or time or blank for both
 		allowOldDates : false
 		}, function(returnDate) {
-			//var newDate = new Date(returnDate);
-			//currentField.val(newDate.toString("dd/MMM/yyyy"));
-			currentField.val(returnDate);
+			var date_array = returnDate.split("-");
+			var date_obj   = new Date(date_array[0], date_array[1], date_array[2]);
+
+			navigator.globalization.dateToString(
+			  date_obj,
+			  function (date) {currentField.val(date.value);},
+			  function () {currentField.val(returnDate);},
+			  {formatLength:'short', selector:'date'});
+			
+			hiddenField.val(Math.round(date_obj.getTime()/1000));
 			currentField.blur();
-		});	
+			console.log(hiddenField.val());
+		}
+	);	
 }
 
 function play_location_sound() {
