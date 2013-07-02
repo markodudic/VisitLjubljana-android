@@ -56,6 +56,7 @@ function load_pois(id, trips_menu_id, save_history) {
 }
 
 function load_events(save_history) {
+	swipe_dir 	   = "";
 	date_from      = "";
 	date_to 	   = "";
 	event_category = 0;
@@ -76,7 +77,8 @@ function load_events(save_history) {
 }
 
 function load_tours(save_history)  {
-    swipe = 0;
+	swipe_dir 	= "";
+    swipe 		= 0;
     if (save_history == 1)  {
         var history_string = "fun--load_tours--empty";
         add_to_history(history_string);
@@ -85,7 +87,7 @@ function load_tours(save_history)  {
     trips_title = main_menu['img6'];
 
     var tmp_query      = "SELECT t.id, tt.title, tt.short_description, ti.image FROM ztl_tour t LEFT JOIN ztl_tour_translation tt ON tt.id_tour = t.id LEFT JOIN ztl_tour_images ti ON t.id = ti.id_tour WHERE tt.id_language = "+settings.id_lang+" GROUP BY t.id";
-    var tmp_callback = "tour_success";
+    var tmp_callback   = "tour_success";
     generate_query(tmp_query, tmp_callback);
 }
 

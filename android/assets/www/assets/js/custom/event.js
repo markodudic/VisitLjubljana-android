@@ -31,6 +31,7 @@ function load_event_type() {
 
 
 function filter_events()  {
+	swipe = 0;
 	console.log("*****************************************");
 	console.log($('#ztl_trip_filter_date_from').val());
 	console.log($('#ztl_trip_filter_date_to').val());
@@ -65,7 +66,7 @@ function filter_events()  {
 }
 
 function load_event(id) {
-	console.log(id);
+	swipe = 1;
 
 	var tmp_query 	 = "SELECT  e.id, et.title, et.intro, et.description, p.coord_x, p.coord_y, p.image FROM ztl_event e LEFT JOIN ztl_event_translation et ON et.id_event = e.id LEFT JOIN  ztl_event_timetable ett ON ett.id_event = e.id LEFT JOIN ztl_poi p ON p.id = ett.venue_id WHERE e.id = "+id+" AND et.id_language = "+settings.id_lang+" GROUP BY e.id"; 
     var tmp_callback = "load_event_success";
@@ -73,6 +74,7 @@ function load_event(id) {
 }
 
 function load_tour(id, save_history) {
+	swipe = 1;
 	console.log(id);
 
 	if (save_history == 1)  {
