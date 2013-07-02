@@ -426,11 +426,11 @@ function addslashes(string) {
 	}
 	
     return String(string)
-    .replace(/&/g, '&amp;')
     .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
+    .replace(/'/g, '&quot;')
+    .replace(/&/g, '&amp;');
+    //.replace(/</g, '&lt;')
+    //.replace(/>/g, '&gt;');
 }
 
 function has_tours() {
