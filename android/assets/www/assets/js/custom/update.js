@@ -19,9 +19,7 @@ function is_updt_finished() {
 }
 
 function check_update_success(results) {
-	
 	var lang_code = "en";
-	
 	if (settings.id_lang == 1) {
 		lang_code = "si";
 	} else if (settings.id_lang == 3) {
@@ -80,7 +78,7 @@ function handle_poi_deleted(data) {
 	db.transaction(function(tx) {
 		var sql = "";
 		for (var i = 0; i < data.length; i++) {
-			sql = "DELETE FROM ztl_poi WHERE id = "+data[i];
+			sql = "UPDATE ztl_poi SET record_status = 0 WHERE id = "+data[i];
 			//console.log(sql);
 			tx.executeSql(sql, [], function(tx, res) {});
 		}
@@ -186,51 +184,69 @@ function update_event(url) {
 		success : function(data) {
 			console.log(" >>>>>>>>>> ok");
 			//truncate
+			/*
 			db.transaction(function(tx) {tx.executeSql('delete from ztl_event;', [], function(tx, res) {});});
 			db.transaction(function(tx) {tx.executeSql('delete from ztl_event_translation;', [], function(tx, res) {});});
 			db.transaction(function(tx) {tx.executeSql('delete from ztl_event_pricing;', [], function(tx, res) {});});
 			db.transaction(function(tx) {tx.executeSql('delete from ztl_event_timetable;', [], function(tx, res) {});});
 			db.transaction(function(tx) {tx.executeSql('delete from ztl_event_category;', [], function(tx, res) {});});
 			db.transaction(function(tx) {tx.executeSql('delete from ztl_event_event_category;', [], function(tx, res) {});});
+			*/
+			handle_event_deleted(data['deleted']);
 			handle_event(data['events']);
 		}
 	});	
 }
 
-var knowntypes = [];
+function handle_event_deleted(data) {
+	db.transaction(function(tx) {
+		var sql = "";
+		if (data != null) {
+			for (var i = 0; i < data.length; i++) {
+				sql = "UPDATE ztl_event SET record_status = 0 WHERE id = "+data[i];
+				//console.log(sql);
+				tx.executeSql(sql, [], function(tx, res) {});
+			}
+		}
+	});
+}
+
 function handle_event(data) {
 	db.transaction(function(tx) {
 		var sql = "";
 		for (var i = 0; i < data.length; i++) {
 			//console.log(JSON.stringify(data[i]));
-			sql = "INSERT INTO ztl_event (id) VALUES ("+data[i].id+")";
+			sql = "INSERT OR REPLACE INTO ztl_event (id, record_status) VALUES ("+data[i].id+", 1)";
 			//console.log(sql);
 			tx.executeSql(sql, [], function(tx, res) {});
-			sql = "INSERT INTO ztl_event_translation (id_event, id_language, title, intro, description) VALUES ("+data[i].id+", "+settings.id_lang+", '"+addslashes(data[i].title)+"', '"+addslashes(data[i].intro)+"', '"+addslashes(data[i].description)+"')";
+			sql = "INSERT OR REPLACE INTO ztl_event_translation (id_event, id_language, title, intro, description) VALUES ("+data[i].id+", "+settings.id_lang+", '"+addslashes(data[i].title)+"', '"+addslashes(data[i].intro)+"', '"+addslashes(data[i].description)+"')";
 			//console.log(sql);
 			tx.executeSql(sql, [], function(tx, res) {});
 			
 			for(var j = 0; j < data[i].types.length; j++) {
-	        	if (knowntypes.indexOf(data[i].types[j].id) == -1) {
-	        		knowntypes.push(data[i].types[j].id);
-	        		var sql = "INSERT INTO ztl_event_category (id, id_language, name) VALUES ("+data[i].types[j].id+", "+settings.id_lang+", '"+addslashes(data[i].types[j].name)+"')";
-	        		tx.executeSql(sql, [], function(tx, res) {});
-	        	}
-        		var sql = "INSERT INTO ztl_event_event_category (id_event, id_event_category) VALUES ("+data[i].id+", "+data[i].types[j].id+")";
+        		var sql = "INSERT OR REPLACE INTO ztl_event_category (id, id_language, name) VALUES ("+data[i].types[j].id+", "+settings.id_lang+", '"+addslashes(data[i].types[j].name)+"')";
+        		console.log(sql);
+        		tx.executeSql(sql, [], function(tx, res) {});
+
+        		var sql = "INSERT OR REPLACE INTO ztl_event_event_category (id_event, id_event_category) VALUES ("+data[i].id+", "+data[i].types[j].id+")";
+        		console.log(sql);
         		tx.executeSql(sql, [], function(tx, res) {});
 			}
 			
 			for(var j = 0; j < data[i].timetable.length; j++) {
-				
 				if (!$.isNumeric(data[i].timetable[j].venue_id)) {
 					data[i].timetable[j].venue_id = 0;
 				}
-        		var sql = "INSERT INTO ztl_event_timetable (id_event, venue_id, venue, date) VALUES ("+data[i].id+", "+data[i].timetable[j].venue_id+", '"+addslashes(data[i].timetable[j].venue)+"', '"+addslashes(data[i].timetable[j].date)+"')";
+				
+				if (!$.isNumeric(data[i].timetable[j].date_last)) {
+					data[i].timetable[j].date_last = data[i].timetable[j].date_first;
+				}
+        		var sql = "INSERT OR REPLACE INTO ztl_event_timetable (id_event, id_language, venue_id, venue, date, date_first, date_last) VALUES ("+data[i].id+", "+settings.id_lang+", "+data[i].timetable[j].venue_id+", '"+addslashes(data[i].timetable[j].venue)+"', '"+addslashes(data[i].timetable[j].date)+"', "+data[i].timetable[j].date_first+", "+data[i].timetable[j].date_last+")";
         		tx.executeSql(sql, [], function(tx, res) {});
 			}
 			
 			for(var j = 0; j < data[i].pricing.length; j++) {
-        		var sql = "INSERT INTO ztl_event_pricing (id_event, id_language, price, ticket_type) VALUES ("+data[i].id+", "+settings.id_lang+", '"+addslashes(data[i].pricing[j].price)+"', '"+addslashes(data[i].pricing[j].ticket_type)+"')";
+        		var sql = "INSERT OR REPLACE INTO ztl_event_pricing (id_event, id_language, price, ticket_type) VALUES ("+data[i].id+", "+settings.id_lang+", '"+addslashes(data[i].pricing[j].price)+"', '"+addslashes(data[i].pricing[j].ticket_type)+"')";
         		tx.executeSql(sql, [], function(tx, res) {});
 			}
 
@@ -275,11 +291,27 @@ function update_tour(url) {
 			console.log(" >>>>>>>>>> ok");
 			
 			//truncate
+			/*
 			db.transaction(function(tx) {tx.executeSql('delete from ztl_tour;', [], function(tx, res) {});});
 			db.transaction(function(tx) {tx.executeSql('delete from ztl_tour_translation;', [], function(tx, res) {});});
 			db.transaction(function(tx) {tx.executeSql('delete from ztl_tour_chaters;', [], function(tx, res) {});});
 			db.transaction(function(tx) {tx.executeSql('delete from ztl_tour_images;', [], function(tx, res) {});});
+			*/
+			handle_tour_deleted(data['deleted']);
 			handle_tour(data['tours']);
+		}
+	});
+}
+
+function handle_tour_deleted(data) {
+	db.transaction(function(tx) {
+		var sql = "";
+		if (data != null) {
+			for (var i = 0; i < data.length; i++) {
+				sql = "UPDATE ztl_tour SET record_status = 0 WHERE id = "+data[i];
+				//console.log(sql);
+				tx.executeSql(sql, [], function(tx, res) {});
+			}
 		}
 	});
 }
@@ -288,7 +320,7 @@ function handle_tour(data) {
 	db.transaction(function(tx) {
 		var sql = "";
 		for (var i = 0; i < data.length; i++) {
-			sql = "INSERT INTO ztl_tour (id, turisticna_kartica, validity_from, validity_to) VALUES ("+data[i].id+", '"+data[i].turisticna_kartica+"', '"+data[i].validity_from+"', '"+data[i].validity_to+"')";
+			sql = "INSERT INTO ztl_tour (id, turisticna_kartica, validity_from, validity_to, record_status) VALUES ("+data[i].id+", '"+data[i].turisticna_kartica+"', '"+data[i].validity_from+"', '"+data[i].validity_to+"', 1)";
 			tx.executeSql(sql, [], function(tx, res) {});
 			sql = "INSERT INTO ztl_tour_translation (id_tour, id_language, title, short_description, long_description) VALUES ("+data[i].id+", "+settings.id_lang+", '"+addslashes(data[i].title)+"', '"+addslashes(data[i].short_description)+"', '"+addslashes(data[i].long_description)+"')";
 			tx.executeSql(sql, [], function(tx, res) {});
