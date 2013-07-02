@@ -190,7 +190,7 @@ function load_event_pricing_success(results) {
     var id_event = tmp_event_data.item.id;
     current 	 = id_event;
 
-    var tmp_query 	 = "SELECT et.venue, et.date FROM ztl_event_timetable et WHERE et.id_event = "+id_event;
+    var tmp_query 	 = "SELECT et.venue, et.date FROM ztl_event_timetable et WHERE et.id_event = "+id_event+" AND et.id_language = "+settings.id_lang;
 	var tmp_callback = "load_event_venue_success";
 	generate_query(tmp_query, tmp_callback);
 }

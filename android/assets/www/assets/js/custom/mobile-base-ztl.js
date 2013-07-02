@@ -279,19 +279,27 @@ var init = function (onSelectFeatureFunction) {
 
 function get_poi_data() {
     if (hash == "mappage") {
-        hash = 645;
+        hash = -1;
     }
 
-    var tmp_query       = 'SELECT zp.id, zp.coord_x, zp.coord_y FROM ztl_poi zp WHERE zp.id = '+hash;
-    var tmp_callback    = "load_map_poi_coord_success";
+    if (from_view == "event") {
+       var tmp_query = 'SELECT e.id, p.coord_x, p.coord_y FROM ztl_event e LEFT JOIN ztl_event_translation et ON et.id_event = e.id LEFT JOIN  ztl_event_timetable ett ON ett.id_event = e.id LEFT JOIN ztl_poi p ON p.id = ett.venue_id WHERE e.id = '+hash+' AND et.id_language = '+settings.id_lang+' GROUP BY e.id';
+    } else {
+       var tmp_query = 'SELECT zp.id, zp.coord_x, zp.coord_y FROM ztl_poi zp WHERE zp.id = '+hash;
+    }
+
+    var tmp_callback = "load_map_poi_coord_success";
             
     generate_query(tmp_query, tmp_callback);
 }
 
 
 function load_trip_content(id) {
-    trip_id = id;
-    var tmp_query = 'SELECT zp.*, zpt.title, zcg.id_group FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id WHERE zp.id IN ('+trip_id+') AND zpt.id_language = '+settings.id_lang+' GROUP BY zp.id';
+    if (from_view == "event") {
+        var tmp_query = 'SELECT  e.id, et.title, p.address, p.post_number, p.post FROM ztl_event e LEFT JOIN ztl_event_translation et ON et.id_event = e.id LEFT JOIN  ztl_event_timetable ett ON ett.id_event = e.id LEFT JOIN ztl_poi p ON p.id = ett.venue_id WHERE e.id = '+id+' AND et.id_language = '+settings.id_lang+' GROUP BY e.id';    
+    } else {
+        var tmp_query = 'SELECT zp.*, zpt.title, zcg.id_group FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id WHERE zp.id IN ('+id+') AND zpt.id_language = '+settings.id_lang+' GROUP BY zp.id';
+    }
     var tmp_callback    = "load_map_poi_data_success";
             
     generate_query(tmp_query, tmp_callback);
