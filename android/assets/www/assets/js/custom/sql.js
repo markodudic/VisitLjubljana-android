@@ -120,6 +120,7 @@ function events_success(results) {
 	
 	data.items 			= res.items;
 	data.categories 	= event_type;
+	trips 				= res;
 
 	console.log("dogodki --- "+JSON.stringify(data));
 
@@ -188,6 +189,7 @@ function load_event_pricing_success(results) {
     }
 
     var id_event = tmp_event_data.item.id;
+    current 	 = id_event;
 
     var tmp_query 	 = "SELECT et.venue, et.date FROM ztl_event_timetable et WHERE et.id_event = "+id_event;
 	var tmp_callback = "load_event_venue_success";
@@ -205,7 +207,13 @@ function load_event_venue_success(results) {
     console.log(tmp_event_data);
     console.log(JSON.stringify(tmp_event_data));
 
-    load_page(template_lang+'event.html', 'event', tmp_event_data, 'fade', false);
+    if (swipe_dir == "left") {
+    	load_page(template_lang+'event.html', 'event', tmp_event_data, 'slide', false);
+    } else if (swipe_dir == "right") {
+    	load_page(template_lang+'event.html', 'event', tmp_event_data, 'slide', true);
+	} else {
+    	load_page(template_lang+'event.html', 'event', tmp_event_data, 'fade', false);
+    }
 }
 
 //touri
@@ -223,6 +231,7 @@ function tour_success(results) {
     	res.items[i] = results.rows.item(i);
     }
 
+    trips = res;
     load_page(template_lang+'tours.html', 'tours', res, 'fade', false);
 }
 
@@ -263,10 +272,13 @@ function tour_charters_success(results) {
     	tmp_tours_data.charters[i] = results.rows.item(i);
     }
 
-    console.log(tmp_tours_data);
-    console.log(JSON.stringify(tmp_tours_data));
-
-    load_page(template_lang+'tour.html', 'tour', tmp_tours_data, 'fade', false);
+     if (swipe_dir == "left") {
+    	load_page(template_lang+'tour.html', 'tour', tmp_tours_data, 'slide', false);
+    } else if (swipe_dir == "right") {
+    	load_page(template_lang+'tour.html', 'tour', tmp_tours_data, 'slide', true);
+	} else {
+    	load_page(template_lang+'tour.html', 'tour', tmp_tours_data, 'fade', false);
+    }
 }
 
 function count_ztl_event_success(results) {
