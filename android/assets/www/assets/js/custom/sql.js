@@ -103,7 +103,6 @@ function events_success(results) {
     		results.rows.item(i).poi_title = tmp.substring(0,max_dolzina_poi_title)+"...";
     	}
     	
-    	
     	if (i<3) {
     		res.top_items[i] = results.rows.item(i);
     	} else  {

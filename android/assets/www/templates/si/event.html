@@ -20,7 +20,6 @@
 
 		<div class="ztl_navigate_events">
 			<!-- div class="ztl_item_shadow"></div -->
-			{{#item.image}}
 			<div class="ztl_img_distance_container">
 				<div class="ztl_distance_img">
 					<img class="ztl_distance_arrow_img" src="assets/css/ztl_images/distance.png" >
@@ -29,11 +28,12 @@
 			</div>
 			<input type="hidden" name="ztl_cord_{{item.id}}" value="{{item.id}}#{{item.coord_x}}#{{item.coord_y}}">
 
-			<div class="ztl_item_details_image">
-				<div class="ztl_details_img_crop">
-					<img class="ztl_details_image" src="./uploads/images/{{item.image}}">
+			{{#item.image}}
+				<div class="ztl_item_details_image">
+					<div class="ztl_details_img_crop">
+						<img class="ztl_details_image" src="./uploads/images/{{item.image}}">
+					</div>
 				</div>
-			</div>
 			{{/item.image}}
 			{{^item.image}}
 				<div style="padding-top:40px;">&nbsp;</div>
@@ -41,7 +41,7 @@
 			<div style="clear:both;"></div>
 			<div class="ztl_item_content_padding">
 				<div class="ztl_item_buttons">
-					<a href="map.html#{{id}}" data-role="link" data-ajax="false" style="text-decoration:none;">
+					<a href="map.html#{{id}}" id="map_href" data-role="link" data-ajax="false" style="text-decoration:none;">
 						<div id="map_button" class="ztl_red_button ztl_item_left_button">{{map_button}}</div>
 					</a>
 					<a href="#" style="text-decoration:none;">

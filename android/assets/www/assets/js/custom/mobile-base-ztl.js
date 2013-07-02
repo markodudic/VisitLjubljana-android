@@ -96,18 +96,20 @@ var init = function (onSelectFeatureFunction) {
         projection: "EPSG:900913",
         externalGraphic: "assets/map/images/map_point.png",
         graphicOpacity: 1.0,
-        graphicWidth: 27,
-        graphicHeight: 36,
-        graphicYOffset: -11
+        graphicWidth: 25,
+        graphicHeight: 25,
+        graphicXOffset: -12,
+        graphicYOffset: -12
     })
 
     var styleMap_my_pos = new OpenLayers.StyleMap({
         projection: "EPSG:900913",
         externalGraphic: "assets/map/images/you_are_here.png",
         graphicOpacity: 1.0,
-        graphicWidth: 94,
-        graphicHeight: 91,
-        graphicYOffset: -45
+        graphicWidth: 50,
+        graphicHeight: 50,
+        graphicXOffset: -25,
+        graphicYOffset: -25
     })
 
     var sprintersLayer = new OpenLayers.Layer.Vector("Sprinters", {
