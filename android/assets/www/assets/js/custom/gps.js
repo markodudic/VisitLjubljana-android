@@ -27,20 +27,21 @@ function onSuccess_gps(position) {
     
 	//gremo crez vse elemente na pregledu, ki imajo kooridinate
     if ((Math.abs(p.x - pOld.x) > minDistance) || (Math.abs(p.y - pOld.y) > minDistance)) {
-    	   $('input[name^="ztl_cord_"]').each(function( index ) {
-        	   pOld = p;
-    		   var geo_stuff = $(this).val().split("#");
-    		   var px=p.x-correctionX;
-		       var py=p.y-correctionY;
-		       if (geo_stuff[1] != "0" && geo_stuff[2] != "0" && geo_stuff[1] != "" && geo_stuff[2] != "" && geo_stuff[1] != undefined  && geo_stuff[2] != undefined ) {
-		    	   $("div.ztl_img_distance_container").show();
-		    	   $("div#map_button").attr('class','ztl_red_button ztl_item_left_button');;
-		    	   $("div#ztl_distance_value_"+geo_stuff[0]).html(lineDistance(px, py, geo_stuff[1], geo_stuff[2])+" km");
-		       } else {
-		    	   $("div.ztl_img_distance_container").hide();
-		    	   $("div#map_button").attr('class','ztl_grey_button_map ztl_item_left_button');;
-		       }
-    	   }); 
+	   	$('input[name^="ztl_cord_"]').each(function( index ) {
+	   	   pOld = p;
+		   var geo_stuff = $(this).val().split("#");
+		   var px=p.x-correctionX;
+	       var py=p.y-correctionY;
+	       if (geo_stuff[1] != "0" && geo_stuff[2] != "0" && geo_stuff[1] != "" && geo_stuff[2] != "" && geo_stuff[1] != undefined  && geo_stuff[2] != undefined ) {
+	    	   $("div.ztl_img_distance_container").show();
+	    	   $("div#map_button").attr('class','ztl_red_button ztl_item_left_button');;
+	    	   $("div#ztl_distance_value_"+geo_stuff[0]).html(lineDistance(px, py, geo_stuff[1], geo_stuff[2])+" km");
+	       } else {
+	    	   $("div.ztl_img_distance_container").hide();
+	    	   $("div#map_button").attr('class','ztl_grey_button_map ztl_item_left_button');
+	    	   $("#map_href").removeAttr('href');
+	       }
+	   	}); 
     }
 }
 

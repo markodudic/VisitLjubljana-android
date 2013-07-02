@@ -33,13 +33,12 @@
 	<div id="verticalScroller">
 
 		<div class="ztl_navigate_events">
-			{{#star}}
-				<div class="ztl_item_shadow"></div>
-				<div class="ztl_item_title_text">
-					<img src="assets/css/ztl_images/star_{{star}}.png" class="img_star">
-				</div>
-			{{/star}}
-			{{#image}}
+			{{#shadow}}
+			<div class="ztl_item_shadow"></div>
+			{{/shadow}}
+			<div class="ztl_item_title_text">
+				<img src="assets/css/ztl_images/star_{{star}}.png" class="img_star">
+			</div>
 			<div class="ztl_img_distance_container">
 				<div class="ztl_distance_img">
 					<img class="ztl_distance_arrow_img" src="assets/css/ztl_images/distance.png" >
@@ -47,12 +46,12 @@
 				</div>
 			</div>
 			<input type="hidden" name="ztl_cord_{{id}}" value="{{id}}#{{coord_x}}#{{coord_y}}">
-
-			<div class="ztl_item_details_image">
-				<div class="ztl_details_img_crop">
-					<img class="ztl_details_image" src="./uploads/images/{{image}}">
+			{{#image}}
+				<div class="ztl_item_details_image">
+					<div class="ztl_details_img_crop">
+						<img class="ztl_details_image" src="./uploads/images/{{image}}">
+					</div>
 				</div>
-			</div>
 			{{/image}}
 			{{^image}}
 				<div style="padding-top:40px;">&nbsp;</div>
@@ -60,7 +59,7 @@
 			<div style="clear:both;"></div>
 			<div class="ztl_item_content_padding">
 				<div class="ztl_item_buttons">
-					<a href="map.html#{{id}}" data-role="link" data-ajax="false" style="text-decoration:none;">
+					<a href="map.html#{{id}}" id="map_href" data-role="link" data-ajax="false" style="text-decoration:none;">
 						<div id="map_button" class="ztl_red_button ztl_item_left_button">{{map_button}}</div>
 					</a>
 					<a href="#" style="text-decoration:none;">
