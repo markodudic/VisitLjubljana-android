@@ -150,7 +150,17 @@ function filter_events_success(results) {
 	var res = {};
     res.items = [];
     var len = results.rows.length;
+    var tmp;
     for (var i=0; i<len; i++){
+    	tmp = results.rows.item(i).title;
+    	if (tmp.length > max_dolzina_title) {
+    		results.rows.item(i).title = tmp.substring(0,max_dolzina_title)+"...";
+    	}
+    	tmp = results.rows.item(i).poi_title;
+    	if (tmp.length > max_dolzina_poi_title) {
+    		results.rows.item(i).poi_title = tmp.substring(0,max_dolzina_poi_title)+"...";
+    	}
+
     	res.items[i] = results.rows.item(i);
     }
 
@@ -476,7 +486,7 @@ function populate_db_firstime() {
             load_mobile();
 
             //to naj se pol odstrani
-            tmp_update_sound();
+            //tmp_update_sound();
         });
     });
 }
