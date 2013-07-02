@@ -81,27 +81,19 @@ var init = function (onSelectFeatureFunction) {
     source = new Proj4js.Proj('EPSG:31469');
     dest = new Proj4js.Proj('EPSG:900913');
 
-    var sprintersLayer = new OpenLayers.Layer.Vector("Sprinters", {
-        styleMap: new OpenLayers.StyleMap({
-            projection: "EPSG:900913",
-            externalGraphic: "assets/map/images/marker-blue.png",
-            graphicOpacity: 1.0,
-            graphicWidth: 16,
-            graphicHeight: 26,
-            graphicYOffset: -26
-        })
-    });
-
     var styleMap = new OpenLayers.StyleMap({
         projection: "EPSG:900913",
         externalGraphic: "assets/map/images/map_point.png",
         graphicOpacity: 1.0,
-        graphicWidth: 25,
-        graphicHeight: 25,
-        graphicXOffset: -12,
-        graphicYOffset: -12
+        graphicWidth: 16,
+        graphicHeight: 18,
+        graphicXOffset:-8,
+        graphicYOffset: -18
     })
 
+
+
+    
     var styleMap_my_pos = new OpenLayers.StyleMap({
         projection: "EPSG:900913",
         externalGraphic: "assets/map/images/you_are_here.png",
