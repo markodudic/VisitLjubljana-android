@@ -152,10 +152,9 @@ public class SQLitePlugin extends CordovaPlugin
 	private void openDatabase(String dbname, String password)
 	{
 		if (this.getDatabase(dbname) != null) this.closeDatabase(dbname);
-
 		File dbfile = this.cordova.getActivity().getDatabasePath(dbname + ".db");
-		//File dbfile = new File("/mnt/sdcard/Android/data/com.vigred.ztl/"+ dbname + ".db");
-		Log.v("info", "Open sqlite db: " + dbfile.getAbsolutePath());
+		//File dbfile = new File("sdcard/ztl/"+ dbname + ".db");
+		Log.v("info", "Open sqlite db: " + dbfile.getAbsolutePath()); 
 
 		SQLiteDatabase mydb = SQLiteDatabase.openOrCreateDatabase(dbfile, null);
 
