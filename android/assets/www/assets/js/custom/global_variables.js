@@ -12,8 +12,7 @@ var pOld 		= null;
 var media		 = "";
 var my_media 	 = null;
 var media_timer  = null;
-var file 		 = "/android_asset/www/uploads/mp3/mp3_test.mp3";
-//var file 		 = "uploads/mp3/mp3_test.mp3";
+var file 		 = "/android_asset/www/uploads/mp3/";
 
 
 //cssless css

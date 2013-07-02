@@ -33,6 +33,9 @@ function load_event_type() {
 
 
 function filter_events()  {
+	var history_string = "fun--load_events--empty";
+	add_to_history(history_string);
+
 	swipe = 0;
 
 	event_title    		 = "";

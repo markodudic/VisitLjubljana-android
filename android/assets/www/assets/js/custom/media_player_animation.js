@@ -1,3 +1,6 @@
+var current_position = 0;
+var tmp_pos 		 = 0;
+
 var media_timer;
 var media_status = 0;
 
@@ -16,29 +19,11 @@ var quart = Math.PI / 2;
 context.lineWidth   = 15;
 context.strokeStyle = '#ccc';
 
-/*
-context.shadowColor   = '#666';
-context.shadowOffsetX = 3;
-context.shadowOffsetY = 3;
-context.shadowBlur    = 3;
-*/
-
 //context.clearRect(0, 0, canvas.width, canvas.height);
 context.beginPath();
 context.arc(x, y, radius, -(quart), ((circ) * 100) - quart, false);
 context.stroke();
 
-/*
-context.lineWidth   = 2;
-context.strokeStyle = '#222222';
-context.arc(x, y, 110, -(quart), ((circ) * 100) - quart, false);
-context.stroke();
-
-context.lineWidth   = 2;
-context.strokeStyle = '#222222';
-context.arc(x, y, 99, -(quart), ((circ) * 100) - quart, false);
-context.stroke();
-*/
 
 
 context.lineWidth   = 15;
@@ -91,7 +76,6 @@ function seconds_to_time(secs){
     };
     return obj;
 }
-//window.setInterval(function() {animate()}, 1000);
 
 function media_control_toggle() {
 	if (media_status == 0) {
@@ -107,14 +91,20 @@ function media_control_toggle() {
 function media_control_start() { 
 	$('.player_control_image').attr('src', 'assets/css/ztl_images/media_player_play_pause.png');
 	media_timer = window.setInterval(function() {animate()}, 1000);
+	play();
 }
 
 function media_control_pause() {
 	$('.player_control_image').attr('src', 'assets/css/ztl_images/media_player_play_start.png');
 	clearTimeout(media_timer);
+	pause();
 }
 
 function media_control_stop() {
+	pause();
+	current_position = 0;
+	tmp_pos 		 = 0;
+
 	current = 0;
 	curPerc = 0;
 	
@@ -124,4 +114,75 @@ function media_control_stop() {
 
 	clearTimeout(media_timer);
 	play_voice_guide(trip_id);
+}
+
+function  load_media_file(file) {
+	console.log("load media file");
+	console.log(file);
+	my_media = new Media(file,
+        function() {
+            console.log("Audio Success");
+        },
+            function(err) {
+                console.log(err);
+        }
+    ); 
+}
+
+function play() {
+	console.log(media_timer);
+	console.log(my_media.getDuration());
+	console.log('position '+current_position);
+
+	
+
+	if (my_media != null) {
+		
+		if (current_position > 0) {
+			console.log("seek "+current_position*1000);
+			my_media.seekTo(current_position*1000);
+			console.log(my_media);
+		}
+		
+		my_media.play();
+
+		if (media_timer == null) {
+			media_timer = setInterval(function() {
+				// get my_media position
+				my_media.getCurrentPosition(
+					// success callback
+					function(position) {
+						if (position > -1) {
+							setAudioPosition((position));
+						}
+					},
+					// error callback
+					function(e) {
+						console.log("Error getting pos=" + e);
+						setAudioPosition("Error: " + e);
+					}
+				);
+			}, 1000);
+		}
+	} else {
+		play_location_sound();
+	}
+}
+
+function pause() {
+	console.log('position '+current_position);
+	if (my_media != null) {
+		my_media.pause();
+	} else {
+		play_location_sound();
+	}
+}
+
+function setAudioPosition(position) {
+	if (tmp_pos != position) {
+		tmp_pos = position;
+		current_position = current_position+1;
+	}
+
+	console.log(current_position);
 }

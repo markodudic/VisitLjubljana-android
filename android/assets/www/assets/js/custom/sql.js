@@ -58,9 +58,12 @@ function load_poi_success(results) {
     	
     res.items[0] = results.rows.item(0);
 
-    swipe 	= 1;
-	current = trip_id;
-	console.log("load poi success");
+    swipe 		= 1;
+	current 	= trip_id;
+	sound_file	= file+res.items[0].sound;
+
+	console.log("load poi success"+JSON.stringify(res.items));
+
 	load_page(template_lang+'trip.html', 'div_trip', res.items[0], 'fade', true);
 }
 
