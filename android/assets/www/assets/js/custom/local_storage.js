@@ -3,8 +3,6 @@ function add_to_history(history_string) {
 	
 	history.push(history_string);
 	localStorage.setItem('history', JSON.stringify(history));
-
-	console.log(JSON.stringify(history));
 }
 
 function local_storage_load() {
