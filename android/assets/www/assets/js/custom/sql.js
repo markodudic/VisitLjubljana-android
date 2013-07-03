@@ -85,6 +85,10 @@ function events_success(results) {
     res.top_items = [];
     var len 	  = results.rows.length;
 
+    var tmp_date;
+    var tmp_day;
+    var tmp_month;
+
     var k = 0;
     var tmp;
     for (var i=0; i<len; i++){
@@ -99,6 +103,13 @@ function events_success(results) {
     	}
     	
     	if (i<3) {
+    		tmp_date 	= new Date(parseInt(results.rows.item(i).date_first)*1000); 
+    		tmp_month 	= tmp_date.getMonth(); 
+    		tmp_day		= tmp_date.getDate();
+
+    		results.rows.item(i).day   = tmp_day;
+			results.rows.item(i).month = month_translation[settings.id_lang][tmp_month];
+
     		res.top_items[i] = results.rows.item(i);
     	} else  {
     		res.items[k] = results.rows.item(i);
