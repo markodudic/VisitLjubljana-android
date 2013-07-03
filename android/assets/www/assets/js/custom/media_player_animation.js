@@ -10,7 +10,8 @@ var context     = canvas.getContext('2d');
 var x = canvas.width / 2;
 var y = canvas.height / 2;
 var radius      = 100;
-var endPercent  = 110;
+//var endPercent  = 100;
+var endPercent  = media_length+1;
 var curPerc     = 0;
 var counterClockwise = false;
 var circ  = Math.PI * 2;
@@ -24,15 +25,16 @@ context.beginPath();
 context.arc(x, y, radius, -(quart), ((circ) * 100) - quart, false);
 context.stroke();
 
-
-
 context.lineWidth   = 15;
 context.strokeStyle = '#ed1b24';
 
+var media_koef = media_length/100;
+
 var current = 0;
+
 function animate() {
   context.beginPath();
-  context.arc(x, y, radius, -(quart), ((circ) * current) - quart, false);
+  context.arc(x, y, radius, -(quart), ((circ) * current/media_koef) - quart, false);
   context.stroke();
   
   curPerc++;

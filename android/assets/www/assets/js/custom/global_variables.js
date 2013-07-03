@@ -12,6 +12,7 @@ var pOld 		= null;
 var media		 = "";
 var my_media 	 = null;
 var media_timer  = null;
+var media_length = 0;
 var file 		 = "/android_asset/www/uploads/mp3/";
 
 
