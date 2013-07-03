@@ -2,8 +2,6 @@ var callback	= "";
 var query 		= "";
 
 function generate_query(q, cb) {
-	console.log("generate_query");
-
 	query 		= q;
 	callback	= cb;
 
@@ -22,12 +20,9 @@ function db_success (tx, results) {
 
 //preveri ce baza obstaja, ce ne klice funkcijo, ki jo napolni
 function check_db_success(results) {
-	console.log(JSON.stringify(results));
     if (results.rows.length != 1) {
-    	console.log("zagon --- polnim bazo");
     	populate_db_firstime();
 	} else {
-		console.log("zagon --- berem nastavitve");
 		load_mobile();
 	}
 }
@@ -62,15 +57,12 @@ function load_poi_success(results) {
 	current 	= trip_id;
 	sound_file	= file+res.items[0].sound;
 
-	console.log("load poi success"+JSON.stringify(res.items));
-
 	load_page(template_lang+'trip.html', 'div_trip', res.items[0], 'fade', true);
 }
 
 //map poi
 function load_map_poi_coord_success(results) {
-    console.log("loading  mappoi results");
-    
+  
     points =  new Array();
 
     var row = results.rows.item(0);
@@ -124,25 +116,15 @@ function events_success(results) {
 	data.categories 	= event_type;
 	trips 				= res;
 
-	console.log("dogodki --- "+JSON.stringify(data));
-
 	load_page(template_lang+'events.html', 'events', data, 'fade', false);
 }
 
 function event_category_success(results) {
-	console.log("dogodki --- query ok");
-
 	var len = results.rows.length;
-    
-    console.log("dogodki --- poizvedba "+ query);
-	console.log("dogodki --- kategorije "+ JSON.stringify(results));
 
     for (var i=0; i<len; i++){
-    	console.log("dogodki ---- "+JSON.stringify(results.rows.item(i)));
     	event_type[i] = results.rows.item(i);
     }
-
-    console.log("dogodki --- kategorije eventov" + JSON.stringify(event_type));
 }
 
 function event_category_title_success(results) {
@@ -214,9 +196,6 @@ function load_event_venue_success(results) {
 	for (var i=0; i<len; i++){
     	tmp_event_data.venue[i] = results.rows.item(i);
     }
-
-    console.log(tmp_event_data);
-    console.log(JSON.stringify(tmp_event_data));
 
     if (swipe_dir == "left") {
     	load_page(template_lang+'event.html', 'event', tmp_event_data, 'slide', false);
@@ -293,12 +272,7 @@ function tour_charters_success(results) {
 }
 
 function count_ztl_event_success(results) {
-	console.log("event check");
-	console.log(results.rows.item(0));
-	console.log(JSON.stringify(results.rows.item(0).nr));
-
 	if (results.rows.item(0).nr == 0)  {
-		console.log("update events and trips");
 		update_db();
 	}
 }
@@ -487,31 +461,6 @@ function populate_db_firstime() {
 
             console.log("zagon --- nalagam nastavitve po insertu");
             load_mobile();
-
-            //to naj se pol odstrani
-            //tmp_update_sound();
         });
     });
-}
-
-/*samo 1x povozim sound, da nebo 300 pojev v glasovnem vodicu --- ko bo urejen atribut v eportu se lahk zbrise*/
-function tmp_update_sound() {
-	var tmp_query 		= "UPDATE ztl_poi SET sound = ''";
-	var tmp_callback	= "tmp_sound_update_success";
-			
-	generate_query(tmp_query, tmp_callback);
-
-	console.log("update sound: vse na 0:"+tmp_query);
-}
-
-function tmp_sound_update_success(results) {
-	var tmp_query 		= "UPDATE ztl_poi SET sound = 'sound' WHERE id IN (546, 538, 645, 652, 672, 606, 578, 586, 582, 1760, 1761, 1762, 1773, 1774)";
-	var tmp_callback	= "tmp_sound_set_update_success";
-
-	generate_query(tmp_query, tmp_callback);
-	console.log("update sound: nekaj na sound:"+tmp_query);
-}
-
-function tmp_sound_set_update_success(results) {
-	console.log("update sound: poi sound pofejkan");
 }

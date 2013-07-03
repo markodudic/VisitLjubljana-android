@@ -1,15 +1,6 @@
 var current_position = 0;
 var tmp_pos = 0;
 
-/*
-function  load_media_file(file) {
-	console.log("MY MEDIA file"+file);
-	my_media = new Media(file, onSuccess, onError);
-	console.log("MY MEDIA"+my_media);
-	play();
-
-}
-*/
 function onSuccess() {
     console.log("playAudio():Audio Success");
 }
@@ -24,8 +15,6 @@ function onError(error) {
 
 
 function  load_media_file(file) {
-	console.log("load media file");
-	console.log(file);
 	my_media = new Media(file,
         function() {
             console.log("Audio Success");
@@ -37,8 +26,6 @@ function  load_media_file(file) {
     ); 
 	
 	$("#time-slider").on( 'slidestop', function( event ) { 
-		console.log("slider move");
-		console.log($("#time-slider").val());
 		tmp_pos = $("#time-slider").val();
 		
 		tmp_pos = parseInt(tmp_pos, 10);
@@ -53,26 +40,13 @@ function  load_media_file(file) {
 
 
 function play() {
-	console.log(media_timer);
-	console.log(my_media.getDuration());
-	console.log('position '+current_position);
-
-	
-
 	if (my_media != null) {
 		
 		if (current_position > 0) {
-			console.log("seek "+current_position*1000);
 			my_media.seekTo(current_position*1000);
-			console.log(my_media);
 		}
 		
 		my_media.play();
-		
-		/* dobim duration -- resi drugic
-		$("#time-slider").attr('max', my_media.getDuration());
-		$("#time-slider").slider("refresh");
-		*/
 
 		if (media_timer == null) {
 			media_timer = setInterval(function() {
@@ -98,7 +72,6 @@ function play() {
 }
 
 function pause() {
-	console.log('position '+current_position);
 	if (my_media != null) {
 		my_media.pause();
 	} else {
@@ -111,8 +84,6 @@ function setAudioPosition(position) {
 		tmp_pos = position;
 		current_position = current_position+1;
 	}
-
-	console.log(current_position);
 
 	$("#time-slider").val(current_position);
 	$("#time-slider").slider("refresh");

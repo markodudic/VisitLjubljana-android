@@ -46,7 +46,6 @@ function check_update_success(results) {
 
 function update_poi(url, pois) {
 	url = url+'&pois='+pois.join(",");
-	console.log("update DB " +  url);
 	$.ajax( {
 		url : url,
 		//type: "POST",

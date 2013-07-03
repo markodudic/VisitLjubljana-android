@@ -40,9 +40,6 @@ function animate() {
 
   if (curPerc < endPercent) {
       current = curPerc / 100;
-      
-      console.log(curPerc);
-
       update_time();
   }
 }
@@ -117,8 +114,6 @@ function media_control_stop() {
 }
 
 function  load_media_file(file) {
-	console.log("load media file");
-	console.log(file);
 	my_media = new Media(file,
         function() {
             console.log("Audio Success");
@@ -130,18 +125,10 @@ function  load_media_file(file) {
 }
 
 function play() {
-	console.log(media_timer);
-	console.log(my_media.getDuration());
-	console.log('position '+current_position);
-
-	
-
 	if (my_media != null) {
 		
 		if (current_position > 0) {
-			console.log("seek "+current_position*1000);
 			my_media.seekTo(current_position*1000);
-			console.log(my_media);
 		}
 		
 		my_media.play();
@@ -170,7 +157,6 @@ function play() {
 }
 
 function pause() {
-	console.log('position '+current_position);
 	if (my_media != null) {
 		my_media.pause();
 	} else {
@@ -183,6 +169,4 @@ function setAudioPosition(position) {
 		tmp_pos = position;
 		current_position = current_position+1;
 	}
-
-	console.log(current_position);
 }

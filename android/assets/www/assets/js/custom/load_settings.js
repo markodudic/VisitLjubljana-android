@@ -19,7 +19,6 @@ function load_settings() {
 		load_desktop();
 		
 		$.getScript('./assets/tmp_settings/db.js', function () {
-			console.log('local storagage loaded');
 			db.transaction(populateDB, errorCB);
 		});
 	}
@@ -32,9 +31,6 @@ function load_pois(id, trips_menu_id, save_history) {
 		var history_string = "fun--load_pois--"+id+"__"+trips_menu_id;
 		add_to_history(history_string);
 	}
-
-	console.log("local id "+id);
-	console.log("local trips_menu_id "+trips_menu_id);
 
 	if (trips_menu_id > 0) {
 		tmi = trips_menu_id;
@@ -92,31 +88,23 @@ function load_tours(save_history)  {
 }
 
 function load_mobile() {
-	console.log('zagon --- nalagam mobilno');
-	
-	//preverim, ce je fajl ze bil kreiran
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem){
         fileSystem.root.getFile("Android/data/com.vigred.ztl/settings.json", { create: false }, fileExists, fileDoesNotExist);
     }, getFSFail); 
 }
 
 function fileExists(fileEntry){
-	console.log("zagon --- fajl obstaja nalagam mobilno");
 	local_db = 1;
     load_moblie_settings();
 }
 function fileDoesNotExist(){
-console.log("zagon --- fajl ne obstaja kreiram datoteko");
    create_file();
 }
 function getFSFail(evt) {
-	console.log("zagon --- fajl napaka kreiram datoteko");
     create_file();
 }
 
 function create_file() {
-	console.log('zagon -- nalagam create');
-
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
         fileSystem.root.getDirectory("Android/data/com.vigred.ztl", {create: true, exclusive: false}, function(dir){}, fail); 
     } , null); 
@@ -127,16 +115,10 @@ function create_file() {
 }
 
 function gotFileEntry(fileEntry) {
-	console.log('zagon --- nalagam gotFileEntry');
-	console.log(fileEntry);
 	fileEntry.createWriter(gotFileWriter, fail);
 }
 
 function gotFileWriter(writer) {
-	console.log('nalagam writer');
-	console.log(writer);
-	console.log(JSON.stringify(settings));
-	
 	writer.onwrite = function(evt) {
 		load_main_menu();
 		load_moblie_settings(); 
@@ -145,7 +127,6 @@ function gotFileWriter(writer) {
 }
 
 function save_mobile_settings() {
-	console.log('zagon --- save_mobile_settings');
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
     	fileSystem.root.getFile("Android/data/com.vigred.ztl/settings.json", {create: true, exclusive: false}, gotFileEntry, fail);
     }, null);
@@ -153,7 +134,6 @@ function save_mobile_settings() {
 }
 
 function load_moblie_settings() {
-	console.log('zagon --- nalagam mobilne nastavitve');
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
 		fileSystem.root.getFile("Android/data/com.vigred.ztl/settings.json", null, function(fileEntry) {
 			fileEntry.file(readAsText, fail);
@@ -162,20 +142,14 @@ function load_moblie_settings() {
 }
 
 function readAsText(file) {
-	console.log('zagon ---  nalagam readAsText');
 	var reader = new FileReader();
 	reader.onloadend = function(evt) {
 
     	var tmp = JSON.parse(evt.target.result);
 
-    	console.log("zagon vsebina datoteke --- "+evt.target.result);
-
-		console.log("zagon --- tmp zapis "+tmp.id_lang);
 		if (tmp.id_lang == undefined) {
-			console.log('zagon --- nastavitve niso pravilne'); 
 			load_page('select_language.html', 'select_language', null, 'fade', false);
 		} else {
-			console.log('zagon --- nastavitve pravilne in nalozene');
 			settings = tmp;
 			load_main_menu();
 			swipe = 0;
@@ -199,8 +173,6 @@ function readAsText(file) {
 		menu_select_lang = 0;
 	};
 	reader.readAsText(file);
-
-	console.log(JSON.stringify(settings));
 }
 
 function fail(error) {
@@ -209,36 +181,10 @@ function fail(error) {
 }
 
 function check_updates() {
-	console.log("zagon --- check updates");
-
 	var tmp_query    = "SELECT count(id_event) AS nr FROM ztl_event_translation WHERE id_language = "+settings.id_lang;
     var tmp_callback = "count_ztl_event_success";
     generate_query(tmp_query, tmp_callback);
 }
-
-/*
-function load_desktop() {
-	$.ajax({
-		type:"GET",
-		url:'assets/tmp_settings/settings.js',
-		cache:false,
-		async:false,
-		dataType: 'json',
-		success:function(resp){
-			settings = resp;
-			load_main_menu();
-		}
-	});
-	
-	if (settings.id_lang == 0) {
-		swipe = 0;
-		load_page('select_language.html', 'select_language', null, 'fade', false);
-	} else {
-		swipe = 0;
-		load_page(template_lang+'main_menu.html', 'main_menu', main_menu, 'fade', false);
-	}
-}
-*/
 
 function load_settings_page(){
 	swipe = 0;

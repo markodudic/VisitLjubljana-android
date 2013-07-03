@@ -41,9 +41,6 @@ var max_dolzina_title = 50;
 document.addEventListener("deviceready", on_device_ready, false);
 
 function on_device_ready() {
-	console.log("zagon -- skripte nalozene");
-	
-
 	var hash = window.location.hash;
 	hash = hash.replace(/^.*?#/,'');
 
@@ -79,8 +76,6 @@ function on_device_ready() {
 
 	//localStorage.clear();
 	if (localStorage.getItem(localStorage.key('first_run')) == null) {
-		console.log("local storage cleared tole sm!!!");
-
 		localStorage.clear();
 		localStorage.setItem('history', JSON.stringify(tmp_history));
 		localStorage.setItem('first_run', 0);
@@ -89,7 +84,6 @@ function on_device_ready() {
 }
 
 function load_main_screen(save_history) {
-	console.log("load_main_screen");
 	//shrani v localhost
 	if (save_history == 1) {
 		var history_string = "fun--load_main_screen--empty";
@@ -101,7 +95,6 @@ function load_main_screen(save_history) {
 }
 
 function swipe_left_handler() {
-	console.log("swipe --- *** div " + group);
 	if (swipe == 1) {
 		if (db_type == 1) {
 			var j = 0;
@@ -124,11 +117,9 @@ function swipe_left_handler() {
 			if (swipe_group == 1) {
 				load_page(template_lang+'trip.html', 'div_trip', trips.items[j], 'slide', false);
 			} else if (swipe_group == 2) {
-				console.log("swipe ---- id"+trips.items[j].id);
 				swipe_dir = "left";
 				load_event(trips.items[j].id);
 			} else if (swipe_group == 3) {
-				console.log("swipe ---- id"+trips.items[j].id);
 				swipe_dir = "left";
 				load_tour(trips.items[j].id);
 			}
@@ -174,7 +165,6 @@ function swipe_right_handler() {
 
 function save_swipe_history(index, direction) {
 	/*
-	console.log("save_swipe_history");
 
 	if (direction == true) {
 		direction = false;
@@ -189,7 +179,6 @@ function save_swipe_history(index, direction) {
 
 
 function load_page(template, div, data, transition, reverse) {
-	console.log("zagon --- loading page: "+trips_title);
 	if (footer == "") {
 		load_footer();
 	}
@@ -295,9 +284,6 @@ function load_page(template, div, data, transition, reverse) {
 
 			$('.icon_'+menu_icon).attr("src","assets/css/ztl_images/icon_"+menu_icon+"_red.png");
 
-			console.log("swipe --- fromm to div "+div+"---"+current_div); 
-			console.log("swipe --- destination transition : "+div+extra_div_id + "---" + transition +"---"+ reverse);
-			console.log("swipe --- swipe value "+swipe);
 			if (swipe == 1) {
 				if (div != "main_menu") {
 
@@ -361,10 +347,6 @@ function doTouchLogic() {
     var distance  = Math.abs(direction);
     var duration  = touchEndTime - touchStartTime;
 
-    /*
-    console.log(distance);
-    console.log(duration);
-    */
     
     if (duration > 75 && distance > 75) {
          if (direction > 0) {
@@ -377,7 +359,6 @@ function doTouchLogic() {
 
 function animate_div(div, transition, reverse) {
 	if (transition == "slide") {
-		//$("body").swipe("disable");
 		$("#"+div).hide();
 
 		if (reverse == true) {
@@ -416,8 +397,6 @@ function load_footer() {
 }
 
 function select_language(id) {
-	console.log("zagon --- izbiram jezik");
-
 	settings.id_lang = id;
 
 	check_updates();
@@ -427,27 +406,23 @@ function select_language(id) {
 		swipe = 0;
 		load_page(template_lang+'main_menu.html', 'main_menu', main_menu, 'fade', false);
 	} else {
-		console.log('zagon -- shrani mobilno');
 		save_mobile_settings();
 	}
 } 
 
 function load_trips() {
-	console.log("load_trips");
 	$.getScript('./assets/js/custom/trips.js', function () {
         load_trips();
     });
 }
 
 function edit_settings() {
-	console.log("edit_settings");
 	$.getScript('./assets/js/custom/application_settings.js', function () {
         load_current_settings();
     });
 }
 
 function load_media() {
-	console.log("load_media");
 	$.ajax({
 		type:"GET",
 		url:template_root+template_lang+"ztl_media_player.html",
@@ -488,11 +463,8 @@ function dprun(t) {
 
 function play_location_sound() {
 	swipe = 0;
-	console.log("play_location_sound");
-	console.log("my media "+my_media);
 	
 	if (my_media != null) {
-		console.log("stop");
 		my_media.stop();
 		my_media.release();
 		
@@ -500,7 +472,6 @@ function play_location_sound() {
 		media_timer = null;
 		
 	} else {
-		console.log("start");
 		$.getScript('./assets/js/custom/play_media_file.js', function () {
 			
 			load_media_file(file);
@@ -510,7 +481,6 @@ function play_location_sound() {
 
 
 function load_voice_guide(save_history) {
-	console.log('load_voice_guide');
 	if (save_history == 1)  {
 		var history_string = "fun--load_voice_guide--empty";
 		add_to_history(history_string);

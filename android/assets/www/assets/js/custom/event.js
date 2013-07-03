@@ -14,21 +14,19 @@ function event_filter_toggle() {
 	$(".header").toggle();
 	$(".footer").toggle();
 
+	/*
 	if ($('.event_filter').is(':visible')) {
 		console.log("dogodki --- event_filter is visible");
 	} else {
 		console.log("dogodki --- event_filter is hidden");
 	}
+	*/
 }
 
 function load_event_type() {
-	console.log("dogodki --- nalozi kategorije dogodkov");
-
 	var tmp_query 	 = "SELECT id, name FROM ztl_event_category e WHERE e.id_language = "+settings.id_lang+" GROUP BY id, name";
 	var tmp_callback = "event_category_success";
 	generate_query(tmp_query, tmp_callback);
-
-	console.log("dogodki --- nalagam tipe dogodkov");
 }
 
 
@@ -54,10 +52,6 @@ function filter_events()  {
 		event_date_to_sql	= $('#ztl_trip_filter_date_to_hidden').val();
 	}
 
-	console.log("datumi -- from " + $('#ztl_trip_filter_date_from_hidden').val());
-	console.log("datumi -- to " + $('#ztl_trip_filter_date_to_hidden').val());
-	console.log("datumi timetable --- "+event_date_from_sql+" --- "+event_date_to_sql);
-
 	event_filter_toggle();
 
 	if ($('#event_type').val() > 0) {
@@ -68,7 +62,6 @@ function filter_events()  {
 
 
 	//nastavim datume za sql
-	console.log("datumi timetable --- "+event_date_from_sql+" --- "+event_date_to_sql);
 	if (event_date_to_sql == 0) {
 		event_date_to_sql = 2379800800;
 	}
@@ -92,7 +85,6 @@ function load_event(id) {
 
 function load_tour(id, save_history) {
 	swipe = 1;
-	console.log(id);
 
 	if (save_history == 1)  {
 		var history_string = "fun--load_tour--"+id+"__fade__false";

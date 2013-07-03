@@ -5,8 +5,6 @@ hash = hash.split("__");
 var from_view = hash[1];
 hash = hash[0];
 
-console.log("hash ---- "+hash+"---"+from_view);
-
 window.location.replace(window.location.href.split("#")[0] + "#mappage");
 
 var selectedFeature = null;
