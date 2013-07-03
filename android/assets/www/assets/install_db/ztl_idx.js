@@ -47,4 +47,6 @@ function populateDB_ztl_tour_images(tx) {
 	tx.executeSql('CREATE UNIQUE INDEX ztl_tour_translation__u ON ztl_tour_translation (id_tour, id_language);');
 	tx.executeSql('CREATE UNIQUE INDEX ztl_tour_chaters__u ON ztl_tour_chaters (id_tour, id_language, tour_idx);');
 	tx.executeSql('CREATE UNIQUE INDEX ztl_tour_images__u ON ztl_tour_images (id_tour, tour_idx);');
+	
+	tx.executeSql('CREATE UNIQUE INDEX ztl_info__u ON ztl_info (id, id_language);');
 }
