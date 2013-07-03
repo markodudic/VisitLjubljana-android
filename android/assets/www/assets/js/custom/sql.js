@@ -217,6 +217,41 @@ function load_event_venue_success(results) {
     }
 }
 
+//info
+function info_success(results) {
+	var res = {};
+    res.items = [];
+    var len = results.rows.length;
+    var tmp;
+    for (var i=0; i<len; i++){
+    	//skrajsam dolzino
+    	tmp = results.rows.item(i).title;
+    	if (tmp.length > max_dolzina_title) {
+    		results.rows.item(i).title = tmp.substring(0,max_dolzina_title)+"...";
+    	}
+    	res.items[i] = results.rows.item(i);
+    }
+
+    trips = res;
+    load_page(template_lang+'infos.html', 'infos', res, 'fade', false);
+}
+
+//single_info
+function load_info_success(results) {
+	var res = {};
+    res.item = [];
+
+	res.item = results.rows.item(0);
+
+	if (swipe_dir == "left") {
+    	load_page(template_lang+'info.html', 'info', res, 'slide', false);
+    } else if (swipe_dir == "right") {
+    	load_page(template_lang+'info.html', 'info', res, 'slide', true);
+	} else {
+    	load_page(template_lang+'info.html', 'info', res, 'fade', true);
+    }
+}
+
 //touri
 function tour_success(results) {
 	var res = {};
@@ -273,7 +308,7 @@ function tour_charters_success(results) {
     	tmp_tours_data.charters[i] = results.rows.item(i);
     }
 
-     if (swipe_dir == "left") {
+    if (swipe_dir == "left") {
     	load_page(template_lang+'tour.html', 'tour', tmp_tours_data, 'slide', false);
     } else if (swipe_dir == "right") {
     	load_page(template_lang+'tour.html', 'tour', tmp_tours_data, 'slide', true);

@@ -87,6 +87,22 @@ function load_tours(save_history)  {
     generate_query(tmp_query, tmp_callback);
 }
 
+function load_info(save_history)  {
+	swipe_dir 	= "";
+    swipe 		= 0;
+    if (save_history == 1)  {
+        var history_string = "fun--load_info--empty";
+        add_to_history(history_string);
+    }
+
+    trips_title = main_menu['img5'];
+
+    //ko bo obstajala tabela info se zamenja query
+    var tmp_query      = "SELECT t.id, tt.title, tt.short_description, ti.image FROM ztl_tour t LEFT JOIN ztl_tour_translation tt ON tt.id_tour = t.id LEFT JOIN ztl_tour_images ti ON t.id = ti.id_tour WHERE tt.id_language = "+settings.id_lang+" GROUP BY t.id";
+    var tmp_callback   = "info_success";
+    generate_query(tmp_query, tmp_callback);
+}
+
 function load_mobile() {
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem){
         fileSystem.root.getFile("Android/data/com.vigred.ztl/settings.json", { create: false }, fileExists, fileDoesNotExist);
