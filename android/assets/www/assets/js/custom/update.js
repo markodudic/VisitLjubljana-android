@@ -10,7 +10,7 @@ function is_updt_finished() {
 	updt_finished++;
 	
 	//vsi updejti
-	if (updt_finished == 3) {
+	if (updt_finished == 4) {
 		var today     = new Date();
 		var sql_today = today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate()+" "+today.getHours()+":"+today.getMinutes()+":"+today.getSeconds();
 		var sql       = "UPDATE ztl_updates SET last_update = '"+sql_today+"' WHERE id_language = "+settings.id_lang;
@@ -40,12 +40,14 @@ function check_update_success(results) {
 	        //update_poi('http://www.visitljubljana.com/'+lang_code+'/mobile_app/poi.json?datemodified='+results.rows.item(0).last_update, pois);
 	        update_event('http://www.visitljubljana.com/'+lang_code+'/mobile_app/event.json?datemodified='+results.rows.item(0).last_update);
 	        update_tour('http://www.visitljubljana.com/'+lang_code+'/mobile_app/tour.json'); //?datemodified='+results.rows.item(0).last_update
+	        update_info('http://www.visitljubljana.com/'+lang_code+'/mobile_app/info.json'); //?datemodified='+results.rows.item(0).last_update
 	    });
 	});
 }
 
 function update_poi(url, pois) {
 	url = url+'&pois='+pois.join(",");
+	console.log("update DB " +  url);
 	$.ajax( {
 		url : url,
 		//type: "POST",
@@ -413,6 +415,62 @@ function readFiles() {
 		});
 	});
 }
+
+function update_info(url) {
+	console.log("update DB " +  url);
+	$.ajax( {
+		url : url,
+		dataType : 'json',
+		beforeSend : function(xhr) {
+	          xhr.setRequestHeader("Authorization", "Basic RWlqdTN6YW86dXRoMWplaUY=");
+		},
+		error : function(xhr, ajaxOptions, thrownError) {
+			//napaka
+			console.log(" >>>>>>>>>> failed "+url);
+			console.log(JSON.stringify(thrownError));
+		},
+		success : function(data) {
+			console.log(" >>>>>>>>>> ok");
+			
+			//truncate
+			/*
+			db.transaction(function(tx) {tx.executeSql('delete from ztl_info;', [], function(tx, res) {});});
+			*/
+			handle_info_deleted(data['deleted']);
+			handle_info(data['info']);
+		}
+	});
+}
+
+function handle_info_deleted(data) {
+	db.transaction(function(tx) {
+		var sql = "";
+		if (data != null) {
+			for (var i = 0; i < data.length; i++) {
+				sql = "UPDATE ztl_info SET record_status = 0 WHERE id = "+data[i];
+				//console.log(sql);
+				tx.executeSql(sql, [], function(tx, res) {});
+			}
+		}
+	});
+}
+
+function handle_info(data) {
+	db.transaction(function(tx) {
+		var sql = "";
+		for (var i = 0; i < data.length; i++) {
+			sql = "INSERT INTO ztl_info (id, id_language, title, content, record_status) VALUES ("+data[i].objects[0].id+", "+settings.id_lang+", '"+addslashes(data[i].objects[0].title)+"', '"+addslashes(data[i].objects[0].content)+"', 1)";
+			tx.executeSql(sql, [], function(tx, res) {});
+		}
+		
+		tx.executeSql('select count(*) as cnt from ztl_info;', [], function(tx, res) {
+			console.log('+31 >>>>>>>>>> ztl_info res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+		});
+		is_updt_finished();
+	});	
+}
+
+/*********************** UTILS ***********************/ 
 
 function onFSError(e) {
 	console.log("FSERROR "+JSON.stringify(e));
