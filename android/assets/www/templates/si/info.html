@@ -1,0 +1,68 @@
+<script id="tpl_info" type="text/html">
+<div data-role="page" id="info_{{item.id}}" data-theme="a" class="ztl_remove_from_page" data-rockncoder-jspage="info" style="overflow:hidden;">
+	<div class="header">
+		<div class="header_placeholder">
+			<div class="red_line"></div>
+			<div class="header_space"></div>
+			<div onClick="load_info()"><img class="header_back"></div>
+			<div class="header_title" onClick="load_info()">{{& item.title}}</div>
+			<div class="header_dots"></div>
+			<div style="clear:both;"></div>
+			<div class="header_space"></div>
+		</div>
+		<div class="header_shadow"></div>
+	</div>
+	
+	<div data-role="content" class="ztl_content ztl_content_extra">
+	
+	<div id="verticalWrapper">
+	<div id="verticalScroller">
+
+		<div class="ztl_navigate_events">
+			
+			<div style="clear:both;"></div>
+			<div class="ztl_item_content_padding">
+				<div class="ztl_item_buttons">
+					<!-- a href="map.html#{{id}}" data-role="link" data-ajax="false" style="text-decoration:none;">
+						<div class="ztl_red_button ztl_item_left_button">{{map_button}}</div>
+					</a -->
+					<a href="#" style="text-decoration:none;">
+						<div class="ztl_red_button ztl_item_right_button">MYVISIT</div>
+					</a>
+				</div>
+				<br>
+				{{#sound}}
+				<div onClick="play_voice_guide({{id}});" class="ztl_grey_button" style="position:relative;">
+					<div class="sound_img">
+						<img src="assets/css/ztl_images/icon_2.png" style="height:27px;">
+					</div> 
+					<div class="sound_txt">{{guide_button}}</div>
+				</div>
+				{{/sound}}
+				<div class="ztl_item_details">
+					<div id="ztl_item_details_description" class="ztl_item_details_title">{{ztl_item_details_description}}</div>
+					<div class="ztl_distance">&nbsp;</div>
+					<div style="clear:both;"></div>
+					<div class="grey_line" style="margin-top:10px;"></div>
+					<br>
+					<div class="ztl_item_details_desc">
+						{{& item.short_description}}
+						<br><br>
+						{{& item.long_description}}
+					</div>
+					<br>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+
+	</div>
+	<div class="footer">
+		<div class="footer_shadow"></div>
+		<div class="header_placeholder">
+			[[[ztl_footer]]]
+		</div>
+	</div>
+</div>
+</script>
