@@ -509,6 +509,16 @@ function populate_db_firstime() {
 		});
 	});
 
+	$.getScript('./assets/install_db/ztl_info.js', function () {
+		db.transaction(populateDB_ztl_info, errorCB, function(tx) {
+			db.transaction(function(tx) {
+				tx.executeSql('select count(*) as cnt from ztl_info;', [], function(tx, res) {
+					console.log('31 >>>>>>>>>> ztl_info res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+				});
+			});
+		});
+	});
+	
 	$.getScript('./assets/install_db/ztl_idx.js', function () {
         db.transaction(populateDB_ztl_tour_images, errorCB, function(tx) {
             console.log('99 >>>>>>>>>> ztl_idx');
