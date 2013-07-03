@@ -75,8 +75,13 @@ function filter_events()  {
     generate_query(tmp_query, tmp_callback);
 }
 
-function load_event(id) {
+function load_event(id, save_history) {
 	swipe = 1;
+
+	if (save_history == 1)  {
+		var history_string = "fun--load_event--"+id+"__fade__false";
+		add_to_history(history_string);
+	}
 
 	var tmp_query 	 = "SELECT  e.id, et.title, et.intro, et.description, p.coord_x, p.coord_y, p.image FROM ztl_event e LEFT JOIN ztl_event_translation et ON et.id_event = e.id LEFT JOIN  ztl_event_timetable ett ON ett.id_event = e.id LEFT JOIN ztl_poi p ON p.id = ett.venue_id WHERE e.id = "+id+" AND et.id_language = "+settings.id_lang+" GROUP BY e.id"; 
     var tmp_callback = "load_event_success";

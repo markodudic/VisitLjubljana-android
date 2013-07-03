@@ -51,3 +51,81 @@ price_translation[2]	= "PRICE";
 price_translation[3]	= "PREIS";
 price_translation[4]	= "PREZZO";
 price_translation[5]	= "PRIX";
+
+//prevodi mesecov za top evente
+var month_translation = [];
+
+//slovenscina
+month_translation[1] = [];
+month_translation[1][0]  = "JAN";
+month_translation[1][1]  = "FEB";
+month_translation[1][2]  = "MAR";
+month_translation[1][3]  = "APR";
+month_translation[1][4]  = "MAJ";
+month_translation[1][5]  = "JUN";
+month_translation[1][6]  = "JUL";
+month_translation[1][7]  = "AVG";
+month_translation[1][8]  = "SEP";
+month_translation[1][9]  = "OKT";
+month_translation[1][10] = "NOV";
+month_translation[1][11] = "DEC";
+
+//anglescina
+month_translation[2] = [];
+month_translation[2][0]  = "JAN";
+month_translation[2][1]  = "FEB";
+month_translation[2][2]  = "MAR";
+month_translation[2][3]  = "APR";
+month_translation[2][4]  = "MAJ";
+month_translation[2][5]  = "JUN";
+month_translation[2][6]  = "JUL";
+month_translation[2][7]  = "AVG";
+month_translation[2][8]  = "SEP";
+month_translation[2][9]  = "OKT";
+month_translation[2][10] = "NOV";
+month_translation[2][11] = "DEC";
+
+//nemscina
+month_translation[3] = [];
+month_translation[3][0]  = "JAN";
+month_translation[3][1]  = "FEB";
+month_translation[3][2]  = "MAR";
+month_translation[3][3]  = "APR";
+month_translation[3][4]  = "MAJ";
+month_translation[3][5]  = "JUN";
+month_translation[3][6]  = "JUL";
+month_translation[3][7]  = "AVG";
+month_translation[3][8]  = "SEP";
+month_translation[3][9]  = "OKT";
+month_translation[3][10] = "NOV";
+month_translation[3][11] = "DEC";
+
+//italjanscina
+month_translation[4] = [];
+month_translation[4][0]  = "JAN";
+month_translation[4][1]  = "FEB";
+month_translation[4][2]  = "MAR";
+month_translation[4][3]  = "APR";
+month_translation[4][4]  = "MAJ";
+month_translation[4][5]  = "JUN";
+month_translation[4][6]  = "JUL";
+month_translation[4][7]  = "AVG";
+month_translation[4][8]  = "SEP";
+month_translation[4][9]  = "OKT";
+month_translation[4][10] = "NOV";
+month_translation[4][11] = "DEC";
+
+//francoscina
+month_translation[5] = [];
+month_translation[5][0]  = "JAN";
+month_translation[5][1]  = "FEB";
+month_translation[5][2]  = "MAR";
+month_translation[5][3]  = "APR";
+month_translation[5][4]  = "MAJ";
+month_translation[5][5]  = "JUN";
+month_translation[5][6]  = "JUL";
+month_translation[5][7]  = "AVG";
+month_translation[5][8]  = "SEP";
+month_translation[5][9]  = "OKT";
+month_translation[5][10] = "NOV";
+month_translation[5][11] = "DEC";
