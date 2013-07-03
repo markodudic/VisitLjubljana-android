@@ -18,7 +18,6 @@ function local_storage_load() {
 }
 
 function go_back() {
-	console.log("***********************************************************");
 	var history = JSON.parse(localStorage.getItem(localStorage.key('history')));
 	console.log(history);
 
@@ -31,17 +30,8 @@ function go_back() {
 			var go_to 	= go_to.split("--"); 
 		}
 
-		console.log("=========================="+go_to);
-
-		console.log("---------------------------------------prej---");
-		console.log(history);
-
-		
 		history.pop();
-		
-		console.log("--------------------------------------potem---");
-		console.log(history);
-		
+
 		localStorage.setItem('history', JSON.stringify(history));
 
 

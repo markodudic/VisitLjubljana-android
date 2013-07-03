@@ -1,4 +1,3 @@
-
 // API key for http://openlayers.org. Please get your own at
 // http://bingmapsportal.com/ and use that instead.
 var apiKey = "AqTGBsziZHIJYYxgivLBf0hVdrAk9mWO5cQcb8Yux8sW5M8c8opEC2lZqKR1ZZXf";
@@ -248,7 +247,6 @@ var init = function (onSelectFeatureFunction) {
     }
 
     function onFeatureSelect(evt) {
-        console.log("features select");
         var feature = evt.feature;
 
         load_trip_content(points[0][3]);
@@ -315,7 +313,6 @@ function load_lang_settings() {
 }
 
 function load_moblie_settings() {
-    console.log('nalagam mobilne nastavitve');
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
         fileSystem.root.getFile("Android/data/com.vigred.ztl/settings.json", null, function(fileEntry) {
             fileEntry.file(readAsText, fail);
@@ -324,13 +321,11 @@ function load_moblie_settings() {
 }
 
 function readAsText(file) {
-    console.log('nalagam readAsText');
     var reader = new FileReader();
     reader.onloadend = function(evt) {
         settings = JSON.parse(evt.target.result);
     };
 
-    console.log(settings);
     reader.readAsText(file);
 }
 

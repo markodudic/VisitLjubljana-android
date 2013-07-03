@@ -1,6 +1,4 @@
 function init_gps() {
-	console.log("init gps");
-	
     //WGS84
 	  Proj4js.defs["EPSG:4326"] = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs";
     //GK
@@ -20,8 +18,7 @@ function onError_gps(error) {
 
 function onSuccess_gps(position) {
 	if (position==undefined) return;
-	console.log("work gps="+position.coords.longitude+":"+position.coords.latitude);
-	
+
     var p = new Proj4js.Point(position.coords.longitude, position.coords.latitude); 
     Proj4js.transform(source, dest, p);  
     

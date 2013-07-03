@@ -34,5 +34,7 @@ var template_lang 		= 'si/';
 var tmp_history = ["fun--load_main_screen--empty"];
 
 //za deploy - ne izpisujejo se komentarji
+/*
 var console = {};
 console.log = function(){};
+*/

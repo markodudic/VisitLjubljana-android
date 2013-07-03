@@ -19,7 +19,6 @@ function load_trip_content(id, transition, reverse, save_history) {
 
 
 function play_voice_guide(id) {
-	console.log('play_voice_guide');
 	$(".media_payer").toggle();
 	
 	$(".ztl_content").toggle();
@@ -30,7 +29,8 @@ function play_voice_guide(id) {
 		load_media_file(sound_file);
 	});
 }
-
+/*
 function play_sound() {
 	console.log('play_sound');
 }
+*/

@@ -7,12 +7,6 @@ function select_language() {
 }
 
 function reminder_change() {
-	console.log(settings);
-	console.log('reminder_change');
-	
-	console.log("lang"+settings.id_lang);
-	console.log('rem'+settings.reminder);
-	
 	var reminder = 0;
 	if  ((settings.reminder == undefined) || (settings.reminder == 0)) {
 		var reminder = 1;
