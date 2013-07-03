@@ -52,15 +52,17 @@ function load_poi_success(results) {
     res.items = [];
     	
     //pofejkam dolzino komada
-    results.rows.item(0).media_duration_sting = "4:24";
-    results.rows.item(0).media_duration_value = 264;
+    //results.rows.item(0).media_duration_sting = "4:24";
+    //results.rows.item(0).media_duration_value = 264;
+
+    console.log(results);
 
     res.items[0] = results.rows.item(0);
 
     swipe 		 = 1;
 	current 	 = trip_id;
 	sound_file	 = file+res.items[0].sound;
-	media_length = results.rows.item(0).media_duration_value;
+	media_length = parseInt(results.rows.item(0).media_duration_value);
 
 
 	load_page(template_lang+'trip.html', 'div_trip', res.items[0], 'fade', true);
