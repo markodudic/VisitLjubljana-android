@@ -83,9 +83,9 @@
 				</div>
 				<div style="clear:both;"></div>
 				<div class="ztl_item_details ztl_item_details_text">
-					{{#post}}
-						{{address}}, {{post_number}} {{post}}<br><br>
-					{{/post}}
+					
+						{{#address}}{{address}},{{/address}}{{#post_number}} {{post_number}}{{/post_number}}{{#post}} {{post}}{{/post}}<br><br>
+					
 					{{#phone}}
 						<div class="red"><img src="assets/css/ztl_images/phone.png" style="height:20px;"> {{phone}}</div>
 						<br>
@@ -98,11 +98,7 @@
 						<div class="red"><img src="assets/css/ztl_images/mouse.png" style="height:20px;"> {{www}}</div>
 					{{/www}}
 					<br><br>
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ut volutpat ante. In hac habitasse platea dictumst. Aliquam ut est fermentum, tempor nunc in, malesuada neque. Fusce et leo est. Donec eget vehicula urna. Sed aliquet nisi vestibulum porttitor euismod. Nam magna nisl, hendrerit eu facilisis vel, hendrerit et ipsum. Phasellus volutpat ligula sed nulla malesuada, porta volutpat est varius. Etiam tellus felis, rhoncus at mi a, feugiat ultricies dolor. Cras malesuada tempor sapien in sollicitudin. 
-					<br><br>
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ut volutpat ante. In hac habitasse platea dictumst. Aliquam ut est fermentum, tempor nunc in, malesuada neque. Fusce et leo est. Donec eget vehicula urna. Sed aliquet nisi vestibulum porttitor euismod. Nam magna nisl, hendrerit eu facilisis vel, hendrerit et ipsum. Phasellus volutpat ligula sed nulla malesuada, porta volutpat est varius. Etiam tellus felis, rhoncus at mi a, feugiat ultricies dolor. Cras malesuada tempor sapien in sollicitudin. 
-					<br><br>
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ut volutpat ante. In hac habitasse platea dictumst. Aliquam ut est fermentum, tempor nunc in, malesuada neque. Fusce et leo est. Donec eget vehicula urna. Sed aliquet nisi vestibulum porttitor euismod. Nam magna nisl, hendrerit eu facilisis vel, hendrerit et ipsum. Phasellus volutpat ligula sed nulla malesuada, porta volutpat est varius. Etiam tellus felis, rhoncus at mi a, feugiat ultricies dolor. Cras malesuada tempor sapien in sollicitudin.
+					{{desc}}
 				</div> 
 			</div>
 		</div>

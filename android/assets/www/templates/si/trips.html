@@ -38,9 +38,7 @@
 						</a>
 						<a href="#" onClick="load_trip_content({{id}}, 'fade', true, 1)" style="text-decoration:none; color:#000000; font-weight:normal;">
 							<div class="ztl_list_content_text">
-								{{#post}}
-									{{address}}, {{post_number}} {{post}}
-								{{/post}}	
+								{{#address}}{{address}},{{/address}}{{#post_number}} {{post_number}}{{/post_number}}{{#post}} {{post}}{{/post}}
 							</div>
 						</a>
 						<div class="ztl_content_info_left"></div>
