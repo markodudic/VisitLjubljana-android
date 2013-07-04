@@ -20,34 +20,30 @@
 	{{#items}}
 		<li class="ztl_list_li">
 			<div class="ztl_list_item" id="ztl_trips_item_{{id}}">
+				<a href="#" onClick="load_tour({{id}}, 1)" style="text-decoration:none; color:#000000; font-weight:normal;">
 				<div class="ztl_list_image">
 					<div class="ztl_list_img_crop">
-						<a href="#" onClick="load_tour({{id}}, 1)" style="text-decoration:none; color:#000000; font-weight:normal;">
 							{{#image}}
 								<img class="ztl_items_image" src="{{image}}">
 							{{/image}}
 							{{^image}}
 								<img class="ztl_items_image" src="./uploads/noimage.png">
 							{{/image}}
-						</a>
 					</div>
 				</div>
 				<div class="ztl_list_content">
-						<a href="#" onClick="load_tour({{id}},1)" style="text-decoration:none; color:#000000; font-weight:normal;">
-							<div class="ztl_list_header">{{title}}</div>
-						</a>
-						<a href="#" onClick="load_tour({{id}},1)" style="text-decoration:none; color:#000000; font-weight:normal;">
-							<div class="ztl_list_content_text">
-								{{#post}}
-									{{address}}, {{post_number}} {{post}}
-								{{/post}}	
-							</div>
-						</a>
+						<div class="ztl_list_header">{{title}}</div>
+						<div class="ztl_list_content_text">
+							{{#post}}
+								{{address}}, {{post_number}} {{post}}
+							{{/post}}	
+						</div>
 						<div class="ztl_content_info_left"></div>
 						<!-- div class="ztl_star"></div>
 						<div class="ztl_distance"><div id="ztl_distance_value_{{id}}"></div></div>
 						<input type="hidden" name="ztl_cord_{{id}}" value="{{id}}#{{coord_x}}#{{coord_y}}" -->
 				</div>
+				</a>
 			</div>
 			<div style="clear:both;"></div>
 			<div class="black_line"></div>
