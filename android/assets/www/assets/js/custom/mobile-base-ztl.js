@@ -245,25 +245,32 @@ var init = function (onSelectFeatureFunction) {
            if (points[i][2] == type) {
                 //na koordinatePOI-ja iz baze se doda 5.000.000 zato da bo v projekciji GK zona 5 oz. EPSG:31469    
                 //ne vem zakaj ampak koordinate po transformaciji strizejo za -350 in 550. GK koordinate so ok.
-        	   get_poi_data
+        	   console.log("ID="+points[i][3]);
         	    var point = transform (parseFloat(points[i][0])+correctionX, parseFloat(points[i][1])+correctionY);
-                var feature = {"geometry": {"type": "Point", "coordinates": [point.lon, point.lat]}}
+                //var feature = {"geometry": {"type": "Point", "coordinates": [point.lon, point.lat]},
+                //				"attributes": {"id": points[i][3]},
+                //				"fid": points[i][3]}
+                //features.push(feature);
+                
+                var attributes = {id: points[i][3]};
+
+                feature = new OpenLayers.Feature.Vector(new OpenLayers.Geometry.Point(point.lon, point.lat), attributes);
                 features.push(feature);
             }
         }
         
-        var features = {
+        /*var features = {
             "type": "FeatureCollection",
             "features": features
         };
 
         var reader = new OpenLayers.Format.GeoJSON();
 
-        return reader.read(features);
+        return reader.read(features);*/
+        return features;
     }
 
     function getFeaturesMyLocation(lon, lat) {
-
         var features = new Array();
 
         var feature = {"geometry": {"type": "Point", "coordinates": [lon, lat]}}
@@ -288,12 +295,18 @@ var init = function (onSelectFeatureFunction) {
         return point;
     }
 
+    
     function onFeatureSelect(evt) {
         var feature = evt.feature;
+        console.log("FEAUTER11="+feature.attributes.id);
+        
+        load_trip_content(feature.attributes.id);
+        console.log("x="+poi_data.coord_x);
+        console.log("y="+poi_data.coord_y);
 
-        load_trip_content(points[0][3]);
-
-        $("#poi_title").html("<span style='font-size:20px;'>"+poi_data.title.toUpperCase()+"<br><br></span>");
+        $("#ztl_cord").attr("name", "ztl_cord_"+feature.attributes.id);
+        $("#ztl_cord").attr("value", feature.attributes.id+"#"+poi_data.coord_x+"#"+poi_data.coord_y);
+        $("#poi_title").html(poi_data.title.toUpperCase());
         $("#poi_address").html(poi_data.address);
 
         $(".txt_popup").show();
@@ -328,9 +341,9 @@ function get_poi_data() {
 
 function load_trip_content(id) {
     if (from_view == "event") {
-        var tmp_query = 'SELECT  e.id, et.title, p.address, p.post_number, p.post FROM ztl_event e LEFT JOIN ztl_event_translation et ON et.id_event = e.id LEFT JOIN  ztl_event_timetable ett ON ett.id_event = e.id LEFT JOIN ztl_poi p ON p.id = ett.venue_id WHERE e.id = '+id+' AND et.id_language = '+settings.id_lang+' GROUP BY e.id';    
+        var tmp_query = 'SELECT  e.id, et.title, p.address, p.post_number, p.post, p.coord_x, p.coord_y  FROM ztl_event e LEFT JOIN ztl_event_translation et ON et.id_event = e.id LEFT JOIN  ztl_event_timetable ett ON ett.id_event = e.id LEFT JOIN ztl_poi p ON p.id = ett.venue_id WHERE e.id = '+id+' AND et.id_language = '+settings.id_lang+' GROUP BY e.id';    
     } else {
-        var tmp_query = 'SELECT zp.*, zpt.title, zcg.id_group FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id WHERE zp.id IN ('+id+') AND zpt.id_language = '+settings.id_lang+' GROUP BY zp.id';
+        var tmp_query = 'SELECT zp.*, zpt.title, zcg.id_group, zp.coord_x, zp.coord_y FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id WHERE zp.id IN ('+id+') AND zpt.id_language = '+settings.id_lang+' GROUP BY zp.id';
     }
     var tmp_callback    = "load_map_poi_data_success";
             
