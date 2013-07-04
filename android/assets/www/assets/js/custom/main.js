@@ -62,6 +62,11 @@ function on_device_ready() {
 		menu_select_lang = 1;
 	} else if (hash == "content") {
 		skip_update = 1;
+	} else if (hash == "load_content") {
+		$.getScript('./assets/js/custom/trips.js', function () {
+			skip_update = 1;
+			load_trip_content(767, 'fade', true, 0);
+	    });	
 	} else {
 		navigator.splashscreen.show();
 		skip_update = 0;
