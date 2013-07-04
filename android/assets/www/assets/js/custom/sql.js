@@ -74,8 +74,10 @@ function load_map_poi_coord_success(results) {
     points =  new Array();
 
     var row = results.rows.item(0);
-    var tmp = new Array(row.coord_x, row.coord_y, 0, row.id);
-    points.push(tmp);
+    if (row != undefined) {
+    	var tmp = new Array(row.coord_x, row.coord_y, 0, row.id);
+    	points.push(tmp);
+    }
 
     //current location -- to preberemo iz gsm -- je pofejkan zarad tega ker se drgac ne vidi na karti //me ni v LJ
     //tmp = new Array('462704.999999999941792', '104070.000000000000000', 1, 0);

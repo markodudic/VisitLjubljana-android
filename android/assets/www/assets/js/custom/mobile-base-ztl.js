@@ -5,6 +5,13 @@ var apiKey = "AqTGBsziZHIJYYxgivLBf0hVdrAk9mWO5cQcb8Yux8sW5M8c8opEC2lZqKR1ZZXf";
 // initialize map when page ready
 var map;
 
+//bbox ljubljana
+var lon0 = 14.434;
+var lat0 = 46;
+var lon1 = 14.587;
+var lat1 = 46.1;
+var extent = new OpenLayers.Bounds();
+
 var lat=46.052327;
 var lon=14.506416;
 var zoom=13;
@@ -83,6 +90,11 @@ var init = function (onSelectFeatureFunction) {
 
     get_poi_data();
 
+    var lonLat0 = new OpenLayers.LonLat(lon0, lat0).transform(new OpenLayers.Projection("EPSG:4326"), new OpenLayers.Projection("EPSG:900913"));
+    var lonLat1 = new OpenLayers.LonLat(lon1, lat1).transform(new OpenLayers.Projection("EPSG:4326"), new OpenLayers.Projection("EPSG:900913"));
+    extent.extend(lonLat0);
+    extent.extend(lonLat1);
+    
     var vector = new OpenLayers.Layer.Vector('vector');
     Proj4js.defs["EPSG:900913"]= "+title=GoogleMercator +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs";
     Proj4js.defs["EPSG:31469"] = "+proj=tmerc +lat_0=0 +lon_0=15 +k=1 +x_0=5500000 +y_0=0 +ellps=bessel +datum=potsdam +units=m +no_defs";
@@ -143,6 +155,8 @@ var init = function (onSelectFeatureFunction) {
         }
     });*/
     
+
+
     map = new OpenLayers.Map({
         div: "map",
         theme: null,
@@ -162,18 +176,20 @@ var init = function (onSelectFeatureFunction) {
             sprintersLayer
         ],
  
-        units: 'm'
+        units: 'm',
+        
+        restrictedExtent: extent
     });
 
     
-    var layer_poi = new OpenLayers.Layer.OSM("Local Tiles", "assets/map/tiles/${z}/${x}/${y}.png", 
+    var layer_tiles = new OpenLayers.Layer.OSM("Local Tiles", "assets/map/tiles/${z}/${x}/${y}.png", 
         {zoomOffset:13,
         resolutions: [19.1092570678711,9.55462853393555,4.77731426696777,2.38865713348389,1.19432856674194], 
         alpha: true, 
         isBaseLayer: true}
     );
 
-    map.addLayer(layer_poi);
+    map.addLayer(layer_tiles);
 
     var click = new OpenLayers.Control.Click();
     map.addControl(click);
