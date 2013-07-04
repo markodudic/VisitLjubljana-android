@@ -19,6 +19,9 @@ var swipe_dir 	  = "";
 var backstep	  = 0;
 
 //voice guide
+var media_status  = 0;
+var media_opened  = 0;
+//var media_poi_id  = 0;
 var voice_guide   = 0;
 
 //history
@@ -111,7 +114,7 @@ function swipe_left_handler() {
 			
 			current = items[j]['id'];
 			
-			save_swipe_history(trips.items[j]['id'], true);
+			//save_swipe_history(trips.items[j]['id'], true);
 
 			if (swipe_group == 1) {
 				load_page(template_lang+'trip.html', 'div_trip', trips.items[j], 'slide', false);
@@ -147,7 +150,7 @@ function swipe_right_handler() {
 			
 			current = items[j]['id'];
 
-			save_swipe_history(trips.items[j]['id'], true);
+			//save_swipe_history(trips.items[j]['id'], true);
 
 			if (swipe_group == 1) {
 				load_page(template_lang+'trip.html', 'div_trip', trips.items[j], 'slide', true);
@@ -165,9 +168,8 @@ function swipe_right_handler() {
 	}
 }
 
+/*
 function save_swipe_history(index, direction) {
-	/*
-
 	if (direction == true) {
 		direction = false;
 	} else {
@@ -176,9 +178,9 @@ function save_swipe_history(index, direction) {
 
 	var history_string = "fun--load_trip_content--"+index+"__slide__"+direction;
 	add_to_history(history_string);
-	*/
+	
 }
-
+*/
 
 function load_page(template, div, data, transition, reverse) {
 	if (footer == "") {
@@ -287,6 +289,9 @@ function load_page(template, div, data, transition, reverse) {
 
 			html = html.replace('[[[ztl_footer]]]', footer);
 
+
+
+			/*
 			if (div == "main_menu") {
 				if (current_div != "main_menu") {
 					$('body').append(html);
@@ -294,12 +299,14 @@ function load_page(template, div, data, transition, reverse) {
 			} else {
 				$('body').append(html);
 			}
+			*/
 
-			$('.icon_'+menu_icon).attr("src","assets/css/ztl_images/icon_"+menu_icon+"_red.png");
+			
 
 			if (swipe == 1) {
-				if (div != "main_menu") {
+				$('body').append(html);
 
+				if (div != "main_menu") {
 					var ts_div = "";
 					if (div == 'div_trip') {
 						ts_div 		= div+"_"+data['id'];
@@ -334,6 +341,14 @@ function load_page(template, div, data, transition, reverse) {
 				}
 			}
 
+			if (swipe == 1) {
+				animate_div(div+extra_div_id, transition, reverse);
+			} else {
+				$('body').html(html);
+			}
+
+			$('.icon_'+menu_icon).attr("src","assets/css/ztl_images/icon_"+menu_icon+"_red.png");
+
 			//ce so karte inicializiram skripto
 			if (div == "show_map") {
 				show_map();
@@ -346,8 +361,7 @@ function load_page(template, div, data, transition, reverse) {
 			pOld = new Proj4js.Point(0,0);
 			navigator.geolocation.getCurrentPosition(onSuccess_gps, onError_gps);
 			
-			animate_div(div+extra_div_id, transition, reverse);
-
+			
 			current_div = div+extra_div_id;
 		}
 	});
@@ -472,11 +486,11 @@ function dprun(t) {
 			
 			hiddenField.val(Math.round(date_obj.getTime()/1000));
 			currentField.blur();
-			console.log(hiddenField.val());
 		}
 	);	
 }
 
+/*
 function play_location_sound() {
 	swipe = 0;
 	
@@ -494,7 +508,7 @@ function play_location_sound() {
 		});
 	}
 }
-
+*/
 
 function load_voice_guide(save_history) {
 	if (save_history == 1)  {

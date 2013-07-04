@@ -2,8 +2,6 @@ var current_position = 0;
 var tmp_pos 		 = 0;
 
 var media_timer;
-var media_status = 0;
-
 var canvas      = document.getElementById('myCanvas');
 var context     = canvas.getContext('2d');
 
@@ -28,9 +26,8 @@ context.stroke();
 context.lineWidth   = 15;
 context.strokeStyle = '#ed1b24';
 
-var media_koef = media_length/100;
-
-var current = 0;
+var media_koef 	= media_length/100;
+var current 	= 0;
 
 function animate() {
   context.beginPath();

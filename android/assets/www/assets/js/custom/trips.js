@@ -1,3 +1,4 @@
+/*
 var sound_file 	= "";
 var trip_id 	= 0;
 swipe 			= 0;
@@ -28,9 +29,5 @@ function play_voice_guide(id) {
 	$.getScript('./assets/js/custom/media_player_animation.js', function () {
 		load_media_file(sound_file);
 	});
-}
-/*
-function play_sound() {
-	console.log('play_sound');
 }
 */
