@@ -16,11 +16,20 @@ function onError_gps(error) {
 	console.log("error");
 }
 
+//ljubljana BBox
+var x0 = 456695;
+var y0 = 96384;
+var x1 = 467803;
+var y1 = 104103;
+
+
 function onSuccess_gps(position) {
 	if (position==undefined) return;
-
-    var p = new Proj4js.Point(position.coords.longitude, position.coords.latitude); 
-    Proj4js.transform(source, dest, p);  
+	var p = new Proj4js.Point(position.coords.longitude, position.coords.latitude); 
+    Proj4js.transform(source, dest, p); 
+    
+    //current location
+    current_position_xy = new Array(p.x, p.y);
     
 	//gremo crez vse elemente na pregledu, ki imajo kooridinate
     if ((Math.abs(p.x - pOld.x) > minDistance) || (Math.abs(p.y - pOld.y) > minDistance)) {
@@ -29,7 +38,13 @@ function onSuccess_gps(position) {
 		   var geo_stuff = $(this).val().split("#");
 		   var px=p.x-correctionX;
 	       var py=p.y-correctionY;
-	       if (geo_stuff[1] != "0" && geo_stuff[2] != "0" && geo_stuff[1] != "" && geo_stuff[2] != "" && geo_stuff[1] != undefined  && geo_stuff[2] != undefined ) {
+	       console.log("GEO="+geo_stuff[1]+":"+geo_stuff[2]);
+	       var bbox = (geo_stuff[1] > x0) && (geo_stuff[1] < x1) && (geo_stuff[2] > y0) && (geo_stuff[2] < y1);
+	       console.log("bbox="+bbox);
+	       if (geo_stuff[1] != "0" && geo_stuff[2] != "0" && 
+	    	   geo_stuff[1] != "" && geo_stuff[2] != "" && 
+	    	   geo_stuff[1] != undefined  && geo_stuff[2] != undefined &&
+	    	   bbox) {
 	    	   $("div.ztl_img_distance_container").show();
 	    	   $("div#map_button").attr('class','ztl_red_button ztl_item_left_button');;
 	    	   $("div#ztl_distance_value_"+geo_stuff[0]).html(lineDistance(px, py, geo_stuff[1], geo_stuff[2])+" km");

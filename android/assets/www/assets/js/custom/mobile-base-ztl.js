@@ -8,8 +8,10 @@ var map;
 var lat=46.052327;
 var lon=14.506416;
 var zoom=13;
-var correctionX = 4999750;
-var correctionY = 5000550;
+var correctionX = 4999650;
+var correctionY = 5000450;
+var myLocationCorrectionX = -100;
+var myLocationCorrectionY = -50;
 
 var points          = new Array();
 var toltip_visible  = 0;
@@ -17,13 +19,13 @@ var poi_data        = null;
 var xy              = new Array();
 
 //current position
-var current_position_xy = new Array('462704.999999999941792', '104070.000000000000000');
+var current_position_xy;
 
 document.addEventListener("deviceready", on_device_ready, false);
 function on_device_ready() {
     document.addEventListener("backbutton", back_to_content, true);
     pOld = new Proj4js.Point(0,0);
-    //init_gps();
+    init_gps();
 
 
     add_to_history("map.html");
@@ -66,15 +68,22 @@ var init = function (onSelectFeatureFunction) {
     db = window.sqlitePlugin.openDatabase("Database", "1.0", "ztl", -1);
 
     $("#my_location").live('click', function(){
+        source = new Proj4js.Proj('EPSG:31469');
+        dest = new Proj4js.Proj('EPSG:900913');
+        
         $(".txt_popup").hide();
-        var center = transform(parseFloat(current_position_xy[0])+correctionX, parseFloat(current_position_xy[1])+correctionY);
+        
+        var center = transform(parseFloat(current_position_xy[0])+myLocationCorrectionX, parseFloat(current_position_xy[1])+myLocationCorrectionY);
         var lonlat = new OpenLayers.LonLat(center.lon, center.lat); 
-
+        
+        sprintersLayer_my_pos.addFeatures(getFeaturesMyLocation(center.lon, center.lat));
+        
         map.panTo(lonlat);
     });
 
     get_poi_data();
 
+    var vector = new OpenLayers.Layer.Vector('vector');
     Proj4js.defs["EPSG:900913"]= "+title=GoogleMercator +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs";
     Proj4js.defs["EPSG:31469"] = "+proj=tmerc +lat_0=0 +lon_0=15 +k=1 +x_0=5500000 +y_0=0 +ellps=bessel +datum=potsdam +units=m +no_defs";
     source = new Proj4js.Proj('EPSG:31469');
@@ -89,8 +98,6 @@ var init = function (onSelectFeatureFunction) {
         graphicXOffset:-8,
         graphicYOffset: -18
     })
-
-
 
     
     var styleMap_my_pos = new OpenLayers.StyleMap({
@@ -126,14 +133,15 @@ var init = function (onSelectFeatureFunction) {
     var selectControl = new OpenLayers.Control.SelectFeature(sprintersLayer, {
         autoActivate:true,
         onSelect: onSelectFeatureFunction});
-    var geolocate = new OpenLayers.Control.Geolocate({
+    
+    /*var geolocate = new OpenLayers.Control.Geolocate({
         id: 'locate-control',
         geolocationOptions: {
             enableHighAccuracy: false,
             maximumAge: 0,
             timeout: 7000
         }
-    });
+    });*/
     
     map = new OpenLayers.Map({
         div: "map",
@@ -145,19 +153,19 @@ var init = function (onSelectFeatureFunction) {
                     enableKinetic: true
                 }
             }),
-            geolocate,
+            //geolocate,
             selectControl
         ],
 
         layers: [
             sprintersLayer_my_pos,
             sprintersLayer
-            
         ],
  
         units: 'm'
     });
 
+    
     var layer_poi = new OpenLayers.Layer.OSM("Local Tiles", "assets/map/tiles/${z}/${x}/${y}.png", 
         {zoomOffset:13,
         resolutions: [19.1092570678711,9.55462853393555,4.77731426696777,2.38865713348389,1.19432856674194], 
@@ -172,12 +180,12 @@ var init = function (onSelectFeatureFunction) {
     click.activate();
 
     if( ! map.getCenter() ){
-        var lonLat = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
+    	var lonLat = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
         map.setCenter (lonLat, zoom);
     }
 
     
-    var style = {
+    /*var style = {
         fillOpacity: 0.1,
         fillColor: '#000',
         strokeColor: '#f00',
@@ -185,7 +193,8 @@ var init = function (onSelectFeatureFunction) {
     };
     
     geolocate.events.register("locationupdated", this, function(e) {
-        vector.removeAllFeatures();
+    	console.log("GEO LOCATE UPDATE");
+    	vector.removeAllFeatures();
         vector.addFeatures([
             new OpenLayers.Feature.Vector(
                 e.point,
@@ -210,18 +219,18 @@ var init = function (onSelectFeatureFunction) {
             )
         ]);
         map.zoomToExtent(vector.getDataExtent());
-    });
+    });*/
     
     function getFeatures(type) {
 
         var features = new Array();
-
+        
         for (var i=0;i<points.length;i++) {
            if (points[i][2] == type) {
                 //na koordinatePOI-ja iz baze se doda 5.000.000 zato da bo v projekciji GK zona 5 oz. EPSG:31469    
                 //ne vem zakaj ampak koordinate po transformaciji strizejo za -350 in 550. GK koordinate so ok.
-                var point = transform (parseFloat(points[i][0])+correctionX, parseFloat(points[i][1])+correctionY);
-
+        	   get_poi_data
+        	    var point = transform (parseFloat(points[i][0])+correctionX, parseFloat(points[i][1])+correctionY);
                 var feature = {"geometry": {"type": "Point", "coordinates": [point.lon, point.lat]}}
                 features.push(feature);
             }
@@ -237,11 +246,28 @@ var init = function (onSelectFeatureFunction) {
         return reader.read(features);
     }
 
+    function getFeaturesMyLocation(lon, lat) {
+
+        var features = new Array();
+
+        var feature = {"geometry": {"type": "Point", "coordinates": [lon, lat]}}
+        features.push(feature);
+
+        var features = {
+            "type": "FeatureCollection",
+            "features": features
+        };
+
+        var reader = new OpenLayers.Format.GeoJSON();
+
+        return reader.read(features);
+    }
+    
     function transform (lon, lat) {
-        var p = new Proj4js.Point(lon, lat); 
-        Proj4js.transform(source, dest, p);  
+    	var p = new Proj4js.Point(lon, lat); 
+        Proj4js.transform(source, dest, p); 
         var point = new Object();
-        point["lat"] = p.y;
+    	point["lat"] = p.y;
         point["lon"] = p.x;
         return point;
     }
