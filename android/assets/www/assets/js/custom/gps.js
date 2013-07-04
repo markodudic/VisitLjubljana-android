@@ -17,11 +17,10 @@ function onError_gps(error) {
 }
 
 //ljubljana BBox
-var x0 = 456695;
-var y0 = 96384;
-var x1 = 467803;
-var y1 = 104103;
-
+var x0 = 456516;
+var y0 = 95835;
+var x1 = 467838;
+var y1 = 104993;
 
 function onSuccess_gps(position) {
 	if (position==undefined) return;
@@ -38,9 +37,7 @@ function onSuccess_gps(position) {
 		   var geo_stuff = $(this).val().split("#");
 		   var px=p.x-correctionX;
 	       var py=p.y-correctionY;
-	       console.log("GEO="+geo_stuff[1]+":"+geo_stuff[2]);
 	       var bbox = (geo_stuff[1] > x0) && (geo_stuff[1] < x1) && (geo_stuff[2] > y0) && (geo_stuff[2] < y1);
-	       console.log("bbox="+bbox);
 	       if (geo_stuff[1] != "0" && geo_stuff[2] != "0" && 
 	    	   geo_stuff[1] != "" && geo_stuff[2] != "" && 
 	    	   geo_stuff[1] != undefined  && geo_stuff[2] != undefined &&
