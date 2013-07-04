@@ -388,12 +388,12 @@ div.poi_address {
 
 .popup_left {
     float:left;
-    width:60%;   
+    width:70%;   
 }
 
 .popup_right {
     float:right;
-    width:40%;
+    width:30%;
 }
 
 .event_date_holder {

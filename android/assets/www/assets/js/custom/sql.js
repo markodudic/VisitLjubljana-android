@@ -48,7 +48,7 @@ function load_pois_success(results) {
 
 //nalozi poi
 function load_poi_success(results) {
-    var res = {};
+	var res = {};
     res.items = [];
     	
     //pofejkam dolzino komada
@@ -75,7 +75,7 @@ function load_map_poi_coord_success(results) {
 
     var row = results.rows.item(0);
     if (row != undefined) {
-    	var tmp = new Array(row.coord_x, row.coord_y, 0, row.id);
+    	var tmp = new Array(row.coord_x, row.coord_y, 0, row.id, row.type);
     	points.push(tmp);
     }
 

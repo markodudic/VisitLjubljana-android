@@ -245,14 +245,14 @@ var init = function (onSelectFeatureFunction) {
            if (points[i][2] == type) {
                 //na koordinatePOI-ja iz baze se doda 5.000.000 zato da bo v projekciji GK zona 5 oz. EPSG:31469    
                 //ne vem zakaj ampak koordinate po transformaciji strizejo za -350 in 550. GK koordinate so ok.
-        	   console.log("ID="+points[i][3]);
+        	    console.log("ID="+points[i][3]);
         	    var point = transform (parseFloat(points[i][0])+correctionX, parseFloat(points[i][1])+correctionY);
                 //var feature = {"geometry": {"type": "Point", "coordinates": [point.lon, point.lat]},
                 //				"attributes": {"id": points[i][3]},
                 //				"fid": points[i][3]}
                 //features.push(feature);
                 
-                var attributes = {id: points[i][3]};
+                var attributes = {id: points[i][3], type: points[i][4]};
 
                 feature = new OpenLayers.Feature.Vector(new OpenLayers.Geometry.Point(point.lon, point.lat), attributes);
                 features.push(feature);
@@ -298,16 +298,16 @@ var init = function (onSelectFeatureFunction) {
     
     function onFeatureSelect(evt) {
         var feature = evt.feature;
-        console.log("FEAUTER11="+feature.attributes.id);
         
-        load_trip_content(feature.attributes.id);
-        console.log("x="+poi_data.coord_x);
-        console.log("y="+poi_data.coord_y);
-
+        load_content(feature.attributes.id);
+        
         $("#ztl_cord").attr("name", "ztl_cord_"+feature.attributes.id);
         $("#ztl_cord").attr("value", feature.attributes.id+"#"+poi_data.coord_x+"#"+poi_data.coord_y);
         $("#poi_title").html(poi_data.title.toUpperCase());
         $("#poi_address").html(poi_data.address);
+        $(".map_info").click(function() {
+       		load_page_content(feature.attributes.id, feature.attributes.type);        		
+        }); 
 
         $(".txt_popup").show();
         toltip_visible = 1;
@@ -328,9 +328,9 @@ function get_poi_data() {
     }
 
     if (from_view == "event") {
-       var tmp_query = 'SELECT e.id, p.coord_x, p.coord_y FROM ztl_event e LEFT JOIN ztl_event_translation et ON et.id_event = e.id LEFT JOIN  ztl_event_timetable ett ON ett.id_event = e.id LEFT JOIN ztl_poi p ON p.id = ett.venue_id WHERE e.id = '+hash+' AND et.id_language = '+settings.id_lang+' GROUP BY e.id';
+       var tmp_query = 'SELECT 0 as type, e.id, p.coord_x, p.coord_y FROM ztl_event e LEFT JOIN ztl_event_translation et ON et.id_event = e.id LEFT JOIN  ztl_event_timetable ett ON ett.id_event = e.id LEFT JOIN ztl_poi p ON p.id = ett.venue_id WHERE e.id = '+hash+' AND et.id_language = '+settings.id_lang+' GROUP BY e.id';
     } else {
-       var tmp_query = 'SELECT zp.id, zp.coord_x, zp.coord_y FROM ztl_poi zp WHERE zp.id = '+hash;
+       var tmp_query = 'SELECT 1 as type, zp.id, zp.coord_x, zp.coord_y FROM ztl_poi zp WHERE zp.id = '+hash;
     }
 
     var tmp_callback = "load_map_poi_coord_success";
@@ -339,11 +339,11 @@ function get_poi_data() {
 }
 
 
-function load_trip_content(id) {
+function load_content(id) {
     if (from_view == "event") {
-        var tmp_query = 'SELECT  e.id, et.title, p.address, p.post_number, p.post, p.coord_x, p.coord_y  FROM ztl_event e LEFT JOIN ztl_event_translation et ON et.id_event = e.id LEFT JOIN  ztl_event_timetable ett ON ett.id_event = e.id LEFT JOIN ztl_poi p ON p.id = ett.venue_id WHERE e.id = '+id+' AND et.id_language = '+settings.id_lang+' GROUP BY e.id';    
+        var tmp_query = 'SELECT 0 as type, e.id, et.title, p.address, p.post_number, p.post, p.coord_x, p.coord_y  FROM ztl_event e LEFT JOIN ztl_event_translation et ON et.id_event = e.id LEFT JOIN  ztl_event_timetable ett ON ett.id_event = e.id LEFT JOIN ztl_poi p ON p.id = ett.venue_id WHERE e.id = '+id+' AND et.id_language = '+settings.id_lang+' GROUP BY e.id';    
     } else {
-        var tmp_query = 'SELECT zp.*, zpt.title, zcg.id_group, zp.coord_x, zp.coord_y FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id WHERE zp.id IN ('+id+') AND zpt.id_language = '+settings.id_lang+' GROUP BY zp.id';
+        var tmp_query = 'SELECT 1 as type, zp.*, zpt.title, zcg.id_group, zp.coord_x, zp.coord_y FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id WHERE zp.id IN ('+id+') AND zpt.id_language = '+settings.id_lang+' GROUP BY zp.id';
     }
     var tmp_callback    = "load_map_poi_data_success";
             
@@ -362,6 +362,9 @@ function load_main_screen() {
     window.location.href = "index.html#content";
 }
 
+function load_page_content(id, type) {
+    window.location.href = "index.html#load_content";
+}
 
 function load_lang_settings() {
     window.location.href = "index.html#lang_settings";
