@@ -239,8 +239,14 @@ function info_success(results) {
     	if (tmp.length > max_dolzina_title) {
     		results.rows.item(i).title = tmp.substring(0,max_dolzina_title)+"...";
     	}
+    	
+    	//pofejkam image -- ko bo v bazi se zbrise
+    	results.rows.item(i).image = "file:///storage/emulated/0/Android/data/com.vigred.ztl/fmpgtmp_8fwmuh.jpeg";
+
     	res.items[i] = results.rows.item(i);
     }
+
+    console.log("drek --- " + JSON.stringify(res));
 
     trips = res;
     load_page(template_lang+'infos.html', 'infos', res, 'fade', false);
@@ -251,6 +257,9 @@ function load_info_success(results) {
 	var res = {};
     res.item = [];
 
+    //pofejkam -- pol se sam zbrise
+    results.rows.item(0).image = "file:///storage/emulated/0/Android/data/com.vigred.ztl/fmpgtmp_8fwmuh.jpeg";
+    
 	res.item = results.rows.item(0);
 
 	if (swipe_dir == "left") {
