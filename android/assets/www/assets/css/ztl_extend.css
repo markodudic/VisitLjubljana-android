@@ -421,6 +421,29 @@ div.poi_address {
     color:#ffffff;
 }
 
+#plus{
+	width:50px;
+	content:url('../map/images/map_plus.png');
+	border-radius:2px;
+}
+
+#minus{
+	width:50px;
+	margin-left:-5px;
+	content:url('../map/images/map_minus.png');
+	border-radius:2px;
+	border-left-style: groove; 
+	border-left-color: black; 
+	border-left-width: 2px;
+}
+
+#my_location{
+	width:50px;
+	margin-left:5px;
+	content:url('../map/images/map_location.png');
+	border-radius:2px;
+}
+
 .ui-slider { position: relative; text-align: left; }
 .ui-slider .ui-slider-handle { position: absolute; z-index: 2; width: 1.2em; height: 1.2em; cursor: default; background-color:red;}
 .ui-slider .ui-slider-range { position: absolute; z-index: 1; font-size: .7em; display: block; border: 0; background-position: 0 0; background-color:red; color:red; border:5px solid red;}
