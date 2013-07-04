@@ -50,21 +50,27 @@
 		<div data-role="content">
 
 			<div id="map" style="z-index:0"></div>
-			<div class="txt_popup">
+				<div class="txt_popup">
+					<img class="img_popup">
 					<div class="popup_left">
-						<div id="poi_title"></div>
+						<div id="poi_title" style="font-size:20px;"></div>
 						<div id="poi_address"></div>
 					</div>
 					<div class="popup_right">
-						<div id="poi_distance"><div class="ztl_distance ztl_distance_poi"><div id="ztl_distance_value_{{id}}"></div>5km</div></div>
-						<input type="hidden" name="ztl_cord_{{id}}" value="{{id}}#{{coord_x}}#{{coord_y}}">
-						
-						<div id="poi_icons">
-							<br><br>
-							<img src="assets/map/images/map_info.png">
-							&nbsp;&nbsp;&nbsp;&nbsp;
-							<img src="assets/map/images/map_direction.png"></div>
+						<div id="ztl_img_distance_container">
+							<div class="ztl_distance ztl_distance_poi">
+								<div id="ztl_distance_value_{{id}}">
+							</div>
+						</div>
 					</div>
+					<input type="hidden" id="ztl_cord" name="ztl_cord_{{id}}" value="{{id}}#{{coord_x}}#{{coord_y}}">
+	
+								
+					<div id="poi_icons">
+						<img class="map_info">
+						<img class="map_direction">
+					</div>
+				</div>
 			</div>					
 			<div id="navigation" style="background-color: transparent;">
 				<img id="plus" style="width:50px;" src="assets/map/images/map_plus.png">
