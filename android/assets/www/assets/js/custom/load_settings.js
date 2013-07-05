@@ -60,6 +60,8 @@ function load_pois(id, trips_menu_id, save_history) {
 
 //tmp 
 function load_trip_content(id, transition, reverse, save_history) {
+	console.log("load trip content");
+
 	if (save_history == 1)  {
 		var history_string = "fun--load_trip_content--"+id+"__"+transition+"__"+reverse;
 		add_to_history(history_string);
