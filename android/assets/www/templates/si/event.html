@@ -1,5 +1,5 @@
 <script id="tpl_event" type="text/html">
-<div data-role="page" id="event_{{item.id}}" data-theme="a" class="ztl_remove_from_page" data-rockncoder-jspage="event" style="overflow:hidden;">
+<div id="event_{{item.id}}" class="ztl_remove_from_page" style="overflow:hidden;">
 	<div class="header">
 		<div class="header_placeholder">
 			<div class="red_line"></div>
@@ -46,7 +46,7 @@
 		</div>
 	</div>
 	
-	<div data-role="content" class="ztl_content ztl_content_extra">
+	<div class="ztl_content ztl_content_extra">
 	
 	<div id="verticalWrapper">
 	<div id="verticalScroller">
@@ -74,7 +74,7 @@
 			<div style="clear:both;"></div>
 			<div class="ztl_item_content_padding">
 				<div class="ztl_item_buttons">
-					<a href="map.html#{{item.id}}__event" id="map_href" data-role="link" data-ajax="false" style="text-decoration:none;">
+					<a href="map.html#{{item.id}}__event" id="map_href" data-ajax="false" style="text-decoration:none;">
 						<div id="map_button" class="ztl_red_button ztl_item_left_button">{{map_button}}</div>
 					</a>
 					<a href="#" style="text-decoration:none;">
