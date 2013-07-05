@@ -14,13 +14,12 @@ function event_filter_toggle() {
 	$(".header").toggle();
 	$(".footer").toggle();
 
-	/*
 	if ($('.event_filter').is(':visible')) {
-		console.log("dogodki --- event_filter is visible");
+		swipe = 0;
 	} else {
-		console.log("dogodki --- event_filter is hidden");
+		swipe = 1;
 	}
-	*/
+
 }
 
 function load_event_type() {

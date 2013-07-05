@@ -6,11 +6,44 @@
 			<div class="header_space"></div>
 			<div onClick="load_events()"><img class="header_back"></div>
 			<div class="header_title" onClick="load_events()">{{item.title}}</div>
-			<div class="header_dots"></div>
+			<div class="header_dots" onClick="event_filter_toggle();"></div>
 			<div style="clear:both;"></div>
 			<div class="header_space"></div>
 		</div>
 		<div class="header_shadow"></div>
+	</div>
+	
+	<div class="event_filter">
+		<div class="ztl_item_details event_filter_content">
+			<div style="text-align:right; padding-top:20px; padding-right:25px;" onClick="event_filter_toggle();">
+				<img src="assets/css/ztl_images/media_player_close.png">
+			</div>
+			<div style="padding-top:50px;">
+				<div class="ztl_item_details_title">PRIKAŽI PRIREDITVE</div>
+				<div class="grey_line set_filter_line" style="margin-top:5px; margin-bottom:40px;"></div>
+				<div class="search_dropdown_container">
+					<select id="event_type" class="ztl_event_type_select">
+						<option value="0">Izberi kategorijo</option>
+						{{#categories}}
+							<option value="{{id}}">{{name}}</option>
+						{{/categories}}
+					</select>
+				</div>
+				<div style="padding-bottom:15px; padding-top:15px;">
+					<div class="event_search_filds_left">
+						<input type="text" id="ztl_trip_filter_date_from" class="ztl_event_search_field" onClick="dprun(this)" >
+						<input type="hidden" id="ztl_trip_filter_date_from_hidden">
+					</div>
+					<div class="event_search_filds_right">
+						<input type="text" id="ztl_trip_filter_date_to" class="ztl_event_search_field" onFocus="dprun(this)" >
+						<input type="hidden" id="ztl_trip_filter_date_to_hidden">
+					</div>
+				</div>
+				<div class="event_search_button_holder">
+					<div class="ztl_red_button ztl_event_search_button" onClick="filter_events();">POTRDI</div>
+				</div>
+			</div>
+		</div>
 	</div>
 	
 	<div data-role="content" class="ztl_content ztl_content_extra">

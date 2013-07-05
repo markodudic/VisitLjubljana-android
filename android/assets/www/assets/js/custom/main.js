@@ -241,6 +241,7 @@ function load_page(template, div, data, transition, reverse) {
 			}
 			 
 			if (div == 'event') {
+				data.categories = event_type;
 				extra_div_id = "_"+data.item.id;
 				if (data.item.title.length>max_dolzina_naslov) {
 					data.item.title=data.item.title.substring(0,max_dolzina_naslov)+"...";

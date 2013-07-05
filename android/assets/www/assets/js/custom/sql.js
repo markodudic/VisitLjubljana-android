@@ -129,6 +129,9 @@ function events_success(results) {
 
     var data 			= {};
     
+
+    console.log("top items --- "+JSON.stringify(res.top_items));
+
 	data.top_events_0 	= res.top_items[0];
 	data.top_events_1 	= res.top_items[1];
 	data.top_events_2 	= res.top_items[2];

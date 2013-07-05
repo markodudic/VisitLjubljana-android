@@ -213,19 +213,21 @@ function handle_event_deleted(data) {
 }
 
 function handle_event(data) {
-	image_table = "ztl_event"
 	db.transaction(function(tx) {
 		var sql 		= "";
 		var tmp_image	= "";
 		for (var i = 0; i < data.length; i++) {
+			if (data[i].featured == true) {
+				console.log("top items --- " + JSON.stringify(data[i]));
+			}
+
 			tmp_image = "";
 			if (data[i].images[0] != undefined) {
 				tmp_image = data[i].images[0];
 			}
 
 			//console.log(JSON.stringify(data[i]));
-			sql = "INSERT OR REPLACE INTO ztl_event (id, image, featured, record_status) VALUES ("+data[i].id+", '"+tmp_image+"', '"+data[i].featured+"' ,1)";
-			//console.log(sql);
+			sql = "INSERT OR REPLACE INTO ztl_event (id, image, featured, record_status) VALUES ("+data[i].id+", '"+tmp_image+"', '"+data[i].featured+"' ,1)";		
 			tx.executeSql(sql, [], function(tx, res) {});
 			sql = "INSERT OR REPLACE INTO ztl_event_translation (id_event, id_language, title, intro, description) VALUES ("+data[i].id+", "+settings.id_lang+", '"+addslashes(data[i].title)+"', '"+addslashes(data[i].intro)+"', '"+addslashes(data[i].description)+"')";
 			//console.log(sql);
@@ -432,26 +434,29 @@ function readFiles() {
 	        	var url      = res.rows.item(i).image;
 	        	var filename = url.split("/").slice(-1)[0];
 
-	        	//lokalno ime
-    			var dlPath = DATADIR.fullPath+"/"+filename;
-    			
-				//shranemo novo pot datoteke v bazo, neglede na to ali obstaja ali ne
-    			if (filename != "") {
-	    			var updt_sql1 = 'update ztl_event set image = "'+dlPath+'" where id='+res.rows.item(i).id+';';
 
-	    			//console.log(updt_sql);
-					tx.executeSql(updt_sql1, [], function(tx, res) {	});	
-				}
-	        	
-	        	//samo nove datoteke
-	        	if (knownfiles.indexOf(filename) == -1) {
-        			var ft = new FileTransfer();
-        			ft.download(url, dlPath, function() {
-        				//console.log("new local file "+dlPath);
-        			}, onFSError);
+	        	if (filename != "") {
+		        	//lokalno ime
+	    			var dlPath = DATADIR.fullPath+"/"+filename;
+	    			
+					//shranemo novo pot datoteke v bazo, neglede na to ali obstaja ali ne
+	    			
+		    			var updt_sql1 = 'update ztl_event set image = "'+dlPath+'" where id='+res.rows.item(i).id+';';
+
+		    			//console.log(updt_sql);
+						tx.executeSql(updt_sql1, [], function(tx, res) {	});	
+					
+		        	
+		        	//samo nove datoteke
+		        	if (knownfiles.indexOf(filename) == -1) {
+	        			var ft = new FileTransfer();
+	        			ft.download(url, dlPath, function() {
+	        				//console.log("new local file "+dlPath);
+	        			}, onFSError);
+	    			}
     			}
 	        }
-	        
+
 	        //validate
 	        /*
 			tx.executeSql('select * from ztl_tour_images;', [], function(tx, res) {
