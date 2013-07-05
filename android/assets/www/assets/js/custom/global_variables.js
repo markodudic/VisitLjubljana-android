@@ -40,6 +40,26 @@ var max_dolzina_naslov = 25;
 var max_dolzina_poi_title = 30;
 var max_dolzina_title = 45;
 
+//bbox ljubljane
+var lon0 = 14.434;
+var lat0 = 46;
+var lon1 = 14.587;
+var lat1 = 46.1;
+var x0 = 456516;
+var y0 = 95835;
+var x1 = 467838;
+var y1 = 104993;
+
+//centar ljubljane
+var lat=46.052327;
+var lon=14.506416;
+var zoom=13;
+
+//korekcije projekcij
+var correctionX = 4999650;
+var correctionY = 5000450;
+var myLocationCorrectionX = -100;
+var myLocationCorrectionY = -50;
 
 //za deploy - ne izpisujejo se komentarji
 /*

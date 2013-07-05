@@ -421,6 +421,11 @@ div.poi_address {
     color:#ffffff;
 }
 
+#navigation {
+	margin-bottom:50px;
+	background-color:#ff0000;
+}
+
 #plus{
 	width:50px;
 	content:url('../map/images/map_plus.png');

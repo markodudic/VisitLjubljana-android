@@ -68,13 +68,17 @@ function load_poi_success(results) {
 
 //map poi
 function load_map_poi_coord_success(results) {
-  
     points =  new Array();
 
-    var row = results.rows.item(0);
-    if (row != undefined) {
-    	var tmp = new Array(row.coord_x, row.coord_y, 0, row.id, row.type);
-    	points.push(tmp);
+    var len = results.rows.length;
+
+    for (var i=0; i<len; i++){
+    	var row = results.rows.item(i);
+    	if (row != undefined) {
+    		if ((row.coord_x > x0) && (row.coord_x < x1) && (row.coord_y > y0) && (row.coord_y < y1)) {
+    			points.push(new Array(row.coord_x, row.coord_y, 0, row.id, row.type));
+    		}
+    	}
     }
 
     //current location -- to preberemo iz gsm -- je pofejkan zarad tega ker se drgac ne vidi na karti //me ni v LJ

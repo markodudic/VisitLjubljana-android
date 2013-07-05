@@ -16,11 +16,7 @@ function onError_gps(error) {
 	console.log("error");
 }
 
-//ljubljana BBox
-var x0 = 456516;
-var y0 = 95835;
-var x1 = 467838;
-var y1 = 104993;
+
 
 function onSuccess_gps(position) {
 	if (position==undefined) return;
@@ -37,16 +33,21 @@ function onSuccess_gps(position) {
 		   var geo_stuff = $(this).val().split("#");
 		   var px=p.x-correctionX;
 	       var py=p.y-correctionY;
-	       var bbox = (geo_stuff[1] > x0) && (geo_stuff[1] < x1) && (geo_stuff[2] > y0) && (geo_stuff[2] < y1);
 	       if (geo_stuff[1] != "0" && geo_stuff[2] != "0" && 
 	    	   geo_stuff[1] != "" && geo_stuff[2] != "" && 
-	    	   geo_stuff[1] != undefined  && geo_stuff[2] != undefined &&
-	    	   bbox) {
+	    	   geo_stuff[1] != undefined  && geo_stuff[2] != undefined) {
 	    	   $("div.ztl_img_distance_container").show();
-	    	   $("div#map_button").attr('class','ztl_red_button ztl_item_left_button');;
 	    	   $("div#ztl_distance_value_"+geo_stuff[0]).html(lineDistance(px, py, geo_stuff[1], geo_stuff[2])+" km");
 	       } else {
 	    	   $("div.ztl_img_distance_container").hide();
+	    	   $("div#map_button").attr('class','ztl_grey_button_map ztl_item_left_button');
+	    	   $("#map_href").removeAttr('href');
+	       }
+	       
+	       var bbox = (geo_stuff[1] > x0) && (geo_stuff[1] < x1) && (geo_stuff[2] > y0) && (geo_stuff[2] < y1);
+	       if (bbox) {
+	    	   $("div#map_button").attr('class','ztl_red_button ztl_item_left_button');;
+	       } else {
 	    	   $("div#map_button").attr('class','ztl_grey_button_map ztl_item_left_button');
 	    	   $("#map_href").removeAttr('href');
 	       }
