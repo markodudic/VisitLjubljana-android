@@ -46,16 +46,16 @@
 				</div>
 			</div>
 			<input type="hidden" name="ztl_cord_{{id}}" value="{{id}}#{{coord_x}}#{{coord_y}}">
-			{{#image}}
-				<div class="ztl_item_details_image">
-					<div class="ztl_details_img_crop">
-						<img class="ztl_details_image" src="./uploads/images/{{image}}">
-					</div>
+			<div class="ztl_item_details_image">
+				<div class="ztl_details_img_crop">
+				{{#image}}
+					<img class="ztl_details_image" src="./uploads/images/{{image}}">
+				{{/image}}
+				{{^image}}
+					<img class="ztl_details_image" src="./uploads/noimage_detail.png">
+				{{/image}}
 				</div>
-			{{/image}}
-			{{^image}}
-				<div style="padding-top:40px;">&nbsp;</div>
-			{{/image}}
+			</div>
 			<div style="clear:both;"></div>
 			<div class="ztl_item_content_padding">
 				<div class="ztl_item_buttons">
