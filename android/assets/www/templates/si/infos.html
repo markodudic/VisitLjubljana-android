@@ -1,5 +1,5 @@
 <script id="tpl_infos" type="text/html">
-<div data-role="page" id="infos" data-theme="a" class="ztl_remove_from_page" data-rockncoder-jspage="infos" style="overflow:hidden;">
+<div id="infos" class="ztl_remove_from_page" style="overflow:hidden;">
 	<div class="header">
 		<div class="header_placeholder">
 			<div class="red_line"></div>
@@ -13,40 +13,31 @@
 		<div class="header_shadow"></div>
 	</div>
 	
-	<div data-role="content" data-theme="a" class="ztl_content">
+	<div class="ztl_content">
 	
 	<div id="verticalWrapper">
 	<div id="verticalScroller">
 	{{#items}}
 		<li class="ztl_list_li">
-			<div class="ztl_list_item" id="ztl_trips_item_{{id}}">
+			<div class="ztl_list_item" id="ztl_trips_item_{{id}}" onClick="load_single_info({{id}}, 1)">
 				<div class="ztl_list_image">
 					<div class="ztl_list_img_crop">
-						<a href="#" onClick="load_single_info({{id}}, 1)" style="text-decoration:none; color:#000000; font-weight:normal;">
-							{{#image}}
-								<img class="ztl_items_image" src="{{image}}">
-							{{/image}}
-							{{^image}}
-								<img class="ztl_items_no_image" src="./uploads/noimage.png">
-							{{/image}}
-						</a>
+						{{#image}}
+							<img class="ztl_items_image" src="{{image}}">
+						{{/image}}
+						{{^image}}
+							<img class="ztl_items_no_image" src="./uploads/noimage.png">
+						{{/image}}
 					</div>
 				</div>
 				<div class="ztl_list_content">
-						<a href="#" onClick="load_single_info({{id}}, 1)" style="text-decoration:none; color:#000000; font-weight:normal;">
-							<div class="ztl_list_header">{{title}}</div>
-						</a>
-						<a href="#" onClick="load_single_info({{id}}, 1)" style="text-decoration:none; color:#000000; font-weight:normal;">
-							<div class="ztl_list_content_text">
-								{{#post}}
-									{{address}}, {{post_number}} {{post}}
-								{{/post}}	
-							</div>
-						</a>
+						<div class="ztl_list_header">{{title}}</div>
+						<div class="ztl_list_content_text">
+							{{#post}}
+								{{address}}, {{post_number}} {{post}}
+							{{/post}}	
+						</div>
 						<div class="ztl_content_info_left"></div>
-						<!-- div class="ztl_star"></div>
-						<div class="ztl_distance"><div id="ztl_distance_value_{{id}}"></div></div>
-						<input type="hidden" name="ztl_cord_{{id}}" value="{{id}}#{{coord_x}}#{{coord_y}}" -->
 				</div>
 			</div>
 			<div style="clear:both;"></div>

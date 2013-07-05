@@ -1,24 +1,24 @@
 <script id="tpl_ztl_settings" type="text/html">
-<div data-role="page" id="ztl_settings" data-theme="a" class="ztl_remove_from_page">
-	<div data-role="header">
+<div id="ztl_settings" class="ztl_remove_from_page">
+	<div>
 		<h1>Nastavitve</h1>
 	</div>
-	<div data-role="content" data-theme="a">	
+	<div>	
 		<div class="ui-grid-solo">
-			<div class="ui-block-a"><button type="v" data-theme="a">MyVisit račun</button></div>
+			<div class="ui-block-a"><button type="v">MyVisit račun</button></div>
 		</div>
 		
 		<div class="ui-grid-a">
 			<div class="ui-block-a">Opomnilnik</div>
 			<div class="ui-block-b">
 				{{#reminder}} 
-				<select onChange="reminder_change();" class="super_slider" name="reminder" id="reminder" data-role="slider">
+				<select onChange="reminder_change();" class="super_slider" name="reminder" id="reminder">
 					<option value="off">Off</option>
 					<option value="on" selected>On</option>
 				</select>
 				{{/reminder}}
 				{{^reminder}} 
-				<select onChange="reminder_change();" class="super_slider" name="reminder" id="reminder" data-role="slider">
+				<select onChange="reminder_change();" class="super_slider" name="reminder" id="reminder">
 					<option value="off" selected>Off</option>
 					<option value="on">On</option>
 				</select>
@@ -27,14 +27,14 @@
 		</div>
 
 		<div class="ui-grid-solo">
-			<div class="ui-block-a"><button type="v" data-theme="a" onClikc="select_language();">Nastavi jezik</button></div>
+			<div class="ui-block-a"><button type="v" onClikc="select_language();">Nastavi jezik</button></div>
 		</div>
 		<div class="ui-grid-solo">
-			<div class="ui-block-a"><button type="v" data-theme="a">Oceni aplikacijo</button></div>
+			<div class="ui-block-a"><button type="v" >Oceni aplikacijo</button></div>
 		</div>
 		
 	</div>
-	<div data-role="footer" class="footer-docs" data-theme="b" data-position="fixed">
+	<div class="footer-docs" data-position="fixed">
 		[[[ztl_footer]]]
 	</div>
 </div>

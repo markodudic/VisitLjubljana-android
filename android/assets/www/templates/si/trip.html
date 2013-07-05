@@ -1,5 +1,5 @@
 <script id="tpl_div_trip" type="text/html">
-<div data-role="page" id="div_trip_{{id}}" data-theme="a" class="ztl_remove_from_page" data-rockncoder-jspage="trip" style="overflow:hidden;">
+<div id="div_trip_{{id}}" class="ztl_remove_from_page" style="overflow:hidden;">
 	<div class="header">
 		<div class="header_placeholder">
 			<div class="red_line"></div>
@@ -27,7 +27,7 @@
 			<div style="width:100%; font-size:30px; text-transform:uppercase; color:#ffffff;"><span class="media_player_time" style="color:#ea1b25;">0:00</span>&nbsp/&nbsp;{{media_duration_string}}</div>
 		</div>
 	</div>
-	<div data-role="content" class="ztl_content ztl_content_extra">
+	<div class="ztl_content ztl_content_extra">
 	
 	<div id="verticalWrapper">
 	<div id="verticalScroller">
@@ -59,7 +59,7 @@
 			<div style="clear:both;"></div>
 			<div class="ztl_item_content_padding">
 				<div class="ztl_item_buttons">
-					<a href="map.html#{{id}}__poi" id="map_href" data-role="link" data-ajax="false" style="text-decoration:none;">
+					<a href="map.html#{{id}}__poi" id="map_href" data-ajax="false" style="text-decoration:none;">
 						<div id="map_button" class="ztl_red_button ztl_item_left_button">{{map_button}}</div>
 					</a>
 					<a href="#" style="text-decoration:none;">
