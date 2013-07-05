@@ -34,6 +34,13 @@ var template_lang 		= 'si/';
 
 var tmp_history = ["fun--load_main_screen--empty"];
 
+
+//text dolzina max
+var max_dolzina_naslov = 25;
+var max_dolzina_poi_title = 30;
+var max_dolzina_title = 45;
+
+
 //za deploy - ne izpisujejo se komentarji
 /*
 var console = {};

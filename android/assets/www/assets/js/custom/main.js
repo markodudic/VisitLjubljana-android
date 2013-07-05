@@ -36,17 +36,21 @@ var skip_update 	 = 0;
 var menu_select_lang = 0;
 var update_running 	 = 0;
 
-//text dolzina max
-var max_dolzina_naslov = 25;
-var max_dolzina_poi_title = 30;
-var max_dolzina_title = 50;
+
 
 document.addEventListener("deviceready", on_device_ready, false);
 
 function on_device_ready() {
+	db 		= window.sqlitePlugin.openDatabase("Database", "1.0", "ztl", -1);
+	pOld 	= new Proj4js.Point(0,0);
+	
+	load_settings();
+	init_gps();
+
 	var hash = window.location.hash;
 	hash = hash.replace(/^.*?#/,'');
-
+	var hash_split = hash.split(";");
+	
 	if (hash == "go_back") {
 		backstep 	= 1;
 		skip_update = 1;
@@ -62,10 +66,15 @@ function on_device_ready() {
 		menu_select_lang = 1;
 	} else if (hash == "content") {
 		skip_update = 1;
-	} else if (hash == "load_content") {
+	} else if (hash_split[0] == "load_content") {
 		$.getScript('./assets/js/custom/trips.js', function () {
 			skip_update = 1;
-			load_trip_content(767, 'fade', true, 0);
+			console.log("STIINGS="+hash_split[2])
+			if (hash_split[2]==0) {
+				load_event(hash_split[1], 0);
+			} else if (hash_split[2]==1) {
+				load_trip_content(hash_split[1], 'fade', true, 0);
+			}
 	    });	
 	} else {
 		navigator.splashscreen.show();
@@ -74,12 +83,6 @@ function on_device_ready() {
 	
 	document.addEventListener("backbutton", go_back, true);
 	
-	db 		= window.sqlitePlugin.openDatabase("Database", "1.0", "ztl", -1);
-	pOld 	= new Proj4js.Point(0,0);
-	
-	
-	load_settings();
-	init_gps();
 
 	//localStorage.clear();
 	if (localStorage.getItem(localStorage.key('first_run')) == null) {
@@ -209,12 +212,15 @@ function load_page(template, div, data, transition, reverse) {
 			var extra_div_id = "";
 
 			if (settings.id_lang!=undefined) {
-				data.map_button 	= map_translation[settings.id_lang];
-				data.guide_button 	= voice_guide_translation_full[settings.id_lang];
-				data.ztl_item_details_title = title_translation[settings.id_lang];
+				data.map_button 				= map_translation[settings.id_lang];
+				data.guide_button 				= voice_guide_translation_full[settings.id_lang];
+				data.ztl_item_details_title 	= title_translation[settings.id_lang];
 				data.ztl_item_details_description = description_translation[settings.id_lang];
-				data.ztl_item_details_venue = venue_translation[settings.id_lang];
-				data.ztl_item_details_price = price_translation[settings.id_lang];
+				data.ztl_item_details_venue 	= venue_translation[settings.id_lang];
+				data.ztl_item_details_price 	= price_translation[settings.id_lang];
+				data.potrdi_button 				= confirm_translation[settings.id_lang];
+				data.events_title 				= events_translation[settings.id_lang];
+				data.default_category 			= default_category_translation[settings.id_lang];
 			}
 		
 			
