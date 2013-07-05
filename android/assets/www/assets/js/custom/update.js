@@ -217,9 +217,6 @@ function handle_event(data) {
 		var sql 		= "";
 		var tmp_image	= "";
 		for (var i = 0; i < data.length; i++) {
-			if (data[i].featured == true) {
-				console.log("top items --- " + JSON.stringify(data[i]));
-			}
 
 			tmp_image = "";
 			if (data[i].images[0] != undefined) {
@@ -227,7 +224,7 @@ function handle_event(data) {
 			}
 
 			//console.log(JSON.stringify(data[i]));
-			sql = "INSERT OR REPLACE INTO ztl_event (id, image, featured, record_status) VALUES ("+data[i].id+", '"+tmp_image+"', '"+data[i].featured+"' ,1)";		
+			sql = "INSERT OR REPLACE INTO ztl_event (id, image, featured, record_status) VALUES ("+data[i].id+", '"+tmp_image+"', '"+data[i].featured+"', 1)";		
 			tx.executeSql(sql, [], function(tx, res) {});
 			sql = "INSERT OR REPLACE INTO ztl_event_translation (id_event, id_language, title, intro, description) VALUES ("+data[i].id+", "+settings.id_lang+", '"+addslashes(data[i].title)+"', '"+addslashes(data[i].intro)+"', '"+addslashes(data[i].description)+"')";
 			//console.log(sql);
@@ -433,7 +430,7 @@ function readFiles() {
 	        for (var i=0; i<res.rows.length; i++) {
 	        	var url      = res.rows.item(i).image;
 	        	var filename = url.split("/").slice(-1)[0];
-
+	        	filename = $.trim(filename);
 
 	        	if (filename != "") {
 		        	//lokalno ime
