@@ -30,7 +30,6 @@ function load_settings() {
 
 
 function load_pois(id, trips_menu_id, save_history) {
-	//tmp 
 	swipe = 0;
 	
 	//shrani v localhost
@@ -50,7 +49,7 @@ function load_pois(id, trips_menu_id, save_history) {
 	} else {
 		group = id;
 		//$.getScript('./assets/js/custom/trips.js', function () {
-			var tmp_query 		= 'SELECT zp.*, zpt.title, zpt.description, zcg.id_group FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id WHERE zcg.id_group = '+group+' AND zpt.id_language = '+settings.id_lang+' AND zp.record_status = 1 GROUP BY zp.id';
+			var tmp_query 		= 'SELECT zp.*, zpt.title, zcg.id_group FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id WHERE zcg.id_group = '+group+' AND zpt.id_language = '+settings.id_lang+' AND zp.record_status = 1 GROUP BY zp.id';
 			var tmp_callback	= "load_pois_success";
 			
 			generate_query(tmp_query, tmp_callback);
@@ -238,9 +237,10 @@ function fail(error) {
 }
 
 function check_updates() {
-	var tmp_query    = "SELECT count(id_event) AS nr FROM ztl_event_translation WHERE id_language = "+settings.id_lang;
+	/*var tmp_query    = "SELECT count(id_event) AS nr FROM ztl_event_translation WHERE id_language = "+settings.id_lang;
     var tmp_callback = "count_ztl_event_success";
-    generate_query(tmp_query, tmp_callback);
+    generate_query(tmp_query, tmp_callback);*/
+    update_db();
 }
 
 function load_settings_page(){

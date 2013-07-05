@@ -33,6 +33,7 @@ function load_pois_success(results) {
     res.items = [];
     var len = results.rows.length;
     var tmp;
+    
     for (var i=0; i<len; i++){
     	//skrajsam dolzino
     	tmp = results.rows.item(i).title;
@@ -41,7 +42,7 @@ function load_pois_success(results) {
     	}
     	res.items[i] = results.rows.item(i);
     }
-
+    
     trips = res;
     load_page(template_lang+'trips.html', 'trips', res, 'fade', false);
 }
