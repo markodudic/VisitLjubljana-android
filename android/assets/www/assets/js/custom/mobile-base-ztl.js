@@ -301,10 +301,18 @@ var init = function (onSelectFeatureFunction) {
         
         load_content(feature.attributes.id);
         
-        $("#ztl_cord").attr("name", "ztl_cord_"+feature.attributes.id);
-        $("#ztl_cord").attr("value", feature.attributes.id+"#"+poi_data.coord_x+"#"+poi_data.coord_y);
+        $("#ztl_cord").val(feature.attributes.id+"#"+poi_data.coord_x+"#"+poi_data.coord_y);
+        //zracunam razdaljo
+        $("#ztl_distance_value").html(lineDistance( poi_data.coord_x, poi_data.coord_y, current_position_xy[0]-correctionX+myLocationCorrectionX, current_position_xy[1]-correctionY+myLocationCorrectionY ) + " km");
+        
+        if (poi_data.title.length>max_dolzina_title) {
+			poi_data.title=poi_data.title.substring(0,max_dolzina_title)+"...";
+		}
         $("#poi_title").html(poi_data.title.toUpperCase());
-        $("#poi_address").html(poi_data.address);
+		if (poi_data.address.length>max_dolzina_naslov) {
+			poi_data.address=poi_data.address.substring(0,max_dolzina_naslov)+"...";
+		}
+		$("#poi_address").html(poi_data.address);
         $(".map_info").click(function() {
        		load_page_content(feature.attributes.id, feature.attributes.type);        		
         }); 
@@ -363,7 +371,7 @@ function load_main_screen() {
 }
 
 function load_page_content(id, type) {
-    window.location.href = "index.html#load_content";
+    window.location.href = "index.html#load_content;"+id+";"+type;
 }
 
 function load_lang_settings() {

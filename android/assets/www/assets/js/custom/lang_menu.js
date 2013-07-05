@@ -52,6 +52,28 @@ price_translation[3]	= "PREIS";
 price_translation[4]	= "PREZZO";
 price_translation[5]	= "PRIX";
 
+
+var confirm_translation = [];
+confirm_translation[1]	= "POTRDI";
+confirm_translation[2]	= "CONFIRM";
+confirm_translation[3]	= "CONFIRM";
+confirm_translation[4]	= "CONFIRM";
+confirm_translation[5]	= "CONFIRM";
+
+var events_translation = [];
+events_translation[1]	= "PRIKAŽI PRIREDITVE";
+events_translation[2]	= "SHOW EVENTS";
+events_translation[3]	= "SHOW EVENTS";
+events_translation[4]	= "SHOW EVENTS";
+events_translation[5]	= "SHOW EVENTS";
+
+var default_category_translation = [];
+default_category_translation[1]	= "Izberi kategorijo";
+default_category_translation[2]	= "Choose category";
+default_category_translation[3]	= "Choose category";
+default_category_translation[4]	= "Choose category";
+default_category_translation[5]	= "Choose category";
+
 //prevodi mesecov za top evente
 var month_translation = [];
 
