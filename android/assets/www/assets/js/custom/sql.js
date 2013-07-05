@@ -55,8 +55,6 @@ function load_poi_success(results) {
     //results.rows.item(0).media_duration_sting = "4:24";
     //results.rows.item(0).media_duration_value = 264;
 
-    console.log(results);
-
     res.items[0] = results.rows.item(0);
 
     swipe 		 = 1;
@@ -100,6 +98,7 @@ function events_success(results) {
     var tmp_month;
 
     var k = 0;
+    var j = 0;
     var tmp;
     for (var i=0; i<len; i++){
     	//skrajsam dolzino
@@ -112,7 +111,7 @@ function events_success(results) {
     		results.rows.item(i).poi_title = tmp.substring(0,max_dolzina_poi_title)+"...";
     	}
     	
-    	if (i<3) {
+    	if (results.rows.item(i).featured == "true") {
     		tmp_date 	= new Date(parseInt(results.rows.item(i).date_first)*1000); 
     		tmp_month 	= tmp_date.getMonth(); 
     		tmp_day		= tmp_date.getDate();
@@ -120,7 +119,8 @@ function events_success(results) {
     		results.rows.item(i).day   = tmp_day;
 			results.rows.item(i).month = month_translation[settings.id_lang][tmp_month];
 
-    		res.top_items[i] = results.rows.item(i);
+    		res.top_items[j] = results.rows.item(i);
+    		j++;
     	} else  {
     		res.items[k] = results.rows.item(i);
     		k++;
@@ -245,8 +245,6 @@ function info_success(results) {
 
     	res.items[i] = results.rows.item(i);
     }
-
-    console.log("drek --- " + JSON.stringify(res));
 
     trips = res;
     load_page(template_lang+'infos.html', 'infos', res, 'fade', false);

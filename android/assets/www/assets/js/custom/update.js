@@ -213,11 +213,18 @@ function handle_event_deleted(data) {
 }
 
 function handle_event(data) {
+	image_table = "ztl_event"
 	db.transaction(function(tx) {
-		var sql = "";
+		var sql 		= "";
+		var tmp_image	= "";
 		for (var i = 0; i < data.length; i++) {
+			tmp_image = "";
+			if (data[i].images[0] != undefined) {
+				tmp_image = data[i].images[0];
+			}
+
 			//console.log(JSON.stringify(data[i]));
-			sql = "INSERT OR REPLACE INTO ztl_event (id, record_status) VALUES ("+data[i].id+", 1)";
+			sql = "INSERT OR REPLACE INTO ztl_event (id, image, featured, record_status) VALUES ("+data[i].id+", '"+tmp_image+"', '"+data[i].featured+"' ,1)";
 			//console.log(sql);
 			tx.executeSql(sql, [], function(tx, res) {});
 			sql = "INSERT OR REPLACE INTO ztl_event_translation (id_event, id_language, title, intro, description) VALUES ("+data[i].id+", "+settings.id_lang+", '"+addslashes(data[i].title)+"', '"+addslashes(data[i].intro)+"', '"+addslashes(data[i].description)+"')";
@@ -273,6 +280,8 @@ function handle_event(data) {
 		});
 		is_updt_finished();
 	});	
+
+	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFSSuccess, null);
 }
 
 function update_tour(url) {
@@ -391,6 +400,7 @@ function readFiles() {
     			
 				//shranemo novo pot datoteke v bazo, neglede na to ali obstaja ali ne
     			var updt_sql = 'update ztl_tour_images set image = "'+dlPath+'" where id_tour='+res.rows.item(i).id_tour+' and tour_idx='+res.rows.item(i).tour_idx+';';
+    			
     			//console.log(updt_sql);
 				tx.executeSql(updt_sql, [], function(tx, res) {	});	
 
@@ -413,6 +423,42 @@ function readFiles() {
 			});
 			*/
 		});
+
+
+		tx.executeSql('select * from ztl_event; where image != ""', [], function(tx, res) {
+	        for (var i=0; i<res.rows.length; i++) {
+	        	var url      = res.rows.item(i).image;
+	        	var filename = url.split("/").slice(-1)[0];
+
+	        	//lokalno ime
+    			var dlPath = DATADIR.fullPath+"/"+filename;
+    			
+				//shranemo novo pot datoteke v bazo, neglede na to ali obstaja ali ne
+    			var updt_sql1 = 'update ztl_event set image = "'+dlPath+'" where id='+res.rows.item(i).id+';';
+
+    			//console.log(updt_sql);
+				tx.executeSql(updt_sql1, [], function(tx, res) {	});	
+
+	        	
+	        	//samo nove datoteke
+	        	if (knownfiles.indexOf(filename) == -1) {
+        			var ft = new FileTransfer();
+        			ft.download(url, dlPath, function() {
+        				//console.log("new local file "+dlPath);
+        			}, onFSError);
+    			}
+	        }
+	        
+	        //validate
+	        /*
+			tx.executeSql('select * from ztl_tour_images;', [], function(tx, res) {
+		        for (var i=0; i<res.rows.length; i++) {
+		        	console.log("LOCALIMAGE "+res.rows.item(i).image);
+		        }
+			});
+			*/
+		});
+
 	});
 }
 
