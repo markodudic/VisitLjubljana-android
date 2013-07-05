@@ -23,11 +23,11 @@
 				<img src="assets/css/ztl_images/media_player_close.png">
 			</div>
 			<div style="padding-top:50px;">
-				<div class="ztl_item_details_title">PRIKAŽI PRIREDITVE</div>
+				<div class="ztl_item_details_title">{{events_title}}</div>
 				<div class="grey_line set_filter_line" style="margin-top:5px; margin-bottom:40px;"></div>
 				<div class="search_dropdown_container">
 					<select id="event_type" class="ztl_event_type_select">
-						<option value="0">Izberi kategorijo</option>
+						<option value="0">{{default_category}}</option>
 						{{#categories}}
 							<option value="{{id}}">{{name}}</option>
 						{{/categories}}
@@ -44,7 +44,7 @@
 					</div>
 				</div>
 				<div class="event_search_button_holder">
-					<div class="ztl_red_button ztl_event_search_button" onClick="filter_events();">POTRDI</div>
+					<div class="ztl_red_button ztl_event_search_button" onClick="filter_events();">{{potrdi_button}}</div>
 				</div>
 			</div>
 		</div>
