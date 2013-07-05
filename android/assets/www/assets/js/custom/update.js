@@ -19,6 +19,7 @@ function is_updt_finished() {
 }
 
 function check_update_success(results) {
+	console.log("**********update**************");
 	var lang_code = "en";
 	if (settings.id_lang == 1) {
 		lang_code = "si";
@@ -37,10 +38,12 @@ function check_update_success(results) {
         		pois[i] = res.rows.item(i).id;
 	        }
 
-	        //update_poi('http://www.visitljubljana.com/'+lang_code+'/mobile_app/poi.json?datemodified='+results.rows.item(0).last_update, pois);
+	        update_poi('http://www.visitljubljana.com/'+lang_code+'/mobile_app/poi.json?datemodified='+results.rows.item(0).last_update, pois);
 	        update_event('http://www.visitljubljana.com/'+lang_code+'/mobile_app/event.json?datemodified='+results.rows.item(0).last_update);
-	        update_tour('http://www.visitljubljana.com/'+lang_code+'/mobile_app/tour.json'); //?datemodified='+results.rows.item(0).last_update
+	        update_tour('http://www.visitljubljana.com/'+lang_code+'/mobile_app/tour.json?datemodified='+results.rows.item(0).last_update); //?datemodified='+results.rows.item(0).last_update
 	        update_info('http://www.visitljubljana.com/'+lang_code+'/mobile_app/info.json'); //?datemodified='+results.rows.item(0).last_update
+	        
+	        //load_pois(217, 3, 1);
 	    });
 	});
 }
@@ -232,11 +235,11 @@ function handle_event(data) {
 			
 			for(var j = 0; j < data[i].types.length; j++) {
         		var sql = "INSERT OR REPLACE INTO ztl_event_category (id, id_language, name) VALUES ("+data[i].types[j].id+", "+settings.id_lang+", '"+addslashes(data[i].types[j].name)+"')";
-        		console.log(sql);
+        		//console.log(sql);
         		tx.executeSql(sql, [], function(tx, res) {});
 
         		var sql = "INSERT OR REPLACE INTO ztl_event_event_category (id_event, id_event_category) VALUES ("+data[i].id+", "+data[i].types[j].id+")";
-        		console.log(sql);
+        		//console.log(sql);
         		tx.executeSql(sql, [], function(tx, res) {});
 			}
 			
