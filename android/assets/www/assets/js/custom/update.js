@@ -399,10 +399,12 @@ function readFiles() {
     			var dlPath = DATADIR.fullPath+"/"+filename;
     			
 				//shranemo novo pot datoteke v bazo, neglede na to ali obstaja ali ne
-    			var updt_sql = 'update ztl_tour_images set image = "'+dlPath+'" where id_tour='+res.rows.item(i).id_tour+' and tour_idx='+res.rows.item(i).tour_idx+';';
+				if (filename != "") {
+    				var updt_sql = 'update ztl_tour_images set image = "'+dlPath+'" where id_tour='+res.rows.item(i).id_tour+' and tour_idx='+res.rows.item(i).tour_idx+';';
     			
-    			//console.log(updt_sql);
-				tx.executeSql(updt_sql, [], function(tx, res) {	});	
+    				//console.log(updt_sql);
+					tx.executeSql(updt_sql, [], function(tx, res) {	});	
+				}
 
 	        	
 	        	//samo nove datoteke
@@ -434,11 +436,12 @@ function readFiles() {
     			var dlPath = DATADIR.fullPath+"/"+filename;
     			
 				//shranemo novo pot datoteke v bazo, neglede na to ali obstaja ali ne
-    			var updt_sql1 = 'update ztl_event set image = "'+dlPath+'" where id='+res.rows.item(i).id+';';
+    			if (filename != "") {
+	    			var updt_sql1 = 'update ztl_event set image = "'+dlPath+'" where id='+res.rows.item(i).id+';';
 
-    			//console.log(updt_sql);
-				tx.executeSql(updt_sql1, [], function(tx, res) {	});	
-
+	    			//console.log(updt_sql);
+					tx.executeSql(updt_sql1, [], function(tx, res) {	});	
+				}
 	        	
 	        	//samo nove datoteke
 	        	if (knownfiles.indexOf(filename) == -1) {
