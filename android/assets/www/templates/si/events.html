@@ -100,7 +100,7 @@
 					<div class="ztl_list_img_crop">
 						<a href="#" onClick="load_event({{id}}, 1)" style="text-decoration:none; color:#000000; font-weight:normal;">
 							{{#image}}
-								<img class="ztl_items_image" src="./uploads/thumbs/{{image}}">
+								<img class="ztl_items_image" src="{{image}}">
 							{{/image}}
 							{{^image}}
 								<img class="ztl_items_no_image" src="./uploads/noimage.png">
@@ -121,7 +121,7 @@
 						</a>
 						<div class="ztl_content_info_left"></div>
 						<div class="ztl_star">
-
+							
 						</div>
 						<div class="ztl_distance"><div id="ztl_distance_value_{{id}}"></div></div>
 						<input type="hidden" name="ztl_cord_{{id}}" value="{{id}}#{{coord_x}}#{{coord_y}}">
