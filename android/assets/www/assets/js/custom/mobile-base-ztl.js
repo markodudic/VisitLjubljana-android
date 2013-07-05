@@ -6,19 +6,7 @@ var apiKey = "AqTGBsziZHIJYYxgivLBf0hVdrAk9mWO5cQcb8Yux8sW5M8c8opEC2lZqKR1ZZXf";
 var map;
 
 //bbox ljubljana
-var lon0 = 14.434;
-var lat0 = 46;
-var lon1 = 14.587;
-var lat1 = 46.1;
 var extent = new OpenLayers.Bounds();
-
-var lat=46.052327;
-var lon=14.506416;
-var zoom=13;
-var correctionX = 4999650;
-var correctionY = 5000450;
-var myLocationCorrectionX = -100;
-var myLocationCorrectionY = -50;
 
 var points          = new Array();
 var toltip_visible  = 0;
@@ -34,7 +22,7 @@ function on_device_ready() {
     pOld = new Proj4js.Point(0,0);
     init_gps();
 
-
+    
     add_to_history("map.html");
 }
 
@@ -338,6 +326,7 @@ function get_poi_data() {
     if (from_view == "event") {
        var tmp_query = 'SELECT 0 as type, e.id, p.coord_x, p.coord_y FROM ztl_event e LEFT JOIN ztl_event_translation et ON et.id_event = e.id LEFT JOIN  ztl_event_timetable ett ON ett.id_event = e.id LEFT JOIN ztl_poi p ON p.id = ett.venue_id WHERE e.id = '+hash+' AND et.id_language = '+settings.id_lang+' GROUP BY e.id';
     } else {
+//       var tmp_query = 'SELECT 1 as type, zp.id, zp.coord_x, zp.coord_y FROM ztl_poi zp';
        var tmp_query = 'SELECT 1 as type, zp.id, zp.coord_x, zp.coord_y FROM ztl_poi zp WHERE zp.id = '+hash;
     }
 
@@ -379,11 +368,13 @@ function load_lang_settings() {
 }
 
 function load_moblie_settings() {
-    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
-        fileSystem.root.getFile("Android/data/com.vigred.ztl/settings.json", null, function(fileEntry) {
-            fileEntry.file(readAsText, fail);
-        }, fail);
-    } , null); 
+    if (LocalFileSystem != undefined) {
+		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
+	        fileSystem.root.getFile("Android/data/com.vigred.ztl/settings.json", null, function(fileEntry) {
+	            fileEntry.file(readAsText, fail);
+	        }, fail);
+	    } , null); 
+    }
 }
 
 function readAsText(file) {
@@ -398,4 +389,17 @@ function readAsText(file) {
 function fail(error) {
     console.log('nalagam error');
     console.log("error code: "+error.code);
+}
+
+function map_filter_toggle() {
+	console.log("TOOLE");
+	$(".map_filter").toggle();
+	
+	$(".mappage").toggle();
+
+}
+
+function map_filter()  {
+
+
 }

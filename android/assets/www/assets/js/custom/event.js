@@ -19,7 +19,6 @@ function event_filter_toggle() {
 	} else {
 		swipe = 1;
 	}
-
 }
 
 function load_event_type() {
