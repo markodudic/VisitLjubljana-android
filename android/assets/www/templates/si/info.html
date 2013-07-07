@@ -4,8 +4,10 @@
 		<div class="header_placeholder">
 			<div class="red_line"></div>
 			<div class="header_space"></div>
-			<div onClick="load_info()"><img class="header_back"></div>
-			<div class="header_title" onClick="load_info()">{{& item.title}}</div>
+			<!--div onClick="load_info()"><img class="header_back"></div>
+			<div class="header_title" onClick="load_info()">{{& item.title}}</div-->
+			<div onClick="load_page(template_lang+'infos.html', 'infos', trips[1], 'fade', false, 1);"><img class="header_back"></div>
+			<div class="header_title" onClick="load_page(template_lang+'infos.html', 'infos', trips[1], 'fade', false, 1);">{{& item.title}}</div>
 			<div class="header_dots"></div>
 			<div style="clear:both;"></div>
 			<div class="header_space"></div>
