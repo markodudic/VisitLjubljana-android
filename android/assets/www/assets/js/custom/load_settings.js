@@ -253,5 +253,6 @@ function load_settings_page(){
 
 function load_main_menu() {
 	var language_index = settings.id_lang - 1;
+	console.log("LANGUAGE="+settings.id_lang+":"+language_index);
 	main_menu = lang.language_menu[language_index];
 }

@@ -97,25 +97,24 @@ function on_device_ready() {
 		localStorage.setItem('history', JSON.stringify(tmp_history));
 		localStorage.setItem('first_run', 0);
 	}
-	
 }
 
 function reset_cache() {
 	
 	load_main_menu(); 
 	
-	load_pois(215, 7, 1);
-    load_pois(217, 3, 1);
-    load_pois(219, 4, 1);
-    load_pois(220, 9, 1);
-    load_pois(222, 8, 1);
+	load_pois(215, 7, 0);
+    load_pois(217, 3, 0);
+    load_pois(219, 4, 0);
+    load_pois(220, 9, 0);
+    load_pois(222, 8, 0);
     load_events(0);
     load_info(0);
     load_tours(0);
     load_voice_guide(0);
     
     localStorage.setItem('trips', JSON.stringify(trips));
-    localStorage.setItem('trips_title', trips_title);
+    localStorage.setItem('trips_title', JSON.stringify(trips_title));
     
 }
 
