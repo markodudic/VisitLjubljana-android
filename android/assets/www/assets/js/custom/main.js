@@ -10,8 +10,8 @@ var footer		  = "";
 var current		  = 0;
 var active_menu	  = 0;
 var group 		  = 0;
-var trips   	  = null;
-var trips_title   = "";
+var trips   	  = {}; //0-event, 1-info, 2-tour, 4 - voice, 5 - filtered events
+var trips_title   = {}; //0-event, 1-info, 2-tour
 var main_menu     = null;
 var swipe		  = 0;
 var swipe_group	  = 0;
@@ -36,6 +36,8 @@ var skip_update 	 = 0;
 var menu_select_lang = 0;
 var update_running 	 = 0;
 
+var selected_group = -1;
+
 
 
 document.addEventListener("deviceready", on_device_ready, false);
@@ -57,19 +59,22 @@ function on_device_ready() {
 	} else if (hash == "voice_guide") {
 		$.getScript('./assets/js/custom/trips.js', function () {
 	        skip_update = 1;
-	        load_voice_guide(1);
+	        //load_voice_guide(1);
+			voice_guide = 1; 
+			load_page(template_lang+'trips.html', 'trips', trips[4], 'fade', false, 4);
 	    });	
 	} else if (hash == "lang_settings") {
 		swipe 			 = 0;
 		settings		 = new Object();
 		skip_update 	 = 1;
 		menu_select_lang = 1;
-	} else if (hash == "content") {
+	} else if (hash == "content") { 
 		skip_update = 1;
 	} else if (hash_split[0] == "load_content") {
 		$.getScript('./assets/js/custom/trips.js', function () {
 			skip_update = 1;
-			console.log("STIINGS="+hash_split[2])
+			console.log("LOAD*****"+hash_split[1]);
+			get_cache();
 			if (hash_split[2]==0) {
 				load_event(hash_split[1], 0);
 			} else if (hash_split[2]==1) {
@@ -80,18 +85,56 @@ function on_device_ready() {
 		navigator.splashscreen.show();
 		skip_update = 0;
 	}
-	
-	document.addEventListener("backbutton", go_back, true);
-	
 
+	//za sprazniti cache
 	//localStorage.clear();
+	get_cache();
+
+	document.addEventListener("backbutton", go_back, true);
+
 	if (localStorage.getItem(localStorage.key('first_run')) == null) {
-		localStorage.clear();
+		//localStorage.clear();
 		localStorage.setItem('history', JSON.stringify(tmp_history));
 		localStorage.setItem('first_run', 0);
 	}
 	
 }
+
+function reset_cache() {
+	
+	load_main_menu(); 
+	
+	load_pois(215, 7, 1);
+    load_pois(217, 3, 1);
+    load_pois(219, 4, 1);
+    load_pois(220, 9, 1);
+    load_pois(222, 8, 1);
+    load_events(0);
+    load_info(0);
+    load_tours(0);
+    load_voice_guide(0);
+    
+    localStorage.setItem('trips', JSON.stringify(trips));
+    localStorage.setItem('trips_title', trips_title);
+    
+}
+
+function get_cache() { 
+	console.log("GET CACHE="+localStorage.getItem('trips'));
+	if (localStorage.getItem('trips') == null) {
+		reset_cache();
+	} else {
+		if (localStorage.getItem('trips') != null) {
+			trips = JSON.parse(localStorage.getItem('trips'));
+		}
+		if (localStorage.getItem('trips_title') != null) {
+			trips_title = JSON.parse(localStorage.getItem('trips_title'));
+		}
+	}
+}
+
+
+
 
 function load_main_screen(save_history) {
 	//shrani v localhost
@@ -101,78 +144,74 @@ function load_main_screen(save_history) {
 	}
 
 	swipe = 0;
-	load_page(template_lang+'main_menu.html', 'main_menu', main_menu, 'fade', false);
-}
-
-function swipe_left_handler() {
-	if (swipe == 1) {
-		if (db_type == 1) {
-			var j = 0;
-			if (trips != null) {
-				var items = trips.items;
-	
-				for (i=0; i<items.length; i++) {
-					if (items[i]['id'] == current) {
-						j = i-1;
-					}
-				}
-				
-				if (j == -1) {
-					j = items.length-1;
-				}
-				
-				current = items[j]['id'];
-				
-				//save_swipe_history(trips.items[j]['id'], true);
-	
-				if (swipe_group == 1) {
-					load_page(template_lang+'trip.html', 'div_trip', trips.items[j], 'slide', false);
-				} else if (swipe_group == 2) {
-					swipe_dir = "left";
-					load_event(trips.items[j].id);
-				} else if (swipe_group == 3) {
-					swipe_dir = "left";
-					load_tour(trips.items[j].id);
-				} else if (swipe_group == 4) {
-					swipe_dir = "left";
-					load_single_info(trips.items[j].id);
-				}
-			}
-		}
-	}
+	load_page(template_lang+'main_menu.html', 'main_menu', main_menu, 'fade', false, 0);
 }
 
 function swipe_right_handler() {
 	if (swipe == 1) {
 		if (db_type == 1) {
 			var j = 0;
-			var items = trips.items;
+			if (trips != null) {
+				var res = trips[selected_group];
+				
+				for (i=0; i<res.items.length; i++) {
+					if (res.items[i]['id'] == current) {
+						j = i-1;
+					}
+				}
+				
+				if (j == -1) {
+					j = res.items.length-1;
+				}
+				
+				current = res.items[j]['id'];
+				
+				if (swipe_group == 1) {
+					load_page(template_lang+'trip.html', 'div_trip', res.items[j], 'slide', true, selected_group);
+				} else if (swipe_group == 2) {
+					swipe_dir = "right";
+					load_event(res.items[j].id);
+				} else if (swipe_group == 3) {
+					swipe_dir = "right";
+					load_tour(res.items[j].id);
+				} else if (swipe_group == 4) {
+					swipe_dir = "right";
+					load_single_info(res.items[j].id);
+				}
+			}
+		}
+	}
+}
 
-			for (i=0; i<items.length; i++) {
-				if (items[i]['id'] == current) {
+function swipe_left_handler() {
+	if (swipe == 1) {
+		if (db_type == 1) {
+			var j = 0;
+			var res = trips[selected_group];
+			
+			for (i=0; i<res.items.length; i++) {
+				if (res.items[i]['id'] == current) {
 					j = i+1;
 				}
 			}
 			
-			if (j == items.length) {
+			if (j == res.items.length) {
 				j = 0;
 			}
 			
-			current = items[j]['id'];
-
-			//save_swipe_history(trips.items[j]['id'], true);
+			current = res.items[j]['id'];
 
 			if (swipe_group == 1) {
-				load_page(template_lang+'trip.html', 'div_trip', trips.items[j], 'slide', true);
+				load_page(template_lang+'trip.html', 'div_trip', res.items[j], 'slide', false, selected_group);
 			} else if (swipe_group == 2) {
-				swipe_dir = "right";
-				load_event(trips.items[j].id);
+				swipe_dir = "left";
+				load_event(res.items[j].id);
 			} else if (swipe_group == 3) {
-				swipe_dir = "right";
-				load_tour(trips.items[j].id);
+				swipe_dir = "left";
+				load_tour(res.items[j].id);
 			} else if (swipe_group == 4) {
-				swipe_dir = "right";
-				load_single_info(trips.items[j].id);
+				swipe_dir = "left";
+				load_single_info(res.items[j].id);
 			}
 		}
 	}
@@ -192,7 +231,10 @@ function save_swipe_history(index, direction) {
 }
 */
 
-function load_page(template, div, data, transition, reverse) {
+function load_page(template, div, data, transition, reverse, id_group) {
+	console.log("load page="+id_group+":"+template);
+	console.log("load page="+JSON.stringify(data));
+
 	if (footer == "") {
 		load_footer();
 	}
@@ -200,6 +242,11 @@ function load_page(template, div, data, transition, reverse) {
 	if (media == "") {
 		load_media();
 	}
+	
+	if (id_group != undefined) {
+		selected_group = id_group;
+	}
+		
 
 	$.ajax({
 		type:"GET",
@@ -212,8 +259,8 @@ function load_page(template, div, data, transition, reverse) {
 			var extra_div_id = "";
 
 			if (settings.id_lang!=undefined) {
+				data.guide_button			= voice_guide_translation_full[settings.id_lang];
 				data.map_button 				= map_translation[settings.id_lang];
-				data.guide_button 				= voice_guide_translation_full[settings.id_lang];
 				data.ztl_item_details_title 	= title_translation[settings.id_lang];
 				data.ztl_item_details_description = description_translation[settings.id_lang];
 				data.ztl_item_details_venue 	= venue_translation[settings.id_lang];
@@ -227,16 +274,16 @@ function load_page(template, div, data, transition, reverse) {
 			if (div == 'trips') {
 				extra_div_id 		= "_"+group;
 				data.extra_div_id 	= group;
-				data.page_title 	= trips_title;
+				data.page_title 	= trips_title[id_group];
 			}
 
 			if (div == 'events') {
-				data.page_title 	= trips_title;
+				data.page_title 	= trips_title[id_group];
 				$('body').html("");
 			}
 
 			if (div == 'filtered_events') {
-				data.page_title 	= trips_title;
+				data.page_title 	= trips_title[id_group];
 				$('body').html("");
 			}
 			 
@@ -256,11 +303,11 @@ function load_page(template, div, data, transition, reverse) {
 			}
 			
 			if (div == 'tours') {
-				data.page_title 	= trips_title;
+				data.page_title 	= trips_title[id_group];
 			}
 
 			if (div == 'infos') {
-				data.page_title 	= trips_title;
+				data.page_title 	= trips_title[id_group];
 			}
 
 			if (div == 'info') {
@@ -443,12 +490,15 @@ function load_footer() {
 function select_language(id) {
 	settings.id_lang = id;
 
-	check_updates();
+	if (localStorage.getItem(localStorage.key('first_run')) == null) {
+		check_updates();
+		reset_cache();
+	}
 
 	if (settings_type == 1) {
 		//nalozim glavni menu
 		swipe = 0;
-		load_page(template_lang+'main_menu.html', 'main_menu', main_menu, 'fade', false);
+		load_page(template_lang+'main_menu.html', 'main_menu', main_menu, 'fade', false, 0);
 	} else {
 		save_mobile_settings();
 	}
@@ -530,10 +580,9 @@ function load_voice_guide(save_history) {
 		add_to_history(history_string);
 	}
 
-	voice_guide = 1;
 	swipe		= 0;
 
-	var tmp_query 		= "SELECT zp.*, zpt.title, zcg.id_group FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id WHERE zpt.id_language = "+settings.id_lang+" AND sound != '' GROUP BY zp.id";
+	var tmp_query 		= "SELECT zp.*, zpt.title, 4 as id_group FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id WHERE zpt.id_language = "+settings.id_lang+" AND sound != '' GROUP BY zp.id";
 	var tmp_callback	= "load_pois_success";
 	
 	generate_query(tmp_query, tmp_callback);

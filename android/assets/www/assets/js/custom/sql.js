@@ -33,6 +33,7 @@ function load_pois_success(results) {
     res.items = [];
     var len = results.rows.length;
     var tmp;
+    var trips_group;
     
     for (var i=0; i<len; i++){
     	//skrajsam dolzino
@@ -41,21 +42,19 @@ function load_pois_success(results) {
     		results.rows.item(i).title = tmp.substring(0,max_dolzina_title)+"...";
     	}
     	res.items[i] = results.rows.item(i);
+    	trips_group = results.rows.item(i).id_group;
     }
-    
-    trips = res;
-    load_page(template_lang+'trips.html', 'trips', res, 'fade', false);
+    console.log(trips_group+"++++"+JSON.stringify(res));
+    trips[trips_group] = res;
+    //load_page(template_lang+'trips.html', 'trips', res, 'fade', false);
 }
 
 //nalozi poi
 function load_poi_success(results) {
+	console.log("load_poi_success");
 	var res = {};
     res.items = [];
-    	
-    //pofejkam dolzino komada
-    //results.rows.item(0).media_duration_sting = "4:24";
-    //results.rows.item(0).media_duration_value = 264;
-
+    	 
     res.items[0] = results.rows.item(0);
 
     swipe 		 = 1;
@@ -142,9 +141,13 @@ function events_success(results) {
 	
 	data.items 			= res.items;
 	data.categories 	= event_type;
-	trips 				= res;
+	trips[0]			= res;
+	trips[0].top_events_0 	= res.top_items[0];
+	trips[0].top_events_1 	= res.top_items[1];
+	trips[0].top_events_2 	= res.top_items[2];
+	trips[0].categories 	= event_type;
 
-	load_page(template_lang+'events.html', 'events', data, 'fade', false);
+	//load_page(template_lang+'events.html', 'events', data, 'fade', false);
 }
 
 function event_category_success(results) {
@@ -187,9 +190,10 @@ function filter_events_success(results) {
     }
 
     res.categories 	= event_type;
-    trips 			= res;
+    trips[5] 			= res;
+    trips[5].categories 			= event_type;
     
-    load_page(template_lang+'events_filtered.html', 'filtered_events', res, 'fade', false);
+    load_page(template_lang+'events_filtered.html', 'filtered_events', trips[5], 'fade', false);
 }
 
 //event
@@ -253,8 +257,8 @@ function info_success(results) {
     	res.items[i] = results.rows.item(i);
     }
 
-    trips = res;
-    load_page(template_lang+'infos.html', 'infos', res, 'fade', false);
+    trips[1] = res;
+    //load_page(template_lang+'infos.html', 'infos', res, 'fade', false);
 }
 
 //single_info
@@ -291,8 +295,8 @@ function tour_success(results) {
     	res.items[i] = results.rows.item(i);
     }
 
-    trips = res;
-    load_page(template_lang+'tours.html', 'tours', res, 'fade', false);
+    trips[2] = res;
+    //load_page(template_lang+'tours.html', 'tours', res, 'fade', false);
 }
 
 //tour
@@ -341,8 +345,15 @@ function tour_charters_success(results) {
     }
 }
 
-function count_ztl_event_success(results) {
-	if (results.rows.item(0).nr == 0)  {
+function last_update_success(results) {
+	var parts = results.rows.item(0).lu.split(" ");
+	var last_update = new Date(parts[0]);
+	last_update.setHours(23);
+	last_update.setMinutes(59);
+	last_update.setSeconds(59);
+	var today = new Date();
+	console.log("LAST UPDATE= "+last_update+":"+today);
+	if (last_update < today)  {
 		update_db();
 	}
 }

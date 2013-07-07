@@ -42,8 +42,6 @@ function check_update_success(results) {
 	        update_event('http://www.visitljubljana.com/'+lang_code+'/mobile_app/event.json?datemodified='+results.rows.item(0).last_update);
 	        update_tour('http://www.visitljubljana.com/'+lang_code+'/mobile_app/tour.json?datemodified='+results.rows.item(0).last_update); //?datemodified='+results.rows.item(0).last_update
 	        update_info('http://www.visitljubljana.com/'+lang_code+'/mobile_app/info.json'); //?datemodified='+results.rows.item(0).last_update
-	        
-	        //load_pois(217, 3, 1);
 	    });
 	});
 }
@@ -67,6 +65,12 @@ function update_poi(url, pois) {
 		success : function(data) {
 			console.log(" >>>>>>>>>> ok");
 			handle_poi(data);
+		    load_pois(215, 7, 1);
+		    load_pois(217, 3, 1);
+		    load_pois(219, 4, 1);
+		    load_pois(220, 9, 1);
+		    load_pois(222, 8, 1);
+		    load_voice_guide(0);
 		}
 	});	        
 }
@@ -125,7 +129,7 @@ function handle_poi_new(data) {
 		var sql = "";
 		for (var i = 0; i < data.length; i++) {
 			sql = "INSERT OR REPLACE INTO ztl_poi (id, address, post_number, post, phone, email, www, coord_x, coord_y, turisticna_kartica, ljubljana_quality, recommended_map, image, star, sound, record_status, from_db) ";
-			sql+= "VALUES ("+data[i].id+", '"+addslashes(data[i].address)+"', "+data[i].postNumber+",'"+addslashes(data[i].post)+"','"+addslashes(data[i].phone)+"', ";
+			sql+= "VALUES ("+data[i].id+", '"+addslashes(data[i].address)+"', '"+data[i].postNumber+"','"+addslashes(data[i].post)+"','"+addslashes(data[i].phone)+"', ";
 			sql+= "'"+addslashes(data[i].email)+"', '"+addslashes(data[i].www)+"', '"+data[i].coord.x+"', '"+data[i].coord.y+"', '"+addslashes(data[i].turisticna_kartica)+"', '"+addslashes(data[i].ljubljanaQuality)+"', ";
 			sql+= "'"+data[i].recommended_map+"', '"+data[i].images+"', '"+data[i].star+"', '"+data[i].sound+"', 1, 0);";
 			//console.log(sql);
@@ -198,6 +202,7 @@ function update_event(url) {
 			*/
 			handle_event_deleted(data['deleted']);
 			handle_event(data['events']);
+		    load_events(0);
 		}
 	});	
 }
@@ -311,6 +316,7 @@ function update_tour(url) {
 			*/
 			handle_tour_deleted(data['deleted']);
 			handle_tour(data['tours']);
+		    load_tours(0);		
 		}
 	});
 }
@@ -492,6 +498,7 @@ function update_info(url) {
 			*/
 			handle_info_deleted(data['deleted']);
 			handle_info(data['info']);
+		    load_info(0);
 		}
 	});
 }
