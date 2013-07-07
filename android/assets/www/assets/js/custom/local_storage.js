@@ -7,8 +7,8 @@ function add_to_history(history_string) {
 
 function local_storage_load() {
 	var history = [];
-	if (localStorage.getItem(localStorage.key('history')) != null) {
-		history = JSON.parse(localStorage.getItem(localStorage.key('history')));
+	if (localStorage.getItem('history') != null) {
+		history = JSON.parse(localStorage.getItem('history'));
 	} else {
 		history = tmp_history;
 	}
@@ -58,7 +58,8 @@ function go_back() {
 				}
 
 				if (go_to[1] == "load_pois") {
-					load_pois(params[0],params[1],0);
+					//load_pois(params[0],params[1],0);
+					load_page(template_lang+'trips.html', 'trips', trips[params[0]], 'fade', false, params[0]);
 				}
 
 				if (go_to[1] == "load_main_screen") {
@@ -66,11 +67,14 @@ function go_back() {
 				}
 
 				if (go_to[1] == "load_voice_guide") {
-					load_voice_guide(0);
+					//load_voice_guide(0);
+					voice_guide = 1; 
+					load_page(template_lang+'trips.html', 'trips', trips[4], 'fade', false, 4);
 				}
 
 				if (go_to[1] == "load_events") {
-					load_events(0);
+					//load_events(0);
+					load_page(template_lang+'events.html', 'events', trips[0], 'fade', false, 0);
 				}
 
 				if (go_to[1] == "load_tours") {
@@ -79,7 +83,8 @@ function go_back() {
 
 
 				if (go_to[1] == "load_tour") {
-					load_tour(params[0], 0);
+					//load_tour(params[0], 0);
+					load_page(template_lang+'tours.html', 'tours', trips[2], 'fade', false, 2);
 				}
 
 				if (go_to[1] == "load_trip_content") {
@@ -100,7 +105,8 @@ function go_back() {
 				}
 
 				if (go_to[1] == "load_info") {
-					load_info(0);
+					//load_info(0);
+					load_page(template_lang+'infos.html', 'infos', trips[1], 'fade', false, 1);
 				}		
 			}
 

@@ -42,14 +42,14 @@ function load_pois(id, trips_menu_id, save_history) {
 		tmi = trips_menu_id;
 	}
 	
-	trips_title = main_menu['img'+tmi];
+	trips_title[id] = main_menu['img'+tmi];
 	
 	if (id == 0) {
 		alert('menu nima nastavljenih vsebin');
 	} else {
 		group = id;
 		//$.getScript('./assets/js/custom/trips.js', function () {
-			var tmp_query 		= 'SELECT zp.*, zpt.title, zcg.id_group FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id WHERE zcg.id_group = '+group+' AND zpt.id_language = '+settings.id_lang+' AND zp.record_status = 1 GROUP BY zp.id';
+			var tmp_query 		= 'SELECT zp.*, zpt.title, zcg.id_group, zpt.description FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id WHERE zcg.id_group = '+group+' AND zpt.id_language = '+settings.id_lang+' AND zp.record_status = 1 GROUP BY zp.id';
 			var tmp_callback	= "load_pois_success";
 			
 			generate_query(tmp_query, tmp_callback);
@@ -72,6 +72,7 @@ function load_trip_content(id, transition, reverse, save_history) {
 	var tmp_query 		= 'SELECT zp.*, zpt.title, zpt.description, zcg.id_group FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id WHERE zp.id = '+id+' AND zpt.id_language = '+settings.id_lang+' GROUP BY zp.id';
 	var tmp_callback	= "load_poi_success";
 
+	console.log("load trip content 22");
 	generate_query(tmp_query, tmp_callback);
 }
 
@@ -106,11 +107,11 @@ function load_events(save_history) {
 
 	load_event_type();
 
-	trips_title = main_menu['img2'];
+	trips_title[0] = main_menu['img2'];
 
 	var tmp_query    = "SELECT e.id, e.featured, et.title, ett.venue_id, ett.date, ett.date_first, p.coord_x, p.coord_y, ett.venue as poi_title, e.image FROM ztl_event e LEFT JOIN ztl_event_translation et ON et.id_event = e.id LEFT JOIN  ztl_event_timetable ett ON ett.id_event = e.id LEFT JOIN ztl_poi p ON p.id = ett.venue_id WHERE et.id_language = "+settings.id_lang+" AND e.record_status = 1 GROUP BY e.id ORDER BY e.id";
-    var tmp_callback = "events_success";
-    generate_query(tmp_query, tmp_callback);
+	var tmp_callback = "events_success";
+    generate_query(tmp_query, tmp_callback); 
 }
 
 function load_tours(save_history)  {
@@ -121,7 +122,7 @@ function load_tours(save_history)  {
         add_to_history(history_string);
     }
 
-    trips_title = main_menu['img6'];
+    trips_title[2] = main_menu['img6'];
 
     var tmp_query      = "SELECT t.id, tt.title, tt.short_description, ti.image FROM ztl_tour t LEFT JOIN ztl_tour_translation tt ON tt.id_tour = t.id LEFT JOIN ztl_tour_images ti ON t.id = ti.id_tour WHERE tt.id_language = "+settings.id_lang+" GROUP BY t.id";
     var tmp_callback   = "tour_success";
@@ -136,7 +137,7 @@ function load_info(save_history)  {
         add_to_history(history_string);
     }
 
-    trips_title = main_menu['img5'];
+    trips_title[1] = main_menu['img5'];
 
     var tmp_query      = "SELECT i.* FROM ztl_info i WHERE i.id_language = "+settings.id_lang+" AND i.record_status = 1 GROUP BY i.id";
     var tmp_callback   = "info_success";
@@ -204,25 +205,27 @@ function readAsText(file) {
     	var tmp = JSON.parse(evt.target.result);
 
 		if (tmp.id_lang == undefined) {
-			load_page('select_language.html', 'select_language', null, 'fade', false);
+			load_page('select_language.html', 'select_language', null, 'fade', false, 0);
 		} else {
 			settings = tmp;
 			load_main_menu();
 			swipe = 0;
 
 			if (skip_update == 0) {
-				check_updates();
+				if (localStorage.getItem(localStorage.key('first_run')) == null) {
+					check_updates();
+				}
 			}
 
 			if (backstep == 1) {
 				go_back();
 			} else {
-				localStorage.clear();
+				//localStorage.clear();
 
 				if (menu_select_lang == 1) {
-					load_page('select_language.html', 'select_language', null, 'fade', false);
+					load_page('select_language.html', 'select_language', null, 'fade', false, 0);
 				} else {
-					load_page(template_lang+'main_menu.html', 'main_menu', main_menu, 'fade', false);
+					load_page(template_lang+'main_menu.html', 'main_menu', main_menu, 'fade', false, 0);
 				}
 			}
 		}
@@ -237,15 +240,15 @@ function fail(error) {
 }
 
 function check_updates() {
-	/*var tmp_query    = "SELECT count(id_event) AS nr FROM ztl_event_translation WHERE id_language = "+settings.id_lang;
-    var tmp_callback = "count_ztl_event_success";
-    generate_query(tmp_query, tmp_callback);*/
-    update_db();
+	console.log("CHECK UPDATES");
+	var tmp_query    = "SELECT last_update AS lu FROM ztl_updates WHERE id_language = "+settings.id_lang;
+    var tmp_callback = "last_update_success";
+    generate_query(tmp_query, tmp_callback);
 }
 
 function load_settings_page(){
 	swipe = 0;
-	load_page('select_language.html', 'select_language', null, 'fade', false);
+	load_page('select_language.html', 'select_language', null, 'fade', false, 0);
 }
 
 function load_main_menu() {

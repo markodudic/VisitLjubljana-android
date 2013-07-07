@@ -18,6 +18,7 @@ var current_position_xy;
 
 document.addEventListener("deviceready", on_device_ready, false);
 function on_device_ready() {
+	console.log("*********on_device_ready");
     document.addEventListener("backbutton", back_to_content, true);
     pOld = new Proj4js.Point(0,0);
     init_gps();
@@ -58,9 +59,9 @@ OpenLayers.Control.Click = OpenLayers.Class(OpenLayers.Control, {
 });
 
 var init = function (onSelectFeatureFunction) {
+	console.log("*********init");
     $(".txt_popup").hide();
-    load_moblie_settings();
-    db = window.sqlitePlugin.openDatabase("Database", "1.0", "ztl", -1);
+    
 
     $("#my_location").live('click', function(){
         source = new Proj4js.Proj('EPSG:31469');
@@ -76,7 +77,6 @@ var init = function (onSelectFeatureFunction) {
         map.panTo(lonlat);
     });
 
-    get_poi_data();
 
     var lonLat0 = new OpenLayers.LonLat(lon0, lat0).transform(new OpenLayers.Projection("EPSG:4326"), new OpenLayers.Projection("EPSG:900913"));
     var lonLat1 = new OpenLayers.LonLat(lon1, lat1).transform(new OpenLayers.Projection("EPSG:4326"), new OpenLayers.Projection("EPSG:900913"));
@@ -123,11 +123,6 @@ var init = function (onSelectFeatureFunction) {
         styleMap: styleMap_my_pos
     });
 
-    var sprinters = getFeatures(0);
-    var sprinters_my_pos = getFeatures(1);
-
-    sprintersLayer.addFeatures(sprinters);
-    sprintersLayer_my_pos.addFeatures(sprinters_my_pos);
 
 
     var selectControl = new OpenLayers.Control.SelectFeature(sprintersLayer, {
@@ -188,6 +183,15 @@ var init = function (onSelectFeatureFunction) {
         map.setCenter (lonLat, zoom);
     }
 
+    load_moblie_settings();
+    db = window.sqlitePlugin.openDatabase("Database", "1.0", "ztl", -1);
+    get_poi_data();
+
+    var sprinters = getFeatures(0);
+    var sprinters_my_pos = getFeatures(1);
+
+    sprintersLayer.addFeatures(sprinters);
+    sprintersLayer_my_pos.addFeatures(sprinters_my_pos);
     
     /*var style = {
         fillOpacity: 0.1,
@@ -368,7 +372,7 @@ function load_lang_settings() {
 }
 
 function load_moblie_settings() {
-    if (LocalFileSystem != undefined) {
+    if (LocalFileSystem != null) {
 		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
 	        fileSystem.root.getFile("Android/data/com.vigred.ztl/settings.json", null, function(fileEntry) {
 	            fileEntry.file(readAsText, fail);
