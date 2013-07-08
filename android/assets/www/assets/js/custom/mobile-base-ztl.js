@@ -372,13 +372,11 @@ function load_lang_settings() {
 }
 
 function load_moblie_settings() {
-    if (LocalFileSystem != null) {
-		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
-	        fileSystem.root.getFile("Android/data/com.vigred.ztl/settings.json", null, function(fileEntry) {
-	            fileEntry.file(readAsText, fail);
-	        }, fail);
-	    } , null); 
-    }
+	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
+        fileSystem.root.getFile("Android/data/com.vigred.ztl/settings.json", null, function(fileEntry) {
+            fileEntry.file(readAsText, fail);
+        }, fail);
+    } , null); 
 }
 
 function readAsText(file) {
