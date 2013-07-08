@@ -324,6 +324,7 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				extra_div_id 		= "_voice_guide";
 				data.extra_div_id 	= "voice_guide";
 				data.page_title 	= voice_guide_translation[settings.id_lang];
+				data.dots 			= 1;
 				
 				menu_icon 	= 2;
 				voice_guide = 0;
