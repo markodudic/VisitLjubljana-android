@@ -113,6 +113,10 @@ function reset_cache() {
     load_tours(0);
     load_voice_guide(0);
     
+    set_cache();
+}
+
+function set_cache() {
     localStorage.setItem('trips', JSON.stringify(trips));
     localStorage.setItem('trips_title', JSON.stringify(trips_title));
     
@@ -491,7 +495,6 @@ function select_language(id) {
 
 	if (localStorage.getItem(localStorage.key('first_run')) == null) {
 		check_updates();
-		reset_cache();
 	}
 
 	if (settings_type == 1) {

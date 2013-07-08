@@ -71,6 +71,7 @@ function update_poi(url, pois) {
 		    load_pois(220, 9, 1);
 		    load_pois(222, 8, 1);
 		    load_voice_guide(0);
+		    set_cache();
 		}
 	});	        
 }
@@ -203,6 +204,7 @@ function update_event(url) {
 			handle_event_deleted(data['deleted']);
 			handle_event(data['events']);
 		    load_events(0);
+		    set_cache();
 		}
 	});	
 }
@@ -316,7 +318,8 @@ function update_tour(url) {
 			*/
 			handle_tour_deleted(data['deleted']);
 			handle_tour(data['tours']);
-		    load_tours(0);		
+		    load_tours(0);	
+		    set_cache();
 		}
 	});
 }
@@ -499,6 +502,7 @@ function update_info(url) {
 			handle_info_deleted(data['deleted']);
 			handle_info(data['info']);
 		    load_info(0);
+		    set_cache();
 		}
 	});
 }
