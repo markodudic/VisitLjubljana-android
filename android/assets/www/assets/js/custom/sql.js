@@ -131,14 +131,6 @@ function events_success(results) {
     	}
     }
 
-    var data = {};
-
-	data.top_events_0 	= res.top_items[0];
-	data.top_events_1 	= res.top_items[1];
-	data.top_events_2 	= res.top_items[2];
-	
-	data.items 			= res.items;
-	data.categories 	= event_type;
 	trips[0]			= res;
 	trips[0].top_events_0 	= res.top_items[0];
 	trips[0].top_events_1 	= res.top_items[1];
@@ -262,7 +254,7 @@ function info_success(results) {
     	}
     	
     	//pofejkam image -- ko bo v bazi se zbrise
-    	results.rows.item(i).image = "file:///storage/emulated/0/Android/data/com.vigred.ztl/fmpgtmp_8fwmuh.jpeg";
+    	results.rows.item(i).image = "file:///storage/emulated/0/Android/data/com.innovatif.ztl/fmpgtmp_8fwmuh.jpeg";
 
     	res.items[i] = results.rows.item(i);
     }
@@ -277,7 +269,7 @@ function load_info_success(results) {
     res.item = [];
 
     //pofejkam -- pol se sam zbrise
-    results.rows.item(0).image = "file:///storage/emulated/0/Android/data/com.vigred.ztl/fmpgtmp_8fwmuh.jpeg";
+    results.rows.item(0).image = "file:///storage/emulated/0/Android/data/com.innovatif.ztl/fmpgtmp_8fwmuh.jpeg";
     
 	res.item = results.rows.item(0);
 

@@ -18,6 +18,7 @@ function is_updt_finished() {
 	}
 }
 
+
 function check_update_success(results) {
 	console.log("**********update**************");
 	var lang_code = "en";
@@ -42,11 +43,12 @@ function check_update_success(results) {
 	    });
 	});
 		        
-	//updatam dogodke. prvic vse
-    if(localStorage.getItem(localStorage.key('first_run'))==null) {
-        update_event(server_url+lang_code+'/mobile_app/event.json');
-    } else {
-	    var events = new Array();
+	//updatam dogodke. prvic ali pri spremembi jezika vse
+    update_event(server_url+lang_code+'/mobile_app/event.json');
+    
+    //na zahtevo se updata samo od datuma
+    /*
+    var events = new Array();
 		db.transaction(function(tx) {
 		    tx.executeSql("select id from ztl_event;", [], function(tx, res) {
 		        for (var i=0; i<res.rows.length; i++) {
@@ -56,12 +58,12 @@ function check_update_success(results) {
 		        update_event_deleted(server_url+lang_code+'/mobile_app/event.json?datemodified='+results.rows.item(0).last_update, events);
 		    });
 		});
-    }
+    }*/
     
-	//updatam ogled. prvic vse
-    if(localStorage.getItem(localStorage.key('first_run'))==null) {
-        update_tour(server_url+lang_code+'/mobile_app/tour.json');
-    } else {
+    
+	//updatam ogled. . prvic ali pri spremembi jezika vse
+    update_tour(server_url+lang_code+'/mobile_app/tour.json');
+    /*
 	    var tours = new Array();
 		db.transaction(function(tx) {
 		    tx.executeSql("select id from ztl_tour;", [], function(tx, res) {
@@ -72,12 +74,10 @@ function check_update_success(results) {
 		        update_tour_deleted(server_url+lang_code+'/mobile_app/tour.json?datemodified='+results.rows.item(0).last_update, tours); 
 		    });
 		});
-	} 
+	} */
 	
 	//updatam info. vedno vse
     update_info(server_url+lang_code+'/mobile_app/info.json'); //?datemodified='+results.rows.item(0).last_update
-	
-
 }
 
 function update_poi(url, pois) {
@@ -407,7 +407,7 @@ var knownfiles = [];
 var DATADIR;
 
 function onFSSuccess(fileSystem) {
-	fileSystem.root.getDirectory("Android/data/com.vigred.ztl",{create:true}, gotDir, onFSError);
+	fileSystem.root.getDirectory("Android/data/com.innovatif.ztl",{create:true}, gotDir, onFSError);
 }
 
 function gotDir(d) {
