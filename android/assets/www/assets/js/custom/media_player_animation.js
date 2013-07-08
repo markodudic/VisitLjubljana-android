@@ -36,7 +36,6 @@ function animate() {
   
   curPerc++;
 
-
   if (curPerc < endPercent) {
       current = curPerc / 100;
       update_time();
@@ -110,17 +109,6 @@ function media_control_stop() {
 
 	clearTimeout(media_timer);
 	play_voice_guide(trip_id);
-}
-
-function  load_media_file(file) {
-	my_media = new Media(file,
-        function() {
-            console.log("Audio Success");
-        },
-            function(err) {
-                console.log(err);
-        }
-    ); 
 }
 
 function play() {

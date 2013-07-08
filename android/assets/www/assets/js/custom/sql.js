@@ -133,8 +133,6 @@ function events_success(results) {
 
     var data = {};
 
-    console.log(JSON.stringify(res.top_items));
-
 	data.top_events_0 	= res.top_items[0];
 	data.top_events_1 	= res.top_items[1];
 	data.top_events_2 	= res.top_items[2];
@@ -200,7 +198,7 @@ function filter_events_success(results) {
 function load_event_success(results) {
 	tmp_event_data.item = results.rows.item(0)
 
-	var tmp_query 	 = "SELECT ep.ticket_type, ep.price FROM ztl_event_pricing ep WHERE ep.id_event = "+results.rows.item(0).id+" AND ep.id_language = "+settings.id_lang;
+	var tmp_query 	 = "SELECT ep.ticket_type, ep.price FROM ztl_event_pricing ep WHERE ep.id_event = "+results.rows.item(0).id+" AND ep.id_language = "+settings.id_lang+" GROUP BY ep.ticket_type, ep.price";
 	var tmp_callback = "load_event_pricing_success";
 	generate_query(tmp_query, tmp_callback);
 }
@@ -213,10 +211,16 @@ function load_event_pricing_success(results) {
     	tmp_event_data.pricing[i] = results.rows.item(i);
     }
 
+    if (len > 0) {
+    	tmp_event_data.has_pricing = 1;
+    } else {
+    	tmp_event_data.has_pricing = "";
+    }
+
     var id_event = tmp_event_data.item.id;
     current 	 = id_event;
 
-    var tmp_query 	 = "SELECT et.venue, et.date FROM ztl_event_timetable et WHERE et.id_event = "+id_event+" AND et.id_language = "+settings.id_lang;
+    var tmp_query 	 = "SELECT et.venue, et.date FROM ztl_event_timetable et WHERE et.id_event = "+id_event+" AND et.id_language = "+settings.id_lang+" GROUP BY et.venue, et.date";
 	var tmp_callback = "load_event_venue_success";
 	generate_query(tmp_query, tmp_callback);
 }
@@ -227,6 +231,12 @@ function load_event_venue_success(results) {
 	var len = results.rows.length;
 	for (var i=0; i<len; i++){
     	tmp_event_data.venue[i] = results.rows.item(i);
+    }
+
+    if (len > 0) {
+    	tmp_event_data.has_venue = 1;
+    } else {
+    	tmp_event_data.has_venue = "";
     }
 
     if (swipe_dir == "left") {
@@ -357,6 +367,103 @@ function last_update_success(results) {
 		update_db();
 	}
 }
+
+//my_visit
+function my_visit_success(results) {
+	var res 	= {};
+    res.poi 	= [];
+    res.evt 	= [];
+    res.tour 	= [];
+	
+	var j = 0;
+	var k = 0;
+	var l = 0;
+
+	var poi_wi 	= "";
+	var evt_wi 	= "";
+	var tour_wi = "";
+
+	var tmp_arr 	 = [];
+	var filtered_arr = [];
+
+	var len = results.rows.length;
+	
+	res.has_poi  = "";
+	res.has_evt	 = "";
+	res.has_tour = "";
+	for (var i=0; i<len; i++){
+		console.log("my_visit --- " + main_menu[mm_pic_group[results.rows.item(i).main_group]]);
+
+		tmp_arr[i] =  results.rows.item(i).main_group;
+
+		if (results.rows.item(i).type == 1) {
+			res.has_pois 	= 1;
+    		//res.poi[j] 		= results.rows.item(i);
+    		poi_wi			= poi_wi + results.rows.item(i).id+",";
+
+    		//j++;
+    	} else if (results.rows.item(i).type == 2) {
+    		res.evt[k] 		= results.rows.item(i);
+    		res.has_evt	 	= 1;
+    		evt_wi			= evt_wi + results.rows.item(i).id+",";
+
+    		k++;
+    	} else if (results.rows.item(i).type == 3) {
+    		res.tour[l] 	= results.rows.item(i);
+    		tour_wi			= tour_wi + results.rows.item(i).id+",";
+
+    		res.has_tour 	= 1;
+    		l++;
+    	}
+    }
+
+    $.each(tmp_arr, function(i, el){
+	    if($.inArray(el, filtered_arr) === -1) filtered_arr.push(el);
+	});
+
+	console.log("my_visit --- filtered array --- "+filtered_arr);
+
+
+	//mywisit poi
+    if (res.has_pois == 1) {
+    	poi_wi = poi_wi+"0";
+    	console.log("my_visit --- poi wi "+poi_wi);
+
+    	var tmp_query = 'SELECT zp.*, zpt.title, zcg.id_group, zpt.description FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id WHERE id IN ('+poi_wi+') AND zpt.id_language = '+settings.id_lang+' AND zp.record_status = 1 GROUP BY zp.id';
+		
+    	db.transaction(function(tx) {
+			 tx.executeSql(tmp_query, [], function(tx, res_poi) {
+			 	console.log("my_visit --- poi response "+ JSON.stringify(res_poi));
+
+			 	var poi_len = res_poi.rows.length;
+			 	for (var pj = 0; pj<filtered_arr.length; pj++) {
+			 		console.log("my_visit --- grupa " +filtered_arr[pj]);
+			 		console.log("my_visit --- gurup name " +  main_menu[mm_pic_group[filtered_arr[pj]]]);
+
+			 		//res.poi[j] = main_menu[mm_pic_group[filtered_arr[pj]]];
+			 		//res.poi[j].group_title = main_menu[mm_pic_group[filtered_arr[pj]]];
+			 		//j++;
+
+			 		for (var pi = 0; pi<poi_len; pi++) {
+			 			
+			 			if (res_poi.rows.item(pi).id_group == filtered_arr[pj]) {
+			 				console.log("my_visit --- group item" + JSON.stringify(res_poi.rows.item(pi).title));
+
+			 				//res.poi[j].group_title 	= "";
+			 				//res.poi[j]				= res_poi.rows.item(pi);
+
+			 				//j++;
+			 			}
+			 		}
+			 	}		 	
+			 });
+		});
+    }
+
+    console.log("my_visit --- "+JSON.stringify(res));
+
+    //console.log("my_visit --- "+JSON.stringify(res));
+} 
 
 //sql error
 function errorCB(err) {
@@ -541,6 +648,17 @@ function populate_db_firstime() {
 			db.transaction(function(tx) {
 				tx.executeSql('select count(*) as cnt from ztl_info;', [], function(tx, res) {
 					console.log('31 >>>>>>>>>> ztl_info res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+				});
+			});
+		});
+	});
+
+	$.getScript('./assets/install_db/ztl_my_visit.js', function () {
+		db.transaction(populateDB_ztl_my_visit, errorCB, function(tx) {
+			db.transaction(function(tx) {
+				tx.executeSql('select count(*) as cnt from ztl_my_visit;', [], function(tx, res) {
+					console.log('32 >>>>>>>>>> ztl_my_visit res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+					console.log("my_visit --- db created")
 				});
 			});
 		});

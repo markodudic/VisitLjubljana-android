@@ -83,9 +83,22 @@ function play_voice_guide(id) {
 	$(".header").toggle();
 	$(".footer").toggle();
 
+	my_media = null;
+
 	$.getScript('./assets/js/custom/media_player_animation.js', function () {
 		load_media_file(sound_file);
 	});
+}
+
+function  load_media_file(file) {
+	my_media = new Media(file,
+        function() {
+            console.log("Audio Success");
+        },
+            function(err) {
+                console.log(err);
+        }
+    ); 
 }
 
 function set_media_state(value) {
@@ -253,6 +266,5 @@ function load_settings_page(){
 
 function load_main_menu() {
 	var language_index = settings.id_lang - 1;
-	console.log("LANGUAGE="+settings.id_lang+":"+language_index);
 	main_menu = lang.language_menu[language_index];
 }
