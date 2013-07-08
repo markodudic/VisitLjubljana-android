@@ -17,7 +17,7 @@
        under the License.
  */
 
-package com.vigred.ztl;
+package com.innovatif.ztl;
 
 import android.os.Bundle;
 
