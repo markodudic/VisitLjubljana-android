@@ -124,12 +124,64 @@ rate_translation[3]	= "Rate appliaction";
 rate_translation[4]	= "Rate appliaction";
 rate_translation[5]	= "Rate appliaction";
 
+var synchronization_translation = [];
+synchronization_translation[1]	= "Sinhronizacija";
+synchronization_translation[2]	= "Synchronization";
+synchronization_translation[3]	= "Synchronization";
+synchronization_translation[4]	= "Synchronization";
+synchronization_translation[5]	= "Synchronization";
+
+var synhronization_title_translation = [];
+synhronization_title_translation[1]	= "PRENOS PODATKOV";
+synhronization_title_translation[2]	= "SYNHRONIZATION";
+synhronization_title_translation[3]	= "SYNHRONIZATION";
+synhronization_title_translation[4]	= "SYNHRONIZATION";
+synhronization_title_translation[5]	= "SYNHRONIZATION";
+
+
+var synhronization_desc_translation = [];
+synhronization_desc_translation[1]	= "Za prenos podatkov rabite brežično povezavo,.....";
+synhronization_desc_translation[2]	= "You need wifi connection for synhronize the data,....";
+synhronization_desc_translation[3]	= "Synchronization";
+synhronization_desc_translation[4]	= "Synchronization";
+synhronization_desc_translation[5]	= "Synchronization";
+
+
+var synhronization_button_translation = [];
+synhronization_button_translation[1]	= "PRENESI PODATKE";
+synhronization_button_translation[2]	= "SYNHRONIZATION";
+synhronization_button_translation[3]	= "SYNHRONIZATION";
+synhronization_button_translation[4]	= "SYNHRONIZATION";
+synhronization_button_translation[5]	= "SYNHRONIZATION";
+
 var about_translation = [];
 about_translation[1]	= "O aplikaciji";
-about_translation[2]	= "About the appliaction";
+about_translation[2]	= "About the application";
 about_translation[3]	= "About appliaction";
 about_translation[4]	= "About appliaction";
 about_translation[5]	= "About appliaction";
+
+
+var about_version_translation = [];
+about_version_translation[1]	= "VERZIJA";
+about_version_translation[2]	= "VERSION";
+about_version_translation[3]	= "VERSION";
+about_version_translation[4]	= "VERSION";
+about_version_translation[5]	= "VERSION";
+
+var about_contact_translation = [];
+about_contact_translation[1]	= "KONTAKT";
+about_contact_translation[2]	= "CONTACT";
+about_contact_translation[3]	= "CONTACT";
+about_contact_translation[4]	= "CONTACT";
+about_contact_translation[5]	= "CONTACT";
+
+var about_desc_translation = [];
+about_desc_translation[1]	= "The development of this application has been co-financed by EU, ...";
+about_desc_translation[2]	= "The development of this application has been co-financed by EU, ...";
+about_desc_translation[3]	= "The development of this application has been co-financed by EU, ...";
+about_desc_translation[4]	= "The development of this application has been co-financed by EU, ...";
+about_desc_translation[5]	= "The development of this application has been co-financed by EU, ...";
 
 
 //prevodi mesecov za top evente

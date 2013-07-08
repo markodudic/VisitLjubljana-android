@@ -86,9 +86,10 @@ function on_device_ready() {
 		skip_update = 0;
 	}
 
-	//za sprazniti cache
-	//localStorage.clear();
-	get_cache();
+	//prvic napolnimo po izbiri jezika
+	if (localStorage.getItem(localStorage.key('first_run')) != null) {
+		get_cache();
+	}
 
 	document.addEventListener("backbutton", go_back, true);
 
@@ -235,7 +236,7 @@ function save_swipe_history(index, direction) {
 */
 
 function load_page(template, div, data, transition, reverse, id_group) {
-	console.log("load page="+id_group+":"+template+":"+div);
+	console.log("load page="+id_group+":"+template+":"+div+":"+swipe);
 	//console.log("load page="+JSON.stringify(data));
 
 	if (footer == "") {
@@ -351,10 +352,27 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				data.my_visit_account 	= my_visit_account_translation[settings.id_lang];
 				data.reminder 			= reminder_translation[settings.id_lang];
 				data.set_language		= set_language_translation[settings.id_lang];
+				data.synchronization	= synchronization_translation[settings.id_lang];
 				data.rate 				= rate_translation[settings.id_lang];
 				data.about				= about_translation[settings.id_lang];
 			}
 			
+			if (div == 'ztl_synhronization') {
+				data = {};
+				data.synhronization_title 	= synhronization_title_translation[settings.id_lang];
+				data.synhronization_desc 	= synhronization_desc_translation[settings.id_lang];
+				data.synhronization_button 	= synhronization_button_translation[settings.id_lang];
+				
+			}
+
+			if (div == 'ztl_about') {
+				data = {};
+				data.about_title	= about_translation[settings.id_lang];
+				data.about_version 	= about_version_translation[settings.id_lang];
+				data.about_contact 	= about_contact_translation[settings.id_lang];
+				data.about_desc		= about_desc_translation[settings.id_lang];
+			}
+
 			
 			var res = $(temp).filter('#tpl_'+div).html();
 			
@@ -366,23 +384,9 @@ function load_page(template, div, data, transition, reverse, id_group) {
 
 			html = html.replace('[[[ztl_footer]]]', footer);
 
-
-
-			/*
-			if (div == "main_menu") {
-				if (current_div != "main_menu") {
-					$('body').append(html);
-				}
-			} else {
-				$('body').append(html);
-			}
-			*/
-
 			$('body').html(html);
 
 			if (swipe == 1) {
-				//$('body').html(html);
-
 				if (div != "main_menu") {
 					var ts_div = "";
 					if (div == 'div_trip') {
@@ -421,12 +425,6 @@ function load_page(template, div, data, transition, reverse, id_group) {
 			if (swipe == 1) {
 				animate_div(div+extra_div_id, transition, reverse);
 			} 
-
-			/*
-			else {
-				$('body').html(html);
-			}
-			*/
 			
 			$('.icon_'+menu_icon).attr("src","assets/css/ztl_images/icon_"+menu_icon+"_red.png");
 
@@ -435,13 +433,15 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				show_map();
 			}
 			
-			if ((div != "trips") && (div != "select_language")) {
+			if ((div != "trips") && 
+				(div != "select_language") && 
+				(div != "ztl_settings") && 
+				(div != "synhronization")) {
 				i_scroll(div+extra_div_id);
 			}
 			
 			pOld = new Proj4js.Point(0,0);
 			navigator.geolocation.getCurrentPosition(onSuccess_gps, onError_gps);
-			
 			
 			current_div = div+extra_div_id;
 		}
@@ -512,11 +512,10 @@ function select_language(id) {
 		load_page(template_lang+'main_menu.html', 'main_menu', main_menu, 'fade', false, 0);
 	} else {
 		settings.id_lang = id;
-	
-		//if (localStorage.getItem(localStorage.key('first_run')) == null) {
-			check_updates();
-		//}
-	
+		
+		reset_cache()
+		localStorage.setItem('first_synhronization', 0);
+		
 		if (settings_type == 1) {
 			//nalozim glavni menu
 			swipe = 0;
@@ -534,7 +533,7 @@ function load_trips() {
 }
 
 function edit_settings() {
-	$.getScript('./assets/js/custom/application_settings.js', function () {
+	$.getScript('./assets/js/custom/ztl_settings.js', function () {
         load_current_settings();
     });
 }

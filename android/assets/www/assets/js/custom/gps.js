@@ -46,7 +46,7 @@ function onSuccess_gps(position) {
 	       if (bbox) {
 	    	   $("div#map_button").attr('class','ztl_red_button ztl_item_left_button');;
 	       } else {
-	    	   $("div#map_button").attr('class','ztl_grey_button_map ztl_item_left_button');
+	    	   $("div#map_button").attr('class','ztl_grey_button ztl_grey_button_map ztl_item_left_button');
 	    	   $("#map_href").removeAttr('href');
 	       }
 	   	}); 

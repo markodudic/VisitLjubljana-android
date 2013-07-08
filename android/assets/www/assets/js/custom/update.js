@@ -8,19 +8,21 @@ function update_db() {
 var updt_finished = 0;
 function is_updt_finished() {
 	updt_finished++;
-	
 	//vsi updejti
 	if (updt_finished == 4) {
 		var today     = new Date();
 		var sql_today = today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate()+" "+today.getHours()+":"+today.getMinutes()+":"+today.getSeconds();
 		var sql       = "UPDATE ztl_updates SET last_update = '"+sql_today+"' WHERE id_language = "+settings.id_lang;
 		db.transaction(function(tx) {tx.executeSql(sql, [], function(tx, res) {});});
+		
+		updt_finished = 0;
+		alert("synhronization finished");
 	}
 }
 
 
 function check_update_success(results) {
-	console.log("**********update**************");
+	console.log("**********update**************"+localStorage.getItem('first_synhronization'));
 	var lang_code = "en";
 	if (settings.id_lang == 1) {
 		lang_code = "si";
@@ -43,27 +45,25 @@ function check_update_success(results) {
 	    });
 	});
 		        
-	//updatam dogodke. prvic ali pri spremembi jezika vse
-    update_event(server_url+lang_code+'/mobile_app/event.json');
-    
-    //na zahtevo se updata samo od datuma
-    /*
-    var events = new Array();
+	//updatam dogodke. prvic vse
+	if (localStorage.getItem('first_synhronization') == 0) {
+		update_event(server_url+lang_code+'/mobile_app/event.json');
+    	update_tour(server_url+lang_code+'/mobile_app/tour.json');
+    	localStorage.setItem('first_synhronization', 1);
+	} else {
+		//pol pa samo od datuma
+		var events = new Array();
 		db.transaction(function(tx) {
-		    tx.executeSql("select id from ztl_event;", [], function(tx, res) {
-		        for (var i=0; i<res.rows.length; i++) {
-		        	events[i] = res.rows.item(i).id;
-		        }
-		        
-		        update_event_deleted(server_url+lang_code+'/mobile_app/event.json?datemodified='+results.rows.item(0).last_update, events);
-		    });
+			tx.executeSql("select id from ztl_event;", [], function(tx, res) {
+				for (var i=0; i<res.rows.length; i++) {
+					events[i] = res.rows.item(i).id;
+				}
+		       
+				update_event_deleted(server_url+lang_code+'/mobile_app/event.json?datemodified='+results.rows.item(0).last_update, events);
+			});
 		});
-    }*/
     
-    
-	//updatam ogled. . prvic ali pri spremembi jezika vse
-    update_tour(server_url+lang_code+'/mobile_app/tour.json');
-    /*
+		//updatam ogled. 
 	    var tours = new Array();
 		db.transaction(function(tx) {
 		    tx.executeSql("select id from ztl_tour;", [], function(tx, res) {
@@ -74,10 +74,10 @@ function check_update_success(results) {
 		        update_tour_deleted(server_url+lang_code+'/mobile_app/tour.json?datemodified='+results.rows.item(0).last_update, tours); 
 		    });
 		});
-	} */
+	}
 	
 	//updatam info. vedno vse
-    update_info(server_url+lang_code+'/mobile_app/info.json'); //?datemodified='+results.rows.item(0).last_update
+    update_info(server_url+lang_code+'/mobile_app/info.json');
 }
 
 function update_poi(url, pois) {
@@ -106,6 +106,7 @@ function update_poi(url, pois) {
 		    load_pois(222, 8, 1);
 		    load_voice_guide(0);
 		    set_cache();
+			is_updt_finished();
 		}
 	});	        
 }
@@ -207,7 +208,6 @@ function handle_poi_new(data) {
 		tx.executeSql('select count(*) as cnt from ztl_poi_translation;', [], function(tx, res) {
 			console.log('+6 >>>>>>>>>> ztl_poi_translation res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
 		});
-		is_updt_finished();
 	});		
 }
 
@@ -235,6 +235,7 @@ function update_event(url) {
 			handle_event(data['events']);
 		    load_events(0);
 		    set_cache();
+			is_updt_finished();
 		}
 	});	
 }
@@ -317,7 +318,6 @@ function handle_event(data) {
 		tx.executeSql('select count(*) as cnt from ztl_event_event_category;', [], function(tx, res) {
 			console.log('+16 >>>>>>>>>> ztl_event_event_category res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
 		});
-		is_updt_finished();
 	});	
 
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFSSuccess, null);
@@ -347,6 +347,7 @@ function update_tour(url) {
 			handle_tour(data['tours']);
 		    load_tours(0);	
 		    set_cache();
+			is_updt_finished();
 		}
 	});
 }
@@ -396,7 +397,6 @@ function handle_tour(data) {
 		tx.executeSql('select count(*) as cnt from ztl_tour_images;', [], function(tx, res) {
 			console.log('+24 >>>>>>>>>> ztl_tour_images res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
 		});
-		is_updt_finished();
 	});	
 	
 	//images
@@ -530,6 +530,7 @@ function update_info(url) {
 			handle_info(data['info']);
 		    load_info(0);
 		    set_cache();
+			is_updt_finished();
 		}
 	});
 }
@@ -558,7 +559,6 @@ function handle_info(data) {
 		tx.executeSql('select count(*) as cnt from ztl_info;', [], function(tx, res) {
 			console.log('+31 >>>>>>>>>> ztl_info res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
 		});
-		is_updt_finished();
 	});	
 }
 
