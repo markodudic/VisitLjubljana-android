@@ -235,8 +235,8 @@ function save_swipe_history(index, direction) {
 */
 
 function load_page(template, div, data, transition, reverse, id_group) {
-	console.log("load page="+id_group+":"+template);
-	console.log("load page="+JSON.stringify(data));
+	console.log("load page="+id_group+":"+template+":"+div);
+	//console.log("load page="+JSON.stringify(data));
 
 	if (footer == "") {
 		load_footer();
@@ -261,8 +261,8 @@ function load_page(template, div, data, transition, reverse, id_group) {
 			var menu_icon 	 = 3;
 			var extra_div_id = "";
 
-			if (settings.id_lang!=undefined) {
-				data.guide_button			= voice_guide_translation_full[settings.id_lang];
+			if (data!=null && settings.id_lang!=undefined) {
+				data.guide_button				= voice_guide_translation_full[settings.id_lang];
 				data.map_button 				= map_translation[settings.id_lang];
 				data.ztl_item_details_title 	= title_translation[settings.id_lang];
 				data.ztl_item_details_description = description_translation[settings.id_lang];
@@ -342,7 +342,19 @@ function load_page(template, div, data, transition, reverse, id_group) {
 			if (div == 'main_menu') {
 				view_main_menu = 1;
 			}
-
+			
+			if (div == 'ztl_settings') {
+				menu_icon 	= 5;
+				data = {};
+				data.title 				= settings_translation[settings.id_lang];
+				data.my_visit_account 	= my_visit_account_translation[settings.id_lang];
+				data.reminder 			= reminder_translation[settings.id_lang];
+				data.set_language		= set_language_translation[settings.id_lang];
+				data.rate 				= rate_translation[settings.id_lang];
+				data.about				= about_translation[settings.id_lang];
+			}
+			
+			
 			var res = $(temp).filter('#tpl_'+div).html();
 			
 			if (data != null) {
@@ -495,20 +507,24 @@ function load_footer() {
 }
 
 function select_language(id) {
-	settings.id_lang = id;
-
-	if (localStorage.getItem(localStorage.key('first_run')) == null) {
-		check_updates();
-	}
-
-	if (settings_type == 1) {
-		//nalozim glavni menu
-		swipe = 0;
+	if (settings.id_lang == id) {
 		load_page(template_lang+'main_menu.html', 'main_menu', main_menu, 'fade', false, 0);
 	} else {
-		save_mobile_settings();
-	}
-} 
+		settings.id_lang = id;
+	
+		//if (localStorage.getItem(localStorage.key('first_run')) == null) {
+			check_updates();
+		//}
+	
+		if (settings_type == 1) {
+			//nalozim glavni menu
+			swipe = 0;
+			load_page(template_lang+'main_menu.html', 'main_menu', main_menu, 'fade', false, 0);
+		} else {
+			save_mobile_settings();
+		}
+	} 
+}
 
 function load_trips() {
 	$.getScript('./assets/js/custom/trips.js', function () {
