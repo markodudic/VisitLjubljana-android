@@ -45,10 +45,11 @@ $("#minus").live('click', function(){
 
 //fix the content height AFTER jQuery Mobile has rendered the map page
 $('#mappage').live('pageshow',function (){
-    fixContentHeight();
+	$(".txt_popup").hide();
+//    fixContentHeight();
 });
     
-$(window).bind("orientationchange resize pageshow", fixContentHeight);
+//$(window).bind("orientationchange resize pageshow", fixContentHeight);
 
 
 function initLayerList() {
