@@ -1,3 +1,5 @@
+var server_url = 'http://www.visitljubljana.com/';
+
 //gps
 var watchID 	= null;
 var source  	= null;

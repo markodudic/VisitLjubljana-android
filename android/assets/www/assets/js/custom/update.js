@@ -31,19 +31,53 @@ function check_update_success(results) {
 		lang_code = "de";
 	}
 	
+	//updatam poi-je
 	var pois = new Array();
 	db.transaction(function(tx) {
 	    tx.executeSql("select id from ztl_poi;", [], function(tx, res) {
 	        for (var i=0; i<res.rows.length; i++) {
         		pois[i] = res.rows.item(i).id;
 	        }
-
-	        update_poi('http://www.visitljubljana.com/'+lang_code+'/mobile_app/poi.json?datemodified='+results.rows.item(0).last_update, pois);
-	        update_event('http://www.visitljubljana.com/'+lang_code+'/mobile_app/event.json?datemodified='+results.rows.item(0).last_update);
-	        update_tour('http://www.visitljubljana.com/'+lang_code+'/mobile_app/tour.json?datemodified='+results.rows.item(0).last_update); //?datemodified='+results.rows.item(0).last_update
-	        update_info('http://www.visitljubljana.com/'+lang_code+'/mobile_app/info.json'); //?datemodified='+results.rows.item(0).last_update
+	        update_poi(server_url+lang_code+'/mobile_app/poi.json?datemodified='+results.rows.item(0).last_update, pois);
 	    });
 	});
+		        
+	//updatam dogodke. prvic vse
+    if(localStorage.getItem(localStorage.key('first_run'))==null) {
+        update_event(server_url+lang_code+'/mobile_app/event.json');
+    } else {
+	    var events = new Array();
+		db.transaction(function(tx) {
+		    tx.executeSql("select id from ztl_event;", [], function(tx, res) {
+		        for (var i=0; i<res.rows.length; i++) {
+		        	events[i] = res.rows.item(i).id;
+		        }
+		        
+		        update_event_deleted(server_url+lang_code+'/mobile_app/event.json?datemodified='+results.rows.item(0).last_update, events);
+		    });
+		});
+    }
+    
+	//updatam ogled. prvic vse
+    if(localStorage.getItem(localStorage.key('first_run'))==null) {
+        update_tour(server_url+lang_code+'/mobile_app/tour.json');
+    } else {
+	    var tours = new Array();
+		db.transaction(function(tx) {
+		    tx.executeSql("select id from ztl_tour;", [], function(tx, res) {
+		        for (var i=0; i<res.rows.length; i++) {
+		        	tours[i] = res.rows.item(i).id;
+		        }
+		        
+		        update_tour_deleted(server_url+lang_code+'/mobile_app/tour.json?datemodified='+results.rows.item(0).last_update, tours); 
+		    });
+		});
+	} 
+	
+	//updatam info. vedno vse
+    update_info(server_url+lang_code+'/mobile_app/info.json'); //?datemodified='+results.rows.item(0).last_update
+	
+
 }
 
 function update_poi(url, pois) {
@@ -132,7 +166,7 @@ function handle_poi_new(data) {
 			sql = "INSERT OR REPLACE INTO ztl_poi (id, address, post_number, post, phone, email, www, coord_x, coord_y, turisticna_kartica, ljubljana_quality, recommended_map, image, star, sound, record_status, from_db) ";
 			sql+= "VALUES ("+data[i].id+", '"+addslashes(data[i].address)+"', '"+data[i].postNumber+"','"+addslashes(data[i].post)+"','"+addslashes(data[i].phone)+"', ";
 			sql+= "'"+addslashes(data[i].email)+"', '"+addslashes(data[i].www)+"', '"+data[i].coord.x+"', '"+data[i].coord.y+"', '"+addslashes(data[i].turisticna_kartica)+"', '"+addslashes(data[i].ljubljanaQuality)+"', ";
-			sql+= "'"+data[i].recommended_map+"', '"+data[i].images+"', '"+data[i].star+"', '"+data[i].sound+"', 1, 0);";
+			sql+= "'"+data[i].recommended_map+"', '"+data[i].image+"', '"+data[i].star+"', '"+data[i].sound+"', 1, 0);";
 			//console.log(sql);
 			tx.executeSql(sql, [], function(tx, res) {});
 			
@@ -177,8 +211,13 @@ function handle_poi_new(data) {
 	});		
 }
 
+function update_event_deleted(url, events) {
+	url = url+'&pois='+events.join(",");
+	update_event(url);
+}
+	
 function update_event(url) {
-	console.log("update DB " +  url);
+	console.log("update DB " +  url);	
 	$.ajax( {
 		url : url,
 		dataType : 'json',
@@ -192,15 +231,6 @@ function update_event(url) {
 		},
 		success : function(data) {
 			console.log(" >>>>>>>>>> ok");
-			//truncate
-			/*
-			db.transaction(function(tx) {tx.executeSql('delete from ztl_event;', [], function(tx, res) {});});
-			db.transaction(function(tx) {tx.executeSql('delete from ztl_event_translation;', [], function(tx, res) {});});
-			db.transaction(function(tx) {tx.executeSql('delete from ztl_event_pricing;', [], function(tx, res) {});});
-			db.transaction(function(tx) {tx.executeSql('delete from ztl_event_timetable;', [], function(tx, res) {});});
-			db.transaction(function(tx) {tx.executeSql('delete from ztl_event_category;', [], function(tx, res) {});});
-			db.transaction(function(tx) {tx.executeSql('delete from ztl_event_event_category;', [], function(tx, res) {});});
-			*/
 			handle_event_deleted(data['deleted']);
 			handle_event(data['events']);
 		    load_events(0);
@@ -229,8 +259,8 @@ function handle_event(data) {
 		for (var i = 0; i < data.length; i++) {
 
 			tmp_image = "";
-			if (data[i].images[0] != undefined) {
-				tmp_image = data[i].images[0];
+			if (data[i].image != undefined) {
+				tmp_image = data[i].image;
 			}
 
 			//console.log(JSON.stringify(data[i]));
@@ -293,6 +323,11 @@ function handle_event(data) {
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFSSuccess, null);
 }
 
+function update_tour_deleted(url, tours) {
+	url = url+'&pois='+tours.join(",");
+	console.log("update DB " +  url);
+}
+
 function update_tour(url) {
 	console.log("update DB " +  url);
 	$.ajax( {
@@ -308,14 +343,6 @@ function update_tour(url) {
 		},
 		success : function(data) {
 			console.log(" >>>>>>>>>> ok");
-			
-			//truncate
-			/*
-			db.transaction(function(tx) {tx.executeSql('delete from ztl_tour;', [], function(tx, res) {});});
-			db.transaction(function(tx) {tx.executeSql('delete from ztl_tour_translation;', [], function(tx, res) {});});
-			db.transaction(function(tx) {tx.executeSql('delete from ztl_tour_chaters;', [], function(tx, res) {});});
-			db.transaction(function(tx) {tx.executeSql('delete from ztl_tour_images;', [], function(tx, res) {});});
-			*/
 			handle_tour_deleted(data['deleted']);
 			handle_tour(data['tours']);
 		    load_tours(0);	
@@ -351,10 +378,10 @@ function handle_tour(data) {
 				tx.executeSql(sql, [], function(tx, res) {});
 			}
 	
-			for(var j = 0; j < data[i].images.length; j++) {
-				sql = "INSERT INTO ztl_tour_images (id_tour, tour_idx, image) VALUES ("+data[i].id+", "+j+", '"+data[i].images[j]+"')";
+			//for(var j = 0; j < data[i].images.length; j++) {
+				sql = "INSERT INTO ztl_tour_images (id_tour, tour_idx, image) VALUES ("+data[i].id+", "+j+", '"+data[i].image+"')";
 				tx.executeSql(sql, [], function(tx, res) {});
-			}
+			//}
 		}
 	
 		tx.executeSql('select count(*) as cnt from ztl_tour;', [], function(tx, res) {

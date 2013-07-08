@@ -211,11 +211,11 @@ function readAsText(file) {
 			load_main_menu();
 			swipe = 0;
 
-			if (skip_update == 0) {
+			/*if (skip_update == 0) {
 				if (localStorage.getItem(localStorage.key('first_run')) == null) {
 					check_updates();
 				}
-			}
+			}*/
 
 			if (backstep == 1) {
 				go_back();
