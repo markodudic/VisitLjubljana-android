@@ -1,41 +1,55 @@
 <script id="tpl_ztl_settings" type="text/html">
-<div id="ztl_settings" class="ztl_remove_from_page">
-	<div>
-		<h1>Nastavitve</h1>
-	</div>
-	<div>	
-		<div class="ui-grid-solo">
-			<div class="ui-block-a"><button type="v">MyVisit račun</button></div>
+<div id="ztl_settings" class="ztl_remove_from_page" style="overflow:hidden;">
+	<div class="header">
+		<div class="header_placeholder">
+			<div class="red_line"></div>
+			<div class="header_space"></div>
+			<div class="header_title_menu">{{title}}</div>
+			<div class="header_space"></div>
 		</div>
-		
-		<div class="ui-grid-a">
-			<div class="ui-block-a">Opomnilnik</div>
-			<div class="ui-block-b">
+		<div class="header_shadow"></div>
+	</div>
+
+
+	<div class="ztl_content">	
+		<li class="ztl_list_li ztl_settings_li">
+			<div class="ztl_list_item ztl_list_header ztl_settings_text">{{my_visit_account}}</div>
+			<div class="black_line"></div>
+		</li>
+
+		<li class="ztl_list_li ztl_settings_li">
+			<div class="ui-grid-a ztl_list_item ztl_list_header ztl_settings_text">{{reminder}}
 				{{#reminder}} 
-				<select onChange="reminder_change();" class="super_slider" name="reminder" id="reminder">
-					<option value="off">Off</option>
-					<option value="on" selected>On</option>
-				</select>
+					<img class="checkbox" src="assets/css/ztl_images/checkbox-on.png">
 				{{/reminder}}
 				{{^reminder}} 
-				<select onChange="reminder_change();" class="super_slider" name="reminder" id="reminder">
-					<option value="off" selected>Off</option>
-					<option value="on">On</option>
-				</select>
+					<img class="checkbox" src="assets/css/ztl_images/checkbox-off.png">
 				{{/reminder}}
-			</div>	   
-		</div>
+			</div>
+			<div class="black_line"></div>
+		</li>
 
-		<div class="ui-grid-solo">
-			<div class="ui-block-a"><button type="v" onClikc="select_language();">Nastavi jezik</button></div>
-		</div>
-		<div class="ui-grid-solo">
-			<div class="ui-block-a"><button type="v" >Oceni aplikacijo</button></div>
-		</div>
-		
+		<li class="ztl_list_li ztl_settings_li">
+			<div class="ztl_list_item ztl_list_header ztl_settings_text" onClick="choose_language();">{{set_language}}</div>
+			<div class="black_line"></div>
+		</li>
+
+		<li class="ztl_list_li ztl_settings_li">
+			<div class="ztl_list_item ztl_list_header ztl_settings_text">{{rate}}</div>
+			<div class="black_line"></div>
+		</li>
+
+		<li class="ztl_list_li ztl_settings_li">
+			<div class="ztl_list_item ztl_list_header ztl_settings_text">{{about}}</div>
+			<div class="black_line"></div>
+		</li>
+
 	</div>
-	<div class="footer-docs" data-position="fixed">
-		[[[ztl_footer]]]
+	<div class="footer">
+		<div class="footer_shadow"></div>
+		<div class="header_placeholder">
+			[[[ztl_footer]]]
+		</div>
 	</div>
 </div>
 </script>
