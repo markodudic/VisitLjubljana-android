@@ -144,6 +144,10 @@ body {
 	font-size:1.25em;
 }
 
+.ztl_red_button_big {
+	width:100%;
+}
+
 .ztl_grey_button {
 	background: rgb(102,102,102); /* Old browsers */
 	background: -moz-linear-gradient(top, rgba(102,102,102,1) 0%, rgba(102,102,102,1) 50%, rgba(85,85,85,1) 50%, rgba(85,85,85,1) 100%); /* FF3.6+ */
@@ -163,21 +167,7 @@ body {
 }
 
 .ztl_grey_button_map {
-	background: rgb(102,102,102); /* Old browsers */
-	background: -moz-linear-gradient(top, rgba(102,102,102,1) 0%, rgba(102,102,102,1) 50%, rgba(85,85,85,1) 50%, rgba(85,85,85,1) 100%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(102,102,102,1)), color-stop(50%,rgba(102,102,102,1)), color-stop(50%,rgba(85,85,85,1)), color-stop(100%,rgba(85,85,85,1))); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top, rgba(102,102,102,1) 0%,rgba(102,102,102,1) 50%,rgba(85,85,85,1) 50%,rgba(85,85,85,1) 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top, rgba(102,102,102,1) 0%,rgba(102,102,102,1) 50%,rgba(85,85,85,1) 50%,rgba(85,85,85,1) 100%); /* Opera 11.10+ */
-	background: -ms-linear-gradient(top, rgba(102,102,102,1) 0%,rgba(102,102,102,1) 50%,rgba(85,85,85,1) 50%,rgba(85,85,85,1) 100%); /* IE10+ */
-	background: linear-gradient(to bottom, rgba(102,102,102,1) 0%,rgba(102,102,102,1) 50%,rgba(85,85,85,1) 50%,rgba(85,85,85,1) 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#666666', endColorstr='#555555',GradientType=0 ); /* IE6-9 */
 	width:@window_width*0.43;
-   height:@window_width*0.10; /*@window_width*0.43*48/206*/
-	text-align:center;
-	line-height:@window_width*0.10;
-	font-size:1.25em;
-	color:#ffffff;
-	font-family: 'robotobold_condensed';
 }
 
 .ztl_item_right_button{
@@ -206,6 +196,14 @@ body {
     float:right;
 }
 
+.ztl_synhronization_button{
+	height:@window_width*0.12;
+	line-height:@window_width*0.08;
+   color:#ffffff;
+   font-family: 'robotobold_condensed';
+	font-size:1em;
+}
+
 .event_search_filds_left{
 	width:@window_width*0.42;
 	text-align:left;
@@ -221,6 +219,14 @@ body {
 .event_search_button_holder {
 	width:100%;
 	text-align:right;
+}
+
+.close_button{
+  	text-align:right;
+}
+
+.settings_content {
+	padding-top:@window_height * 0.1;
 }
 
 .ztl_event_search_field {
@@ -460,8 +466,10 @@ ul.footer_list li{
 }
 
 .event_filter_content {
-	padding-left:25px;
-	padding-right:25px;
+   color:#555555;
+   font-size:1.5em;
+	padding-left:@window_width * 0.0521;
+	padding-right:@window_width * 0.0521;
 }
 
 .map_filter {
