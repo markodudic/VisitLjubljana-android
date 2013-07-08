@@ -104,24 +104,28 @@
 						{{& item.description}}
 						<br><br>
 					</div>
-					{{#venue}}
+					{{#has_venue}}
 						<div id="ztl_item_details_venue" class="ztl_item_details_title" style="text-transform:uppercase;">{{ztl_item_details_venue}}</div>
 						<div class="grey_line" style="margin-top:10px;"></div>
-						<br>
-						<div class="ztl_item_details_desc">
-							{{date}}<br>{{venue}}<br>
-						</div>
-					{{/venue}}
-					<br><br>
-					{{#pricing}}
+						{{#venue}}
+							<br>
+							<div class="ztl_item_details_desc">
+								{{date}}<br>{{venue}}<br>
+							</div>
+						{{/venue}}
+						<br><br>
+					{{/has_venue}}
+					{{#has_pricing}}
 						<div id="ztl_item_details_price" class="ztl_item_details_title" style="text-transform:uppercase;">{{ztl_item_details_price}}</div>
 						<div class="grey_line" style="margin-top:10px;"></div>
-						<br>
-						<div class="ztl_item_details_desc">
-							{{ticket_type}}: {{price}} EUR<br>
-						</div>
-					{{/pricing}}
-					<br><br><br>
+						{{#pricing}}
+							<br>
+							<div class="ztl_item_details_desc">
+								{{ticket_type}}: {{price}} EUR<br>
+							</div>
+						{{/pricing}}
+						<br><br><br>
+					{{/has_pricing}}
 				</div>
 			</div>
 		</div>

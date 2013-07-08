@@ -365,10 +365,10 @@ function load_page(template, div, data, transition, reverse, id_group) {
 			}
 			*/
 
-			
+			$('body').html(html);
 
 			if (swipe == 1) {
-				$('body').append(html);
+				//$('body').html(html);
 
 				if (div != "main_menu") {
 					var ts_div = "";
@@ -407,10 +407,14 @@ function load_page(template, div, data, transition, reverse, id_group) {
 
 			if (swipe == 1) {
 				animate_div(div+extra_div_id, transition, reverse);
-			} else {
+			} 
+
+			/*
+			else {
 				$('body').html(html);
 			}
-
+			*/
+			
 			$('.icon_'+menu_icon).attr("src","assets/css/ztl_images/icon_"+menu_icon+"_red.png");
 
 			//ce so karte inicializiram skripto
