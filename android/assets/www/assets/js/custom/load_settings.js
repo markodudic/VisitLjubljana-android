@@ -159,7 +159,7 @@ function load_info(save_history)  {
 
 function load_mobile() {
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem){
-        fileSystem.root.getFile("Android/data/com.vigred.ztl/settings.json", { create: false }, fileExists, fileDoesNotExist);
+        fileSystem.root.getFile("Android/data/com.innovatif.ztl/settings.json", { create: false }, fileExists, fileDoesNotExist);
     }, getFSFail); 
 }
 
@@ -176,11 +176,11 @@ function getFSFail(evt) {
 
 function create_file() {
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
-        fileSystem.root.getDirectory("Android/data/com.vigred.ztl", {create: true, exclusive: false}, function(dir){}, fail); 
+        fileSystem.root.getDirectory("Android/data/com.innovatif.ztl", {create: true, exclusive: false}, function(dir){}, fail); 
     } , null); 
 
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
-    	fileSystem.root.getFile("Android/data/com.vigred.ztl/settings.json", {create: true, exclusive: false}, gotFileEntry, fail);
+    	fileSystem.root.getFile("Android/data/com.innovatif.ztl/settings.json", {create: true, exclusive: false}, gotFileEntry, fail);
     }, null);
 }
 
@@ -198,14 +198,14 @@ function gotFileWriter(writer) {
 
 function save_mobile_settings() {
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
-    	fileSystem.root.getFile("Android/data/com.vigred.ztl/settings.json", {create: true, exclusive: false}, gotFileEntry, fail);
+    	fileSystem.root.getFile("Android/data/com.innovatif.ztl/settings.json", {create: true, exclusive: false}, gotFileEntry, fail);
     }, null);
     load_moblie_settings();
 }
 
 function load_moblie_settings() {
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
-		fileSystem.root.getFile("Android/data/com.vigred.ztl/settings.json", null, function(fileEntry) {
+		fileSystem.root.getFile("Android/data/com.innovatif.ztl/settings.json", null, function(fileEntry) {
 			fileEntry.file(readAsText, fail);
 		}, fail);
 	} , null); 

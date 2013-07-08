@@ -382,7 +382,7 @@ function load_lang_settings() {
 
 function load_moblie_settings() {
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
-        fileSystem.root.getFile("Android/data/com.vigred.ztl/settings.json", null, function(fileEntry) {
+        fileSystem.root.getFile("Android/data/com.innovatif.ztl/settings.json", null, function(fileEntry) {
             fileEntry.file(readAsText, fail);
         }, fail);
     } , null); 
