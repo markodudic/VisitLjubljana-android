@@ -86,6 +86,52 @@ default_category_translation[3]	= "Choose category";
 default_category_translation[4]	= "Choose category";
 default_category_translation[5]	= "Choose category";
 
+var settings_translation = [];
+settings_translation[1]	= "Nastavitve";
+settings_translation[2]	= "Settings";
+settings_translation[3]	= "Settings";
+settings_translation[4]	= "Settings";
+settings_translation[5]	= "Settings";
+
+
+var my_visit_account_translation = [];
+my_visit_account_translation[1]	= "My Visit račun";
+my_visit_account_translation[2]	= "My Visit account";
+my_visit_account_translation[3]	= "My Visit account";
+my_visit_account_translation[4]	= "My Visit account";
+my_visit_account_translation[5]	= "My Visit account";
+
+
+var reminder_translation = [];
+reminder_translation[1]	= "Opomnik";
+reminder_translation[2]	= "Reminder";
+reminder_translation[3]	= "Reminder";
+reminder_translation[4]	= "Reminder";
+reminder_translation[5]	= "Reminder";
+
+
+var set_language_translation = [];
+set_language_translation[1]	= "Nastavi jezik";
+set_language_translation[2]	= "Set language";
+set_language_translation[3]	= "Set language";
+set_language_translation[4]	= "Set language";
+set_language_translation[5]	= "Set language";
+
+var rate_translation = [];
+rate_translation[1]	= "Oceni aplikacijo";
+rate_translation[2]	= "Rate appliaction";
+rate_translation[3]	= "Rate appliaction";
+rate_translation[4]	= "Rate appliaction";
+rate_translation[5]	= "Rate appliaction";
+
+var about_translation = [];
+about_translation[1]	= "O aplikaciji";
+about_translation[2]	= "About the appliaction";
+about_translation[3]	= "About appliaction";
+about_translation[4]	= "About appliaction";
+about_translation[5]	= "About appliaction";
+
+
 //prevodi mesecov za top evente
 var month_translation = [];
 

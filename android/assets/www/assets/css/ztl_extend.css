@@ -100,6 +100,7 @@ a:active {text-decoration:none;}
 
 .header_placeholder {
 	background-color:#222222;
+	height:46px;
 }
 
 .header_back {
@@ -111,12 +112,7 @@ a:active {text-decoration:none;}
 }
 
 
-.header_title_menu {
-	padding:10px 0px 5px 15px;
-	height:25px;
-	text-transform:uppercase;
-    color:#ffffff;
-}
+
 
 .header_space {
     height:10px;
@@ -448,6 +444,8 @@ div.poi_address {
 	content:url('../map/images/map_location.png');
 	border-radius:2px;
 }
+
+
 
 .ui-slider { position: relative; text-align: left; }
 .ui-slider .ui-slider-handle { position: absolute; z-index: 2; width: 1.2em; height: 1.2em; cursor: default; background-color:red;}

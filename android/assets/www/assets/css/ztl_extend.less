@@ -10,6 +10,7 @@ body {
     width:@window_width;
 }
 
+
 /*slika na seznamu*/
 .ztl_items_image {
 	width: @window_width * 0.35 * 1.1;
@@ -95,6 +96,8 @@ body {
 }
 
 .header_title_menu {
+	height:25px;
+    color:#ffffff;
 	padding:0px 0px 0px @window_width*0.05;
 	font-size:1.2em;
 	text-transform:uppercase;
@@ -468,4 +471,22 @@ ul.footer_list li{
     height:@window_height;
     width:@window_width;
     z-index:-100;
+}
+
+.ztl_settings_li {
+	width: @window_width;
+	height: @window_height * 0.125;
+	padding-left:@window_width*0.05;
+}
+
+.ztl_settings_text {
+	line-height: @window_height * 0.125;
+  	vertical-align:middle;	
+}
+
+.checkbox {
+	width:@window_width * 0.085;
+	float:right;
+	margin: @window_height*0.03 @window_width*0.1 auto auto;
+  	vertical-align:middle;	
 }

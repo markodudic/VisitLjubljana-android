@@ -1,9 +1,11 @@
+   			
+
 function load_current_settings() {
 	load_page(template_lang+'ztl_settings.html', 'ztl_settings', settings, 'fade', false);
 }
 
-function select_language() {
-	load_page('select_language.html', 'select_language', null, 'fade', false);
+function choose_language() {
+	load_page('select_language.html', 'select_language', null, 'fade', false, 0);
 }
 
 function reminder_change() {
