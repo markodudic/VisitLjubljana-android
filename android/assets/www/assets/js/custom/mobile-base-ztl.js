@@ -16,15 +16,24 @@ var xy              = new Array();
 //current position
 var current_position_xy;
 
+//phonegap in jqm morata biti oba nalozena
+
+
 document.addEventListener("deviceready", on_device_ready, false);
 function on_device_ready() {
 	console.log("*********on_device_ready");
-    document.addEventListener("backbutton", back_to_content, true);
+	//pred nalaganjem podatkov poèakamo da se cordova nalozi
+	fixContentHeight();
+	document.addEventListener("backbutton", back_to_content, true);
     pOld = new Proj4js.Point(0,0);
     init_gps();
 
     
     add_to_history("map.html");
+}
+
+function doInit() {
+    alert('Ready');
 }
 
 OpenLayers.Control.Click = OpenLayers.Class(OpenLayers.Control, {                
