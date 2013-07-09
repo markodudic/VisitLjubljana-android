@@ -30,11 +30,9 @@
 					</div>
 				</div>
 				<div class="ztl_list_content">
-						<div class="ztl_list_header">{{title}}</div>
+						<div class="ztl_list_header">{{& title}}</div>
 						<div class="ztl_list_content_text">
-							{{#post}}
-								{{address}}, {{post_number}} {{post}}
-							{{/post}}	
+							{{#address}}{{& address}},{{/address}}{{#post_number}} {{post_number}}{{/post_number}}{{#post}} {{& post}}{{/post}}
 						</div>
 						<div class="ztl_content_info_left"></div>
 				</div>

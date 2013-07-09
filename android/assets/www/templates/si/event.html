@@ -7,7 +7,7 @@
 			<!--div onClick="load_events()"><img class="header_back"></div>
 			<div class="header_title" onClick="load_events()">{{item.title}}</div-->
 			<div onClick="load_page(template_lang+'events.html', 'events', trips[0], 'fade', false, 0);"><img class="header_back"></div>
-			<div class="header_title" onClick="load_page(template_lang+'events.html', 'events', trips[0], 'fade', false, 0);">{{item.title}}</div>
+			<div class="header_title" onClick="load_page(template_lang+'events.html', 'events', trips[0], 'fade', false, 0);">{{& item.title}}</div>
 			<div class="header_dots" onClick="event_filter_toggle();"></div>
 			<div style="clear:both;"></div>
 			<div class="header_space"></div>
@@ -79,7 +79,7 @@
 						{{#venue}}
 							<br>
 							<div class="ztl_item_details_desc">
-								{{date}}<br>{{venue}}  --- <span onClick="add_to_my_visit({{item.id}},2,{{id_time}},0);">tmp_my_visit</span><br>
+								{{& date}}<br>{{& venue}}  --- <span onClick="add_to_my_visit({{item.id}},2,{{id_time}},0);">tmp_my_visit</span><br>
 							</div>
 						{{/venue}}
 						<br><br>
@@ -90,7 +90,7 @@
 						{{#pricing}}
 							<br>
 							<div class="ztl_item_details_desc">
-								{{ticket_type}}: {{price}} EUR<br>
+								{{& ticket_type}}: {{& price}} EUR<br>
 							</div>
 						{{/pricing}}
 						<br><br><br>
