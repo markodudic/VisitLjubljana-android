@@ -17,6 +17,29 @@
 	
 	<div id="verticalWrapper">
 	<div id="verticalScroller">
+	{{#evt_group_name_translation}}
+		<li class="ztl_list_li">
+			<div class="my_visit_title">
+				{{evt_group_name_translation}}
+			</div>
+			<div class="header_shadow"></div>
+		</li>
+	{{/evt_group_name_translation}}
+	
+	{{#evt}}
+		<li class="ztl_list_li">
+			<div class="ztl_list_item">
+				<div class="my_visit_content">
+					<div class="ztl_list_header">{{title}}</div>
+					<div class="ztl_list_content_text">
+						{{date}}<br>
+						{{venue}}
+					</div>
+				</div>
+			</div>
+		</li>
+	{{/evt}}
+
 	{{#poi}}
 		{{#group_name}}
 			<li class="ztl_list_li">
@@ -52,36 +75,3 @@
 	</div>
 </div>
 </script>
-
-<!--
-<li class="ztl_list_li">
-	<div class="ztl_list_item" id="ztl_trips_item_{{id}}" onClick="load_trip_content({{id}}, 'fade', true, 1)">
-		<div class="ztl_list_image">
-			<div class="ztl_list_img_crop">
-				{{#image}}
-					<img class="ztl_items_image" src="./uploads/images/{{image}}">
-				{{/image}}
-				{{^image}}
-					<img class="ztl_items_no_image" src="./uploads/noimage.png">
-				{{/image}}
-			</div>
-		</div>
-		<div class="ztl_list_content">
-				<div class="ztl_list_header">{{title}}</div>
-				<div class="ztl_list_content_text">
-					{{#address}}{{address}},{{/address}}{{#post_number}} {{post_number}}{{/post_number}}{{#post}} {{post}}{{/post}}
-				</div>
-				<div class="ztl_content_info_left"></div>
-				{{#star}}
-					<div class="ztl_star">
-						<img src="assets/css/ztl_images/star_{{star}}.png" class="img_star">
-					</div>
-				{{/star}}
-				<div class="ztl_distance"><div id="ztl_distance_value_{{id}}"></div></div>
-				<input type="hidden" name="ztl_cord_{{id}}" value="{{id}}#{{coord_x}}#{{coord_y}}">
-		</div>
-	</div>
-	<div style="clear:both;"></div>
-	<div class="black_line"></div>
-</li>
--->
