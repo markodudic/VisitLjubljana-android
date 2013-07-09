@@ -30,11 +30,11 @@ function check_update_success(results) {
 	if (settings.id_lang == 1) {
 		lang_code = "si";
 	} else if (settings.id_lang == 3) {
-		lang_code = "fr";
-	} else if (settings.id_lang == 4) {
-		lang_code = "if";
-	} else if (settings.id_lang == 5) {
 		lang_code = "de";
+	} else if (settings.id_lang == 4) {
+		lang_code = "it";
+	} else if (settings.id_lang == 5) {
+		lang_code = "fr";
 	}
 	
 	//updatam poi-je
@@ -593,14 +593,13 @@ function addslashes(string) {
 	if (string.length == 0) {
 		return string;
 	}
-	
-    return String(string)
+	return escape(string);
+    /*return String(string)
+    .replace(/&/g, '&amp;')
     .replace(/"/g, '&quot;')
-    .replace(/'/g, '&quot;')
-    .replace(/&/g, '&amp;');
-    //.replace(/</g, '&lt;')
-    //.replace(/>/g, '&gt;');
+    .replace(/'/g, '&quot;');*/
 }
+
 
 function has_tours() {
 	db.transaction(function(tx) {

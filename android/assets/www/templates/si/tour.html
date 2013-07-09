@@ -57,27 +57,24 @@
 				{{/sound}}
 				<div class="ztl_item_details">
 					<div id="ztl_item_details_description" class="ztl_item_details_title">{{ztl_item_details_description}}</div>
-					<div class="ztl_distance">&nbsp;</div>
-					<div style="clear:both;"></div>
 					<div class="grey_line" style="margin-top:10px;"></div>
-					<br>
+					
+					<div class="ztl_item_details_title" style="text-transform:uppercase;">{{ztl_item_details_description}}</div>
+					<div class="grey_line" style="margin-top:10px;"></div>
 					<div class="ztl_item_details_desc">
 						{{& item.short_description}}
-						<br><br>
 						{{& item.long_description}}
 					</div>
-					<br>
+					
 					{{#charters}}
 						<div class="ztl_item_details_title" style="text-transform:uppercase;">{{& title}}</div>
 						<div class="grey_line" style="margin-top:10px;"></div>
-						<br>
 						<div class="ztl_item_details_desc">
 							{{& content}}
 						</div>
-						<br>
 					{{/charters}}
-					<br>
 				</div>
+				<div class="ztl_distance_to_footer">&nbsp;</div>
 			</div>
 		</div>
 	</div>

@@ -38,6 +38,7 @@ function load_pois_success(results) {
     
     for (var i=0; i<len; i++){
     	//skrajsam dolzino
+    	results.rows.item(i).title = unescape(results.rows.item(i).title);
     	tmp = results.rows.item(i).title;
     	if (tmp.length > max_dolzina_title) {
     		results.rows.item(i).title = tmp.substring(0,max_dolzina_title)+"...";
@@ -56,6 +57,7 @@ function load_poi_success(results) {
 	var res = {};
     res.items = [];
     	 
+	results.rows.item(0).title = unescape(results.rows.item(0).title);
     res.items[0] = results.rows.item(0);
 
     swipe 		 = 1;
@@ -103,6 +105,9 @@ function events_success(results) {
     var tmp;
     for (var i=0; i<len; i++){
     	//skrajsam dolzino
+    	results.rows.item(i).title = unescape(results.rows.item(i).title);
+    	results.rows.item(i).date = unescape(results.rows.item(i).date);
+    	results.rows.item(i).poi_title = unescape(results.rows.item(i).poi_title);
     	tmp = results.rows.item(i).title;
     	if (tmp.length > max_dolzina_title) {
     		results.rows.item(i).title = tmp.substring(0,max_dolzina_title)+"...";
@@ -132,20 +137,19 @@ function events_success(results) {
 	trips[0].top_events_0 	= res.top_items[0];
 	trips[0].top_events_1 	= res.top_items[1];
 	trips[0].top_events_2 	= res.top_items[2];
-
-	//load_page(template_lang+'events.html', 'events', data, 'fade', false);
 }
 
 function event_category_success(results) {
 	var len = results.rows.length;
 
     for (var i=0; i<len; i++){
+    	results.rows.item(i).name = unescape(results.rows.item(i).name);
     	event_type[i] = results.rows.item(i);
     }
 }
 
 function event_category_title_success(results) {
-	event_title = results.rows.item(0).name;
+	event_title = unescape(results.rows.item(0).name);
 }
 
 function filter_events_success(results) {
@@ -154,6 +158,9 @@ function filter_events_success(results) {
     var len = results.rows.length;
     var tmp;
     for (var i=0; i<len; i++){
+    	results.rows.item(i).title = unescape(results.rows.item(i).title);
+    	results.rows.item(i).date = unescape(results.rows.item(i).date);
+    	results.rows.item(i).poi_title = unescape(results.rows.item(i).poi_title);
     	tmp = results.rows.item(i).title;
     	if (tmp.length > max_dolzina_title) {
     		results.rows.item(i).title = tmp.substring(0,max_dolzina_title)+"...";
@@ -181,6 +188,9 @@ function filter_events_success(results) {
 
 //event
 function load_event_success(results) {
+	results.rows.item(0).title = unescape(results.rows.item(0).title);
+	results.rows.item(0).intro = unescape(results.rows.item(0).intro);
+	results.rows.item(0).description = unescape(results.rows.item(0).description);
 	tmp_event_data.item = results.rows.item(0)
 
 	var tmp_query 	 = "SELECT ep.ticket_type, ep.price FROM ztl_event_pricing ep WHERE ep.id_event = "+results.rows.item(0).id+" AND ep.id_language = "+settings.id_lang+" GROUP BY ep.ticket_type, ep.price";
@@ -193,7 +203,9 @@ function load_event_pricing_success(results) {
 
 	var len = results.rows.length;
 	for (var i=0; i<len; i++){
-    	tmp_event_data.pricing[i] = results.rows.item(i);
+		results.rows.item(i).ticket_type = unescape(results.rows.item(i).ticket_type);
+		results.rows.item(i).price = unescape(results.rows.item(i).price);
+		tmp_event_data.pricing[i] = results.rows.item(i);
     }
 
     if (len > 0) {
@@ -215,7 +227,9 @@ function load_event_venue_success(results) {
 
 	var len = results.rows.length;
 	for (var i=0; i<len; i++){
-    	tmp_event_data.venue[i] = results.rows.item(i);
+		results.rows.item(i).date = unescape(results.rows.item(i).date);
+		results.rows.item(i).venue = unescape(results.rows.item(i).venue);
+		tmp_event_data.venue[i] = results.rows.item(i);
     }
 
     if (len > 0) {
@@ -241,14 +255,12 @@ function info_success(results) {
     var tmp;
     for (var i=0; i<len; i++){
     	//skrajsam dolzino
+    	results.rows.item(i).title = unescape(results.rows.item(i).title);
     	tmp = results.rows.item(i).title;
     	if (tmp.length > max_dolzina_title) {
     		results.rows.item(i).title = tmp.substring(0,max_dolzina_title)+"...";
     	}
     	
-    	//pofejkam image -- ko bo v bazi se zbrise
-    	results.rows.item(i).image = "file:///storage/emulated/0/Android/data/com.innovatif.ztl/fmpgtmp_8fwmuh.jpeg";
-
     	res.items[i] = results.rows.item(i);
     }
 
@@ -261,9 +273,8 @@ function load_info_success(results) {
 	var res = {};
     res.item = [];
 
-    //pofejkam -- pol se sam zbrise
-    results.rows.item(0).image = "file:///storage/emulated/0/Android/data/com.innovatif.ztl/fmpgtmp_8fwmuh.jpeg";
-    
+	results.rows.item(0).title = unescape(results.rows.item(0).title);
+	results.rows.item(0).content = unescape(results.rows.item(0).content);
 	res.item = results.rows.item(0);
 
 	if (swipe_dir == "left") {
@@ -284,6 +295,7 @@ function tour_list_success(results) {
     console.log(JSON.stringify(results));
 
      for (var i=0; i<len; i++){
+     	results.rows.item(i).title = unescape(results.rows.item(i).title);
         tmp = results.rows.item(i).title;
         if (tmp.length > max_dolzina_title) {
             results.rows.item(i).title = tmp.substring(0,max_dolzina_title)+"...";
@@ -301,6 +313,7 @@ function tour_success(results) {
     var tmp;
     for (var i=0; i<len; i++){
     	//skrajsam dolzino
+    	results.rows.item(i).title = unescape(results.rows.item(i).title);
     	tmp = results.rows.item(i).title;
     	if (tmp.length > max_dolzina_title) {
     		results.rows.item(i).title = tmp.substring(0,max_dolzina_title)+"...";
@@ -314,6 +327,10 @@ function tour_success(results) {
 
 //tour
 function load_tour_success(results) {
+	results.rows.item(0).title = unescape(results.rows.item(0).title);
+	results.rows.item(0).short_description = unescape(results.rows.item(0).short_description);
+	results.rows.item(0).long_description = unescape(results.rows.item(0).long_description);
+	results.rows.item(0).content = unescape(results.rows.item(0).content);
 	tmp_tours_data.item = results.rows.item(0);
 
 	var tmp_query = "SELECT ti.image FROM ztl_tour_images ti WHERE ti.id_tour = "+tmp_tours_data.item.id+" ORDER BY ti.tour_idx";
@@ -506,6 +523,14 @@ function check_my_visit(res) {
 
     	load_page(template_lang+'my_visit_list.html', 'my_visit_list', res, 'fade', false);
     }
+}
+
+
+function decode(string) {
+    return String(string)
+    .replace('&amp;', /&/g)
+    .replace('&quot;', /"/g)
+    .replace('&quot;', /'/g);
 }
 
 //sql error
