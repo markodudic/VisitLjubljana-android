@@ -101,6 +101,13 @@ my_visit_account_translation[3]	= "My Visit account";
 my_visit_account_translation[4]	= "My Visit account";
 my_visit_account_translation[5]	= "My Visit account";
 
+var my_visit_page_title_translation = [];
+my_visit_page_title_translation[1]	= "My Visit";
+my_visit_page_title_translation[2]	= "My Visit";
+my_visit_page_title_translation[3]	= "My Visit";
+my_visit_page_title_translation[4]	= "My Visit";
+my_visit_page_title_translation[5]	= "My Visit";
+
 
 var reminder_translation = [];
 reminder_translation[1]	= "Opomnik";
