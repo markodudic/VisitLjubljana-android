@@ -1,5 +1,6 @@
-var callback	= "";
-var query 		= "";
+var callback		= "";
+var query 			= "";
+var my_visit_status = 0;
 
 function generate_query(q, cb) {
 	query 		= q;
@@ -80,10 +81,6 @@ function load_map_poi_coord_success(results) {
     		}
     	}
     }
-
-    //current location -- to preberemo iz gsm -- je pofejkan zarad tega ker se drgac ne vidi na karti //me ni v LJ
-    //tmp = new Array('462704.999999999941792', '104070.000000000000000', 1, 0);
-    //points.push(tmp);
 }
 
 function load_map_poi_data_success(results) {
@@ -362,21 +359,23 @@ function last_update_success(results) {
 
 //my_visit
 function my_visit_success(results) {
-	var res 	= {};
-    res.poi 	= [];
-    res.evt 	= [];
-    res.tour 	= [];
+	my_visit_status = 0;
 	
+	var res 		 = {};
+    res.poi 		 = [];
+    res.evt 		 = [];
+    res.tour 		 = [];
+	
+    var tmp_arr 	 = [];
+	var filtered_arr = [];
+
+	var poi_wi 		 = "";
+	var evt_wi 		 = "";
+	var tour_wi 	 = "";
+
 	var j = 0;
 	var k = 0;
 	var l = 0;
-
-	var poi_wi 	= "";
-	var evt_wi 	= "";
-	var tour_wi = "";
-
-	var tmp_arr 	 = [];
-	var filtered_arr = [];
 
 	var len = results.rows.length;
 	
@@ -395,13 +394,13 @@ function my_visit_success(results) {
 
     		//j++;
     	} else if (results.rows.item(i).type == 2) {
-    		res.evt[k] 		= results.rows.item(i);
+    		//res.evt[k] 		= results.rows.item(i);
     		res.has_evt	 	= 1;
     		evt_wi			= evt_wi + results.rows.item(i).id+",";
 
     		k++;
     	} else if (results.rows.item(i).type == 3) {
-    		res.tour[l] 	= results.rows.item(i);
+    		//res.tour[l] 	= results.rows.item(i);
     		tour_wi			= tour_wi + results.rows.item(i).id+",";
 
     		res.has_tour 	= 1;
@@ -417,11 +416,12 @@ function my_visit_success(results) {
 
 
 	//mywisit poi
+	var j = 0;
     if (res.has_pois == 1) {
     	poi_wi = poi_wi+"0";
     	console.log("my_visit --- poi wi "+poi_wi);
 
-    	var tmp_query = 'SELECT zp.*, zpt.title, zcg.id_group, zpt.description FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id WHERE id IN ('+poi_wi+') AND zpt.id_language = '+settings.id_lang+' AND zp.record_status = 1 GROUP BY zp.id';
+    	var tmp_query = 'SELECT zp.*, zpt.title, zcg.id_group FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id WHERE id IN ('+poi_wi+') AND zpt.id_language = '+settings.id_lang+' AND zp.record_status = 1 GROUP BY zp.id';
 		
     	db.transaction(function(tx) {
 			 tx.executeSql(tmp_query, [], function(tx, res_poi) {
@@ -429,33 +429,48 @@ function my_visit_success(results) {
 
 			 	var poi_len = res_poi.rows.length;
 			 	for (var pj = 0; pj<filtered_arr.length; pj++) {
-			 		console.log("my_visit --- grupa " +filtered_arr[pj]);
-			 		console.log("my_visit --- gurup name " +  main_menu[mm_pic_group[filtered_arr[pj]]]);
+			 		//console.log("my_visit --- grupa " +filtered_arr[pj]);
+			 		//console.log("my_visit --- gurup name " +  main_menu[mm_pic_group[filtered_arr[pj]]]);
 
-			 		//res.poi[j] = main_menu[mm_pic_group[filtered_arr[pj]]];
-			 		//res.poi[j].group_title = main_menu[mm_pic_group[filtered_arr[pj]]];
-			 		//j++;
+			 		var tmp_title = {};
+			 		tmp_title.group_name = main_menu[mm_pic_group[filtered_arr[pj]]];
+
+			 		res.poi[j] = tmp_title;
+			 		j++;
 
 			 		for (var pi = 0; pi<poi_len; pi++) {
 			 			
 			 			if (res_poi.rows.item(pi).id_group == filtered_arr[pj]) {
-			 				console.log("my_visit --- group item" + JSON.stringify(res_poi.rows.item(pi).title));
+			 				//console.log("my_visit --- group item" + JSON.stringify(res_poi.rows.item(pi).title));
 
-			 				//res.poi[j].group_title 	= "";
-			 				//res.poi[j]				= res_poi.rows.item(pi);
-
-			 				//j++;
+			 				res_poi.rows.item(pi).group_name = "";
+			 				res.poi[j]	= res_poi.rows.item(pi);
+			 				j++;
 			 			}
 			 		}
-			 	}		 	
+			 	}
+
+    		 	my_visit_status++;
+    		 	check_my_visit(res);
 			 });
 		});
+    } else {
+    	my_visit_status++;
+    	check_my_visit(res);
     }
-
-    console.log("my_visit --- "+JSON.stringify(res));
-
-    //console.log("my_visit --- "+JSON.stringify(res));
 } 
+
+function check_my_visit(res) {
+	console.log("my_visit --- status ====== " + my_visit_status);
+
+	console.log("my_visit --- results");
+    console.log("my_visit --- "+JSON.stringify(res.poi));
+
+    //nalozim seznam
+    if (my_visit_status == 1) {
+    	load_page(template_lang+'my_visit_list.html', 'my_visit_list', res, 'fade', false);
+    }
+}
 
 //sql error
 function errorCB(err) {

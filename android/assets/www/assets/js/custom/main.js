@@ -375,6 +375,11 @@ function load_page(template, div, data, transition, reverse, id_group) {
 			}
 
 			
+			if (div == "my_visit_list") {
+				data.page_title = my_visit_page_title_translation[settings.id_lang];
+				data.dots 		= 1;
+			}
+
 			var res = $(temp).filter('#tpl_'+div).html();
 			
 			if (data != null) {
@@ -460,7 +465,7 @@ function doTouchLogic() {
     var duration  = touchEndTime - touchStartTime;
 
     
-    if (duration > 120 && distance > 120) {
+    if (duration > 170 && distance > 120) {
          if (direction > 0) {
         	 swipe_left_handler();
          } else {
@@ -576,26 +581,6 @@ function dprun(t) {
 		}
 	);	
 }
-
-/*
-function play_location_sound() {
-	swipe = 0;
-	
-	if (my_media != null) {
-		my_media.stop();
-		my_media.release();
-		
-		my_media 	= null;
-		media_timer = null;
-		
-	} else {
-		$.getScript('./assets/js/custom/play_media_file.js', function () {
-			
-			load_media_file(file);
-		});
-	}
-}
-*/
 
 function load_voice_guide(save_history) {
 	if (save_history == 1)  {
