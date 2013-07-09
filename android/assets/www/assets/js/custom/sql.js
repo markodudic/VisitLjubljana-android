@@ -280,6 +280,24 @@ function load_info_success(results) {
 }
 
 //touri
+function tour_list_success(results) {
+    var res = {};
+    res.items = [];
+    var len = results.rows.length;
+
+    console.log(JSON.stringify(results));
+
+     for (var i=0; i<len; i++){
+        tmp = results.rows.item(i).title;
+        if (tmp.length > max_dolzina_title) {
+            results.rows.item(i).title = tmp.substring(0,max_dolzina_title)+"...";
+        }
+        res.items[i] = results.rows.item(i);
+    }
+
+    console.log(JSON.stringify(res));
+}
+
 function tour_success(results) {
 	var res = {};
     res.items = [];
