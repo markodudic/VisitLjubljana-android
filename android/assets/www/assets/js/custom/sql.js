@@ -44,7 +44,7 @@ function load_pois_success(results) {
     	res.items[i] = results.rows.item(i);
     	trips_group = results.rows.item(i).id_group;
     }
-    console.log(trips_group+"++++"+JSON.stringify(res));
+
     trips[trips_group] = res;
     //load_page(template_lang+'trips.html', 'trips', res, 'fade', false);
 }
@@ -465,6 +465,12 @@ function errorCB(err) {
 
 //ob prvem zagonu napolni bazo
 function populate_db_firstime() {
+	db.transaction(function(tx) {
+		tx.executeSql('select sqlite_version() AS sqlite_version;', [], function(tx, res) {
+			console.log('0 >>>>>>>>>> sqlite_version ' + res.rows.item(0).sqlite_version);
+		});
+	});
+	
 	$.getScript('./assets/install_db/ztl_updates.js', function () {
 		db.transaction(populateDB_ztl_updates, errorCB, function(tx) {
 			db.transaction(function(tx) {
@@ -654,8 +660,8 @@ function populate_db_firstime() {
 				});
 			});
 		});
-	});
-	
+	}); 
+
 	$.getScript('./assets/install_db/ztl_idx.js', function () {
         db.transaction(populateDB_ztl_tour_images, errorCB, function(tx) {
             console.log('99 >>>>>>>>>> ztl_idx');
@@ -664,4 +670,5 @@ function populate_db_firstime() {
             load_mobile();
         });
     });
+
 }
