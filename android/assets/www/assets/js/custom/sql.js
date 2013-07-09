@@ -626,11 +626,31 @@ function populate_db_firstime() {
 		});
 	});
 
+	$.getScript('./assets/install_db/ztl_tour_category.js', function () {
+		db.transaction(populateDB_ztl_tour_category, errorCB, function(tx) {
+			db.transaction(function(tx) {
+				tx.executeSql('select count(*) as cnt from ztl_tour_category;', [], function(tx, res) {
+					console.log('22 >>>>>>>>>> ztl_tour_category res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+				});
+			});
+		});
+	});
+	
+	$.getScript('./assets/install_db/ztl_tour_tour_category.js', function () {
+		db.transaction(populateDB_ztl_tour_tour_category, errorCB, function(tx) {
+			db.transaction(function(tx) {
+				tx.executeSql('select count(*) as cnt from ztl_tour_tour_category;', [], function(tx, res) {
+					console.log('23 >>>>>>>>>> ztl_tour_tour_category res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+				});
+			});
+		});
+	});
+	
 	$.getScript('./assets/install_db/ztl_tour_translation.js', function () {
 		db.transaction(populateDB_ztl_tour_translation, errorCB, function(tx) {
 			db.transaction(function(tx) {
 				tx.executeSql('select count(*) as cnt from ztl_tour_translation;', [], function(tx, res) {
-					console.log('22 >>>>>>>>>> ztl_tour_translation res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+					console.log('24 >>>>>>>>>> ztl_tour_translation res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
 				});
 			});
 		});
@@ -640,7 +660,7 @@ function populate_db_firstime() {
 		db.transaction(populateDB_ztl_tour_chaters, errorCB, function(tx) {
 			db.transaction(function(tx) {
 				tx.executeSql('select count(*) as cnt from ztl_tour_chaters;', [], function(tx, res) {
-					console.log('23 >>>>>>>>>> ztl_tour_chaters res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+					console.log('25 >>>>>>>>>> ztl_tour_chaters res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
 				});
 			});
 		});
@@ -650,7 +670,7 @@ function populate_db_firstime() {
 		db.transaction(populateDB_ztl_tour_images, errorCB, function(tx) {
 			db.transaction(function(tx) {
 				tx.executeSql('select count(*) as cnt from ztl_tour_images;', [], function(tx, res) {
-					console.log('24 >>>>>>>>>> ztl_tour_images res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+					console.log('26 >>>>>>>>>> ztl_tour_images res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
 				});
 			});
 		});
