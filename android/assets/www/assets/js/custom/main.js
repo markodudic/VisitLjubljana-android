@@ -6,6 +6,9 @@ var local_db	  = 0;
 //footer
 var footer		  = "";
 
+//event_filter
+var event_filter  = "";
+
 //navigation
 var current		  = 0;
 var active_menu	  = 0;
@@ -124,6 +127,7 @@ function reset_cache() {
 function set_cache() {
     localStorage.setItem('trips', JSON.stringify(trips));
     localStorage.setItem('trips_title', JSON.stringify(trips_title));
+    localStorage.setItem('event_type', JSON.stringify(event_type));
     
 }
 
@@ -137,6 +141,9 @@ function get_cache() {
 		}
 		if (localStorage.getItem('trips_title') != null) {
 			trips_title = JSON.parse(localStorage.getItem('trips_title'));
+		}
+		if (localStorage.getItem('event_type') != null) {
+			event_type = JSON.parse(localStorage.getItem('event_type'));
 		}
 	}
 }
@@ -240,12 +247,18 @@ function save_swipe_history(index, direction) {
 */
 
 function load_page(template, div, data, transition, reverse, id_group) {
+	console.log("load page="+id_group+":"+template);
+
 	if (footer == "") {
-		load_footer();
+		footer = load_template("ztl_footer.html", "#tpl_ztl_footer");
 	}
 
 	if (media == "") {
-		load_media();
+		media = load_template("ztl_media_player.html", "#tpl_ztl_media_player");
+	}
+	
+	if (event_filter == "") {
+		event_filter = load_template("event_filter.html", "#tpl_event_filter");
 	}
 	
 	if (id_group != undefined) {
@@ -268,6 +281,7 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				data.extra_div_id 	= id_group;
 				data.page_title 	= trips_title[id_group];
 			} else if (div == 'events') {
+				data.categories 	= event_type;
 				data.page_title 	= trips_title[id_group];
 				data.map_button 	= map_translation[settings.id_lang];
 				data.events_title 	= events_translation[settings.id_lang];
@@ -276,12 +290,14 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				$('body').html("");
 			} else if (div == 'filtered_events') {
 				data.page_title 	= trips_title[id_group];
+				data.categories 	= event_type;
+				data.page_title 	= trips_title[id_group];
 				data.events_title 	= events_translation[settings.id_lang];
 				data.default_category = default_category_translation[settings.id_lang];
 				data.potrdi_button 	= confirm_translation[settings.id_lang];
 				$('body').html("");
 			} else if (div == 'event') {
-				data.categories = event_type;
+				data.categories 				= event_type;
 				data.ztl_item_details_title 	= title_translation[settings.id_lang];
 				data.events_title 				= events_translation[settings.id_lang];
 				data.ztl_item_details_venue 	= venue_translation[settings.id_lang];
@@ -289,6 +305,7 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				data.default_category 			= default_category_translation[settings.id_lang];
 				data.guide_button				= voice_guide_translation_full[settings.id_lang];
 				data.potrdi_button 				= confirm_translation[settings.id_lang];
+				data.map_button 				= map_translation[settings.id_lang];
 				extra_div_id = "_"+data.item.id;
 				if (data.item.title.length>max_dolzina_naslov) {
 					data.item.title=data.item.title.substring(0,max_dolzina_naslov)+"...";
@@ -366,6 +383,11 @@ function load_page(template, div, data, transition, reverse, id_group) {
 			}
 
 			html = html.replace('[[[ztl_footer]]]', footer);
+			
+			if ((div == 'events') || (div == 'event') || (div == 'filtered_events')) {
+				var html_event_filter = Mustache.to_html(event_filter, data);
+				html = html.replace('[[[event_filter]]]', html_event_filter);
+			}
 
 			$('body').html(html);
 
@@ -477,17 +499,20 @@ function i_scroll(div_id) {
 	myScroll = new iScroll(div_id);
 }
 
-function load_footer() {
+function load_template(src, tpl) {
+	var tmp;
 	$.ajax({
 		type:"GET",
-		url:template_root+template_lang+"ztl_footer.html",
+		url:template_root+template_lang+src,
 		cache:false,
 		async:false,
 		dataType: 'html',
 		success:function(temp){
-			footer = $(temp).filter('#tpl_ztl_footer').html();
+			tmp = $(temp).filter(tpl).html();
 		}
 	});
+	//console.log("TMP="+tmp);
+	return tmp;
 }
 
 function select_language(id) {
@@ -521,18 +546,6 @@ function edit_settings() {
     });
 }
 
-function load_media() {
-	$.ajax({
-		type:"GET",
-		url:template_root+template_lang+"ztl_media_player.html",
-		cache:false,
-		async:false,
-		dataType: 'html',
-		success:function(temp){
-			media = $(temp).filter('#tpl_ztl_media_player').html();
-		}
-	});
-}
 
 function dprun(t) {
 	var currentField = $(t);
@@ -593,7 +606,7 @@ function show_spinner() {
 			  corners: 1, // Corner roundness (0..1)
 			  rotate: 0, // The rotation offset
 			  direction: 1, // 1: clockwise, -1: counterclockwise
-			  color: '#ffff00', // #rgb or #rrggbb
+			  color: '#ff0000', // #rgb or #rrggbb
 			  speed: 1, // Rounds per second
 			  trail: 60, // Afterglow percentage
 			  shadow: false, // Whether to render a shadow
