@@ -241,9 +241,6 @@ function save_swipe_history(index, direction) {
 */
 
 function load_page(template, div, data, transition, reverse, id_group) {
-	console.log("load page="+id_group+":"+template+":"+div+":"+swipe);
-	//console.log("load page="+JSON.stringify(data));
-
 	if (footer == "") {
 		load_footer();
 	}
@@ -268,8 +265,8 @@ function load_page(template, div, data, transition, reverse, id_group) {
 			var extra_div_id = "";
 			
 			if (div == 'trips') {
-				extra_div_id 		= "_"+group;
-				data.extra_div_id 	= group;
+				extra_div_id 		= "_"+id_group;
+				data.extra_div_id 	= id_group;
 				data.page_title 	= trips_title[id_group];
 			} else if (div == 'events') {
 				data.page_title 	= trips_title[id_group];

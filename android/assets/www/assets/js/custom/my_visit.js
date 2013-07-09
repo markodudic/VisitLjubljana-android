@@ -1,4 +1,9 @@
 function add_to_my_visit(id, type, time, location) {
+	console.log("my_visit --- "+ id);
+	console.log("my_visit --- "+ type);
+	console.log("my_visit --- "+ time);
+	console.log("my_visit --- "+ location);
+
 	var tmp_query      = "INSERT OR REPLACE INTO ztl_my_visit (id, main_group, type, time, location) VALUES ("+id+", "+selected_group+", "+type+", "+time+", "+location+");";
     db.transaction(function(tx) {
 		 tx.executeSql(tmp_query, [], function(tx, res) {});
