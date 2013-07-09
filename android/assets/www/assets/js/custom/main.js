@@ -300,6 +300,7 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				data.categories 				= event_type;
 				data.ztl_item_details_title 	= title_translation[settings.id_lang];
 				data.events_title 				= events_translation[settings.id_lang];
+				data.ztl_item_details_description = description_translation[settings.id_lang];
 				data.ztl_item_details_venue 	= venue_translation[settings.id_lang];
 				data.ztl_item_details_price 	= price_translation[settings.id_lang];
 				data.default_category 			= default_category_translation[settings.id_lang];
@@ -328,6 +329,7 @@ function load_page(template, div, data, transition, reverse, id_group) {
 					data.item.title=data.item.title.substring(0,max_dolzina_naslov)+"...";
 				}
 			} else if (div == 'trip') {
+				data.ztl_item_details_description = description_translation[settings.id_lang];
 				data.map_button 				= map_translation[settings.id_lang];
 				data.ztl_item_details_title 	= title_translation[settings.id_lang];
 				data.guide_button				= voice_guide_translation_full[settings.id_lang];

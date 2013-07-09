@@ -61,41 +61,36 @@
 					<div class="sound_txt">{{guide_button}}</div>
 				</div>
 				{{/sound}}
+
 				<div class="ztl_item_details">
-					<div id="ztl_item_details_title" class="ztl_item_details_title">{{ztl_item_details_title}}</div>
-					<div class="ztl_distance">&nbsp;</div>
-					<div style="clear:both;"></div>
+					<div class="ztl_item_details_title" style="text-transform:uppercase;">{{ztl_item_details_description}}</div>
 					<div class="grey_line" style="margin-top:10px;"></div>
-					<br>
 					<div class="ztl_item_details_desc">
 						{{& item.intro}}
-						<br><br>
 						{{& item.description}}
-						<br><br>
 					</div>
+
 					{{#has_venue}}
 						<div id="ztl_item_details_venue" class="ztl_item_details_title" style="text-transform:uppercase;">{{ztl_item_details_venue}}</div>
 						<div class="grey_line" style="margin-top:10px;"></div>
 						{{#venue}}
-							<br>
 							<div class="ztl_item_details_desc">
 								{{& date}}<br>{{& venue}}  --- <span onClick="add_to_my_visit({{item.id}},2,{{id_time}},0);">tmp_my_visit</span><br>
 							</div>
 						{{/venue}}
-						<br><br>
 					{{/has_venue}}
+
 					{{#has_pricing}}
 						<div id="ztl_item_details_price" class="ztl_item_details_title" style="text-transform:uppercase;">{{ztl_item_details_price}}</div>
 						<div class="grey_line" style="margin-top:10px;"></div>
 						{{#pricing}}
-							<br>
 							<div class="ztl_item_details_desc">
-								{{& ticket_type}}: {{& price}} EUR<br>
+								{{& ticket_type}}: {{& price}}<br>
 							</div>
 						{{/pricing}}
-						<br><br><br>
 					{{/has_pricing}}
 				</div>
+				<div class="ztl_distance_to_footer">&nbsp;</div>
 			</div>
 		</div>
 	</div>
