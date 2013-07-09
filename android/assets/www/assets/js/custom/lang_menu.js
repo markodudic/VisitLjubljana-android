@@ -153,6 +153,13 @@ synhronization_desc_translation[3]	= "Synchronization";
 synhronization_desc_translation[4]	= "Synchronization";
 synhronization_desc_translation[5]	= "Synchronization";
 
+var synronization_finished_translation = [];
+synronization_finished_translation[1]	= "Sinhronizacija končana";
+synronization_finished_translation[2]	= "Synhronization finished";
+synronization_finished_translation[3]	= "Synhronization finished";
+synronization_finished_translation[4]	= "Synhronization finished";
+synronization_finished_translation[5]	= "Synhronization finished";
+
 
 var synhronization_button_translation = [];
 synhronization_button_translation[1]	= "PRENESI PODATKE";
@@ -190,6 +197,12 @@ about_desc_translation[3]	= "The development of this application has been co-fin
 about_desc_translation[4]	= "The development of this application has been co-financed by EU, ...";
 about_desc_translation[5]	= "The development of this application has been co-financed by EU, ...";
 
+var wifi_connection_translation = [];
+wifi_connection_translation[1]	= "Potrebuješ WIFI povezavo";
+wifi_connection_translation[2]	= "You need wifi connection";
+wifi_connection_translation[3]	= "You need wifi connection";
+wifi_connection_translation[4]	= "You need wifi connection";
+wifi_connection_translation[5]	= "You need wifi connection";
 
 //prevodi mesecov za top evente
 var month_translation = [];

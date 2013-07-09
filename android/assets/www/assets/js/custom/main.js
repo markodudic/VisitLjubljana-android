@@ -99,9 +99,11 @@ function on_device_ready() {
 		localStorage.setItem('history', JSON.stringify(tmp_history));
 		localStorage.setItem('first_run', 0);
 	}
+
 }
 
 function reset_cache() {
+	show_spinner();
 	
 	load_main_menu(); 
 	
@@ -116,6 +118,8 @@ function reset_cache() {
     load_voice_guide(0);
     
     set_cache();
+    
+    hide_spinner();
 }
 
 function set_cache() {
@@ -125,7 +129,7 @@ function set_cache() {
 }
 
 function get_cache() { 
-	console.log("GET CACHE="+localStorage.getItem('trips'));
+	console.log("GET CACHE");
 	if (localStorage.getItem('trips') == null) {
 		reset_cache();
 	} else {
@@ -172,7 +176,7 @@ function swipe_right_handler() {
 				current = res.items[j]['id'];
 				
 				if (swipe_group == 1) {
-					load_page(template_lang+'trip.html', 'div_trip', res.items[j], 'slide', true, selected_group);
+					load_page(template_lang+'trip.html', 'trip', res.items[j], 'slide', true, selected_group);
 				} else if (swipe_group == 2) {
 					swipe_dir = "right";
 					load_event(res.items[j].id);
@@ -207,7 +211,7 @@ function swipe_left_handler() {
 			current = res.items[j]['id'];
 
 			if (swipe_group == 1) {
-				load_page(template_lang+'trip.html', 'div_trip', res.items[j], 'slide', false, selected_group);
+				load_page(template_lang+'trip.html', 'trip', res.items[j], 'slide', false, selected_group);
 			} else if (swipe_group == 2) {
 				swipe_dir = "left";
 				load_event(res.items[j].id);
@@ -262,67 +266,55 @@ function load_page(template, div, data, transition, reverse, id_group) {
 		success:function(temp){
 			var menu_icon 	 = 3;
 			var extra_div_id = "";
-
-			if (data!=null && settings.id_lang!=undefined) {
-				data.guide_button				= voice_guide_translation_full[settings.id_lang];
-				data.map_button 				= map_translation[settings.id_lang];
-				data.ztl_item_details_title 	= title_translation[settings.id_lang];
-				data.ztl_item_details_description = description_translation[settings.id_lang];
-				data.ztl_item_details_venue 	= venue_translation[settings.id_lang];
-				data.ztl_item_details_price 	= price_translation[settings.id_lang];
-				data.potrdi_button 				= confirm_translation[settings.id_lang];
-				data.events_title 				= events_translation[settings.id_lang];
-				data.default_category 			= default_category_translation[settings.id_lang];
-			}
-		
 			
 			if (div == 'trips') {
 				extra_div_id 		= "_"+group;
 				data.extra_div_id 	= group;
 				data.page_title 	= trips_title[id_group];
-			}
-
-			if (div == 'events') {
+			} else if (div == 'events') {
 				data.page_title 	= trips_title[id_group];
+				data.map_button 	= map_translation[settings.id_lang];
+				data.events_title 	= events_translation[settings.id_lang];
+				data.default_category = default_category_translation[settings.id_lang];
+				data.potrdi_button 	= confirm_translation[settings.id_lang];
 				$('body').html("");
-			}
-
-			if (div == 'filtered_events') {
+			} else if (div == 'filtered_events') {
 				data.page_title 	= trips_title[id_group];
+				data.events_title 	= events_translation[settings.id_lang];
+				data.default_category = default_category_translation[settings.id_lang];
+				data.potrdi_button 	= confirm_translation[settings.id_lang];
 				$('body').html("");
-			}
-			 
-			if (div == 'event') {
+			} else if (div == 'event') {
 				data.categories = event_type;
+				data.ztl_item_details_title 	= title_translation[settings.id_lang];
+				data.events_title 				= events_translation[settings.id_lang];
+				data.ztl_item_details_venue 	= venue_translation[settings.id_lang];
+				data.ztl_item_details_price 	= price_translation[settings.id_lang];
+				data.default_category 			= default_category_translation[settings.id_lang];
+				data.guide_button				= voice_guide_translation_full[settings.id_lang];
+				data.potrdi_button 				= confirm_translation[settings.id_lang];
 				extra_div_id = "_"+data.item.id;
 				if (data.item.title.length>max_dolzina_naslov) {
 					data.item.title=data.item.title.substring(0,max_dolzina_naslov)+"...";
 				}
-			}
-
-			if (div == 'tour') {
+			} else 	if (div == 'tour') {
+				data.ztl_item_details_description = description_translation[settings.id_lang];
+				data.guide_button				= voice_guide_translation_full[settings.id_lang];
 				extra_div_id 		= "_"+data.item.id;
 				if (data.item.title.length>max_dolzina_naslov) {
 					data.item.title=data.item.title.substring(0,max_dolzina_naslov)+"...";
 				}
-			}
-			
-			if (div == 'tours') {
+			} else if (div == 'tours') {
 				data.page_title 	= trips_title[id_group];
-			}
-
-			if (div == 'infos') {
+			} else if (div == 'infos') {
 				data.page_title 	= trips_title[id_group];
-			}
-
-			if (div == 'info') {
+			} else if (div == 'info') {
+				data.ztl_item_details_description = description_translation[settings.id_lang];
 				extra_div_id 		= "_"+data.item.id;
 				if (data.item.title.length>max_dolzina_naslov) {
 					data.item.title=data.item.title.substring(0,max_dolzina_naslov)+"...";
 				}
-			}
-
-			if (voice_guide == 1)  {
+			} else if (voice_guide == 1)  {
 				extra_div_id 		= "_voice_guide";
 				data.extra_div_id 	= "voice_guide";
 				data.page_title 	= voice_guide_translation[settings.id_lang];
@@ -330,9 +322,10 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				
 				menu_icon 	= 2;
 				voice_guide = 0;
-			}
-
-			if (div == 'div_trip') {
+			} else if (div == 'trip') {
+				data.map_button 				= map_translation[settings.id_lang];
+				data.ztl_item_details_title 	= title_translation[settings.id_lang];
+				data.guide_button				= voice_guide_translation_full[settings.id_lang];
 				data.tmi = tmi;
 				if (data.title.length>max_dolzina_naslov) {
 					data.title=data.title.substring(0,max_dolzina_naslov)+"...";
@@ -340,13 +333,9 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				if (data.star != 0) {
 					data.shadow="true";
 				}
-			}
-
-			if (div == 'main_menu') {
+			} else if (div == 'main_menu') {
 				view_main_menu = 1;
-			}
-			
-			if (div == 'ztl_settings') {
+			} else if (div == 'ztl_settings') {
 				menu_icon 	= 5;
 				data = {};
 				data.title 				= settings_translation[settings.id_lang];
@@ -356,26 +345,18 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				data.synchronization	= synchronization_translation[settings.id_lang];
 				data.rate 				= rate_translation[settings.id_lang];
 				data.about				= about_translation[settings.id_lang];
-			}
-			
-			if (div == 'ztl_synhronization') {
+			} else if (div == 'ztl_synhronization') {
 				data = {};
 				data.synhronization_title 	= synhronization_title_translation[settings.id_lang];
 				data.synhronization_desc 	= synhronization_desc_translation[settings.id_lang];
 				data.synhronization_button 	= synhronization_button_translation[settings.id_lang];
-				
-			}
-
-			if (div == 'ztl_about') {
+			} else if (div == 'ztl_about') {
 				data = {};
 				data.about_title	= about_translation[settings.id_lang];
 				data.about_version 	= about_version_translation[settings.id_lang];
 				data.about_contact 	= about_contact_translation[settings.id_lang];
 				data.about_desc		= about_desc_translation[settings.id_lang];
-			}
-
-			
-			if (div == "my_visit_list") {
+			} else if (div == "my_visit_list") {
 				data.page_title = my_visit_page_title_translation[settings.id_lang];
 				data.dots 		= 1;
 			}
@@ -395,7 +376,7 @@ function load_page(template, div, data, transition, reverse, id_group) {
 			if (swipe == 1) {
 				if (div != "main_menu") {
 					var ts_div = "";
-					if (div == 'div_trip') {
+					if (div == 'trip') {
 						ts_div 		= div+"_"+data['id'];
 						div 		= div+"_"+data['id'];
 						swipe_group = 1;
@@ -594,4 +575,43 @@ function load_voice_guide(save_history) {
 	var tmp_callback	= "load_pois_success";
 	
 	generate_query(tmp_query, tmp_callback);
+}
+
+function do_synhronization() {
+	if (navigator.network.connection.type == Connection.WIFI) {
+		check_updates();
+	} else {
+	    alert(wifi_connection_translation[settings.id_lang]);
+	}
+
+}
+
+var spinner; 
+	
+function show_spinner() {
+	var opts = {
+			  lines: 13, // The number of lines to draw
+			  length: window.innerWidth/8, // The length of each line
+			  width: window.innerWidth/24, // The line thickness
+			  radius: 30, // The radius of the inner circle
+			  corners: 1, // Corner roundness (0..1)
+			  rotate: 0, // The rotation offset
+			  direction: 1, // 1: clockwise, -1: counterclockwise
+			  color: '#ffff00', // #rgb or #rrggbb
+			  speed: 1, // Rounds per second
+			  trail: 60, // Afterglow percentage
+			  shadow: false, // Whether to render a shadow
+			  hwaccel: false, // Whether to use hardware acceleration
+			  className: 'spinner', // The CSS class to assign to the spinner
+			  zIndex: 2e9, // The z-index (defaults to 2000000000)
+			  top: 'auto', // Top position relative to parent in px
+			  left: 'auto' // Left position relative to parent in px
+			};
+	var target = document.getElementById('body');
+	spinner = new Spinner(opts).spin(target);
+
+}
+
+function hide_spinner() {
+	spinner.stop();
 }

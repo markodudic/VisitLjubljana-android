@@ -64,7 +64,7 @@ function load_poi_success(results) {
 	media_length = parseInt(results.rows.item(0).media_duration_value);
 
 
-	load_page(template_lang+'trip.html', 'div_trip', res.items[0], 'fade', true);
+	load_page(template_lang+'trip.html', 'trip', res.items[0], 'fade', true);
 }
 
 //map poi
@@ -351,9 +351,11 @@ function last_update_success(results) {
 	last_update.setMinutes(59);
 	last_update.setSeconds(59);
 	var today = new Date();
-	console.log("LAST UPDATE= "+last_update+":"+today);
 	if (last_update < today)  {
 		update_db();
+	} else {
+		alert(synronization_finished_translation[settings.id_lang]);
+		edit_settings();
 	}
 }
 
