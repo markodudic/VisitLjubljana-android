@@ -253,7 +253,6 @@ function fail(error) {
 }
 
 function check_updates() {
-	console.log("CHECK UPDATES");
 	var tmp_query    = "SELECT last_update AS lu FROM ztl_updates WHERE id_language = "+settings.id_lang;
     var tmp_callback = "last_update_success";
     generate_query(tmp_query, tmp_callback);

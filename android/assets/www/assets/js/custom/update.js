@@ -16,13 +16,16 @@ function is_updt_finished() {
 		db.transaction(function(tx) {tx.executeSql(sql, [], function(tx, res) {});});
 		
 		updt_finished = 0;
-		alert("synhronization finished");
+		spinner.stop();
+		alert(synronization_finished_translation[settings.id_lang]);
+		edit_settings();		
 	}
 }
 
 
 function check_update_success(results) {
 	console.log("**********update**************"+localStorage.getItem('first_synhronization'));
+	show_spinner();
 	var lang_code = "en";
 	if (settings.id_lang == 1) {
 		lang_code = "si";
