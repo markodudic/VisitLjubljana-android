@@ -132,7 +132,6 @@ function events_success(results) {
 	trips[0].top_events_0 	= res.top_items[0];
 	trips[0].top_events_1 	= res.top_items[1];
 	trips[0].top_events_2 	= res.top_items[2];
-	trips[0].categories 	= event_type;
 
 	//load_page(template_lang+'events.html', 'events', data, 'fade', false);
 }
@@ -168,19 +167,16 @@ function filter_events_success(results) {
     }
 
     res.page_sub_title 		= event_title;
-
-
     res.page_sub_title_date	= event_date_from;
     
     if (event_date_to != "") {
     	res.page_sub_title_date = res.page_sub_title_date +" - "+event_date_to;
     }
 
-    res.categories 	= event_type;
+    //res.categories 	= event_type;
     trips[5] 			= res;
-    trips[5].categories 			= event_type;
     
-    load_page(template_lang+'events_filtered.html', 'filtered_events', trips[5], 'fade', false);
+    load_page(template_lang+'events_filtered.html', 'filtered_events', trips[5], 'fade', false, 0);
 }
 
 //event
