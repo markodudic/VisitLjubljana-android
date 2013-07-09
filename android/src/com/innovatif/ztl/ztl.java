@@ -23,6 +23,8 @@ import android.os.Bundle;
 
 import org.apache.cordova.*;
 
+import com.google.analytics.tracking.android.EasyTracker;
+
 public class ztl extends DroidGap
 {
     @Override
@@ -35,5 +37,8 @@ public class ztl extends DroidGap
         appView.setVerticalScrollBarEnabled(false);
         appView.setHorizontalScrollBarEnabled(false);
        
+        //analytics
+        EasyTracker.getInstance().setContext(this);
+        EasyTracker.getInstance().activityStart(this); // Add this method.
     }
 }
