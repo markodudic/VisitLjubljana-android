@@ -327,14 +327,6 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				if (data.item.title.length>max_dolzina_naslov) {
 					data.item.title=data.item.title.substring(0,max_dolzina_naslov)+"...";
 				}
-			} else if (voice_guide == 1)  {
-				extra_div_id 		= "_voice_guide";
-				data.extra_div_id 	= "voice_guide";
-				data.page_title 	= voice_guide_translation[settings.id_lang];
-				data.dots 			= 1;
-				
-				menu_icon 	= 2;
-				voice_guide = 0;
 			} else if (div == 'trip') {
 				data.map_button 				= map_translation[settings.id_lang];
 				data.ztl_item_details_title 	= title_translation[settings.id_lang];
@@ -374,6 +366,16 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				data.dots 		= 1;
 			}
 
+			if (voice_guide == 1)  {
+				extra_div_id 		= "_voice_guide";
+				data.extra_div_id 	= "voice_guide";
+				data.page_title 	= voice_guide_translation[settings.id_lang];
+				data.dots 			= 1;
+				
+				menu_icon 	= 2;
+				voice_guide = 0;
+			} 
+			
 			var res = $(temp).filter('#tpl_'+div).html();
 			
 			if (data != null) {
