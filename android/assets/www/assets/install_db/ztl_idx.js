@@ -11,7 +11,8 @@ function populateDB_ztl_tour_images(tx) {
 	tx.executeSql('CREATE INDEX ztl_category_group__id_category ON ztl_category_group (id_category)');
 	tx.executeSql('CREATE INDEX ztl_category_group__id_group ON ztl_category_group (id_group)');
 
-	tx.executeSql('CREATE INDEX ztl_event__id ON ztl_poi (id)');
+	tx.executeSql('CREATE INDEX ztl_event__id ON ztl_event (id)');
+	tx.executeSql('CREATE INDEX ztl_event__record_status ON ztl_event (record_status)');
 	tx.executeSql('CREATE INDEX ztl_event_translation__id_event ON ztl_event_translation (id_event)');
 	tx.executeSql('CREATE INDEX ztl_event_translation__id_language ON ztl_event_translation (id_language)');
 	tx.executeSql('CREATE INDEX ztl_event_category__id ON ztl_event_category (id)');
@@ -23,7 +24,7 @@ function populateDB_ztl_tour_images(tx) {
 	tx.executeSql('CREATE INDEX ztl_event_timetable__id_event ON ztl_event_timetable (id_event)');
 	tx.executeSql('CREATE INDEX ztl_event_timetable__venue_id ON ztl_event_timetable (venue_id)');
 
-	tx.executeSql('CREATE INDEX ztl_tour__id ON ztl_poi (id)');
+	tx.executeSql('CREATE INDEX ztl_tour__id ON ztl_tour (id)');
 	tx.executeSql('CREATE INDEX ztl_tour_category__id ON ztl_tour_category (id)');
 	tx.executeSql('CREATE INDEX ztl_tour_category__id_language ON ztl_tour_category (id_language)');
 	tx.executeSql('CREATE INDEX ztl_tour_tour_category__id_tour ON ztl_tour_tour_category (id_tour)');
