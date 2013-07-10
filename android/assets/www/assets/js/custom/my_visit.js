@@ -13,19 +13,30 @@ function load_my_visit() {
 }
 
 function load_my_visit_settings() {
-	console.log("my_visit --- nalagam nastavitve");
-	var res 		 = {};
-    res.user 		 = [];
+	var res  = {};
+	
+	var tmp_user = check_user();
 
-	res.user = check_user();
-
-	console.log("my_visit --- "+ JSON.stringify(res));
+	if (tmp_user != false) {
+		res.logged_id = 1;
+		res.user 	  = check_user();
+	}
 
 	load_page(template_lang+'my_visit_settings.html', 'my_visit_settings', res, 'fade', false);
 }
 
 function check_user() {
-	return "";
+	var ztl_user = localStorage.getItem('my_visit_ztl_user');
+	
+	if (ztl_user != null) {
+		ztl_user = JSON.parse(ztl_user);
+
+		return  ztl_user;
+	} else {
+		return false;
+	}
+	
+	
 }
 
 function delete_from_my_visit(id, time) {
@@ -47,6 +58,61 @@ function web_login() {
 	var username = $("#my_visit_username").val();
 	var password = $("#my_visit_password").val();
 
-	console.log("login --- " + username);
-	console.log("login --- " + password);
+	var url = 'http://www.visitljubljana.com/si/mobile_app/service.json?action=login&u='+username+'&p='+password;
+
+	$.ajax( {
+		url : url,
+		dataType : 'json',
+		beforeSend : function(xhr) {
+	          xhr.setRequestHeader("Authorization", "Basic RWlqdTN6YW86dXRoMWplaUY=");
+		},
+		error : function(xhr, ajaxOptions, thrownError) {
+			//napaka
+			console.log(" >>>>>>>>>> failed "+url);
+			console.log(JSON.stringify(thrownError));
+		},
+		success : function(data) {
+			handle_web_login(data);
+		}
+	});
+}
+
+function handle_web_login(res) {
+	console.log("login --- res: " + JSON.stringify(res));
+	console.log("login --- login success: " + res.success);
+
+	if (res.success == 1) {
+		//nastavim localstorage
+		var ztl_user = {};
+
+		ztl_user.username = $("#my_visit_username").val();
+		ztl_user.password = $("#my_visit_password").val();
+
+
+		localStorage.setItem('my_visit_ztl_user', JSON.stringify(ztl_user));
+
+		//tu se bodo se sinhronizirali podatki
+		sync_my_visit(res);
+	} else {
+		$("#my_visit_password").val("login failed");
+	}
+}
+
+function sync_my_visit(res) {
+	//rediractam na my_visit
+	load_my_visit();
+}
+
+function web_user_logout() {
+	//zbrisem userja iz localstorage
+	localStorage.removeItem('my_visit_ztl_user');
+
+	//spraznim tabelo my_visit
+	tmp_query = "DELETE FROM  ztl_my_visit";
+	db.transaction(function(tx) {
+		 tx.executeSql(tmp_query, [], function(tx, res_poi) {
+		 	//redirectam na login
+		 	load_my_visit();
+		 });
+	});
 }
