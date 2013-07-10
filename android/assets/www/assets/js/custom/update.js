@@ -455,7 +455,7 @@ function readFiles() {
 	        	var filename = url.split("/").slice(-1)[0];
 
 	        	//lokalno ime
-    			var dlPath = DATADIR.fullPath+"/t_"+filename;
+    			var dlPath = DATADIR.fullPath+"/"+filename;
     			
 				//shranemo novo pot datoteke v bazo, neglede na to ali obstaja ali ne
 				if (filename != "") {
@@ -495,7 +495,7 @@ function readFiles() {
 
 	        	if (filename != "") {
 		        	//lokalno ime
-	    			var dlPath = DATADIR.fullPath+"/e_"+filename;
+	    			var dlPath = DATADIR.fullPath+"/"+filename;
 	    			
 					//shranemo novo pot datoteke v bazo, neglede na to ali obstaja ali ne
 	    			
@@ -534,7 +534,7 @@ function readFiles() {
 
 	        	if (filename != "") {
 		        	//lokalno ime
-	    			var dlPath = DATADIR.fullPath+"/i_"+filename;
+	    			var dlPath = DATADIR.fullPath+"/"+filename;
 	    			
 					//shranemo novo pot datoteke v bazo, neglede na to ali obstaja ali ne
 	    			
