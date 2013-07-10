@@ -418,8 +418,6 @@ function my_visit_success(results) {
 			res.has_pois 	= 1;
     		poi_wi			= poi_wi + results.rows.item(i).id+",";
     	} else if (results.rows.item(i).type == 2) {
-    		//console.log("my_visit evt--- " + JSON.stringify(results.rows.item(i)));
-
     		res.has_evt	 	= 1;
     		evt_wi			= evt_wi + results.rows.item(i).id+",";
 
@@ -479,8 +477,8 @@ function my_visit_success(results) {
     if (res.has_evt == 1) {
     	evt_wi = evt_wi+"0";
 
-    	var tmp_query 	 = "SELECT  e.id, et.title, ett.timetable_idx AS id_timetable, ett.venue, ett.date FROM ztl_event e LEFT JOIN ztl_event_translation et ON et.id_event = e.id LEFT JOIN  ztl_event_timetable ett ON ett.id_event = e.id WHERE e.id IN ("+evt_wi+") AND et.id_language = "+settings.id_lang+" GROUP BY e.id"; 
-    	
+    	var tmp_query 	 = "SELECT  e.id, et.title, ett.timetable_idx AS id_timetable, ett.venue, ett.date FROM ztl_event e LEFT JOIN ztl_event_translation et ON et.id_event = e.id LEFT JOIN  ztl_event_timetable ett ON ett.id_event = e.id WHERE e.id IN ("+evt_wi+") AND et.id_language = "+settings.id_lang; 
+
     	db.transaction(function(tx) {
 			tx.executeSql(tmp_query, [], function(tx, res_evt) {
 				var evt_len = res_evt.rows.length;
@@ -488,9 +486,8 @@ function my_visit_success(results) {
                 res.evt_group_name_translation = main_menu[mm_pic_group[0]];
                 
 				for (var ej = 0; ej<evt_tt.length; ej++) {
-					for (var ei = 0; ei<evt_len; ei++) {
-						if ((res_evt.rows.item(ei).id == evt_tt[ej].id) && (res_evt.rows.item(ei).id_timetable == evt_tt[ej].time)) {
-							
+                    for (var ei = 0; ei<evt_len; ei++) {
+                        if ((res_evt.rows.item(ei).id == evt_tt[ej].id) && (res_evt.rows.item(ei).id_timetable == evt_tt[ej].time)) {
 							res.evt[k] = res_evt.rows.item(ei);
 							k++;
 						}
@@ -541,17 +538,15 @@ function my_visit_success(results) {
 } 
 
 function check_my_visit(res) {
-	console.log("my_visit --- status ====== " + my_visit_status);
-
-    //nalozim seznam
     if (my_visit_status == 3) {
-        console.log("my_visit --- results : " + JSON.stringify(res.tour));
-        console.log("my_visit --- results : " + JSON.stringify(res.tour_group_name_translation));
-
     	load_page(template_lang+'my_visit_list.html', 'my_visit_list', res, 'fade', false);
     }
 }
 
+
+function delete_from_my_visit_success(results) {
+    load_my_visit();
+}
 
 function decode(string) {
     return String(string)
