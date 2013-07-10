@@ -323,6 +323,7 @@ function handle_event(data) {
 		});
 	});	
 
+	//images
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFSSuccess, null);
 }
 
@@ -523,6 +524,44 @@ function readFiles() {
 			*/
 		});
 
+		tx.executeSql('select * from ztl_info; where image != ""', [], function(tx, res) {
+	        for (var i=0; i<res.rows.length; i++) {
+	        	var url      = res.rows.item(i).image;
+	        	var filename = url.split("/").slice(-1)[0];
+	        	filename = $.trim(filename);
+
+	        	if (filename != "") {
+		        	//lokalno ime
+	    			var dlPath = DATADIR.fullPath+"/"+filename;
+	    			
+					//shranemo novo pot datoteke v bazo, neglede na to ali obstaja ali ne
+	    			
+		    			var updt_sql1 = 'update ztl_info set image = "'+dlPath+'" where id='+res.rows.item(i).id+';';
+
+		    			//console.log(updt_sql);
+						tx.executeSql(updt_sql1, [], function(tx, res) {	});	
+					
+		        	
+		        	//samo nove datoteke
+		        	if (knownfiles.indexOf(filename) == -1) {
+	        			var ft = new FileTransfer();
+	        			ft.download(url, dlPath, function() {
+	        				//console.log("new local file "+dlPath);
+	        			}, onFSError);
+	    			}
+    			}
+	        }
+
+	        //validate
+	        /*
+			tx.executeSql('select * from ztl_tour_images;', [], function(tx, res) {
+		        for (var i=0; i<res.rows.length; i++) {
+		        	console.log("LOCALIMAGE "+res.rows.item(i).image);
+		        }
+			});
+			*/
+		});
+		
 	});
 }
 
@@ -572,13 +611,16 @@ function handle_info(data) {
 	db.transaction(function(tx) {
 		var sql = "";
 		for (var i = 0; i < data.length; i++) {
-			sql = "INSERT INTO ztl_info (id, id_language, title, content, record_status) VALUES ("+data[i].objects[0].id+", "+settings.id_lang+", '"+addslashes(data[i].objects[0].title)+"', '"+addslashes(data[i].objects[0].content)+"', 1)";
+			sql = "INSERT INTO ztl_info (id, id_language, title, image, content, record_status) VALUES ("+data[i].objects[0].id+", "+settings.id_lang+", '"+addslashes(data[i].objects[0].title)+"', '"+data[i].objects[0].image+"', '"+addslashes(data[i].objects[0].content)+"', 1)";
 			tx.executeSql(sql, [], function(tx, res) {});
 		}
 		
 		tx.executeSql('select count(*) as cnt from ztl_info;', [], function(tx, res) {
 			console.log('+31 >>>>>>>>>> ztl_info res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
 		});
+		
+		//images
+		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFSSuccess, null);
 	});	
 }
 
