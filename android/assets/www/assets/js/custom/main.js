@@ -378,6 +378,14 @@ function load_page(template, div, data, transition, reverse, id_group) {
 			} else if (div == "my_visit_list") {
 				data.page_title = my_visit_page_title_translation[settings.id_lang];
 				data.dots 		= 1;
+<<<<<<< .mine
+			} else if (div == "guide_buy") {
+				data.title 				= voice_guide_translation[settings.id_lang].toUpperCase();
+				data.guide_buy_desc 	= guide_buy_desc_translation[settings.id_lang].toUpperCase();
+				data.guide_buy_desc_text= guide_buy_desc_text_translation[settings.id_lang].toUpperCase();
+				data.guide_buy_locations= guide_buy_locations_translation[settings.id_lang].toUpperCase();
+				data.guide_buy_button	= guide_buy_button_translation[settings.id_lang].toUpperCase();
+=======
 			} else if (div == "my_visit_settings") {
 				data.page_title 					= my_visit_page_title_translation[settings.id_lang];
 				data.my_visit_download_translation 	= my_visit_download_translation[settings.id_lang];
@@ -390,6 +398,7 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				data.my_visit_poi					= my_visit_poi_translation[settings.id_lang];
 				
 				data.dots 							= 1;
+>>>>>>> .r237
 			}
 
 			if (voice_guide == 1)  {
@@ -571,16 +580,27 @@ function load_trips() {
 }
 
 function edit_settings() {
+    console.log("SETTINGS");
 	$.getScript('./assets/js/custom/ztl_settings.js', function () {
-        load_current_settings();
+        console.log("SETTINGS");
+		load_current_settings();
     });
 }
+
+
+function guide_buy() {
+	$.getScript('./assets/js/custom/guide_buy.js', function () {
+        load_guide_buy();
+    });
+}
+
 
 function show_map() {
 	$.getScript('./assets/js/custom/ztl_map.js', function () {
         load_show_map();
     });
 }
+
 
 function dprun(t) {
 	var currentField = $(t);
