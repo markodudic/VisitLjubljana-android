@@ -292,8 +292,6 @@ function tour_list_success(results) {
     res.items = [];
     var len = results.rows.length;
 
-    console.log(JSON.stringify(results));
-
      for (var i=0; i<len; i++){
      	results.rows.item(i).title = unescape(results.rows.item(i).title);
         tmp = results.rows.item(i).title;
@@ -302,8 +300,7 @@ function tour_list_success(results) {
         }
         res.items[i] = results.rows.item(i);
     }
-
-    console.log(JSON.stringify(res));
+   load_page(template_lang+'tour_category.html', 'tour_category', res, 'fade', false);
 }
 
 function tour_success(results) {
@@ -321,8 +318,8 @@ function tour_success(results) {
     	res.items[i] = results.rows.item(i);
     }
 
-    trips[2] = res;
-    //load_page(template_lang+'tours.html', 'tours', res, 'fade', false);
+    //trips[2] = res;
+    load_page(template_lang+'tours.html', 'tours', res, 'fade', false);
 }
 
 //tour
