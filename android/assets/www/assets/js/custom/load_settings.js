@@ -70,7 +70,6 @@ function load_trip_content(id, transition, reverse, save_history) {
 	var tmp_query 		= 'SELECT zp.*, zpt.title, zpt.description, zcg.id_group FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id WHERE zp.id = '+id+' AND zpt.id_language = '+settings.id_lang+' GROUP BY zp.id';
 	var tmp_callback	= "load_poi_success";
 
-	console.log("load trip content 22");
 	generate_query(tmp_query, tmp_callback);
 }
 
@@ -143,7 +142,7 @@ function load_tours(id_tour_category, save_history)  {
 
     trips_title[2] = main_menu['img6'];
 
-    var tmp_query = "SELECT t.id, tt.title, tt.short_description, ti.image FROM ztl_tour t LEFT JOIN ztl_tour_translation tt ON tt.id_tour = t.id LEFT JOIN ztl_tour_tour_category ttc ON ttc.id_tour = t.id LEFT JOIN ztl_tour_images ti ON t.id = ti.id_tour WHERE tt.id_language = "+settings.id_lang+" AND ttc.id_tour_category = "+id_tour_category+" GROUP BY t.id";
+    var tmp_query = "SELECT t.id, tt.title, tt.short_description, ti.image, tc.id as tour_category_id, tc.title as tour_category FROM ztl_tour t LEFT JOIN ztl_tour_translation tt ON tt.id_tour = t.id LEFT JOIN ztl_tour_tour_category ttc ON ttc.id_tour = t.id LEFT JOIN ztl_tour_category tc ON ttc.id_tour_category = tc.id LEFT JOIN ztl_tour_images ti ON t.id = ti.id_tour WHERE tt.id_language = "+settings.id_lang+" AND ttc.id_tour_category = "+id_tour_category+" GROUP BY t.id";
     var tmp_callback   = "tour_success";
     generate_query(tmp_query, tmp_callback);
 }

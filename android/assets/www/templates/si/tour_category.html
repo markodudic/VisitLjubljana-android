@@ -18,7 +18,7 @@
 	<div id="verticalScroller">
 	{{#items}}
 		<li class="ztl_list_li">
-			<div class="ztl_list_item" id="ztl_trips_item_{{id}}" onClick="load_tours({{id}}, 1)" >
+			<div class="ztl_list_item" id="ztl_trips_item_{{id}}" onClick="load_page(template_lang+'tours.html', 'tours', trips[6].tours[{{id}}], 'fade', false, {{id}});" >
 				<div class="ztl_list_image">
 					<div class="ztl_list_img_crop">
 						{{#image}}

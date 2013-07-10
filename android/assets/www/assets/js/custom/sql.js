@@ -66,7 +66,7 @@ function load_poi_success(results) {
 	media_length = parseInt(results.rows.item(0).media_duration_value);
 
 
-	load_page(template_lang+'trip.html', 'trip', res.items[0], 'fade', true);
+	load_page(template_lang+'trip.html', 'trip', res.items[0], 'fade', true, results.rows.item(0).id_group);
 }
 
 //map poi
@@ -191,7 +191,7 @@ function load_event_success(results) {
 	results.rows.item(0).title = unescape(results.rows.item(0).title);
 	results.rows.item(0).intro = unescape(results.rows.item(0).intro);
 	results.rows.item(0).description = unescape(results.rows.item(0).description);
-	tmp_event_data.item = results.rows.item(0)
+	tmp_event_data.item = results.rows.item(0);
 
 	var tmp_query 	 = "SELECT ep.ticket_type, ep.price FROM ztl_event_pricing ep WHERE ep.id_event = "+results.rows.item(0).id+" AND ep.id_language = "+settings.id_lang+" GROUP BY ep.ticket_type, ep.price";
 	var tmp_callback = "load_event_pricing_success";
@@ -292,15 +292,16 @@ function tour_list_success(results) {
     res.items = [];
     var len = results.rows.length;
 
-     for (var i=0; i<len; i++){
+    for (var i=0; i<len; i++){
      	results.rows.item(i).title = unescape(results.rows.item(i).title);
-        tmp = results.rows.item(i).title;
-        if (tmp.length > max_dolzina_title) {
-            results.rows.item(i).title = tmp.substring(0,max_dolzina_title)+"...";
-        }
+     	results.rows.item(i).address = unescape(results.rows.item(i).address);
+     	results.rows.item(i).post = unescape(results.rows.item(i).post);
         res.items[i] = results.rows.item(i);
+        
+        load_tours(results.rows.item(i).id, 0);
     }
-   load_page(template_lang+'tour_category.html', 'tour_category', res, 'fade', false);
+    trips[6] = res;
+    trips[6].tours = tours;
 }
 
 function tour_success(results) {
@@ -311,15 +312,20 @@ function tour_success(results) {
     for (var i=0; i<len; i++){
     	//skrajsam dolzino
     	results.rows.item(i).title = unescape(results.rows.item(i).title);
+    	results.rows.item(i).tour_category = unescape(results.rows.item(i).tour_category);
     	tmp = results.rows.item(i).title;
     	if (tmp.length > max_dolzina_title) {
     		results.rows.item(i).title = tmp.substring(0,max_dolzina_title)+"...";
     	}
+    	tmp = results.rows.item(i).tour_category;
+    	if (tmp.length > max_dolzina_title) {
+    		results.rows.item(i).tour_category = tmp.substring(0,max_dolzina_title)+"...";
+    	}
     	res.items[i] = results.rows.item(i);
     }
 
-    //trips[2] = res;
-    load_page(template_lang+'tours.html', 'tours', res, 'fade', false);
+    tours[results.rows.item(0).tour_category_id] = res;
+    //load_page(template_lang+'tours.html', 'tours', res, 'fade', false);
 }
 
 //tour
@@ -327,7 +333,6 @@ function load_tour_success(results) {
 	results.rows.item(0).title = unescape(results.rows.item(0).title);
 	results.rows.item(0).short_description = unescape(results.rows.item(0).short_description);
 	results.rows.item(0).long_description = unescape(results.rows.item(0).long_description);
-	results.rows.item(0).content = unescape(results.rows.item(0).content);
 	tmp_tours_data.item = results.rows.item(0);
 
 	var tmp_query = "SELECT ti.image FROM ztl_tour_images ti WHERE ti.id_tour = "+tmp_tours_data.item.id+" ORDER BY ti.tour_idx";
@@ -346,8 +351,6 @@ function tour_images_success(results) {
     	tmp_tours_data.images[i] = results.rows.item(i);
     }
 
-
-
     var id_tour = tmp_tours_data.item.id;
 
     var tmp_query 	 = " SELECT tc.title, tc.content FROM ztl_tour_chaters tc WHERE tc.id_tour = "+id_tour+" AND tc.id_language = "+settings.id_lang+" GROUP BY  tc.title, tc.content ORDER BY tc.tour_idx";
@@ -360,6 +363,7 @@ function tour_charters_success(results) {
 
 	var len = results.rows.length;
 	for (var i=0; i<len; i++){
+		results.rows.item(i).content = unescape(results.rows.item(i).content);
     	tmp_tours_data.charters[i] = results.rows.item(i);
     }
 
