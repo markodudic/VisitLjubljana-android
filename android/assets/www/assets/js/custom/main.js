@@ -13,8 +13,10 @@ var event_filter  = "";
 var current		  = 0;
 var active_menu	  = 0;
 var group 		  = 0;
-var trips   	  = {}; //0-event, 1-info, 2-tour, 4 - voice, 5 - filtered events
+var trips   	  = {}; //0-event, 1-info, 2-tour, 4 - voice, 5 - filtered events, 6 - tour list
 var trips_title   = {}; //0-event, 1-info, 2-tour
+var tours		  = {};  //toure po kategorijah. ID kategorije je key
+var selected_div  = null;
 var main_menu     = null;
 var swipe		  = 0;
 var swipe_group	  = 0;
@@ -116,7 +118,7 @@ function reset_cache() {
     load_pois(222, 8, 0);
     load_events(0);
     load_info(0);
-    load_tours(0);
+    load_tour_list(0);
     load_voice_guide(0);
     
     set_cache();
@@ -167,7 +169,11 @@ function swipe_right_handler() {
 		if (db_type == 1) {
 			var j = 0;
 			if (trips != null) {
-				var res = trips[selected_group];
+				if (selected_div == 'tour') {
+					var res = trips[6].tours[selected_group];
+				} else {
+					var res = trips[selected_group];
+				}
 				
 				for (i=0; i<res.items.length; i++) {
 					if (res.items[i]['id'] == current) {
@@ -202,7 +208,11 @@ function swipe_left_handler() {
 	if (swipe == 1) {
 		if (db_type == 1) {
 			var j = 0;
-			var res = trips[selected_group];
+			if (selected_div == 'tour') {
+				var res = trips[6].tours[selected_group];
+			} else {
+				var res = trips[selected_group];
+			}
 			
 			for (i=0; i<res.items.length; i++) {
 				if (res.items[i]['id'] == current) {
@@ -247,7 +257,7 @@ function save_swipe_history(index, direction) {
 */
 
 function load_page(template, div, data, transition, reverse, id_group) {
-	console.log("load page="+id_group+":"+template);
+	console.log("load page="+id_group+":"+template+":"+data);
 
 	if (footer == "") {
 		footer = load_template("ztl_footer.html", "#tpl_ztl_footer");
@@ -264,7 +274,7 @@ function load_page(template, div, data, transition, reverse, id_group) {
 	if (id_group != undefined) {
 		selected_group = id_group;
 	}
-		
+	selected_div = div;
 
 	$.ajax({
 		type:"GET",
@@ -307,20 +317,20 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				data.guide_button				= voice_guide_translation_full[settings.id_lang];
 				data.potrdi_button 				= confirm_translation[settings.id_lang];
 				data.map_button 				= map_translation[settings.id_lang];
-				extra_div_id = "_"+data.item.id;
+				extra_div_id 					= "_"+data.item.id;
 				if (data.item.title.length>max_dolzina_naslov) {
 					data.item.title=data.item.title.substring(0,max_dolzina_naslov)+"...";
 				}
 			} else 	if (div == 'tour') {
 				data.ztl_item_details_description = description_translation[settings.id_lang];
 				data.guide_button				= voice_guide_translation_full[settings.id_lang];
-				extra_div_id 		= "_"+data.item.id;
+				data.tour_category_id 			= selected_group;
+				extra_div_id 					= "_"+data.item.id;
 				if (data.item.title.length>max_dolzina_naslov) {
 					data.item.title=data.item.title.substring(0,max_dolzina_naslov)+"...";
 				}
 			} else if (div == 'tours') {
-				//data.page_title 	= trips_title[id_group];
-				data.page_title 	= main_menu['img6'];
+				data.page_title 	= data.items[id_group].tour_category;
 			} else if (div == 'tour_category') {
 				data.page_title 	= main_menu['img6'];
 			} else if (div == 'infos') {
@@ -336,6 +346,7 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				data.map_button 				= map_translation[settings.id_lang];
 				data.ztl_item_details_title 	= title_translation[settings.id_lang];
 				data.guide_button				= voice_guide_translation_full[settings.id_lang];
+				data.id_group 					= id_group;
 				data.tmi = tmi;
 				if (data.title.length>max_dolzina_naslov) {
 					data.title=data.title.substring(0,max_dolzina_naslov)+"...";
@@ -528,7 +539,9 @@ function select_language(id) {
 	} else {
 		settings.id_lang = id;
 		
-		reset_cache()
+		reset_cache();
+		//samo za test sinhronizacije
+		//check_updates();
 		localStorage.setItem('first_synhronization', 0);
 		
 		if (settings_type == 1) {

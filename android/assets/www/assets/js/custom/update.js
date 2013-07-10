@@ -81,6 +81,7 @@ function check_update_success(results) {
 	
 	//updatam info. vedno vse
     update_info(server_url+lang_code+'/mobile_app/info.json');
+    
 }
 
 function update_poi(url, pois) {
@@ -165,6 +166,18 @@ function handle_poi_categories(data) {
 
 function handle_poi_new(data) {
 	db.transaction(function(tx) {
+		if (data[i].image == undefined) {
+			data[i].image = '';
+		}
+		
+		if (data[i].star == undefined) {
+			data[i].star = 0;
+		}
+		
+		if (data[i].sound == undefined) {
+			data[i].sound = '';
+		}
+		
 		var sql = "";
 		for (var i = 0; i < data.length; i++) {
 			sql = "INSERT OR REPLACE INTO ztl_poi (id, address, post_number, post, phone, email, www, coord_x, coord_y, turisticna_kartica, ljubljana_quality, recommended_map, image, star, sound, record_status, from_db) ";
@@ -349,7 +362,7 @@ function update_tour(url) {
 			console.log(" >>>>>>>>>> ok");
 			handle_tour_deleted(data['deleted']);
 			handle_tour(data['tours']);
-		    load_tours(0);	
+			load_tour_list(0);	
 		    set_cache();
 			is_updt_finished();
 		}
