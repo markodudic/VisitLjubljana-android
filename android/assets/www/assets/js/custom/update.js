@@ -455,14 +455,14 @@ function readFiles() {
 	        	var filename = url.split("/").slice(-1)[0];
 
 	        	//lokalno ime
-    			var dlPath = DATADIR.fullPath+"/"+filename;
+    			var dlPath = DATADIR.fullPath+"/t_"+filename;
     			
 				//shranemo novo pot datoteke v bazo, neglede na to ali obstaja ali ne
 				if (filename != "") {
     				var updt_sql = 'update ztl_tour_images set image = "'+dlPath+'" where id_tour='+res.rows.item(i).id_tour+' and tour_idx='+res.rows.item(i).tour_idx+';';
     			
     				//console.log(updt_sql);
-					tx.executeSql(updt_sql, [], function(tx, res) {	});	
+					tx.executeSql(updt_sql, [], function(tx, res) {});	
 				}
 
 	        	
@@ -470,7 +470,8 @@ function readFiles() {
 	        	if (knownfiles.indexOf(filename) == -1) {
         			var ft = new FileTransfer();
         			ft.download(url, dlPath, function() {
-        				//console.log("new local file "+dlPath);
+        				console.log("new local file ztl_tour_images "+url);
+        				console.log("new local file ztl_tour_images "+dlPath);
         			}, onFSError);
     			}
 	        }
@@ -486,7 +487,7 @@ function readFiles() {
 		});
 
 
-		tx.executeSql('select * from ztl_event; where image != ""', [], function(tx, res) {
+		tx.executeSql('select * from ztl_event where image != ""', [], function(tx, res) {
 	        for (var i=0; i<res.rows.length; i++) {
 	        	var url      = res.rows.item(i).image;
 	        	var filename = url.split("/").slice(-1)[0];
@@ -494,7 +495,7 @@ function readFiles() {
 
 	        	if (filename != "") {
 		        	//lokalno ime
-	    			var dlPath = DATADIR.fullPath+"/"+filename;
+	    			var dlPath = DATADIR.fullPath+"/e_"+filename;
 	    			
 					//shranemo novo pot datoteke v bazo, neglede na to ali obstaja ali ne
 	    			
@@ -508,7 +509,8 @@ function readFiles() {
 		        	if (knownfiles.indexOf(filename) == -1) {
 	        			var ft = new FileTransfer();
 	        			ft.download(url, dlPath, function() {
-	        				//console.log("new local file "+dlPath);
+	        				console.log("new local file ztl_event "+url);
+	        				console.log("new local file ztl_event "+dlPath);
 	        			}, onFSError);
 	    			}
     			}
@@ -524,7 +526,7 @@ function readFiles() {
 			*/
 		});
 
-		tx.executeSql('select * from ztl_info; where image != ""', [], function(tx, res) {
+		tx.executeSql('select * from ztl_info where image != ""', [], function(tx, res) {
 	        for (var i=0; i<res.rows.length; i++) {
 	        	var url      = res.rows.item(i).image;
 	        	var filename = url.split("/").slice(-1)[0];
@@ -532,7 +534,7 @@ function readFiles() {
 
 	        	if (filename != "") {
 		        	//lokalno ime
-	    			var dlPath = DATADIR.fullPath+"/"+filename;
+	    			var dlPath = DATADIR.fullPath+"/i_"+filename;
 	    			
 					//shranemo novo pot datoteke v bazo, neglede na to ali obstaja ali ne
 	    			
@@ -546,7 +548,8 @@ function readFiles() {
 		        	if (knownfiles.indexOf(filename) == -1) {
 	        			var ft = new FileTransfer();
 	        			ft.download(url, dlPath, function() {
-	        				//console.log("new local file "+dlPath);
+	        				console.log("new local file ztl_info "+url);
+	        				console.log("new local file ztl_info "+dlPath);
 	        			}, onFSError);
 	    			}
     			}
