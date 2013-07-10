@@ -410,6 +410,7 @@ function my_visit_success(results) {
 
 	var len = results.rows.length;
 	
+    res.len      = len;
 	res.has_poi  = "";
 	res.has_evt	 = "";
 	res.has_tour = "";
@@ -543,7 +544,14 @@ function my_visit_success(results) {
 
 function check_my_visit(res) {
     if (my_visit_status == 3) {
-    	load_page(template_lang+'my_visit_list.html', 'my_visit_list', res, 'fade', false);
+        console.log("my_visit --- st objektov: " + res.len);
+
+        if (res.len > 0) {
+    	   load_page(template_lang+'my_visit_list.html', 'my_visit_list', res, 'fade', false);
+        } else {
+            //nalozim nastavitve my_visit
+            load_my_visit_settings();
+        }
     }
 }
 
