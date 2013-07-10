@@ -462,8 +462,8 @@ function load_page(template, div, data, transition, reverse, id_group) {
 			$('.icon_'+menu_icon).attr("src","assets/css/ztl_images/icon_"+menu_icon+"_red.png");
 
 			//ce so karte inicializiram skripto
-			if (div == "show_map") {
-				show_map();
+			if (div == "ztl_map") {
+				 init_map();
 			}
 			
 			if ((div != "trips") && 
@@ -576,6 +576,11 @@ function edit_settings() {
     });
 }
 
+function show_map() {
+	$.getScript('./assets/js/custom/ztl_map.js', function () {
+        load_show_map();
+    });
+}
 
 function dprun(t) {
 	var currentField = $(t);
