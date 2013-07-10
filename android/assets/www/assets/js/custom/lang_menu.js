@@ -281,3 +281,60 @@ month_translation[5][8]  = "SEP";
 month_translation[5][9]  = "OKT";
 month_translation[5][10] = "NOV";
 month_translation[5][11] = "DEC";
+
+//mywisit
+var my_visit_download_translation = [];
+my_visit_download_translation[1] = "Prenesi MyVisit s spletnega mesta";
+my_visit_download_translation[2] = "Prenesi MyVisit s spletnega mesta";
+my_visit_download_translation[3] = "Prenesi MyVisit s spletnega mesta";
+my_visit_download_translation[4] = "Prenesi MyVisit s spletnega mesta";
+my_visit_download_translation[5] = "Prenesi MyVisit s spletnega mesta";
+
+var user_name_translation = [];
+user_name_translation[1] = "Uporabniško ime";
+user_name_translation[2] = "Uporabniško ime";
+user_name_translation[3] = "Uporabniško ime";
+user_name_translation[4] = "Uporabniško ime";
+user_name_translation[5] = "Uporabniško ime";
+
+var password_translation = [];
+password_translation[1] = "Geslo";
+password_translation[2] = "Geslo";
+password_translation[3] = "Geslo";
+password_translation[4] = "Geslo";
+password_translation[5] = "Geslo";
+
+var forgotten_pass_translation = [];
+forgotten_pass_translation[1] = "Pozabljeno geslo";
+forgotten_pass_translation[2] = "Pozabljeno geslo";
+forgotten_pass_translation[3] = "Pozabljeno geslo";
+forgotten_pass_translation[4] = "Pozabljeno geslo";
+forgotten_pass_translation[5] = "Pozabljeno geslo";
+
+var register_translation = [];
+register_translation[1] = "Registriraj se";
+register_translation[2] = "Registriraj se";
+register_translation[3] = "Registriraj se";
+register_translation[4] = "Registriraj se";
+register_translation[5] = "Registriraj se";
+
+var login_translation = [];
+login_translation[1] = "Prijava";
+login_translation[2] = "Prijava";
+login_translation[3] = "Prijava";
+login_translation[4] = "Prijava";
+login_translation[5] = "Prijava";
+
+var my_visit_tours_translation = [];
+my_visit_tours_translation[1] = "Pripravljeni predlogi izletov";
+my_visit_tours_translation[2] = "Pripravljeni predlogi izletov";
+my_visit_tours_translation[3] = "Pripravljeni predlogi izletov";
+my_visit_tours_translation[4] = "Pripravljeni predlogi izletov";
+my_visit_tours_translation[5] = "Pripravljeni predlogi izletov";
+
+var my_visit_poi_translation = [];
+my_visit_poi_translation[1] = "Preglej in dodaj oglede, nastanitve, prireditve, zanimivosti ...";
+my_visit_poi_translation[2] = "Preglej in dodaj oglede, nastanitve, prireditve, zanimivosti ...";
+my_visit_poi_translation[3] = "Preglej in dodaj oglede, nastanitve, prireditve, zanimivosti ...";
+my_visit_poi_translation[4] = "Preglej in dodaj oglede, nastanitve, prireditve, zanimivosti ...";
+my_visit_poi_translation[5] = "Preglej in dodaj oglede, nastanitve, prireditve, zanimivosti ...";

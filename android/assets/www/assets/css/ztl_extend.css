@@ -450,7 +450,13 @@ div.poi_address {
 	border-radius:2px;
 }
 
+.left {
+    float: left;
+}
 
+.rigth {
+    float:right;
+}
 
 .ui-slider { position: relative; text-align: left; }
 .ui-slider .ui-slider-handle { position: absolute; z-index: 2; width: 1.2em; height: 1.2em; cursor: default; background-color:red;}
