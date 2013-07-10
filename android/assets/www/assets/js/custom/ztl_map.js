@@ -1,7 +1,3 @@
-function load_show_map() {
-	load_page(template_lang+'ztl_map.html', 'ztl_map', settings, 'fade', false);
-}
-
 var apiKey = "AqTGBsziZHIJYYxgivLBf0hVdrAk9mWO5cQcb8Yux8sW5M8c8opEC2lZqKR1ZZXf";
 var map;
 
@@ -11,8 +7,17 @@ var points          = new Array();
 var toltip_visible  = 0;
 var poi_data        = null; 
 var xy              = new Array();
+var curr_id;
+var curr_tip;
 
 var current_position_xy;
+
+function load_show_map(id, type) {
+	curr_id = id;
+	curr_type = type;
+	load_page(template_lang+'ztl_map.html', 'ztl_map', null, 'fade', false);
+}
+
 
 //klicem iz main.js 445
 function init_map() {
@@ -97,8 +102,10 @@ var init = function (onSelectFeatureFunction) {
         
         $(".txt_popup").hide();
         
-        current_position_xy[0] = 5462704;
-        current_position_xy[1] = 5104170;
+        
+        //samo za test ce nisi v ljubljani
+        //current_position_xy[0] = 5462704;
+        //current_position_xy[1] = 5104170;
         	
         var center = transform(parseFloat(current_position_xy[0])+myLocationCorrectionX, parseFloat(current_position_xy[1])+myLocationCorrectionY);
         var lonlat = new OpenLayers.LonLat(center.lon, center.lat); 
@@ -270,6 +277,8 @@ var init = function (onSelectFeatureFunction) {
         
         $("#ztl_cord").val(feature.attributes.id+"#"+poi_data.coord_x+"#"+poi_data.coord_y);
         //zracunam razdaljo
+        console.log("poi_data.coord_x1="+poi_data.coord_x);
+        console.log("poi_data.coord_x2="+current_position_xy[0]-correctionX+myLocationCorrectionX);
         $("#ztl_distance_value").html(lineDistance( poi_data.coord_x, poi_data.coord_y, current_position_xy[0]-correctionX+myLocationCorrectionX, current_position_xy[1]-correctionY+myLocationCorrectionY ) + " km");
         
         if (poi_data.title.length>max_dolzina_title) {
@@ -295,29 +304,23 @@ var init = function (onSelectFeatureFunction) {
 
 };
 
+
 function get_poi_data() {
-	//TODO paramter?
-	/*
-    if (hash == "mappage") {
-        hash = -1;
-    }
-    */
-    var hash = 774;
-    from_view = "poi";
-
-    if (from_view == "event") {
-       var tmp_query = 'SELECT 0 as type, e.id, p.coord_x, p.coord_y FROM ztl_event e LEFT JOIN ztl_event_translation et ON et.id_event = e.id LEFT JOIN  ztl_event_timetable ett ON ett.id_event = e.id LEFT JOIN ztl_poi p ON p.id = ett.venue_id WHERE e.id = '+hash+' AND et.id_language = '+settings.id_lang+' GROUP BY e.id';
-    } else {
-//       var tmp_query = 'SELECT 1 as type, zp.id, zp.coord_x, zp.coord_y FROM ztl_poi zp';
-       var tmp_query = 'SELECT 1 as type, zp.id, zp.coord_x, zp.coord_y FROM ztl_poi zp WHERE zp.id = '+hash;
-    }
-
-    var tmp_callback = "load_map_poi_coord_success";
-    generate_query(tmp_query, tmp_callback);
+	if (curr_id != undefined) {
+		if (curr_type == 0) { //event
+	       var tmp_query = 'SELECT '+curr_type+' as type, e.id, p.coord_x, p.coord_y FROM ztl_event e LEFT JOIN ztl_event_translation et ON et.id_event = e.id LEFT JOIN  ztl_event_timetable ett ON ett.id_event = e.id LEFT JOIN ztl_poi p ON p.id = ett.venue_id WHERE e.id = '+curr_id+' AND et.id_language = '+settings.id_lang+' GROUP BY e.id';
+	    } else { //poi
+	//       var tmp_query = 'SELECT 1 as type, zp.id, zp.coord_x, zp.coord_y FROM ztl_poi zp';
+	       var tmp_query = 'SELECT '+curr_type+' as type, zp.id, zp.coord_x, zp.coord_y FROM ztl_poi zp WHERE zp.id = '+curr_id;
+	    }
+	
+	    var tmp_callback = "load_map_poi_coord_success";
+	    generate_query(tmp_query, tmp_callback);
+	}
 }
 
 function load_content(id) {
-    if (from_view == "event") {
+    if (curr_type == 0) {
         var tmp_query = 'SELECT 0 as type, e.id, et.title, p.address, p.post_number, p.post, p.coord_x, p.coord_y  FROM ztl_event e LEFT JOIN ztl_event_translation et ON et.id_event = e.id LEFT JOIN  ztl_event_timetable ett ON ett.id_event = e.id LEFT JOIN ztl_poi p ON p.id = ett.venue_id WHERE e.id = '+id+' AND et.id_language = '+settings.id_lang+' GROUP BY e.id';    
     } else {
         var tmp_query = 'SELECT 1 as type, zp.*, zpt.title, zcg.id_group, zp.coord_x, zp.coord_y FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id WHERE zp.id IN ('+id+') AND zpt.id_language = '+settings.id_lang+' GROUP BY zp.id';
@@ -325,4 +328,13 @@ function load_content(id) {
     var tmp_callback    = "load_map_poi_data_success";
             
     generate_query(tmp_query, tmp_callback);
+}
+
+function load_page_content(id, type) {
+	if (type==0) {
+		load_event(id, 0);
+	} else if (type==1) {
+		load_trip_content(id, 'fade', true, 0);
+	}
+    
 }

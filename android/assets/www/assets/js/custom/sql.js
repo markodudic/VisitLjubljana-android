@@ -78,9 +78,9 @@ function load_map_poi_coord_success(results) {
     for (var i=0; i<len; i++){
     	var row = results.rows.item(i);
     	if (row != undefined) {
-    		//if ((row.coord_x > x0) && (row.coord_x < x1) && (row.coord_y > y0) && (row.coord_y < y1)) {
+    		if ((row.coord_x > x0) && (row.coord_x < x1) && (row.coord_y > y0) && (row.coord_y < y1)) {
     			points.push(new Array(row.coord_x, row.coord_y, 0, row.id, row.type));
-    		//}
+    		}
     	}
     }
 }
