@@ -418,7 +418,7 @@ function my_visit_success(results) {
 			res.has_pois 	= 1;
     		poi_wi			= poi_wi + results.rows.item(i).id+",";
     	} else if (results.rows.item(i).type == 2) {
-    		console.log("my_visit evt--- " + JSON.stringify(results.rows.item(i)));
+    		//console.log("my_visit evt--- " + JSON.stringify(results.rows.item(i)));
 
     		res.has_evt	 	= 1;
     		evt_wi			= evt_wi + results.rows.item(i).id+",";
@@ -506,17 +506,47 @@ function my_visit_success(results) {
     	check_my_visit(res);
     }
 
+    //myvisit tour
+    var l = 0;
+    var tmp_info_text = "";
+    if (res.has_evt == 1) {
+        tour_wi = tour_wi+"0";
+        var tmp_query = "SELECT t.id, tt.title, tt.short_description FROM ztl_tour t LEFT JOIN ztl_tour_translation tt ON tt.id_tour = t.id WHERE t.id IN ("+tour_wi+")";
+
+        db.transaction(function(tx) {
+            tx.executeSql(tmp_query, [], function(tx, res_tour) {
+                var tour_len = res_tour.rows.length;
+
+                res.tour_group_name_translation = main_menu[mm_pic_group[2]];
+                
+                for (var ti = 0; ti<tour_len; ti++) {
+                 
+                    tmp_info_text = res_tour.rows.item(ti).short_description;
+                    if (tmp_info_text.length > max_dolzina_short_desc) {
+                        res_tour.rows.item(ti).short_description = tmp_info_text.substring(0,max_dolzina_short_desc)+"...";
+                    }
+
+                   res.tour[l] = res_tour.rows.item(ti);
+                   l++;
+                }
+
+                my_visit_status++;
+                check_my_visit(res);
+            });
+        });
+    } else {
+        my_visit_status++;
+        check_my_visit(res);
+    }
 } 
 
 function check_my_visit(res) {
 	console.log("my_visit --- status ====== " + my_visit_status);
 
-	
-
     //nalozim seznam
-    if (my_visit_status == 2) {
-        console.log("my_visit --- results : " + JSON.stringify(res.evt));
-        console.log("my_visit --- results : " + JSON.stringify(res.evt_group_name_translation));
+    if (my_visit_status == 3) {
+        console.log("my_visit --- results : " + JSON.stringify(res.tour));
+        console.log("my_visit --- results : " + JSON.stringify(res.tour_group_name_translation));
 
     	load_page(template_lang+'my_visit_list.html', 'my_visit_list', res, 'fade', false);
     }

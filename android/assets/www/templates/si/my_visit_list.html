@@ -25,7 +25,6 @@
 			<div class="header_shadow"></div>
 		</li>
 	{{/evt_group_name_translation}}
-	
 	{{#evt}}
 		<li class="ztl_list_li">
 			<div class="ztl_list_item">
@@ -39,7 +38,6 @@
 			</div>
 		</li>
 	{{/evt}}
-
 	{{#poi}}
 		{{#group_name}}
 			<li class="ztl_list_li">
@@ -62,6 +60,26 @@
 			</li>
 		{{/group_name}}
 	{{/poi}}
+	{{#tour_group_name_translation}}
+		<li class="ztl_list_li">
+			<div class="my_visit_title">
+				{{tour_group_name_translation}}
+			</div>
+			<div class="header_shadow"></div>
+		</li>
+	{{/tour_group_name_translation}}
+	{{#tour}}
+		<li class="ztl_list_li">
+			<div class="ztl_list_item">
+				<div class="my_visit_content">
+					<div class="ztl_list_header">{{title}}</div>
+					<div class="ztl_list_content_text">
+						{{short_description}}
+					</div>
+				</div>
+			</div>
+		</li>
+	{{/tour}}
 	</div>
 	</div>
 	
