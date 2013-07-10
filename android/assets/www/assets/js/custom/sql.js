@@ -579,6 +579,7 @@ function populate_db_firstime() {
 			db.transaction(function(tx) {
 				tx.executeSql('select count(*) as cnt from ztl_updates;', [], function(tx, res) {
 					console.log('0 >>>>>>>>>> ztl_updates res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+					add_indexes();
 				});
 			});
 		});
@@ -589,6 +590,7 @@ function populate_db_firstime() {
 			db.transaction(function(tx) {
 				tx.executeSql('select count(*) as cnt from ztl_category;', [], function(tx, res) {
 					console.log('1 >>>>>>>>>> ztl_category res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+					add_indexes();
 				});
 			});
 		});
@@ -599,6 +601,7 @@ function populate_db_firstime() {
 			db.transaction(function(tx) {
 				tx.executeSql('select count(*) as cnt from ztl_group;', [], function(tx, res) {
 					console.log('2 >>>>>>>>>> ztl_group res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+					add_indexes();
 				});
 			});
 		});
@@ -609,6 +612,7 @@ function populate_db_firstime() {
 			db.transaction(function(tx) {
 				tx.executeSql('select count(*) as cnt from ztl_category_group;', [], function(tx, res) {
 					console.log('3 >>>>>>>>>> ztl_category_group res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+					add_indexes();
 				});
 			});
 		});
@@ -619,6 +623,7 @@ function populate_db_firstime() {
 			db.transaction(function(tx) {
 				tx.executeSql('select count(*) as cnt from ztl_poi;', [], function(tx, res) {
 					console.log('4 >>>>>>>>>> ztl_poi res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+					add_indexes();
 				});
 			});
 		});
@@ -629,6 +634,7 @@ function populate_db_firstime() {
 			db.transaction(function(tx) {
 				tx.executeSql('select count(*) as cnt from ztl_poi_category;', [], function(tx, res) {
 					console.log('5 >>>>>>>>>> ztl_poi_category res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+					add_indexes();
 				});
 			});
 		});
@@ -639,6 +645,7 @@ function populate_db_firstime() {
 			db.transaction(function(tx) {
 				tx.executeSql('select count(*) as cnt from ztl_poi_translation;', [], function(tx, res) {
 					console.log('6 >>>>>>>>>> ztl_poi_translation res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+					add_indexes();
 				});
 			});
 		});
@@ -649,6 +656,7 @@ function populate_db_firstime() {
 			db.transaction(function(tx) {
 				tx.executeSql('select count(*) as cnt from ztl_event;', [], function(tx, res) {
 					console.log('11 >>>>>>>>>> ztl_event res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+					add_indexes();
 				});
 			});
 		});
@@ -659,6 +667,7 @@ function populate_db_firstime() {
 			db.transaction(function(tx) {
 				tx.executeSql('select count(*) as cnt from ztl_event_translation;', [], function(tx, res) {
 					console.log('12 >>>>>>>>>> ztl_event_translation res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+					add_indexes();
 				});
 			});
 		});
@@ -669,6 +678,7 @@ function populate_db_firstime() {
 			db.transaction(function(tx) {
 				tx.executeSql('select count(*) as cnt from ztl_event_timetable;', [], function(tx, res) {
 					console.log('13 >>>>>>>>>> ztl_event_translation res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+					add_indexes();
 				});
 			});
 		});
@@ -679,6 +689,7 @@ function populate_db_firstime() {
 			db.transaction(function(tx) {
 				tx.executeSql('select count(*) as cnt from ztl_event_pricing;', [], function(tx, res) {
 					console.log('14 >>>>>>>>>> ztl_event_pricing res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+					add_indexes();
 				});
 			});
 		});
@@ -689,6 +700,7 @@ function populate_db_firstime() {
 			db.transaction(function(tx) {
 				tx.executeSql('select count(*) as cnt from ztl_event_category;', [], function(tx, res) {
 					console.log('15 >>>>>>>>>> ztl_event_category res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+					add_indexes();
 				});
 			});
 		});
@@ -699,6 +711,7 @@ function populate_db_firstime() {
 			db.transaction(function(tx) {
 				tx.executeSql('select count(*) as cnt from ztl_event_event_category;', [], function(tx, res) {
 					console.log('16 >>>>>>>>>> ztl_event_event_category res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+					add_indexes();
 				});
 			});
 		});
@@ -709,6 +722,7 @@ function populate_db_firstime() {
 			db.transaction(function(tx) {
 				tx.executeSql('select count(*) as cnt from ztl_tour;', [], function(tx, res) {
 					console.log('21 >>>>>>>>>> ztl_tour res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+					add_indexes();
 				});
 			});
 		});
@@ -719,6 +733,7 @@ function populate_db_firstime() {
 			db.transaction(function(tx) {
 				tx.executeSql('select count(*) as cnt from ztl_tour_category;', [], function(tx, res) {
 					console.log('22 >>>>>>>>>> ztl_tour_category res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+					add_indexes();
 				});
 			});
 		});
@@ -729,6 +744,7 @@ function populate_db_firstime() {
 			db.transaction(function(tx) {
 				tx.executeSql('select count(*) as cnt from ztl_tour_tour_category;', [], function(tx, res) {
 					console.log('23 >>>>>>>>>> ztl_tour_tour_category res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+					add_indexes();
 				});
 			});
 		});
@@ -739,6 +755,7 @@ function populate_db_firstime() {
 			db.transaction(function(tx) {
 				tx.executeSql('select count(*) as cnt from ztl_tour_translation;', [], function(tx, res) {
 					console.log('24 >>>>>>>>>> ztl_tour_translation res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+					add_indexes();
 				});
 			});
 		});
@@ -749,6 +766,7 @@ function populate_db_firstime() {
 			db.transaction(function(tx) {
 				tx.executeSql('select count(*) as cnt from ztl_tour_chaters;', [], function(tx, res) {
 					console.log('25 >>>>>>>>>> ztl_tour_chaters res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+					add_indexes();
 				});
 			});
 		});
@@ -759,6 +777,7 @@ function populate_db_firstime() {
 			db.transaction(function(tx) {
 				tx.executeSql('select count(*) as cnt from ztl_tour_images;', [], function(tx, res) {
 					console.log('26 >>>>>>>>>> ztl_tour_images res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+					add_indexes();
 				});
 			});
 		});
@@ -769,6 +788,7 @@ function populate_db_firstime() {
 			db.transaction(function(tx) {
 				tx.executeSql('select count(*) as cnt from ztl_info;', [], function(tx, res) {
 					console.log('31 >>>>>>>>>> ztl_info res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+					add_indexes();
 				});
 			});
 		});
@@ -779,19 +799,25 @@ function populate_db_firstime() {
 			db.transaction(function(tx) {
 				tx.executeSql('select count(*) as cnt from ztl_my_visit;', [], function(tx, res) {
 					console.log('32 >>>>>>>>>> ztl_my_visit res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
-					console.log("my_visit --- db created")
+					add_indexes();
 				});
 			});
 		});
 	}); 
+}
 
-	$.getScript('./assets/install_db/ztl_idx.js', function () {
-        db.transaction(populateDB_ztl_tour_images, errorCB, function(tx) {
-            console.log('99 >>>>>>>>>> ztl_idx');
+var processed_files = 0;
+function add_indexes() {
+	processed_files++;
+	console.log('98 >>>>>>>>>> '+processed_files);
+	if (processed_files == 21) {
+		$.getScript('./assets/install_db/ztl_idx.js', function () {
+	        db.transaction(populateDB_ztl_tour_images, errorCB, function(tx) {
+	            console.log('99 >>>>>>>>>> ztl_idx');
 
-            console.log("zagon --- nalagam nastavitve po insertu");
-            load_mobile();
-        });
-    });
-
+	            console.log("zagon --- nalagam nastavitve po insertu");
+	            load_mobile();
+	        });
+	    });		
+	}	
 }
