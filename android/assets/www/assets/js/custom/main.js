@@ -319,7 +319,10 @@ function load_page(template, div, data, transition, reverse, id_group) {
 					data.item.title=data.item.title.substring(0,max_dolzina_naslov)+"...";
 				}
 			} else if (div == 'tours') {
-				data.page_title 	= trips_title[id_group];
+				//data.page_title 	= trips_title[id_group];
+				data.page_title 	= main_menu['img6'];
+			} else if (div == 'tour_category') {
+				data.page_title 	= main_menu['img6'];
 			} else if (div == 'infos') {
 				data.page_title 	= trips_title[id_group];
 			} else if (div == 'info') {
