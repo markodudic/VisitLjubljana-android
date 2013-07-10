@@ -36,6 +36,7 @@
     <preference name="useBrowserHistory" value="true" />
     <preference name="exit-on-suspend" value="false" />
 <plugins>
+	<plugin name="InAppBillingPlugin" value="com.smartmobilesoftware.inappbilling.InAppBillingPlugin"/>
 	<plugin name="SQLitePlugin" value="com.phonegap.plugin.sqlitePlugin.SQLitePlugin"/>
 	<plugin name="DatePickerPlugin" value="com.phonegap.plugin.DatePickerPlugin"/>
 	<plugin name="GAPlugin" value="com.adobe.plugins.GAPlugin"/>
