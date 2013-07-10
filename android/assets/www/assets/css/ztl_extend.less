@@ -504,18 +504,32 @@ ul.footer_list li{
 .my_visit_header_title {
     position:absolute;
 	float:left;
-	padding-left:25px;
+	margin-left:25px;
     font-size:1.2em;
     text-transform:uppercase;
     color:#ffffff;
 }
 
 .my_visit_content {
+	position:relative;
 	width:@window_width;
-	height: @window_width * 110/480;
+	height: @window_width * 90/480;
 	display:block;
 	padding-left:25px;
 	border-bottom:1px solid #000000;
+}
+
+.my_visit_text {
+	float:left;
+	width:@window_width * 0.70;	
+}
+
+.my_visit_icons {
+	float:right;
+	width:@window_width * 0.20;
+	margin-right:50px;	
+	margin-top:10px;
+	text-align:right;
 }
 
 .my_visit_title {
@@ -530,4 +544,3 @@ ul.footer_list li{
 	text-transform:uppercase;
 	display:block;
 }
-
