@@ -3,6 +3,7 @@ function update_db() {
 	var tmp_query 		= "SELECT last_update FROM ztl_updates WHERE id_language ="+settings.id_lang;
 	var tmp_callback	= "check_update_success";
 	generate_query(tmp_query, tmp_callback);
+	//update_audio();
 }
 
 var updt_finished = 0;
@@ -21,7 +22,6 @@ function is_updt_finished() {
 		edit_settings();		
 	}
 }
-
 
 function check_update_success(results) {
 	console.log("**********update**************"+localStorage.getItem('first_synhronization'));
@@ -638,6 +638,56 @@ function handle_info(data) {
 		//images
 		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFSSuccess, null);
 	});	
+}
+
+/*********************** AUDIO ***********************/
+
+function update_audio() {
+	//audio
+	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFSSuccessAudio, null);
+}
+
+var knownfiles_audio = [];
+var DATADIR_audio;
+
+function onFSSuccessAudio(fileSystem) {
+	fileSystem.root.getDirectory("Android/data/com.innovatif.ztl/audio",{create:true}, gotDirAudio, onFSError);
+}
+
+function gotDirAudio(d) {
+	DATADIR_audio = d;
+	var reader = DATADIR_audio.createReader();
+	reader.readEntries(function(d) {
+		gotFilesAudio(d);
+		readFilesAudio();
+	}, onFSError);
+}
+
+function gotFilesAudio(entries) {
+	for (var i=0; i<entries.length; i++) {
+		knownfiles_audio.push(entries[i].name);
+		console.log("old local file "+entries[i].fullPath);
+	}
+}
+
+function readFilesAudio() {
+	for (var i = 0; i < trips[4]['items'].length; i++) {
+		var filename  = trips[4]['items'][i]['sound'];
+		var filearray = filename.split("_");
+    	var url       = "http://www.visitljubljana.com/file/"+filearray[0]+"/"+filearray[1]+filearray[2];
+
+    	//lokalno ime
+		var dlPath = DATADIR_audio.fullPath+"/"+filename;
+		
+    	//samo nove datoteke
+    	if (knownfiles_audio.indexOf(filename) == -1) {
+			var ft = new FileTransfer();
+			ft.download(url, dlPath, function() {
+				console.log("new local file audio "+url);
+				console.log("new local file audio "+dlPath);
+			}, onFSError);
+		}
+	}
 }
 
 /*********************** UTILS ***********************/ 
