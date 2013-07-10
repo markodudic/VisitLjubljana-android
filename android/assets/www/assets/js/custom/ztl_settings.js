@@ -1,6 +1,7 @@
    			
 
 function load_current_settings() {
+	console.log("SETTINGS");
 	load_page(template_lang+'ztl_settings.html', 'ztl_settings', settings, 'fade', false);
 }
 
@@ -24,9 +25,9 @@ function synhronization(){
 
 function rate() {
 	if ((navigator.userAgent.match(/iPhone/i))  == "iPhone") {
-	   window.open('itms-apps://itunes.apple.com/us/app/domainsicle-domain-name-search/id511364723?ls=1&mt=8'); 
+	   window.open('itms-apps://itunes.apple.com/us/app/domainsicle-domain-name-search/id511364723?ls=1&mt=8','_system'); 
 	} else if ((navigator.userAgent.match(/Android/i)) == "Android") {
-	   window.open('market://details?id=com.innovatif.ztl');
+	   window.open('market://details?id=com.innovatif.ztl','_system');
 	}
 }
 

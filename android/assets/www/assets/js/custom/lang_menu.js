@@ -204,6 +204,39 @@ wifi_connection_translation[3]	= "You need wifi connection";
 wifi_connection_translation[4]	= "You need wifi connection";
 wifi_connection_translation[5]	= "You need wifi connection";
 
+
+var guide_buy_desc_translation = [];
+guide_buy_desc_translation[1]	= "PREDSTAVITEV";
+guide_buy_desc_translation[2]	= "DESCRIPTION";
+guide_buy_desc_translation[3]	= "DESCRIPTION";
+guide_buy_desc_translation[4]	= "DESCRIPTION";
+guide_buy_desc_translation[5]	= "DESCRIPTION";
+
+
+var guide_buy_locations_translation = [];
+guide_buy_locations_translation[1]	= "SEZNAM LOKACIJ";
+guide_buy_locations_translation[2]	= "LOCATIONS";
+guide_buy_locations_translation[3]	= "LOCATIONS";
+guide_buy_locations_translation[4]	= "LOCATIONS";
+guide_buy_locations_translation[5]	= "LOCATIONS";
+
+
+var guide_buy_button_translation = [];
+guide_buy_button_translation[1]	= "PRENESI VODIČ";
+guide_buy_button_translation[2]	= "DOWNLOAD";
+guide_buy_button_translation[3]	= "DOWNLOAD";
+guide_buy_button_translation[4]	= "DOWNLOAD";
+guide_buy_button_translation[5]	= "DOWNLOAD";
+
+
+var guide_buy_desc_text_translation = [];
+guide_buy_desc_text_translation[1]	= "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ";
+guide_buy_desc_text_translation[2]	= "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ";
+guide_buy_desc_text_translation[3]	= "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ";
+guide_buy_desc_text_translation[4]	= "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ";
+guide_buy_desc_text_translation[5]	= "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ";
+
+
 //prevodi mesecov za top evente
 var month_translation = [];
 
