@@ -45,12 +45,8 @@
 			<div style="clear:both;"></div>
 			<div class="ztl_item_content_padding">
 				<div class="ztl_item_buttons">
-					<a href="map.html#{{item.id}}__event" id="map_href" data-ajax="false" style="text-decoration:none;">
-						<div id="map_button" class="ztl_red_button ztl_item_left_button">{{map_button}}</div>
-					</a>
-					<a href="#" style="text-decoration:none;">
-						<div class="ztl_red_button ztl_item_right_button" onClick="add_to_my_visit({{item.id}},2,0,0);">MYVISIT</div>
-					</a>
+					<div id="map_button" class="ztl_red_button ztl_item_left_button" onclick="load_show_map({{id}}, 0)">{{map_button}}</div>
+					<div class="ztl_red_button ztl_item_right_button" onClick="add_to_my_visit({{item.id}},2,0,0);">MYVISIT</div>
 				</div>
 				<br>
 				{{#sound}}

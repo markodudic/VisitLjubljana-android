@@ -3,8 +3,6 @@ function init_gps() {
 	  Proj4js.defs["EPSG:4326"] = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs";
     //GK
     Proj4js.defs["EPSG:31469"] = "+proj=tmerc +lat_0=0 +lon_0=15 +k=1 +x_0=5500000 +y_0=0 +ellps=bessel +datum=potsdam +units=m +no_defs";
-    source = new Proj4js.Proj('EPSG:4326');	//WGS84
-    dest = new Proj4js.Proj('EPSG:31469');	//GK
 
     //timeout pomeni kolk casa caka na novo pozicijo, enableHighAccuracy ali naj uporabi gps ali samo wifi
     var options = { timeout: 10000, enableHighAccuracy: true };
@@ -20,7 +18,10 @@ function onError_gps(error) {
 
 function onSuccess_gps(position) {
 	if (position==undefined) return;
-	var p = new Proj4js.Point(position.coords.longitude, position.coords.latitude); 
+    source = new Proj4js.Proj('EPSG:4326');	//WGS84
+    dest = new Proj4js.Proj('EPSG:31469');	//GK
+
+    var p = new Proj4js.Point(position.coords.longitude, position.coords.latitude); 
     Proj4js.transform(source, dest, p); 
     
     //current location
@@ -37,6 +38,7 @@ function onSuccess_gps(position) {
 	    	   geo_stuff[1] != "" && geo_stuff[2] != "" && 
 	    	   geo_stuff[1] != undefined  && geo_stuff[2] != undefined) {
 	    	   $("div.ztl_img_distance_container").show();
+	    	   console.log("*****="+px+":"+py+":"+geo_stuff[1]+":"+geo_stuff[2]);
 	    	   $("div#ztl_distance_value_"+geo_stuff[0]).html(lineDistance(px, py, geo_stuff[1], geo_stuff[2])+" km");
 	       } else {
 	    	   $("div.ztl_img_distance_container").hide();

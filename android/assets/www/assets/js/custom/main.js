@@ -74,17 +74,6 @@ function on_device_ready() {
 		menu_select_lang = 1;
 	} else if (hash == "content") { 
 		skip_update = 1;
-	} else if (hash_split[0] == "load_content") {
-		$.getScript('./assets/js/custom/trips.js', function () {
-			skip_update = 1;
-			console.log("LOAD*****"+hash_split[1]);
-			get_cache();
-			if (hash_split[2]==0) {
-				load_event(hash_split[1], 0);
-			} else if (hash_split[2]==1) {
-				load_trip_content(hash_split[1], 'fade', true, 0);
-			}
-	    });	
 	} else {
 		navigator.splashscreen.show();
 		skip_update = 0;
@@ -378,14 +367,12 @@ function load_page(template, div, data, transition, reverse, id_group) {
 			} else if (div == "my_visit_list") {
 				data.page_title = my_visit_page_title_translation[settings.id_lang];
 				data.dots 		= 1;
-<<<<<<< .mine
 			} else if (div == "guide_buy") {
 				data.title 				= voice_guide_translation[settings.id_lang].toUpperCase();
 				data.guide_buy_desc 	= guide_buy_desc_translation[settings.id_lang].toUpperCase();
 				data.guide_buy_desc_text= guide_buy_desc_text_translation[settings.id_lang].toUpperCase();
 				data.guide_buy_locations= guide_buy_locations_translation[settings.id_lang].toUpperCase();
 				data.guide_buy_button	= guide_buy_button_translation[settings.id_lang].toUpperCase();
-=======
 			} else if (div == "my_visit_settings") {
 				data.page_title 					= my_visit_page_title_translation[settings.id_lang];
 				data.my_visit_download_translation 	= my_visit_download_translation[settings.id_lang];
@@ -396,9 +383,10 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				data.login						    = login_translation[settings.id_lang];
 				data.my_visit_tours					= my_visit_tours_translation[settings.id_lang];
 				data.my_visit_poi					= my_visit_poi_translation[settings.id_lang];
-				
 				data.dots 							= 1;
->>>>>>> .r237
+			} else if (div == "ztl_map") {
+				data = {};
+				data.title 					= map_translation[settings.id_lang];			
 			}
 
 			if (voice_guide == 1)  {
@@ -594,12 +582,6 @@ function guide_buy() {
     });
 }
 
-
-function show_map() {
-	$.getScript('./assets/js/custom/ztl_map.js', function () {
-        load_show_map();
-    });
-}
 
 
 function dprun(t) {
