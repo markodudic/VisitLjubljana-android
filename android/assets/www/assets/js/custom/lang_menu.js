@@ -324,14 +324,16 @@ my_visit_download_translation[4] = "Prenesi MyVisit s spletnega mesta";
 my_visit_download_translation[5] = "Prenesi MyVisit s spletnega mesta";
 
 var user_name_translation = [];
-user_name_translation[1] = "Uporabniško ime";
+//user_name_translation[1] = "Uporabniško ime";
+user_name_translation[1] = "markodudic@gmail.com";
 user_name_translation[2] = "Uporabniško ime";
 user_name_translation[3] = "Uporabniško ime";
 user_name_translation[4] = "Uporabniško ime";
 user_name_translation[5] = "Uporabniško ime";
 
 var password_translation = [];
-password_translation[1] = "Geslo";
+//password_translation[1] = "Geslo";
+password_translation[1] = "okram";
 password_translation[2] = "Geslo";
 password_translation[3] = "Geslo";
 password_translation[4] = "Geslo";

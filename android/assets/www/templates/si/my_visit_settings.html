@@ -27,21 +27,29 @@
 				{{my_visit_download_translation}}
 			</div>
 			<div class="my_visit_padding_top"></div>
-			<input type="text" class="my_visit_input" id="my_visit_username" value="{{user_name}}" onClick="clear_field('my_visit_username');">
-			<br><br> 
-			<input type="text" class="my_visit_input" id="my_visit_password" value="{{password}}" onClick="clear_field('my_visit_password');"> 
-			<br><br>
-			<div class="left red my_visit_forgotten_pass">
-				{{forgotten_pass}}
-			</div>
-			<div class="right red my_visit_register">
-				{{register_translation}}
-			</div>
-			<br>
-			<div class="my_visit_login">
-				<img src="assets/css/ztl_images/my_visit_questionmark.png" class="my_visit_questionmark">&nbsp;&nbsp;&nbsp;&nbsp;
-				<div class="ztl_red_button ztl_event_search_button my_visit_login_button" onClick="web_login();">{{login}}</div>
-			</div>
+			{{#logged_id}}
+				<div class="my_visit_input">
+					<div>{{user.username}}</div>
+					<div>  --  <span onClick="web_user_logout();">odjava</span></div>
+				</div>
+			{{/logged_id}}
+			{{^logged_id}}
+				<input type="text" class="my_visit_input" id="my_visit_username" value="{{user_name}}" onClick="clear_field('my_visit_username');">
+				<br><br> 
+				<input type="text" class="my_visit_input" id="my_visit_password" value="{{password}}" onClick="clear_field('my_visit_password');"> 
+				<br><br>
+				<div class="left red my_visit_forgotten_pass">
+					{{forgotten_pass}}
+				</div>
+				<div class="right red my_visit_register">
+					{{register_translation}}
+				</div>
+				<br>
+				<div class="my_visit_login">
+					<img src="assets/css/ztl_images/my_visit_questionmark.png" class="my_visit_questionmark">&nbsp;&nbsp;&nbsp;&nbsp;
+					<div class="ztl_red_button ztl_event_search_button my_visit_login_button" onClick="web_login();">{{login}}</div>
+				</div>
+			{{/logged_id}}
 
 			<div class="my_visit_padding_top"></div>
 			<div class="my_visit_list_border"></div>
