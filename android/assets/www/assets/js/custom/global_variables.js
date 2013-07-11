@@ -39,7 +39,8 @@ var my_media 	 = null;
 var media_timer  = null;
 var media_length = 0;
 var file 		 = "/android_asset/www/uploads/mp3/";
-
+var file_alt 	 = "Android/data/com.innovatif.ztl/audio/"; //lokacija na SD kartici
+var file_uploads = "/uploads/images/"; //lokacija slik v instalaciji - tabela ztl_poi se updejta prvem zagonu
 
 //cssless css
 var window_width = $(window).width();
