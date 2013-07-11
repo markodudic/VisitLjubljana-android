@@ -380,3 +380,38 @@ download_translation[2] = "Prenesi";
 download_translation[3] = "Prenesi";
 download_translation[4] = "Prenesi";
 download_translation[5] = "Prenesi";
+
+var select_view_translation = [];
+select_view_translation[1] = "Izberi pogled";
+select_view_translation[2] = "Izberi pogled";
+select_view_translation[3] = "Izberi pogled";
+select_view_translation[4] = "Izberi pogled";
+select_view_translation[5] = "Izberi pogled";
+
+var show_on_map_translation = [];
+show_on_map_translation[1] = "Prikaži vse na zemljevidu";
+show_on_map_translation[2] = "Prikaži vse na zemljevidu";
+show_on_map_translation[3] = "Prikaži vse na zemljevidu";
+show_on_map_translation[4] = "Prikaži vse na zemljevidu";
+show_on_map_translation[5] = "Prikaži vse na zemljevidu";
+
+var logout_translation = [];
+logout_translation[1] = "Odjava";
+logout_translation[2] = "Odjava";
+logout_translation[3] = "Odjava";
+logout_translation[4] = "Odjava";
+logout_translation[5] = "Odjava";
+
+var my_visit_sync_translation = [];
+my_visit_sync_translation[1] = "Sinhroniziraj";
+my_visit_sync_translation[2] = "Sinhroniziraj";
+my_visit_sync_translation[3] = "Sinhroniziraj";
+my_visit_sync_translation[4] = "Sinhroniziraj";
+my_visit_sync_translation[5] = "Sinhroniziraj";
+
+var clear_my_visit_translation = [];
+clear_my_visit_translation[1] = "Izprazni celotni MyVisit";
+clear_my_visit_translation[2] = "Izprazni celotni MyVisit";
+clear_my_visit_translation[3] = "Izprazni celotni MyVisit";
+clear_my_visit_translation[4] = "Izprazni celotni MyVisit";
+clear_my_visit_translation[5] = "Izprazni celotni MyVisit";

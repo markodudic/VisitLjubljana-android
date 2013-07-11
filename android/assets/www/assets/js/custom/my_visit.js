@@ -40,8 +40,14 @@ function check_user() {
 	} else {
 		return false;
 	}
-	
-	
+}
+
+function my_visit_sync() {
+	if (check_user() != false) {
+		web_login();
+	} else {
+		load_my_visit_settings();
+	}
 }
 
 function delete_from_my_visit(id, time) {
@@ -113,6 +119,10 @@ function web_user_logout() {
 	localStorage.removeItem('my_visit_ztl_user');
 
 	//spraznim tabelo my_visit
+	clear_my_visit();
+}
+
+function clear_my_visit() {
 	tmp_query = "DELETE FROM  ztl_my_visit";
 	db.transaction(function(tx) {
 		 tx.executeSql(tmp_query, [], function(tx, res_poi) {
@@ -120,4 +130,18 @@ function web_user_logout() {
 		 	load_my_visit();
 		 });
 	});
+}
+
+function my_visit_settings_menu_toggle() {
+	$(".event_filter").toggle();
+	
+	$(".ztl_content").toggle();
+	$(".header").toggle();
+	$(".footer").toggle();
+
+	if ($('.event_filter').is(':visible')) {
+		swipe = 0;
+	} else {
+		swipe = 1;
+	}
 }

@@ -30,7 +30,7 @@
 			{{#logged_id}}
 				<div class="my_visit_input my_visit_loged_in_user_info">
 					<div class="left">{{user.username}}</div>
-					<div class="right red my_visit_logout"><span onClick="web_user_logout();">odjava</span></div>
+					<div class="right red my_visit_logout"><span onClick="web_user_logout();">{{logout}}</span></div>
 					<input type="hidden" id="my_visit_username" value="{{user.username}}">
 					<input type="hidden" id="my_visit_password" value="{{user.password}}" > 
 				</div>
