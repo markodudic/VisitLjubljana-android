@@ -95,7 +95,8 @@ function  load_media_file(file) {
             function(err) {
                 console.log(err);
         }
-    ); 
+    );
+
 }
 
 function set_media_state(value) {

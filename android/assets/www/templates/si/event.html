@@ -6,8 +6,8 @@
 			<div class="header_space"></div>
 			<!--div onClick="load_events()"><img class="header_back"></div>
 			<div class="header_title" onClick="load_events()">{{item.title}}</div-->
-			<div onClick="load_page(template_lang+'events.html', 'events', trips[0], 'fade', false, 0);"><img class="header_back"></div>
-			<div class="header_title" onClick="load_page(template_lang+'events.html', 'events', trips[0], 'fade', false, 0);">{{& item.title}}</div>
+			<div onClick="load_page(template_lang+'events.html', 'events', trips[EVENT_GROUP], 'fade', false, EVENT_GROUP);"><img class="header_back"></div>
+			<div class="header_title" onClick="load_page(template_lang+'events.html', 'events', trips[EVENT_GROUP], 'fade', false, EVENT_GROUP);">{{& item.title}}</div>
 			<div class="header_dots" onClick="event_filter_toggle();"></div>
 			<div style="clear:both;"></div>
 			<div class="header_space"></div>
@@ -45,7 +45,7 @@
 			<div style="clear:both;"></div>
 			<div class="ztl_item_content_padding">
 				<div class="ztl_item_buttons">
-					<div id="map_button" class="ztl_red_button ztl_item_left_button" onclick="load_show_map({{id}}, 0)">{{map_button}}</div>
+					<div id="map_button" class="ztl_red_button ztl_item_left_button" onclick="load_show_map({{id}}, EVENT_GROUP)">{{map_button}}</div>
 					<div class="ztl_red_button ztl_item_right_button" onClick="add_to_my_visit({{item.id}},2,0,0);">MYVISIT</div>
 				</div>
 				<br>
