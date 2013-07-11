@@ -110,6 +110,7 @@ function update_poi(url, pois) {
 			//napaka
 			console.log(" >>>>>>>>>> failed "+url);
 			console.log(JSON.stringify(thrownError));
+			is_updt_finished();
 		},
 		success : function(data) {
 			console.log(" >>>>>>>>>> ok");
@@ -259,6 +260,7 @@ function update_event(url) {
 			//napaka
 			console.log(" >>>>>>>>>> failed "+url);
 			console.log(JSON.stringify(thrownError));
+			is_updt_finished();
 		},
 		success : function(data) {
 			console.log(" >>>>>>>>>> ok");
@@ -369,6 +371,7 @@ function update_tour(url) {
 			//napaka
 			console.log(" >>>>>>>>>> failed "+url);
 			console.log(JSON.stringify(thrownError));
+			is_updt_finished();
 		},
 		success : function(data) {
 			console.log(" >>>>>>>>>> ok");
@@ -461,6 +464,7 @@ function update_inspired(url) {
 			//napaka
 			console.log(" >>>>>>>>>> failed "+url);
 			console.log(JSON.stringify(thrownError));
+			is_updt_finished();
 		},
 		success : function(data) {
 			console.log(" >>>>>>>>>> ok");
@@ -537,6 +541,7 @@ function update_info(url) {
 			//napaka
 			console.log(" >>>>>>>>>> failed "+url);
 			console.log(JSON.stringify(thrownError));
+			is_updt_finished();
 		},
 		success : function(data) {
 			console.log(" >>>>>>>>>> ok");
