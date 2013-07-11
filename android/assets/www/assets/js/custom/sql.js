@@ -415,6 +415,7 @@ function last_update_success(results) {
 //my_visit
 function my_visit_success(results) {
 	my_visit_status = 0;
+    //var tmp_date    = new Date();
 	
 	var res 		 = {};
     res.poi 		 = [];
@@ -458,8 +459,10 @@ function my_visit_success(results) {
 
     if (res.has_poi == 1) {
     	poi_wi = poi_wi+"0";
-    	var tmp_query = 'SELECT zp.id, zp.address, zp.post_number, zp.post, zpt.title, zcg.id_group FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id WHERE id IN ('+poi_wi+') AND zpt.id_language = '+settings.id_lang+' AND zp.record_status = 1 GROUP BY zp.id';
+    	var tmp_query = 'SELECT zp.id, zp.address, zp.post_number, zp.post, zpt.title, zcg.id_group, zmi.start, zmi.end FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id LEFT JOIN ztl_my_visit zmi ON (zmi.id = zp.id AND zmi.ztl_group = '+POI_GROUP+') WHERE zp.id IN ('+poi_wi+') AND zpt.id_language = '+settings.id_lang+' AND zp.record_status = 1 GROUP BY zp.id';
 		
+        console.log("my_visit --- qverij --- "+tmp_query);
+
     	db.transaction(function(tx) {
 			 tx.executeSql(tmp_query, [], function(tx, res_poi) {
 
@@ -500,7 +503,7 @@ function my_visit_success(results) {
     	evt_wi = evt_wi+"0";
 
     	//var tmp_query 	 = "SELECT  e.id, et.title, ett.timetable_idx AS id_timetable, ett.venue, ett.date FROM ztl_event e LEFT JOIN ztl_event_translation et ON et.id_event = e.id LEFT JOIN  ztl_event_timetable ett ON ett.id_event = e.id WHERE e.id IN ("+evt_wi+") AND et.id_language = "+settings.id_lang; 
-        var tmp_query    = "SELECT  e.id, et.title FROM ztl_event e LEFT JOIN ztl_event_translation et ON et.id_event = e.id WHERE e.id IN ("+evt_wi+") AND et.id_language = "+settings.id_lang; 
+        var tmp_query    = "SELECT  e.id, et.title, zmi.start, zmi.end FROM ztl_event e LEFT JOIN ztl_event_translation et ON et.id_event = e.id LEFT JOIN ztl_my_visit zmi ON (zmi.id = e.id AND zmi.ztl_group = "+EVENT_GROUP+") WHERE e.id IN ("+evt_wi+") AND et.id_language = "+settings.id_lang; 
 
     	db.transaction(function(tx) {
 			tx.executeSql(tmp_query, [], function(tx, res_evt) {
@@ -510,9 +513,32 @@ function my_visit_success(results) {
                 
                 for (var ei = 0; ei<evt_len; ei++) {
                     res_evt.rows.item(ei).title = unescape(res_evt.rows.item(ei).title);
-					res.evt[k] = res_evt.rows.item(ei);
+					
+                    /*
+                    if (res_evt.rows.item(ei).start > 0) {
+
+                        tmp_date = new Date(res_evt.rows.item(ei).start * 1000);
+                        res_evt.rows.item(ei).start = return_formated_date(tmp_date);
+
+                    } else {
+                        es_evt.rows.item(ei).start = "";
+                    }
+
+                    if (res_evt.rows.item(ei).end > 0) {
+
+                        tmp_date = new Date(res_evt.rows.item(ei).end * 1000);
+                        res_evt.rows.item(ei).end = return_formated_date(tmp_date);
+
+                    } else {
+                        es_evt.rows.item(ei).end = "";
+                    }
+                    */
+
+                    res.evt[k] = res_evt.rows.item(ei);
 					k++;
 				}
+
+                //console.log("aaaaaaaaa" + JSON.stringify(res.evt));
 
 				my_visit_status++;
 				check_my_visit(res);
@@ -529,7 +555,7 @@ function my_visit_success(results) {
     var tmp_info_text = "";
     if (res.has_evt == 1) {
         tour_wi = tour_wi+"0";
-        var tmp_query = "SELECT t.id, tt.title, tt.short_description FROM ztl_tour t LEFT JOIN ztl_tour_translation tt ON tt.id_tour = t.id WHERE t.id IN ("+tour_wi+")";
+        var tmp_query = "SELECT t.id, tt.title, tt.short_description, zmi.start, zmi.end FROM ztl_tour t LEFT JOIN ztl_tour_translation tt ON tt.id_tour = t.id  LEFT JOIN ztl_my_visit zmi ON (zmi.id = t.id AND zmi.ztl_group = "+TOUR_GROUP+") WHERE t.id IN ("+tour_wi+")";
 
         console.log("my_visit "+tmp_query);
 

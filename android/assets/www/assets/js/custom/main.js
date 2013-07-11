@@ -508,6 +508,11 @@ function load_page(template, div, data, transition, reverse, id_group) {
 			navigator.geolocation.getCurrentPosition(onSuccess_gps, onError_gps);
 			
 			current_div = div+extra_div_id;
+
+			//ko nalozim my_visit grem se cez case
+			if (div == "my_visit_list") {
+				render_time();
+			}
 		}
 	});
 }
@@ -659,4 +664,21 @@ function show_spinner() {
 
 function hide_spinner() {
 	spinner.stop();
+}
+
+function format_date(date_string, id) {
+    console.log("render ---- date string "+date_string);
+    console.log("render ---- id "+ id);
+
+    var date_obj = new Date(date_string*1000);
+    
+    navigator.globalization.dateToString(
+        date_obj,
+    function (date) {
+        console.log("render --- " + date.value);
+        $("#"+id).html(date.value);
+    },
+    function () {alert('Error getting dateString\n');},
+    {formatLength:'short', selector:'date and time'}
+    );
 }

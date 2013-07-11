@@ -201,3 +201,23 @@ function add_inspire_to_my_visit(id) {
 		 });
 	});
 }
+
+function my_visit_item_date(id, group) {
+	console.log("my_visit ---- id: "+id);
+	console.log("my_visit ---- group: "+group);
+}
+
+function render_time() {
+	var tmp_id = "";
+	$("[id^=non_formated_]" ).each(function() {
+		console.log("render time --- "+ $(this).attr('id'));
+		console.log("render time --- "+ $(this).val());
+		console.log("render time ------------------------------------ ");
+
+		if ($(this).val() > 0) {
+			tmp_id = $(this).attr('id').substring(4, $(this).attr('id').length);
+			
+			format_date($(this).val(), tmp_id);
+		}
+	});
+}
