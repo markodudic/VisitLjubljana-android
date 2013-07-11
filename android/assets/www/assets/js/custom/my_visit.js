@@ -129,21 +129,27 @@ function sync_my_visit(res) {
 		for (var i = 0; i<res.length; i++) {
 			console.log(JSON.stringify(res[i]));
 
-			
-			if (res[i].ref_object_type == ZTL_EVENT_GROUP) {
-				tmp_group = EVENT_GROUP;
-			} else if (res[i].ref_object_type == ZTL_TOUR_GROUP) {
-				tmp_group = TOUR_GROUP;
-			} else if (res[i].ref_object_type == ZTL_POI_GROUP) {
-				tmp_group = POI_GROUP;
-			}
-
+			tmp_group = get_mobile_group(res[i].ref_object_type);
 			add_to_my_visit(res[i].ref_object, tmp_group, res[i].ref_object_date_type, res[i].ref_object_start, res[i].ref_object_end);
 		}
 	}
 
 	//rediractam na my_visit
 	load_my_visit();
+}
+
+function get_mobile_group(object_type) {
+	var tmp_group = 0;
+
+	if (object_type == ZTL_EVENT_GROUP) {
+		tmp_group = EVENT_GROUP;
+	} else if (object_type == ZTL_TOUR_GROUP) {
+		tmp_group = TOUR_GROUP;
+	} else if (object_type == ZTL_POI_GROUP) {
+		tmp_group = POI_GROUP;
+	}
+
+	return tmp_group;
 }
 
 function web_user_logout() {
@@ -176,4 +182,22 @@ function my_visit_settings_menu_toggle() {
 	} else {
 		swipe = 1;
 	}
+}
+
+function add_inspire_to_my_visit(id) {
+	var tmp_query = "SELECT zic.ref_object, zic.ref_object_type, zic.ref_object_date_type FROM ztl_inspired_category zic WHERE zic.id_inspired = "+id;
+	var tmp_group = 0;
+	db.transaction(function(tx) {
+		 tx.executeSql(tmp_query, [], function(tx, results) {
+		 	
+		 	var len = results.rows.length;
+			for (var i=0; i<len; i++){
+				tmp_group = get_mobile_group(results.rows.item(i).ref_object_type);
+
+				add_to_my_visit(results.rows.item(i).ref_object, tmp_group, results.rows.item(i).ref_object_date_type, 0, 0);
+		    }
+
+		    load_my_visit();
+		 });
+	});
 }
