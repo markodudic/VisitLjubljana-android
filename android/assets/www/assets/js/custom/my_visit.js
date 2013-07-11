@@ -1,5 +1,15 @@
-function add_to_my_visit(id, type, time, location) {
-	var tmp_query      = "INSERT OR REPLACE INTO ztl_my_visit (id, main_group, type, time, location) VALUES ("+id+", "+selected_group+", "+type+", "+time+", "+location+");";
+var only_login = 1;
+
+function add_to_my_visit(id, ztl_group, type, start, end) {
+
+	console.log("my_visit -- id: "+id);
+	console.log("my_visit -- ztl_group: "+ztl_group);
+	console.log("my_visit -- type: "+type);
+	console.log("my_visit -- start: "+start);
+	console.log("my_visit -- end: "+end);
+
+	var tmp_query = "INSERT OR REPLACE INTO ztl_my_visit (id, ztl_group, type, start, end) VALUES ("+id+", "+ztl_group+", "+type+", "+start+", "+end+");";
+    
     db.transaction(function(tx) {
 		 tx.executeSql(tmp_query, [], function(tx, res) {});
 	});
@@ -11,7 +21,7 @@ function load_my_visit(save_history) {
 		add_to_history(history_string);
 	}
 
-	var tmp_query      = "SELECT id, main_group, type, time, location FROM ztl_my_visit GROUP BY id, main_group, type, time, location ORDER BY type, main_group";
+	var tmp_query      = "SELECT id, ztl_group, type, start, end FROM ztl_my_visit GROUP BY id, ztl_group, type, start, end ORDER BY type, ztl_group";
     var tmp_callback   = "my_visit_success";
 
     generate_query(tmp_query, tmp_callback);
@@ -44,7 +54,7 @@ function check_user() {
 
 function my_visit_sync() {
 	if (check_user() != false) {
-		web_login();
+		web_login(0);
 	} else {
 		load_my_visit_settings();
 	}
@@ -65,7 +75,9 @@ function clear_field(field) {
 	$("#"+field).val("");
 }
 
-function web_login() {
+function web_login(sync) {
+	only_login = sync;
+
 	var username = $("#my_visit_username").val();
 	var password = $("#my_visit_password").val();
 
@@ -89,9 +101,6 @@ function web_login() {
 }
 
 function handle_web_login(res) {
-	console.log("login --- res: " + JSON.stringify(res));
-	console.log("login --- login success: " + res.success);
-
 	if (res.success == 1) {
 		//nastavim localstorage
 		var ztl_user = {};
@@ -110,6 +119,29 @@ function handle_web_login(res) {
 }
 
 function sync_my_visit(res) {
+	var tmp_group = 0;
+	res = res.myVisit.ref_object;
+	
+
+	if (only_login == 0) {
+		clear_my_visit();
+
+		for (var i = 0; i<res.length; i++) {
+			console.log(JSON.stringify(res[i]));
+
+			
+			if (res[i].ref_object_type == ZTL_EVENT_GROUP) {
+				tmp_group = EVENT_GROUP;
+			} else if (res[i].ref_object_type == ZTL_TOUR_GROUP) {
+				tmp_group = TOUR_GROUP;
+			} else if (res[i].ref_object_type == ZTL_POI_GROUP) {
+				tmp_group = POI_GROUP;
+			}
+
+			add_to_my_visit(res[i].ref_object, tmp_group, res[i].ref_object_date_type, res[i].ref_object_start, res[i].ref_object_end);
+		}
+	}
+
 	//rediractam na my_visit
 	load_my_visit();
 }
@@ -123,7 +155,7 @@ function web_user_logout() {
 }
 
 function clear_my_visit() {
-	tmp_query = "DELETE FROM  ztl_my_visit";
+	tmp_query = "DELETE FROM ztl_my_visit";
 	db.transaction(function(tx) {
 		 tx.executeSql(tmp_query, [], function(tx, res_poi) {
 		 	//redirectam na login

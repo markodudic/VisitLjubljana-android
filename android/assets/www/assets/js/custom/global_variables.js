@@ -16,7 +16,12 @@ var POI_NASTANITVE_GROUP	= 215;
 var POI_NAKUPOVANJE_GROUP	= 220;
 var POI_ZABAVA_GROUP		= 222;
 
-var UPDATE_GROUPS			= 5;
+//ztl grupe -- my_visit sinhronizacija
+var ZTL_EVENT_GROUP = 1;
+var ZTL_TOUR_GROUP 	= 10031;
+var ZTL_POI_GROUP 	= 10027;
+
+var UPDATE_GROUPS	= 5;
 
 //gps
 var watchID 	= null;
