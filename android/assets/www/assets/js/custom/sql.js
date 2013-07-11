@@ -421,7 +421,6 @@ function my_visit_success(results) {
     res.evt 		 = [];
     res.tour 		 = [];
 	
-    var tmp_arr 	 = [];
 	var filtered_arr = [];
 
 	var poi_wi 		 = "";
@@ -438,56 +437,52 @@ function my_visit_success(results) {
 
 	var ett_i = 0;
 	for (var i=0; i<len; i++){
-		tmp_arr[i] =  results.rows.item(i).main_group;
-
-		if (results.rows.item(i).type == 1) {
-			res.has_pois 	= 1;
+		if (results.rows.item(i).ztl_group == POI_GROUP) {
+			res.has_poi 	= 1;
     		poi_wi			= poi_wi + results.rows.item(i).id+",";
-    	} else if (results.rows.item(i).type == 2) {
+    	} else if (results.rows.item(i).ztl_group == EVENT_GROUP) {
     		res.has_evt	 	= 1;
     		evt_wi			= evt_wi + results.rows.item(i).id+",";
 
     		evt_tt[ett_i] = results.rows.item(i);
     		ett_i++;
-    	} else if (results.rows.item(i).type == 3) {
+    	} else if (results.rows.item(i).ztl_group == TOUR_GROUP) {
     		tour_wi			= tour_wi + results.rows.item(i).id+",";
     		res.has_tour 	= 1;
     	}
     }
-
-    $.each(tmp_arr, function(i, el){
-	    if($.inArray(el, filtered_arr) === -1) filtered_arr.push(el);
-	});
-
+   
 	//myvisit poi
 	var j = 0;
-    if (res.has_pois == 1) {
+    var current_group = 0;
+
+    if (res.has_poi == 1) {
     	poi_wi = poi_wi+"0";
-    	var tmp_query = 'SELECT zp.*, zpt.title, zcg.id_group FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id WHERE id IN ('+poi_wi+') AND zpt.id_language = '+settings.id_lang+' AND zp.record_status = 1 GROUP BY zp.id';
+    	var tmp_query = 'SELECT zp.id, zp.address, zp.post_number, zp.post, zpt.title, zcg.id_group FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id WHERE id IN ('+poi_wi+') AND zpt.id_language = '+settings.id_lang+' AND zp.record_status = 1 GROUP BY zp.id';
 		
     	db.transaction(function(tx) {
 			 tx.executeSql(tmp_query, [], function(tx, res_poi) {
 
 			 	var poi_len = res_poi.rows.length;
-			 	for (var pj = 0; pj<filtered_arr.length; pj++) {
-			 		
-                    if (filtered_arr[pj] > 200) {
+
+                for (var pi = 0; pi<poi_len; pi++) {
+                    if (current_group < res_poi.rows.item(pi).id_group) {
                         var tmp_title = {};
-    			 		tmp_title.group_name = main_menu[mm_pic_group[filtered_arr[pj]]];
+                        tmp_title.group_name = main_menu[mm_pic_group[res_poi.rows.item(pi).id_group]];
 
-    			 		res.poi[j] = tmp_title;
-    			 		j++;
+                        res.poi[j] = tmp_title;
+                        j++;
 
-    			 		for (var pi = 0; pi<poi_len; pi++) {
-    			 			
-    			 			if (res_poi.rows.item(pi).id_group == filtered_arr[pj]) {
-    			 				res_poi.rows.item(pi).group_name = "";
-    			 				res.poi[j]	= res_poi.rows.item(pi);
-    			 				j++;
-    			 			}
-    			 		}
+                        current_group = res_poi.rows.item(pi).id_group;
                     }
-			 	}
+
+                    res_poi.rows.item(pi).group_name = "";
+                    res_poi.rows.item(pi).title = unescape(res_poi.rows.item(pi).title);
+
+                    res.poi[j]  = res_poi.rows.item(pi);
+                    j++;
+                }
+
 
     		 	my_visit_status++;
     		 	check_my_visit(res);
@@ -498,12 +493,14 @@ function my_visit_success(results) {
     	check_my_visit(res);
     }
 
+
     //myvisit event
     var k = 0;
     if (res.has_evt == 1) {
     	evt_wi = evt_wi+"0";
 
-    	var tmp_query 	 = "SELECT  e.id, et.title, ett.timetable_idx AS id_timetable, ett.venue, ett.date FROM ztl_event e LEFT JOIN ztl_event_translation et ON et.id_event = e.id LEFT JOIN  ztl_event_timetable ett ON ett.id_event = e.id WHERE e.id IN ("+evt_wi+") AND et.id_language = "+settings.id_lang; 
+    	//var tmp_query 	 = "SELECT  e.id, et.title, ett.timetable_idx AS id_timetable, ett.venue, ett.date FROM ztl_event e LEFT JOIN ztl_event_translation et ON et.id_event = e.id LEFT JOIN  ztl_event_timetable ett ON ett.id_event = e.id WHERE e.id IN ("+evt_wi+") AND et.id_language = "+settings.id_lang; 
+        var tmp_query    = "SELECT  e.id, et.title FROM ztl_event e LEFT JOIN ztl_event_translation et ON et.id_event = e.id WHERE e.id IN ("+evt_wi+") AND et.id_language = "+settings.id_lang; 
 
     	db.transaction(function(tx) {
 			tx.executeSql(tmp_query, [], function(tx, res_evt) {
@@ -511,13 +508,10 @@ function my_visit_success(results) {
 
                 res.evt_group_name_translation = main_menu[mm_pic_group[0]];
                 
-				for (var ej = 0; ej<evt_tt.length; ej++) {
-                    for (var ei = 0; ei<evt_len; ei++) {
-                        if ((res_evt.rows.item(ei).id == evt_tt[ej].id) && (res_evt.rows.item(ei).id_timetable == evt_tt[ej].time)) {
-							res.evt[k] = res_evt.rows.item(ei);
-							k++;
-						}
-					}
+                for (var ei = 0; ei<evt_len; ei++) {
+                    res_evt.rows.item(ei).title = unescape(res_evt.rows.item(ei).title);
+					res.evt[k] = res_evt.rows.item(ei);
+					k++;
 				}
 
 				my_visit_status++;
@@ -529,12 +523,15 @@ function my_visit_success(results) {
     	check_my_visit(res);
     }
 
+
     //myvisit tour
     var l = 0;
     var tmp_info_text = "";
     if (res.has_evt == 1) {
         tour_wi = tour_wi+"0";
         var tmp_query = "SELECT t.id, tt.title, tt.short_description FROM ztl_tour t LEFT JOIN ztl_tour_translation tt ON tt.id_tour = t.id WHERE t.id IN ("+tour_wi+")";
+
+        console.log("my_visit "+tmp_query);
 
         db.transaction(function(tx) {
             tx.executeSql(tmp_query, [], function(tx, res_tour) {
@@ -544,13 +541,15 @@ function my_visit_success(results) {
                 
                 for (var ti = 0; ti<tour_len; ti++) {
                  
-                    tmp_info_text = res_tour.rows.item(ti).short_description;
+                    tmp_info_text = unescape(res_tour.rows.item(ti).short_description);
                     if (tmp_info_text.length > max_dolzina_short_desc) {
                         res_tour.rows.item(ti).short_description = tmp_info_text.substring(0,max_dolzina_short_desc)+"...";
                     }
 
-                   res.tour[l] = res_tour.rows.item(ti);
-                   l++;
+
+                    res_tour.rows.item(ti).title = unescape(res_tour.rows.item(ti).title);
+                    res.tour[l] = res_tour.rows.item(ti);
+                    l++;
                 }
 
                 my_visit_status++;
@@ -561,6 +560,7 @@ function my_visit_success(results) {
         my_visit_status++;
         check_my_visit(res);
     }
+
 } 
 
 function check_my_visit(res) {
@@ -572,7 +572,6 @@ function check_my_visit(res) {
 
     	   load_page(template_lang+'my_visit_list.html', 'my_visit_list', res, 'fade', false);
         } else {
-            //nalozim nastavitve my_visit
             load_my_visit_settings();
         }
     }

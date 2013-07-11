@@ -46,7 +46,7 @@
 			<div class="ztl_item_content_padding">
 				<div class="ztl_item_buttons">
 					<div id="map_button" class="ztl_red_button ztl_item_left_button" onclick="load_show_map({{id}}, EVENT_GROUP)">{{map_button}}</div>
-					<div class="ztl_red_button ztl_item_right_button" onClick="add_to_my_visit({{item.id}},2,0,0);">MYVISIT</div>
+					<div class="ztl_red_button ztl_item_right_button" onClick="add_to_my_visit({{item.id}},EVENT_GROUP,0,0,0);">MYVISIT</div>
 				</div>
 				<br>
 				{{#sound}}
@@ -71,7 +71,7 @@
 						<div class="grey_line" style="margin-top:10px;"></div>
 						{{#venue}}
 							<div class="ztl_item_details_desc">
-								{{& date}}<br>{{& venue}}  --- <span onClick="add_to_my_visit({{item.id}},2,{{id_time}},0);">tmp_my_visit</span><br>
+								{{& date}}<br>{{& venue}}
 							</div>
 						{{/venue}}
 					{{/has_venue}}
