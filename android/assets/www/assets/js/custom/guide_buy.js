@@ -23,9 +23,9 @@ function load_guide_buy() {
 	lang_has_stored    = audio_guides[settings.id_lang].stored;
 	
 	if (lang_has_purchased == 1 && lang_has_stored == 1) {
-		load_page(template_lang+'trips.html', 'trips', trips[4], 'fade', false, 4);
+		load_page(template_lang+'trips.html', 'trips', trips[VOICE_GROUP], 'fade', false, VOICE_GROUP);
 	} else {
-		load_page(template_lang+'guide_buy.html', 'guide_buy', trips[4], 'fade', false);		
+		load_page(template_lang+'guide_buy.html', 'guide_buy', trips[VOICE_GROUP], 'fade', false);		
 	}
 }
 
