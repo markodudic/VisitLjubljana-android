@@ -15,7 +15,7 @@ function is_updt_finished() {
 	
 	if (updt_finished == 5) {
 	    //all images
-		//window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFSSuccess, null);
+		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFSSuccess, null);
 		
 		var today     = new Date();
 		var sql_today = today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate()+" "+today.getHours()+":"+today.getMinutes()+":"+today.getSeconds();
@@ -355,7 +355,7 @@ function handle_event(data) {
 
 function update_tour_deleted(url, tours) {
 	url = url+'&pois='+tours.join(",");
-	console.log("update DB " +  url);
+	update_tour(url)
 }
 
 function update_tour(url) {
@@ -623,7 +623,7 @@ function readFiles() {
 	        	if (knownfiles.indexOf(filename) == -1) {
         			var ft = new FileTransfer();
         			ft.download(url, dlPath, function() {
-        				console.log("new local file ztl_tour_images "+dlPath);
+        				console.log("==== new local file ztl_tour_images "+dlPath);
         			}, onFSError);
     			}
 	        }
@@ -645,7 +645,7 @@ function readFiles() {
 		        	if (knownfiles.indexOf(filename) == -1) {
 	        			var ft = new FileTransfer();
 	        			ft.download(url, dlPath, function() {
-	        				console.log("new local file ztl_event "+dlPath);
+	        				console.log("==== new local file ztl_event "+dlPath);
 	        			}, onFSError);
 	    			}
     			}
@@ -667,7 +667,7 @@ function readFiles() {
 		        	if (knownfiles.indexOf(filename) == -1) {
 	        			var ft = new FileTransfer();
 	        			ft.download(url, dlPath, function() {
-	        				console.log("new local file ztl_inspired "+dlPath);
+	        				console.log("==== new local file ztl_inspired "+dlPath);
 	        			}, onFSError);
 	    			}
     			}
@@ -689,7 +689,7 @@ function readFiles() {
 		        	if (knownfiles.indexOf(filename) == -1) {
 	        			var ft = new FileTransfer();
 	        			ft.download(url, dlPath, function() {
-	        				console.log("new local file ztl_info "+dlPath);
+	        				console.log("==== new local file ztl_info "+dlPath);
 	        			}, onFSError);
 	    			}
     			}
