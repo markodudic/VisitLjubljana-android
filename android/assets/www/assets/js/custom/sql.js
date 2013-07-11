@@ -547,6 +547,8 @@ function check_my_visit(res) {
         console.log("my_visit --- st objektov: " + res.len);
 
         if (res.len > 0) {
+           res.user = check_user();
+
     	   load_page(template_lang+'my_visit_list.html', 'my_visit_list', res, 'fade', false);
         } else {
             //nalozim nastavitve my_visit
