@@ -10,7 +10,10 @@ var updt_finished = 0;
 function is_updt_finished() {
 	updt_finished++;
 	//vsi updejti
-	if (updt_finished == 4) {
+	if (updt_finished == 5) {
+	    //all images
+		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFSSuccess, null);
+		
 		var today     = new Date();
 		var sql_today = today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate()+" "+today.getHours()+":"+today.getMinutes()+":"+today.getSeconds();
 		var sql       = "UPDATE ztl_updates SET last_update = '"+sql_today+"' WHERE id_language = "+settings.id_lang;
@@ -61,7 +64,6 @@ function check_update_success(results) {
 				for (var i=0; i<res.rows.length; i++) {
 					events[i] = res.rows.item(i).id;
 				}
-		       
 				update_event_deleted(server_url+lang_code+'/mobile_app/event.json?datemodified='+results.rows.item(0).last_update, events);
 			});
 		});
@@ -73,7 +75,6 @@ function check_update_success(results) {
 		        for (var i=0; i<res.rows.length; i++) {
 		        	tours[i] = res.rows.item(i).id;
 		        }
-		        
 		        update_tour_deleted(server_url+lang_code+'/mobile_app/tour.json?datemodified='+results.rows.item(0).last_update, tours); 
 		    });
 		});
@@ -81,8 +82,10 @@ function check_update_success(results) {
 	
 	//updatam info. vedno vse
     update_info(server_url+lang_code+'/mobile_app/info.json');
-    
+    update_inspired(server_url+lang_code+'/mobile_app/inspired.json');
 }
+
+/*********************** POI ***********************/
 
 function update_poi(url, pois) {
 	url = url+'&pois='+pois.join(",");
@@ -227,6 +230,8 @@ function handle_poi_new(data) {
 	});		
 }
 
+/*********************** EVENT ***********************/
+
 function update_event_deleted(url, events) {
 	url = url+'&pois='+events.join(",");
 	update_event(url);
@@ -335,10 +340,9 @@ function handle_event(data) {
 			console.log('+16 >>>>>>>>>> ztl_event_event_category res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
 		});
 	});	
-
-	//images
-	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFSSuccess, null);
 }
+
+/*********************** TOUR ***********************/
 
 function update_tour_deleted(url, tours) {
 	url = url+'&pois='+tours.join(",");
@@ -432,154 +436,65 @@ function handle_tour(data) {
 			console.log('+26 >>>>>>>>>> ztl_tour_images res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
 		});
 	});	
-	
-	//images
-	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFSSuccess, null);
 }
 
-var knownfiles = [];
-var DATADIR;
+/*********************** INSPIRED ***********************/
 
-function onFSSuccess(fileSystem) {
-	fileSystem.root.getDirectory("Android/data/com.innovatif.ztl",{create:true}, gotDir, onFSError);
-}
-
-function gotDir(d) {
-	DATADIR = d;
-	var reader = DATADIR.createReader();
-	reader.readEntries(function(d) {
-		gotFiles(d);
-		readFiles();
-	}, onFSError);
-}
-
-function gotFiles(entries) {
-	for (var i=0; i<entries.length; i++) {
-		knownfiles.push(entries[i].name);
-		console.log("old local file "+entries[i].fullPath);
-	}
-}
-
-function readFiles() {
-	db.transaction(function(tx) {
-		tx.executeSql('select * from ztl_tour_images;', [], function(tx, res) {
-	        for (var i=0; i<res.rows.length; i++) {
-	        	var url      = res.rows.item(i).image;
-	        	var filename = url.split("/").slice(-1)[0];
-
-	        	//lokalno ime
-    			var dlPath = DATADIR.fullPath+"/"+filename;
-    			
-				//shranemo novo pot datoteke v bazo, neglede na to ali obstaja ali ne
-				if (filename != "") {
-    				var updt_sql = 'update ztl_tour_images set image = "'+dlPath+'" where id_tour='+res.rows.item(i).id_tour+' and tour_idx='+res.rows.item(i).tour_idx+';';
-    			
-    				//console.log(updt_sql);
-					tx.executeSql(updt_sql, [], function(tx, res) {});	
-				}
-
-	        	
-	        	//samo nove datoteke
-	        	if (knownfiles.indexOf(filename) == -1) {
-        			var ft = new FileTransfer();
-        			ft.download(url, dlPath, function() {
-        				console.log("new local file ztl_tour_images "+url);
-        				console.log("new local file ztl_tour_images "+dlPath);
-        			}, onFSError);
-    			}
-	        }
-	        
-	        //validate
-	        /*
-			tx.executeSql('select * from ztl_tour_images;', [], function(tx, res) {
-		        for (var i=0; i<res.rows.length; i++) {
-		        	console.log("LOCALIMAGE "+res.rows.item(i).image);
-		        }
-			});
-			*/
-		});
-
-
-		tx.executeSql('select * from ztl_event where image != ""', [], function(tx, res) {
-	        for (var i=0; i<res.rows.length; i++) {
-	        	var url      = res.rows.item(i).image;
-	        	var filename = url.split("/").slice(-1)[0];
-	        	filename = $.trim(filename);
-
-	        	if (filename != "") {
-		        	//lokalno ime
-	    			var dlPath = DATADIR.fullPath+"/"+filename;
-	    			
-					//shranemo novo pot datoteke v bazo, neglede na to ali obstaja ali ne
-	    			
-		    			var updt_sql1 = 'update ztl_event set image = "'+dlPath+'" where id='+res.rows.item(i).id+';';
-
-		    			//console.log(updt_sql);
-						tx.executeSql(updt_sql1, [], function(tx, res) {	});	
-					
-		        	
-		        	//samo nove datoteke
-		        	if (knownfiles.indexOf(filename) == -1) {
-	        			var ft = new FileTransfer();
-	        			ft.download(url, dlPath, function() {
-	        				console.log("new local file ztl_event "+url);
-	        				console.log("new local file ztl_event "+dlPath);
-	        			}, onFSError);
-	    			}
-    			}
-	        }
-
-	        //validate
-	        /*
-			tx.executeSql('select * from ztl_tour_images;', [], function(tx, res) {
-		        for (var i=0; i<res.rows.length; i++) {
-		        	console.log("LOCALIMAGE "+res.rows.item(i).image);
-		        }
-			});
-			*/
-		});
-
-		tx.executeSql('select * from ztl_info where image != ""', [], function(tx, res) {
-	        for (var i=0; i<res.rows.length; i++) {
-	        	var url      = res.rows.item(i).image;
-	        	var filename = url.split("/").slice(-1)[0];
-	        	filename = $.trim(filename);
-
-	        	if (filename != "") {
-		        	//lokalno ime
-	    			var dlPath = DATADIR.fullPath+"/"+filename;
-	    			
-					//shranemo novo pot datoteke v bazo, neglede na to ali obstaja ali ne
-	    			
-		    			var updt_sql1 = 'update ztl_info set image = "'+dlPath+'" where id='+res.rows.item(i).id+';';
-
-		    			//console.log(updt_sql);
-						tx.executeSql(updt_sql1, [], function(tx, res) {	});	
-					
-		        	
-		        	//samo nove datoteke
-		        	if (knownfiles.indexOf(filename) == -1) {
-	        			var ft = new FileTransfer();
-	        			ft.download(url, dlPath, function() {
-	        				console.log("new local file ztl_info "+url);
-	        				console.log("new local file ztl_info "+dlPath);
-	        			}, onFSError);
-	    			}
-    			}
-	        }
-
-	        //validate
-	        /*
-			tx.executeSql('select * from ztl_tour_images;', [], function(tx, res) {
-		        for (var i=0; i<res.rows.length; i++) {
-		        	console.log("LOCALIMAGE "+res.rows.item(i).image);
-		        }
-			});
-			*/
-		});
-		
+function update_inspired(url) {
+	console.log("update DB " +  url);
+	$.ajax( {
+		url : url,
+		dataType : 'json',
+		beforeSend : function(xhr) {
+	          xhr.setRequestHeader("Authorization", "Basic RWlqdTN6YW86dXRoMWplaUY=");
+		},
+		error : function(xhr, ajaxOptions, thrownError) {
+			//napaka
+			console.log(" >>>>>>>>>> failed "+url);
+			console.log(JSON.stringify(thrownError));
+		},
+		success : function(data) {
+			console.log(" >>>>>>>>>> ok");
+			
+			//truncate
+			db.transaction(function(tx) {tx.executeSql('delete from ztl_inspired;', [], function(tx, res) {});});
+			//handle_inspired_deleted(data['deleted']);
+			handle_inspired(data['getInspired']);
+		    //load_inspired(0); TODO marko 
+		    set_cache();
+			is_updt_finished();
+		}
 	});
 }
+
+function handle_inspired_deleted(data) {
+	db.transaction(function(tx) {
+		var sql = "";
+		if (data != null) {
+			for (var i = 0; i < data.length; i++) {
+				sql = "UPDATE ztl_inspired SET record_status = 0 WHERE id = "+data[i];
+				//console.log(sql);
+				tx.executeSql(sql, [], function(tx, res) {});
+			}
+		}
+	});
+}
+
+function handle_inspired(data) {
+	db.transaction(function(tx) {
+		var sql = "";
+		for (var i = 0; i < data.length; i++) {
+			sql = "INSERT INTO ztl_inspired (id, image, record_status) VALUES ("+data[i].id+", '"+data[i].image+"', 1)";
+			tx.executeSql(sql, [], function(tx, res) {});
+		}
+		
+		tx.executeSql('select count(*) as cnt from ztl_inspired;', [], function(tx, res) {
+			console.log('+31 >>>>>>>>>> ztl_info res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+		});
+	});	
+}
+
+/*********************** INFO ***********************/
 
 function update_info(url) {
 	console.log("update DB " +  url);
@@ -598,10 +513,8 @@ function update_info(url) {
 			console.log(" >>>>>>>>>> ok");
 			
 			//truncate
-			/*
 			db.transaction(function(tx) {tx.executeSql('delete from ztl_info;', [], function(tx, res) {});});
-			*/
-			handle_info_deleted(data['deleted']);
+			//handle_info_deleted(data['deleted']);
 			handle_info(data['info']);
 		    load_info(0);
 		    set_cache();
@@ -632,12 +545,126 @@ function handle_info(data) {
 		}
 		
 		tx.executeSql('select count(*) as cnt from ztl_info;', [], function(tx, res) {
-			console.log('+31 >>>>>>>>>> ztl_info res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+			console.log('+41 >>>>>>>>>> ztl_info res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+		});
+	});	
+}
+
+/*********************** IMAGES ***********************/
+
+var knownfiles = [];
+var DATADIR;
+
+function onFSSuccess(fileSystem) {
+	fileSystem.root.getDirectory("Android/data/com.innovatif.ztl",{create:true}, gotDir, onFSError);
+}
+
+function gotDir(d) {
+	DATADIR = d;
+	var reader = DATADIR.createReader();
+	reader.readEntries(function(d) {
+		gotFiles(d);
+		readFiles();
+	}, onFSError);
+}
+
+function gotFiles(entries) {
+	for (var i=0; i<entries.length; i++) {
+		knownfiles.push(entries[i].name);
+	}
+}
+
+function readFiles() {
+	db.transaction(function(tx) {
+		tx.executeSql('select * from ztl_tour_images;', [], function(tx, res) {
+	        for (var i=0; i<res.rows.length; i++) {
+	        	var url      = res.rows.item(i).image;
+	        	var filename = url.split("/").slice(-1)[0];
+	        	filename = $.trim(filename);
+    			
+	        	//filename ni prazen && ni na lokalnem FS && se zacne s http
+	        	if (filename != "" && url.indexOf(DATADIR.fullPath) != 0 && url.indexOf("http") == 0) {
+	    			var dlPath = DATADIR.fullPath+"/"+filename;
+    				var updt_sql0 = 'update ztl_tour_images set image = "'+dlPath+'" where id_tour='+res.rows.item(i).id_tour+' and tour_idx='+res.rows.item(i).tour_idx+';';
+					tx.executeSql(updt_sql0, [], function(tx, res) {});	
+				}
+
+	        	if (knownfiles.indexOf(filename) == -1) {
+        			var ft = new FileTransfer();
+        			ft.download(url, dlPath, function() {
+        				console.log("new local file ztl_tour_images "+dlPath);
+        			}, onFSError);
+    			}
+	        }
+		});
+
+
+		tx.executeSql('select * from ztl_event where image != ""', [], function(tx, res) {
+	        for (var i=0; i<res.rows.length; i++) {
+	        	var url      = res.rows.item(i).image;
+	        	var filename = url.split("/").slice(-1)[0];
+	        	filename = $.trim(filename);
+
+	        	//filename ni prazen && ni na lokalnem FS && se zacne s http
+	        	if (filename != "" && url.indexOf(DATADIR.fullPath) != 0 && url.indexOf("http") == 0) {
+	    			var dlPath = DATADIR.fullPath+"/"+filename;
+	    			var updt_sql1 = 'update ztl_event set image = "'+dlPath+'" where id='+res.rows.item(i).id+';';
+					tx.executeSql(updt_sql1, [], function(tx, res) {});	
+					
+		        	if (knownfiles.indexOf(filename) == -1) {
+	        			var ft = new FileTransfer();
+	        			ft.download(url, dlPath, function() {
+	        				console.log("new local file ztl_event "+dlPath);
+	        			}, onFSError);
+	    			}
+    			}
+	        }
+		});
+
+		tx.executeSql('select * from ztl_inspired where image != ""', [], function(tx, res) {
+	        for (var i=0; i<res.rows.length; i++) {
+	        	var url      = res.rows.item(i).image;
+	        	var filename = url.split("/").slice(-1)[0];
+	        	filename = $.trim(filename);
+
+	        	//filename ni prazen && ni na lokalnem FS && se zacne s http
+	        	if (filename != "" && url.indexOf(DATADIR.fullPath) != 0 && url.indexOf("http") == 0) {
+	    			var dlPath = DATADIR.fullPath+"/"+filename;
+	    			var updt_sql2 = 'update ztl_inspired set image = "'+dlPath+'" where id='+res.rows.item(i).id+';';
+					tx.executeSql(updt_sql2, [], function(tx, res) {});	
+					
+		        	if (knownfiles.indexOf(filename) == -1) {
+	        			var ft = new FileTransfer();
+	        			ft.download(url, dlPath, function() {
+	        				console.log("new local file ztl_inspired "+dlPath);
+	        			}, onFSError);
+	    			}
+    			}
+	        }
 		});
 		
-		//images
-		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFSSuccess, null);
-	});	
+		tx.executeSql('select * from ztl_info where image != ""', [], function(tx, res) {
+	        for (var i=0; i<res.rows.length; i++) {
+	        	var url      = res.rows.item(i).image;
+	        	var filename = url.split("/").slice(-1)[0];
+	        	filename = $.trim(filename);
+
+	        	//filename ni prazen && ni na lokalnem FS && se zacne s http
+	        	if (filename != "" && url.indexOf(DATADIR.fullPath) != 0 && url.indexOf("http") == 0) {
+	    			var dlPath = DATADIR.fullPath+"/"+filename;
+	    			var updt_sql3 = 'update ztl_info set image = "'+dlPath+'" where id='+res.rows.item(i).id+';';
+					tx.executeSql(updt_sql3, [], function(tx, res) {});	
+					
+		        	if (knownfiles.indexOf(filename) == -1) {
+	        			var ft = new FileTransfer();
+	        			ft.download(url, dlPath, function() {
+	        				console.log("new local file ztl_info "+dlPath);
+	        			}, onFSError);
+	    			}
+    			}
+	        }
+		});
+	});
 }
 
 /*********************** AUDIO ***********************/
@@ -666,7 +693,6 @@ function gotDirAudio(d) {
 function gotFilesAudio(entries) {
 	for (var i=0; i<entries.length; i++) {
 		knownfiles_audio.push(entries[i].name);
-		console.log("old local file "+entries[i].fullPath);
 	}
 }
 
@@ -683,7 +709,6 @@ function readFilesAudio() {
     	if (knownfiles_audio.indexOf(filename) == -1) {
 			var ft = new FileTransfer();
 			ft.download(url, dlPath, function() {
-				console.log("new local file audio "+url);
 				console.log("new local file audio "+dlPath);
 			}, onFSError);
 		}
