@@ -652,6 +652,9 @@ function populate_db_firstime() {
 	$.getScript('./assets/install_db/ztl_poi.js', function () {
 		db.transaction(populateDB_ztl_poi, errorCB, function(tx) {
 			db.transaction(function(tx) {
+				//fix za poti do slik
+				tx.executeSql('update ztl_poi set image = '+file_uploads+' || image where image != "";', [], function(tx, res) {});
+				
 				tx.executeSql('select count(*) as cnt from ztl_poi;', [], function(tx, res) {
 					console.log('4 >>>>>>>>>> ztl_poi res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
 					add_indexes();

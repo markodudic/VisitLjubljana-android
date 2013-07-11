@@ -611,7 +611,7 @@ function gotFiles(entries) {
 
 function readFiles() {
 	db.transaction(function(tx) {
-		tx.executeSql('select * from ztl_tour_images;', [], function(tx, res) {
+		tx.executeSql('select * from ztl_tour_images where image != "";', [], function(tx, res) {
 	        for (var i=0; i<res.rows.length; i++) {
 	        	var url      = res.rows.item(i).image;
 	        	var filename = url.split("/").slice(-1)[0];
