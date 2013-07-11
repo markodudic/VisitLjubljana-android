@@ -17,12 +17,18 @@ function read_audio_guides_settings() {
 	}
 }
 
-function load_guide_buy() {
+function is_purchased_and_stored(){
 	read_audio_guides_settings();
 	lang_has_purchased = audio_guides[settings.id_lang].purchased;
 	lang_has_stored    = audio_guides[settings.id_lang].stored;
-	
-	if (lang_has_purchased == 1 && lang_has_stored == 1) {
+	if (lang_has_purchased == 1 && lang_has_stored == 1) 
+		return 1;
+	else
+		return 0;
+}
+
+function load_guide_buy() {
+	if (is_purchased_and_stored() == 1) {
 		load_page(template_lang+'trips.html', 'trips', trips[VOICE_GROUP], 'fade', false, VOICE_GROUP);
 	} else {
 		load_page(template_lang+'guide_buy.html', 'guide_buy', trips[VOICE_GROUP], 'fade', false);		

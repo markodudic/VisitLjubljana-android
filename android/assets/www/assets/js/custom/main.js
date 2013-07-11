@@ -589,28 +589,6 @@ function select_language(id) {
 	} 
 }
 
-function load_trips() {
-	$.getScript('./assets/js/custom/trips.js', function () {
-        load_trips();
-    });
-}
-
-function edit_settings() {
-    console.log("SETTINGS");
-	$.getScript('./assets/js/custom/ztl_settings.js', function () {
-        console.log("SETTINGS");
-		load_current_settings();
-    });
-}
-
-
-function guide_buy() {
-	$.getScript('./assets/js/custom/guide_buy.js', function () {
-        load_guide_buy();
-    });
-}
-
-
 
 function dprun(t) {
 	var currentField = $(t);

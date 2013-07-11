@@ -74,17 +74,19 @@ function load_trip_content(id, transition, reverse, save_history) {
 }
 
 function play_voice_guide(id) {
-	$(".media_payer").toggle();
+	if (is_purchased_and_stored() == 0) {
+		load_page(template_lang+'guide_buy.html', 'guide_buy', trips[VOICE_GROUP], 'fade', false);
+	} else {
+		
+		$(".media_payer").toggle();
+		
+		$(".ztl_content").toggle();
+		$(".header").toggle();
+		$(".footer").toggle();
 	
-	$(".ztl_content").toggle();
-	$(".header").toggle();
-	$(".footer").toggle();
-
-	my_media = null;
-
-	$.getScript('./assets/js/custom/media_player_animation.js', function () {
+		my_media = null;
 		load_media_file(sound_file);
-	});
+	}
 }
 
 function  load_media_file(file) {
