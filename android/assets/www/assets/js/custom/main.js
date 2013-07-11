@@ -383,6 +383,7 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				data.login						    = login_translation[settings.id_lang];
 				data.my_visit_tours					= my_visit_tours_translation[settings.id_lang];
 				data.my_visit_poi					= my_visit_poi_translation[settings.id_lang];
+				data.download 						= download_translation[settings.id_lang];
 				data.dots 							= 1;
 			} else if (div == "ztl_map") {
 				data = {};
