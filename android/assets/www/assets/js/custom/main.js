@@ -244,8 +244,6 @@ function save_swipe_history(index, direction) {
 */
 
 function load_page(template, div, data, transition, reverse, id_group) {
-	console.log("load page="+id_group+":"+template+":"+data);
-
 	if (footer == "") {
 		footer = load_template("ztl_footer.html", "#tpl_ztl_footer");
 	}

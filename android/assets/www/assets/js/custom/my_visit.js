@@ -5,7 +5,12 @@ function add_to_my_visit(id, type, time, location) {
 	});
 }
 
-function load_my_visit() {
+function load_my_visit(save_history) {
+	if (save_history == 1)  {
+		var history_string = "fun--load_my_visit--empty";
+		add_to_history(history_string);
+	}
+
 	var tmp_query      = "SELECT id, main_group, type, time, location FROM ztl_my_visit GROUP BY id, main_group, type, time, location ORDER BY type, main_group";
     var tmp_callback   = "my_visit_success";
 

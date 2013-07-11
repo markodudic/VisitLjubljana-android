@@ -16,12 +16,11 @@ function local_storage_load() {
 }
 
 function go_back() {
-	var history = JSON.parse(localStorage.getItem(localStorage.key('history')));
+	var history = JSON.parse(localStorage.getItem('history'));
 	
 	console.log("localStorage --- " + JSON.stringify(history));
 
 	/*
-	//media player sranje
 	media_opened = 0;
 	
 	if (media_opened == 1) {
@@ -87,6 +86,11 @@ function go_back() {
 					load_page(template_lang+'tours.html', 'tours', trips[2], 'fade', false, 2);
 				}
 
+				//to mora vedno preverit aktualno stanje iz baze
+				if (go_to[1] == "load_my_visit") {
+					load_my_visit(0);
+				}
+
 				if (go_to[1] == "load_trip_content") {
 					slide = 1;
 					
@@ -113,8 +117,8 @@ function go_back() {
 		} else {
 			if (main_menu == 0) {
 				view_main_menu = 1;
-				load_main_screen(0);
 			}
+			load_main_screen(0);
 		}
 	//}
 }
