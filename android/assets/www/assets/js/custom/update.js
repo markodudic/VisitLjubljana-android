@@ -11,9 +11,8 @@ var updt_running  = 0;
 function is_updt_finished() {
 	updt_finished++;
 	//vsi updejti
-	console.log('XXX >>>>>>>>>> updt_finished ' + updt_finished);
-	
-	if (updt_finished == 5) {
+	if (updt_finished == UPDATE_GROUPS) {
+
 	    //all images
 		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFSSuccess, null);
 		
@@ -470,7 +469,7 @@ function update_inspired(url) {
 			db.transaction(function(tx) {tx.executeSql('delete from ztl_inspired;', [], function(tx, res) {});});
 			//handle_inspired_deleted(data['deleted']);
 			handle_inspired(data['getInspired']);
-		    //load_inspired(0); TODO marko 
+		    load_inspired(0);
 		    set_cache();
 		    console.log("XXX >>> inspired");
 			is_updt_finished();
@@ -728,8 +727,8 @@ function gotFilesAudio(entries) {
 }
 
 function readFilesAudio() {
-	for (var i = 0; i < trips[4]['items'].length; i++) {
-		var filename  = trips[4]['items'][i]['sound'];
+	for (var i = 0; i < trips[VOICE_GROUP]['items'].length; i++) {
+		var filename  = trips[VOICE_GROUP]['items'][i]['sound'];
 		var filearray = filename.split("_");
     	var url       = "http://www.visitljubljana.com/file/"+filearray[0]+"/"+filearray[1]+filearray[2];
 
