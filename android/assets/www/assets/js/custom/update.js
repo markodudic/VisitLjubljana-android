@@ -7,9 +7,12 @@ function update_db() {
 }
 
 var updt_finished = 0;
+var updt_running  = 0;
 function is_updt_finished() {
 	updt_finished++;
 	//vsi updejti
+	console.log('XXX >>>>>>>>>> updt_finished ' + updt_finished);
+	
 	if (updt_finished == 5) {
 	    //all images
 		//window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFSSuccess, null);
@@ -20,6 +23,7 @@ function is_updt_finished() {
 		db.transaction(function(tx) {tx.executeSql(sql, [], function(tx, res) {});});
 		
 		updt_finished = 0;
+		updt_running  = 0;
 		spinner.stop();
 		alert(synronization_finished_translation[settings.id_lang]);
 		edit_settings();		
@@ -27,6 +31,11 @@ function is_updt_finished() {
 }
 
 function check_update_success(results) {
+	if (updt_running  == 1) {
+		return;
+	}
+	updt_running  = 1;
+	
 	console.log("**********update**************"+localStorage.getItem('first_synhronization'));
 	show_spinner();
 	var lang_code = "en";
@@ -113,6 +122,7 @@ function update_poi(url, pois) {
 		    load_pois(222, 8, 1);
 		    load_voice_guide(0);
 		    set_cache();
+		    console.log("XXX >>> poi");
 			is_updt_finished();
 		}
 	});	        
@@ -257,6 +267,7 @@ function update_event(url) {
 			handle_event(data['events']);
 		    load_events(0);
 		    set_cache();
+		    console.log("XXX >>> events");
 			is_updt_finished();
 		}
 	});	
@@ -366,6 +377,7 @@ function update_tour(url) {
 			handle_tour(data['tours']);
 			load_tour_list(0);	
 		    set_cache();
+		    console.log("XXX >>> tours");
 			is_updt_finished();
 		}
 	});
@@ -460,6 +472,7 @@ function update_inspired(url) {
 			handle_inspired(data['getInspired']);
 		    //load_inspired(0); TODO marko 
 		    set_cache();
+		    console.log("XXX >>> inspired");
 			is_updt_finished();
 		}
 	});
@@ -492,11 +505,7 @@ function handle_inspired(data) {
 			sql = "INSERT INTO ztl_inspired_translation (id_inspired, id_language, title, desc) VALUES ("+data[i].id+", "+settings.id_lang+",'"+addslashes(data[i].title)+"','"+addslashes(data[i].desc)+"')";
 			tx.executeSql(sql, [], function(tx, res) {});
 			
-			for (var j = 0; i<data[i].refs.length; j++) {
-				if (data[i].refs[j].ref_object == null) {
-					data[i].refs[j].ref_object = 0;
-				}
-				
+			for (var j = 0; j<data[i].refs.length; j++) {
 				sql  = "INSERT INTO ztl_inspired_category (id_inspired, id_language, category_idx, ref_object, ref_object_date_type, ref_object_start, ref_object_end, ref_object_type, title) ";
 				sql += "VALUES ("+data[i].id+", "+settings.id_lang+", "+j+", "+data[i].refs[j].ref_object+", "+data[i].refs[j].ref_object_date_type+", '"+addslashes(data[i].refs[j].ref_object_start)+"', '"+addslashes(data[i].refs[j].ref_object_end)+"', "+data[i].refs[j].ref_object_type+", '"+addslashes(data[i].refs[j].title)+"')";
 				tx.executeSql(sql, [], function(tx, res) {});
@@ -504,7 +513,13 @@ function handle_inspired(data) {
 		}
 		
 		tx.executeSql('select count(*) as cnt from ztl_inspired;', [], function(tx, res) {
-			console.log('+31 >>>>>>>>>> ztl_info res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+			console.log('+31 >>>>>>>>>> ztl_inspired res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+		});
+		tx.executeSql('select count(*) as cnt from ztl_inspired_translation;', [], function(tx, res) {
+			console.log('+32 >>>>>>>>>> ztl_inspired_translation res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+		});
+		tx.executeSql('select count(*) as cnt from ztl_inspired_category;', [], function(tx, res) {
+			console.log('+33 >>>>>>>>>> ztl_inspired_category res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
 		});
 	});
 }
@@ -533,6 +548,7 @@ function update_info(url) {
 			handle_info(data['info']);
 		    load_info(0);
 		    set_cache();
+		    console.log("XXX >>> info");
 			is_updt_finished();
 		}
 	});
