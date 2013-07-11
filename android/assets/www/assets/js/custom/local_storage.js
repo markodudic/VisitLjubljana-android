@@ -99,13 +99,7 @@ function go_back() {
 						tmp_transition = true;
 					}
 
-					if (backstep == 1) {
-						$.getScript('./assets/js/custom/trips.js', function () {
-							load_trip_content(params[0],params[1],tmp_transition,0);					
-						});
-					} else {
-						load_trip_content(params[0],params[1],tmp_transition,0);
-					}			
+					load_trip_content(params[0],params[1],tmp_transition,0);
 				}
 
 				if (go_to[1] == "load_info") {
