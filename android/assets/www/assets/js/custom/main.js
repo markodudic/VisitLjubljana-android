@@ -56,7 +56,7 @@ function on_device_ready() {
 	load_settings();
 	init_gps();
 
-	var hash = window.location.hash;
+	/*var hash = window.location.hash;
 	hash = hash.replace(/^.*?#/,'');
 	var hash_split = hash.split(";");
 	
@@ -70,24 +70,24 @@ function on_device_ready() {
 			voice_guide = 1; 
 			load_page(template_lang+'trips.html', 'trips', trips[4], 'fade', false, 4);
 	    });	
-	} else if (hash == "lang_settings") {
+	} else 	if (hash == "lang_settings") {
 		swipe 			 = 0;
 		settings		 = new Object();
 		skip_update 	 = 1;
 		menu_select_lang = 1;
 	} else if (hash == "content") { 
 		skip_update = 1;
-	} else {
+	} else {*/
 		navigator.splashscreen.show();
 		skip_update = 0;
-	}
+	//}
 
 	//prvic napolnimo po izbiri jezika
 	if (localStorage.getItem(localStorage.key('first_run')) != null) {
 		get_cache();
 	}
 
-	document.addEventListener("backbutton", go_back, true);
+	//document.addEventListener("backbutton", go_back, true);
 
 	if (localStorage.getItem(localStorage.key('first_run')) == null) {
 		localStorage.setItem('history', JSON.stringify(tmp_history));
@@ -247,6 +247,8 @@ function save_swipe_history(index, direction) {
 */
 
 function load_page(template, div, data, transition, reverse, id_group) {
+	console.log("load page="+id_group+":"+template+":"+data+":"+voice_guide);
+
 	if (footer == "") {
 		footer = load_template("ztl_footer.html", "#tpl_ztl_footer");
 	}
@@ -347,7 +349,8 @@ function load_page(template, div, data, transition, reverse, id_group) {
 					data.shadow="true";
 				}
 			} else if (div == 'main_menu') {
-				view_main_menu = 1;
+				view_main_menu 	= 1;
+				voice_guide		= 0;
 			} else if (div == 'ztl_settings') {
 				menu_icon 	= 5;
 				data = {};
@@ -358,6 +361,7 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				data.synchronization	= synchronization_translation[settings.id_lang];
 				data.rate 				= rate_translation[settings.id_lang];
 				data.about				= about_translation[settings.id_lang];
+				voice_guide				=0;
 			} else if (div == 'ztl_synhronization') {
 				data = {};
 				data.synhronization_title 	= synhronization_title_translation[settings.id_lang];
@@ -378,6 +382,7 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				data.logout 		= logout_translation[settings.id_lang];
 				data.clear_my_visit = clear_my_visit_translation[settings.id_lang];
 				data.dots 		 	= 1;
+				voice_guide			= 0;
 			} else if (div == "guide_buy") {
 				data.title 				= voice_guide_translation[settings.id_lang].toUpperCase();
 				data.guide_buy_desc 	= guide_buy_desc_translation[settings.id_lang].toUpperCase();
@@ -403,13 +408,14 @@ function load_page(template, div, data, transition, reverse, id_group) {
 			}
 
 			if (voice_guide == 1)  {
-				extra_div_id 		= "_voice_guide";
-				data.extra_div_id 	= "voice_guide";
-				data.page_title 	= voice_guide_translation[settings.id_lang];
+				if (div == 'trips') {
+					extra_div_id 		= "_voice_guide";
+					data.extra_div_id 	= "voice_guide";
+					data.page_title 	= voice_guide_translation[settings.id_lang];
+				}
 				data.dots 			= 1;
-				
-				menu_icon 	= 2;
-				voice_guide = 0;
+				data.id_group 		= VOICE_GROUP;
+				menu_icon 			= 2;
 			} 
 			
 			var res = $(temp).filter('#tpl_'+div).html();
@@ -419,7 +425,7 @@ function load_page(template, div, data, transition, reverse, id_group) {
 			} else {
 				var html = res;
 			}
-
+			
 			html = html.replace('[[[ztl_footer]]]', footer);
 			
 			if ((div == 'events') || (div == 'event') || (div == 'filtered_events')) {
@@ -433,7 +439,8 @@ function load_page(template, div, data, transition, reverse, id_group) {
 			}
 
 			$('body').html(html);
-
+			window.scrollTo(0,0);
+			
 			if (swipe == 1) {
 				if (div != "main_menu") {
 					var ts_div = "";
@@ -473,13 +480,16 @@ function load_page(template, div, data, transition, reverse, id_group) {
 			if (swipe == 1) {
 				animate_div(div+extra_div_id, transition, reverse);
 			} 
+
+			//ce so karte inicializiram skripto. sele po nalaganju 
+			if (div == "ztl_map") {
+				voice_guide=0;
+				menu_icon=4;
+				init_map();
+			}
 			
 			$('.icon_'+menu_icon).attr("src","assets/css/ztl_images/icon_"+menu_icon+"_red.png");
 
-			//ce so karte inicializiram skripto
-			if (div == "ztl_map") {
-				 init_map();
-			}
 			
 			if ((div != "trips") && 
 				(div != "select_language") && 

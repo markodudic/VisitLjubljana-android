@@ -68,12 +68,12 @@ function go_back() {
 				if (go_to[1] == "load_voice_guide") {
 					//load_voice_guide(0);
 					voice_guide = 1; 
-					load_page(template_lang+'trips.html', 'trips', trips[4], 'fade', false, 4);
+					load_page(template_lang+'trips.html', 'trips', trips[VOICE_GROUP], 'fade', false, VOICE_GROUP);
 				}
 
 				if (go_to[1] == "load_events") {
 					//load_events(0);
-					load_page(template_lang+'events.html', 'events', trips[0], 'fade', false, 0);
+					load_page(template_lang+'events.html', 'events', trips[EVENT_GROUP], 'fade', false, EVENT_GROUP);
 				}
 
 				if (go_to[1] == "load_tours") {
@@ -83,7 +83,7 @@ function go_back() {
 
 				if (go_to[1] == "load_tour") {
 					//load_tour(params[0], 0);
-					load_page(template_lang+'tours.html', 'tours', trips[2], 'fade', false, 2);
+					load_page(template_lang+'tours.html', 'tours', trips[TOUR_GROUP], 'fade', false, TOUR_GROUP);
 				}
 
 				//to mora vedno preverit aktualno stanje iz baze
@@ -110,7 +110,7 @@ function go_back() {
 
 				if (go_to[1] == "load_info") {
 					//load_info(0);
-					load_page(template_lang+'infos.html', 'infos', trips[1], 'fade', false, 1);
+					load_page(template_lang+'infos.html', 'infos', trips[INFO_GROUP], 'fade', false, INFO_GROUP);
 				}		
 			}
 

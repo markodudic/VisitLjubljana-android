@@ -38,7 +38,6 @@ function onSuccess_gps(position) {
 	    	   geo_stuff[1] != "" && geo_stuff[2] != "" && 
 	    	   geo_stuff[1] != undefined  && geo_stuff[2] != undefined) {
 	    	   $("div.ztl_img_distance_container").show();
-	    	   console.log("*****="+px+":"+py+":"+geo_stuff[1]+":"+geo_stuff[2]);
 	    	   $("div#ztl_distance_value_"+geo_stuff[0]).html(lineDistance(px, py, geo_stuff[1], geo_stuff[2])+" km");
 	       } else {
 	    	   $("div.ztl_img_distance_container").hide();
@@ -49,7 +48,7 @@ function onSuccess_gps(position) {
 	    	   $("div#map_button").attr('class','ztl_red_button ztl_item_left_button');;
 	       } else {
 	    	   $("div#map_button").attr('class','ztl_grey_button ztl_grey_button_map ztl_item_left_button');
-	    	   $("#map_href").removeAttr('href');
+	    	   $("div#map_button").removeAttr('onclick');
 	       }
 	   	}); 
     }

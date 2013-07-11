@@ -1,5 +1,21 @@
 var server_url = 'http://www.visitljubljana.com/';
 
+
+//grupe za cache
+var EVENT_GROUP 			= 0;
+var INFO_GROUP 				= 1;
+var TOUR_GROUP				= 2;
+var POI_GROUP				= 3;
+var VOICE_GROUP				= 4;
+var EVENTS_FILTERED_GROUP	= 5;
+var TOUR_LIST_GROUP			= 6;
+var POI_ZAMENITOSTI_GROUP	= 217;
+var POI_KULINARIKA_GROUP	= 219;
+var POI_NASTANITVE_GROUP	= 215;
+var POI_NAKUPOVANJE_GROUP	= 220;
+var POI_ZABAVA_GROUP		= 222;
+
+
 //gps
 var watchID 	= null;
 var source  	= null;

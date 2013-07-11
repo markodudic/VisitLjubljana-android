@@ -9,6 +9,7 @@ var poi_data        = null;
 var xy              = new Array();
 var curr_id;
 var curr_tip;
+var wgs;
 
 var current_position_xy;
 
@@ -21,8 +22,7 @@ function load_show_map(id, type) {
 
 //klicem iz main.js 445
 function init_map() {
-	//document.addEventListener("backbutton", back_to_content, true); //TODO ??
-    pOld = new Proj4js.Point(0,0);
+	pOld = new Proj4js.Point(0,0);
     
 	//resize
     $("#map").height($(window).height()-$(".header").height()+$(".footer").height());
@@ -123,8 +123,10 @@ var init = function (onSelectFeatureFunction) {
     var vector = new OpenLayers.Layer.Vector('vector');
     Proj4js.defs["EPSG:900913"]= "+title=GoogleMercator +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs";
     Proj4js.defs["EPSG:31469"] = "+proj=tmerc +lat_0=0 +lon_0=15 +k=1 +x_0=5500000 +y_0=0 +ellps=bessel +datum=potsdam +units=m +no_defs";
+	Proj4js.defs["EPSG:4326"] = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs";
     source = new Proj4js.Proj('EPSG:31469');
     dest = new Proj4js.Proj('EPSG:900913');
+    wgs = new Proj4js.Proj('EPSG:4326');	//WGS84
 
     var styleMap = new OpenLayers.StyleMap({
         projection: "EPSG:900913",
@@ -231,11 +233,6 @@ var init = function (onSelectFeatureFunction) {
                 //ne vem zakaj ampak koordinate po transformaciji strizejo za -350 in 550. GK koordinate so ok.
         	    console.log("ID="+points[i][3]);
         	    var point = transform (parseFloat(points[i][0])+correctionX, parseFloat(points[i][1])+correctionY);
-                //var feature = {"geometry": {"type": "Point", "coordinates": [point.lon, point.lat]},
-                //				"attributes": {"id": points[i][3]},
-                //				"fid": points[i][3]}
-                //features.push(feature);
-                
                 var attributes = {id: points[i][3], type: points[i][4]};
 
                 feature = new OpenLayers.Feature.Vector(new OpenLayers.Geometry.Point(point.lon, point.lat), attributes);
@@ -260,15 +257,7 @@ var init = function (onSelectFeatureFunction) {
 
         return reader.read(features);
     }
-    
-    function transform (lon, lat) {
-    	var p = new Proj4js.Point(lon, lat); 
-        Proj4js.transform(source, dest, p); 
-        var point = new Object();
-    	point["lat"] = p.y;
-        point["lon"] = p.x;
-        return point;
-    }
+
 
     
     function onFeatureSelect(evt) {
@@ -277,8 +266,6 @@ var init = function (onSelectFeatureFunction) {
         
         $("#ztl_cord").val(feature.attributes.id+"#"+poi_data.coord_x+"#"+poi_data.coord_y);
         //zracunam razdaljo
-        console.log("poi_data.coord_x1="+poi_data.coord_x);
-        console.log("poi_data.coord_x2="+current_position_xy[0]-correctionX+myLocationCorrectionX);
         $("#ztl_distance_value").html(lineDistance( poi_data.coord_x, poi_data.coord_y, current_position_xy[0]-correctionX+myLocationCorrectionX, current_position_xy[1]-correctionY+myLocationCorrectionY ) + " km");
         
         if (poi_data.title.length>max_dolzina_title) {
@@ -305,9 +292,18 @@ var init = function (onSelectFeatureFunction) {
 };
 
 
+function transform (lon, lat) {
+	var p = new Proj4js.Point(lon, lat); 
+	Proj4js.transform(source, dest, p);
+    var point = new Object();
+	point["lat"] = p.y;
+    point["lon"] = p.x;
+    return point;
+}
+
 function get_poi_data() {
 	if (curr_id != undefined) {
-		if (curr_type == 0) { //event
+		if (curr_type == EVENT_GROUP) { //event
 	       var tmp_query = 'SELECT '+curr_type+' as type, e.id, p.coord_x, p.coord_y FROM ztl_event e LEFT JOIN ztl_event_translation et ON et.id_event = e.id LEFT JOIN  ztl_event_timetable ett ON ett.id_event = e.id LEFT JOIN ztl_poi p ON p.id = ett.venue_id WHERE e.id = '+curr_id+' AND et.id_language = '+settings.id_lang+' GROUP BY e.id';
 	    } else { //poi
 	//       var tmp_query = 'SELECT 1 as type, zp.id, zp.coord_x, zp.coord_y FROM ztl_poi zp';
@@ -320,10 +316,10 @@ function get_poi_data() {
 }
 
 function load_content(id) {
-    if (curr_type == 0) {
-        var tmp_query = 'SELECT 0 as type, e.id, et.title, p.address, p.post_number, p.post, p.coord_x, p.coord_y  FROM ztl_event e LEFT JOIN ztl_event_translation et ON et.id_event = e.id LEFT JOIN  ztl_event_timetable ett ON ett.id_event = e.id LEFT JOIN ztl_poi p ON p.id = ett.venue_id WHERE e.id = '+id+' AND et.id_language = '+settings.id_lang+' GROUP BY e.id';    
+    if (curr_type == EVENT_GROUP) {
+        var tmp_query = 'SELECT  '+curr_type+' as type, e.id, et.title, p.address, p.post_number, p.post, p.coord_x, p.coord_y  FROM ztl_event e LEFT JOIN ztl_event_translation et ON et.id_event = e.id LEFT JOIN  ztl_event_timetable ett ON ett.id_event = e.id LEFT JOIN ztl_poi p ON p.id = ett.venue_id WHERE e.id = '+id+' AND et.id_language = '+settings.id_lang+' GROUP BY e.id';    
     } else {
-        var tmp_query = 'SELECT 1 as type, zp.*, zpt.title, zcg.id_group, zp.coord_x, zp.coord_y FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id WHERE zp.id IN ('+id+') AND zpt.id_language = '+settings.id_lang+' GROUP BY zp.id';
+        var tmp_query = 'SELECT  '+curr_type+' as type, zp.*, zpt.title, zcg.id_group, zp.coord_x, zp.coord_y FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id WHERE zp.id IN ('+id+') AND zpt.id_language = '+settings.id_lang+' GROUP BY zp.id';
     }
     var tmp_callback    = "load_map_poi_data_success";
             
@@ -331,10 +327,29 @@ function load_content(id) {
 }
 
 function load_page_content(id, type) {
-	if (type==0) {
+	if (type==EVENT_GROUP) {
 		load_event(id, 0);
-	} else if (type==1) {
+	} else if (type==POI_GROUP) {
 		load_trip_content(id, 'fade', true, 0);
 	}
     
 }
+
+function show_system_maps() {
+    source = new Proj4js.Proj('EPSG:31469');
+    dest = new Proj4js.Proj('EPSG:4326');	//WGS84
+
+    var x = parseFloat(poi_data.coord_x)+correctionX;
+	var y = parseFloat(poi_data.coord_y)+correctionY;   
+	var p = transform (x, y);
+	
+	var  geo = 'geo:'+p.lat+','+p.lon+'?z=17';
+    window.open(geo,'_system');
+}
+
+function back_to_content() {
+	backstep 	= 1;
+	go_back();
+    //window.location.href = "index.html#go_back";
+}
+
