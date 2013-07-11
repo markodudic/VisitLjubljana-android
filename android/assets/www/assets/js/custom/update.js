@@ -12,7 +12,7 @@ function is_updt_finished() {
 	//vsi updejti
 	if (updt_finished == 5) {
 	    //all images
-		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFSSuccess, null);
+		//window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFSSuccess, null);
 		
 		var today     = new Date();
 		var sql_today = today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate()+" "+today.getHours()+":"+today.getMinutes()+":"+today.getSeconds();
@@ -169,20 +169,21 @@ function handle_poi_categories(data) {
 
 function handle_poi_new(data) {
 	db.transaction(function(tx) {
-		if (data[i].image == undefined) {
-			data[i].image = '';
-		}
-		
-		if (data[i].star == undefined) {
-			data[i].star = 0;
-		}
-		
-		if (data[i].sound == undefined) {
-			data[i].sound = '';
-		}
-		
 		var sql = "";
 		for (var i = 0; i < data.length; i++) {
+
+			if (data[i].image == null) {
+				data[i].image = '';
+			}
+			
+			if (data[i].star == null) {
+				data[i].star = 0;
+			}
+			
+			if (data[i].sound == null) {
+				data[i].sound = '';
+			}
+			
 			sql = "INSERT OR REPLACE INTO ztl_poi (id, address, post_number, post, phone, email, www, coord_x, coord_y, turisticna_kartica, ljubljana_quality, recommended_map, image, star, sound, record_status, from_db) ";
 			sql+= "VALUES ("+data[i].id+", '"+addslashes(data[i].address)+"', '"+data[i].postNumber+"','"+addslashes(data[i].post)+"','"+addslashes(data[i].phone)+"', ";
 			sql+= "'"+addslashes(data[i].email)+"', '"+addslashes(data[i].www)+"', '"+data[i].coord.x+"', '"+data[i].coord.y+"', '"+addslashes(data[i].turisticna_kartica)+"', '"+addslashes(data[i].ljubljanaQuality)+"', ";
@@ -277,16 +278,13 @@ function handle_event_deleted(data) {
 function handle_event(data) {
 	db.transaction(function(tx) {
 		var sql 		= "";
-		var tmp_image	= "";
 		for (var i = 0; i < data.length; i++) {
-
-			tmp_image = "";
-			if (data[i].image != undefined) {
-				tmp_image = data[i].image;
+			if (data[i].image == null) {
+				 data[i].image = "";
 			}
 
 			//console.log(JSON.stringify(data[i]));
-			sql = "INSERT OR REPLACE INTO ztl_event (id, image, featured, record_status) VALUES ("+data[i].id+", '"+tmp_image+"', '"+data[i].featured+"', 1)";		
+			sql = "INSERT OR REPLACE INTO ztl_event (id, image, featured, record_status) VALUES ("+data[i].id+", '"+data[i].image+"', '"+data[i].featured+"', 1)";		
 			tx.executeSql(sql, [], function(tx, res) {});
 			sql = "INSERT OR REPLACE INTO ztl_event_translation (id_event, id_language, title, intro, description) VALUES ("+data[i].id+", "+settings.id_lang+", '"+addslashes(data[i].title)+"', '"+addslashes(data[i].intro)+"', '"+addslashes(data[i].description)+"')";
 			//console.log(sql);
@@ -484,14 +482,31 @@ function handle_inspired(data) {
 	db.transaction(function(tx) {
 		var sql = "";
 		for (var i = 0; i < data.length; i++) {
-			sql = "INSERT INTO ztl_inspired (id, image, record_status) VALUES ("+data[i].id+", '"+data[i].image+"', 1)";
+			if (data[i].image == null) {
+				 data[i].image = "";
+			}
+			
+			sql = "INSERT INTO ztl_inspired (id, image, cnt, record_status) VALUES ("+data[i].id+", '"+data[i].image+"', "+data[i].refs.length+",1)";
 			tx.executeSql(sql, [], function(tx, res) {});
+			
+			sql = "INSERT INTO ztl_inspired_translation (id_inspired, id_language, title, desc) VALUES ("+data[i].id+", "+settings.id_lang+",'"+addslashes(data[i].title)+"','"+addslashes(data[i].desc)+"')";
+			tx.executeSql(sql, [], function(tx, res) {});
+			
+			for (var j = 0; i<data[i].refs.length; j++) {
+				if (data[i].refs[j].ref_object == null) {
+					data[i].refs[j].ref_object = 0;
+				}
+				
+				sql  = "INSERT INTO ztl_inspired_category (id_inspired, id_language, category_idx, ref_object, ref_object_date_type, ref_object_start, ref_object_end, ref_object_type, title) ";
+				sql += "VALUES ("+data[i].id+", "+settings.id_lang+", "+j+", "+data[i].refs[j].ref_object+", "+data[i].refs[j].ref_object_date_type+", '"+addslashes(data[i].refs[j].ref_object_start)+"', '"+addslashes(data[i].refs[j].ref_object_end)+"', "+data[i].refs[j].ref_object_type+", '"+addslashes(data[i].refs[j].title)+"')";
+				tx.executeSql(sql, [], function(tx, res) {});
+			}
 		}
 		
 		tx.executeSql('select count(*) as cnt from ztl_inspired;', [], function(tx, res) {
 			console.log('+31 >>>>>>>>>> ztl_info res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
 		});
-	});	
+	});
 }
 
 /*********************** INFO ***********************/
