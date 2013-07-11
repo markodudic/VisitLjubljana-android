@@ -82,6 +82,7 @@ function on_device_ready() {
 		skip_update = 0;
 	//}
 
+	//za test
 	//prvic napolnimo po izbiri jezika
 	if (localStorage.getItem(localStorage.key('first_run')) != null) {
 		get_cache();
@@ -101,15 +102,16 @@ function reset_cache() {
 	
 	load_main_menu(); 
 	
-	load_pois(215, 7, 0);
-    load_pois(217, 3, 0);
-    load_pois(219, 4, 0);
-    load_pois(220, 9, 0);
-    load_pois(222, 8, 0);
+	load_pois(POI_NASTANITVE_GROUP, 7, 0);
+    load_pois(POI_ZAMENITOSTI_GROUP, 3, 0);
+    load_pois(POI_KULINARIKA_GROUP, 4, 0);
+    load_pois(POI_NAKUPOVANJE_GROUP, 9, 0);
+    load_pois(POI_ZABAVA_GROUP, 8, 0);
     load_events(0);
     load_info(0);
     load_tour_list(0);
     load_voice_guide(0);
+    load_inspired(0);
     
     set_cache();
     
@@ -124,7 +126,6 @@ function set_cache() {
 }
 
 function get_cache() { 
-	console.log("GET CACHE");
 	if (localStorage.getItem('trips') == null) {
 		reset_cache();
 	} else {
@@ -160,7 +161,7 @@ function swipe_right_handler() {
 			var j = 0;
 			if (trips != null) {
 				if (selected_div == 'tour') {
-					var res = trips[6].tours[selected_group];
+					var res = trips[TOUR_LIST_GROUP].tours[selected_group];
 				} else {
 					var res = trips[selected_group];
 				}
@@ -199,7 +200,7 @@ function swipe_left_handler() {
 		if (db_type == 1) {
 			var j = 0;
 			if (selected_div == 'tour') {
-				var res = trips[6].tours[selected_group];
+				var res = trips[TOUR_LIST_GROUP].tours[selected_group];
 			} else {
 				var res = trips[selected_group];
 			}
@@ -404,7 +405,11 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				data.dots 							= 1;
 			} else if (div == "ztl_map") {
 				data = {};
-				data.title 					= map_translation[settings.id_lang];			
+				data.title 					= map_translation[settings.id_lang];
+			}
+			else if (div == "inspired") {
+				data.page_title 	= main_menu['img1'];
+			
 			}
 
 			if (voice_guide == 1)  {
@@ -487,6 +492,7 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				menu_icon=4;
 				init_map();
 			}
+
 			
 			$('.icon_'+menu_icon).attr("src","assets/css/ztl_images/icon_"+menu_icon+"_red.png");
 
@@ -615,19 +621,6 @@ function dprun(t) {
 	);	
 }
 
-function load_voice_guide(save_history) {
-	if (save_history == 1)  {
-		var history_string = "fun--load_voice_guide--empty";
-		add_to_history(history_string);
-	}
-
-	swipe		= 0;
-
-	var tmp_query 		= "SELECT zp.*, zpt.title, 4 as id_group FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id WHERE zpt.id_language = "+settings.id_lang+" AND sound != '' GROUP BY zp.id";
-	var tmp_callback	= "load_pois_success";
-	
-	generate_query(tmp_query, tmp_callback);
-}
 
 function do_synhronization() {
 	if (navigator.network.connection.type == Connection.WIFI) {

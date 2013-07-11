@@ -133,10 +133,10 @@ function events_success(results) {
     	}
     }
 
-	trips[0]			= res;
-	trips[0].top_events_0 	= res.top_items[0];
-	trips[0].top_events_1 	= res.top_items[1];
-	trips[0].top_events_2 	= res.top_items[2];
+	trips[EVENT_GROUP]			= res;
+	trips[EVENT_GROUP].top_events_0 	= res.top_items[0];
+	trips[EVENT_GROUP].top_events_1 	= res.top_items[1];
+	trips[EVENT_GROUP].top_events_2 	= res.top_items[2];
 }
 
 function event_category_success(results) {
@@ -181,9 +181,9 @@ function filter_events_success(results) {
     }
 
     //res.categories 	= event_type;
-    trips[5] 			= res;
+    trips[EVENTS_FILTERED_GROUP] 			= res;
     
-    load_page(template_lang+'events_filtered.html', 'filtered_events', trips[5], 'fade', false, 0);
+    load_page(template_lang+'events_filtered.html', 'filtered_events', trips[EVENTS_FILTERED_GROUP], 'fade', false, 0);
 }
 
 //event
@@ -264,7 +264,7 @@ function info_success(results) {
     	res.items[i] = results.rows.item(i);
     }
 
-    trips[1] = res;
+    trips[INFO_GROUP] = res;
     //load_page(template_lang+'infos.html', 'infos', res, 'fade', false);
 }
 
@@ -286,6 +286,27 @@ function load_info_success(results) {
     }
 }
 
+//inspired
+function inspired_success(results) {
+	var res = {};
+    res.items = [];
+    var len = results.rows.length;
+    var tmp;
+    for (var i=0; i<len; i++){
+    	//skrajsam dolzino
+    	results.rows.item(i).title = unescape(results.rows.item(i).title);
+    	results.rows.item(i).desc = unescape(results.rows.item(i).desc);
+    	tmp = results.rows.item(i).title;
+    	if (tmp.length > max_dolzina_title) {
+    		results.rows.item(i).title = tmp.substring(0,max_dolzina_title)+"...";
+    	}
+    	
+    	res.items[i] = results.rows.item(i);
+    }
+
+    trips[INSPIRED_GROUP] = res;
+}
+
 //touri
 function tour_list_success(results) {
     var res = {};
@@ -300,8 +321,8 @@ function tour_list_success(results) {
         
         load_tours(results.rows.item(i).id, 0);
     }
-    trips[6] = res;
-    trips[6].tours = tours;
+    trips[TOUR_LIST_GROUP] = res;
+    trips[TOUR_LIST_GROUP].tours = tours;
 }
 
 function tour_success(results) {

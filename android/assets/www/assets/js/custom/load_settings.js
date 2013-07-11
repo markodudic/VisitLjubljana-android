@@ -165,6 +165,37 @@ function load_info(save_history)  {
     generate_query(tmp_query, tmp_callback);
 }
 
+
+function load_inspired(save_history)  {
+	swipe_dir 	= "";
+    swipe 		= 0;
+    if (save_history == 1)  {
+        var history_string = "fun--load_inspired--empty";
+        add_to_history(history_string);
+    }
+
+    trips_title[1] = main_menu['img5'];
+
+    var tmp_query      = "SELECT i.*, it.title, it.desc FROM ztl_inspired i LEFT JOIN ztl_inspired_translation it ON it.id_inspired = i.id WHERE it.id_language = "+settings.id_lang+" AND i.record_status = 1 GROUP BY i.id";
+    var tmp_callback   = "inspired_success";
+    generate_query(tmp_query, tmp_callback);
+}
+
+
+function load_voice_guide(save_history) {
+	if (save_history == 1)  {
+		var history_string = "fun--load_voice_guide--empty";
+		add_to_history(history_string);
+	}
+
+	swipe		= 0;
+
+	var tmp_query 		= "SELECT zp.*, zpt.title, " + VOICE_GROUP + " as id_group FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id WHERE zpt.id_language = "+settings.id_lang+" AND sound != '' GROUP BY zp.id";
+	var tmp_callback	= "load_pois_success";
+	
+	generate_query(tmp_query, tmp_callback);
+}
+
 function load_mobile() {
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem){
         fileSystem.root.getFile("Android/data/com.innovatif.ztl/settings.json", { create: false }, fileExists, fileDoesNotExist);

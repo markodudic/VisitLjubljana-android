@@ -463,6 +463,12 @@ div.poi_address {
     float:right;
 }
 
+.my_visit_add {
+    position: absolute;
+    bottom: 5px;
+    left: 0;
+}
+
 
 .ui-slider { position: relative; text-align: left; }
 .ui-slider .ui-slider-handle { position: absolute; z-index: 2; width: 1.2em; height: 1.2em; cursor: default; background-color:red;}
