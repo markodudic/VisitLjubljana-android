@@ -575,11 +575,13 @@ function errorCB(err) {
 
 //ob prvem zagonu napolni bazo
 function populate_db_firstime() {
+	/*
 	db.transaction(function(tx) {
 		tx.executeSql('select sqlite_version() AS sqlite_version;', [], function(tx, res) {
 			console.log('0 >>>>>>>>>> sqlite_version ' + res.rows.item(0).sqlite_version);
 		});
 	});
+	*/
 	
 	$.getScript('./assets/install_db/ztl_updates.js', function () {
 		db.transaction(populateDB_ztl_updates, errorCB, function(tx) {
@@ -790,11 +792,44 @@ function populate_db_firstime() {
 		});
 	});
 
+	$.getScript('./assets/install_db/ztl_inspired.js', function () {
+		db.transaction(populateDB_ztl_inspired, errorCB, function(tx) {
+			db.transaction(function(tx) {
+				tx.executeSql('select count(*) as cnt from ztl_inspired;', [], function(tx, res) {
+					console.log('31 >>>>>>>>>> ztl_inspired res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+					add_indexes();
+				});
+			});
+		});
+	}); 
+	
+	$.getScript('./assets/install_db/ztl_inspired_translation.js', function () {
+		db.transaction(populateDB_ztl_inspired_translation, errorCB, function(tx) {
+			db.transaction(function(tx) {
+				tx.executeSql('select count(*) as cnt from ztl_inspired_translation;', [], function(tx, res) {
+					console.log('32 >>>>>>>>>> ztl_inspired_translation res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+					add_indexes();
+				});
+			});
+		});
+	}); 
+	
+	$.getScript('./assets/install_db/ztl_inspired_category.js', function () {
+		db.transaction(populateDB_ztl_inspired_category, errorCB, function(tx) {
+			db.transaction(function(tx) {
+				tx.executeSql('select count(*) as cnt from ztl_inspired_category;', [], function(tx, res) {
+					console.log('33 >>>>>>>>>> ztl_inspired_category res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+					add_indexes();
+				});
+			});
+		});
+	}); 
+	
 	$.getScript('./assets/install_db/ztl_info.js', function () {
 		db.transaction(populateDB_ztl_info, errorCB, function(tx) {
 			db.transaction(function(tx) {
 				tx.executeSql('select count(*) as cnt from ztl_info;', [], function(tx, res) {
-					console.log('31 >>>>>>>>>> ztl_info res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+					console.log('41 >>>>>>>>>> ztl_info res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
 					add_indexes();
 				});
 			});
@@ -805,7 +840,7 @@ function populate_db_firstime() {
 		db.transaction(populateDB_ztl_my_visit, errorCB, function(tx) {
 			db.transaction(function(tx) {
 				tx.executeSql('select count(*) as cnt from ztl_my_visit;', [], function(tx, res) {
-					console.log('32 >>>>>>>>>> ztl_my_visit res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+					console.log('51 >>>>>>>>>> ztl_my_visit res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
 					add_indexes();
 				});
 			});
@@ -816,8 +851,7 @@ function populate_db_firstime() {
 var processed_files = 0;
 function add_indexes() {
 	processed_files++;
-	console.log('98 >>>>>>>>>> '+processed_files);
-	if (processed_files == 21) {
+	if (processed_files == 24) {
 		$.getScript('./assets/install_db/ztl_idx.js', function () {
 	        db.transaction(populateDB_ztl_tour_images, errorCB, function(tx) {
 	            console.log('99 >>>>>>>>>> ztl_idx');

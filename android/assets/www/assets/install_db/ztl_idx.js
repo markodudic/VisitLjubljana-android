@@ -33,4 +33,14 @@ function populateDB_ztl_tour_images(tx) {
 	tx.executeSql('CREATE INDEX ztl_tour_translation__id_language ON ztl_tour_translation (id_language)');
 	tx.executeSql('CREATE INDEX ztl_tour_images__id_tour ON ztl_tour_images (id_tour)');
 	tx.executeSql('CREATE INDEX ztl_tour_chaters__id_tour ON ztl_tour_chaters (id_tour)');
+	
+	tx.executeSql('CREATE INDEX ztl_info__id ON ztl_info (id)');
+	tx.executeSql('CREATE INDEX ztl_info__id_language ON ztl_info (id_language)');
+	
+	tx.executeSql('CREATE INDEX ztl_inspired__id ON ztl_inspired (id)');
+	tx.executeSql('CREATE INDEX ztl_inspired_translation__id_inspired ON ztl_inspired_translation (id_inspired)');
+	tx.executeSql('CREATE INDEX ztl_inspired_translation__id_language ON ztl_inspired_translation (id_language)');
+	tx.executeSql('CREATE INDEX ztl_inspired_category__id_inspired ON ztl_inspired_category (id_inspired)');
+	tx.executeSql('CREATE INDEX ztl_inspired_category__id_language ON ztl_inspired_category (id_language)');
+	tx.executeSql('CREATE INDEX ztl_inspired_category__ref_object ON ztl_inspired_category (ref_object)');
 }

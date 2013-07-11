@@ -19,7 +19,6 @@ function read_audio_guides_settings() {
 
 function load_guide_buy() {
 	read_audio_guides_settings();
-	console.log(JSON.stringify(audio_guides[settings.id_lang]));
 	lang_has_purchased = audio_guides[settings.id_lang].purchased;
 	lang_has_stored    = audio_guides[settings.id_lang].stored;
 	
