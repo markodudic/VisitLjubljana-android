@@ -373,3 +373,10 @@ my_visit_poi_translation[2] = "Preglej in dodaj oglede, nastanitve, prireditve, 
 my_visit_poi_translation[3] = "Preglej in dodaj oglede, nastanitve, prireditve, zanimivosti ...";
 my_visit_poi_translation[4] = "Preglej in dodaj oglede, nastanitve, prireditve, zanimivosti ...";
 my_visit_poi_translation[5] = "Preglej in dodaj oglede, nastanitve, prireditve, zanimivosti ...";
+
+var download_translation = [];
+download_translation[1] = "Prenesi";
+download_translation[2] = "Prenesi";
+download_translation[3] = "Prenesi";
+download_translation[4] = "Prenesi";
+download_translation[5] = "Prenesi";
