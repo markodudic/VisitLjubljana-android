@@ -655,12 +655,19 @@ function hide_spinner() {
 	spinner.stop();
 }
 
-function format_date(date_string, id) {
+function format_date(date_string, id, hide_time) {
     console.log("render ---- date string "+date_string);
     console.log("render ---- id "+ id);
+    console.log("render ---- hide_time "+ hide_time);
 
     var date_obj = new Date(date_string*1000);
     
+    var selector = "date and time";
+    if (hide_time == 1) {
+    	selector = "date";
+    }
+
+
     navigator.globalization.dateToString(
         date_obj,
     function (date) {
@@ -668,6 +675,6 @@ function format_date(date_string, id) {
         $("#"+id).html(date.value);
     },
     function () {alert('Error getting dateString\n');},
-    {formatLength:'short', selector:'date and time'}
+    {formatLength:'short', selector:selector}
     );
 }
