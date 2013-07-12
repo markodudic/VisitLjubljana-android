@@ -9,9 +9,6 @@ var footer		  = "";
 //event_filter
 var event_filter  = "";
 
-//my_visit_settings
-var my_visit_settings_menu = "";
-
 //navigation
 var current		  = 0;
 var active_menu	  = 0;
@@ -261,10 +258,6 @@ function load_page(template, div, data, transition, reverse, id_group) {
 	if (event_filter == "") {
 		event_filter = load_template("event_filter.html", "#tpl_event_filter");
 	}
-
-	if (my_visit_settings_menu == "") {
-		my_visit_settings_menu = load_template("my_visit_settings_menu.html", "#tpl_my_visit_settings_menu");
-	}
 	
 	if (id_group != undefined) {
 		selected_group = id_group;
@@ -375,15 +368,16 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				data.about_contact 	= about_contact_translation[settings.id_lang];
 				data.about_desc		= about_desc_translation[settings.id_lang];
 			} else if (div == "my_visit_list") {
-				data.page_title  	= my_visit_page_title_translation[settings.id_lang];
-				data.select_view 	= select_view_translation[settings.id_lang];
-				data.confirm 	 	= confirm_translation[settings.id_lang];
-				data.show_on_map 	= show_on_map_translation[settings.id_lang];
-				data.my_visit_sync  = my_visit_sync_translation[settings.id_lang];
-				data.logout 		= logout_translation[settings.id_lang];
-				data.clear_my_visit = clear_my_visit_translation[settings.id_lang];
-				data.dots 		 	= 1;
-				voice_guide			= 0;
+				data.page_title  		= my_visit_page_title_translation[settings.id_lang];
+				data.select_view 		= select_view_translation[settings.id_lang];
+				data.confirm 	 		= confirm_translation[settings.id_lang];
+				data.show_on_map 		= show_on_map_translation[settings.id_lang];
+				data.my_visit_sync  	= my_visit_sync_translation[settings.id_lang];
+				data.logout 			= logout_translation[settings.id_lang];
+				data.clear_my_visit 	= clear_my_visit_translation[settings.id_lang];
+				data.default_category 	= default_category_translation[settings.id_lang];
+				data.dots 		 		= 1;
+				voice_guide				= 0;
 			} else if (div == "guide_buy") {
 				data.title 				= voice_guide_translation[settings.id_lang].toUpperCase();
 				data.guide_buy_desc 	= guide_buy_desc_translation[settings.id_lang].toUpperCase();
@@ -402,7 +396,7 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				data.my_visit_poi					= my_visit_poi_translation[settings.id_lang];
 				data.download 						= download_translation[settings.id_lang];
 				data.logout 						= logout_translation[settings.id_lang];
-				data.dots 							= 1;
+				data.dots 							= 0;
 			} else if (div == "ztl_map") {
 				data = {};
 				data.title 					= map_translation[settings.id_lang];
@@ -436,11 +430,6 @@ function load_page(template, div, data, transition, reverse, id_group) {
 			if ((div == 'events') || (div == 'event') || (div == 'filtered_events')) {
 				var html_event_filter = Mustache.to_html(event_filter, data);
 				html = html.replace('[[[event_filter]]]', html_event_filter);
-			}
-
-			if (div == 'my_visit_list') {
-				var html_my_visit_settings_menu = Mustache.to_html(my_visit_settings_menu, data);
-				html = html.replace('[[[my_visit_settings_menu]]]', html_my_visit_settings_menu);
 			}
 
 			$('body').html(html);

@@ -1,4 +1,9 @@
-var only_login = 1;
+var only_login 		= 1;
+var skip_filter_cat = 0;
+var filter_cat;
+
+var sql_filter_group  = -1;
+var sql_filer_poi_cat = -1;
 
 function add_to_my_visit(id, ztl_group, type, start, end) {
 
@@ -15,13 +20,19 @@ function add_to_my_visit(id, ztl_group, type, start, end) {
 	});
 }
 
-function load_my_visit(save_history) {
+function load_my_visit(save_history, filter_group) {
 	if (save_history == 1)  {
 		var history_string = "fun--load_my_visit--empty";
 		add_to_history(history_string);
 	}
 
-	var tmp_query      = "SELECT id, ztl_group, type, start, end FROM ztl_my_visit GROUP BY id, ztl_group, type, start, end ORDER BY type, ztl_group";
+	if ((filter_group != undefined) && (filter_group >-1)) {
+		var tmp_query  = "SELECT id, ztl_group, type, start, end FROM ztl_my_visit WHERE ztl_group = "+sql_filter_group+" GROUP BY id, ztl_group, type, start, end ORDER BY type, ztl_group";
+	} else {
+		var tmp_query = "SELECT id, ztl_group, type, start, end FROM ztl_my_visit GROUP BY id, ztl_group, type, start, end ORDER BY type, ztl_group";
+	}
+	
+	
     var tmp_callback   = "my_visit_success";
 
     generate_query(tmp_query, tmp_callback);
@@ -60,13 +71,8 @@ function my_visit_sync() {
 	}
 }
 
-function delete_from_my_visit(id, time) {
-	if (time == -1) {
-		var tmp_query = "DELETE FROM ztl_my_visit WHERE id = "+id;
-	} else {
-		var tmp_query = "DELETE FROM ztl_my_visit WHERE id = "+id+" AND time = "+time;
-	}
-	
+function delete_from_my_visit(id, group) {
+	var tmp_query = "DELETE FROM ztl_my_visit WHERE id = "+id+" AND ztl_group = "+group;
     var tmp_callback   = "delete_from_my_visit_success";
     generate_query(tmp_query, tmp_callback);
 }
@@ -177,11 +183,11 @@ function my_visit_settings_menu_toggle() {
 	$(".header").toggle();
 	$(".footer").toggle();
 
+	/*
 	if ($('.event_filter').is(':visible')) {
-		swipe = 0;
-	} else {
-		swipe = 1;
+		get_active_my_visti_categories();
 	}
+	*/
 }
 
 function add_inspire_to_my_visit(id) {
@@ -243,4 +249,25 @@ function render_time() {
 			format_date($(this).val(), tmp_id);
 		}
 	});
+}
+
+function filter_visits () {
+	var id_filter 	= parseInt($("#visit_type").val());
+	skip_filter_cat = 1;
+
+	if (id_filter == EVENT_GROUP) {
+		sql_filter_group = EVENT_GROUP;
+	} else if (id_filter == TOUR_GROUP) {
+		sql_filter_group = TOUR_GROUP;
+	} else {
+		sql_filter_group  = POI_GROUP;
+		sql_filer_poi_cat = id_filter;
+	}
+
+	load_my_visit(0, id_filter);
+
+	console.log("my_visit --- visit filter");
+	console.log("my_visit ---"+id_filter);
+
+
 }
