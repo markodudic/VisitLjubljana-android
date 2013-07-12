@@ -5,8 +5,8 @@ var lang_has_stored    = 0;
 function read_audio_guides_settings() {
 	var stored_audio_guides = window.localStorage.getItem("audio_guides");
 	if (stored_audio_guides == null) {
-		var defaults = {"1": {"purchased": "0", "stored": "1"},
-						"2": {"purchased": "0", "stored": "0"},
+		var defaults = {"1": {"purchased": "0", "stored": "0"},
+						"2": {"purchased": "0", "stored": "1"},
 						"3": {"purchased": "0", "stored": "0"},
 						"4": {"purchased": "0", "stored": "0"},
 						"5": {"purchased": "0", "stored": "0"}};
@@ -19,7 +19,9 @@ function read_audio_guides_settings() {
 
 function is_purchased_and_stored(){
 	read_audio_guides_settings();
-	lang_has_purchased = audio_guides[settings.id_lang].purchased;
+	//po novem je guide zastonj. ostane koda ce se premislijo
+	//lang_has_purchased = audio_guides[settings.id_lang].purchased;
+	lang_has_purchased = 1;
 	lang_has_stored    = audio_guides[settings.id_lang].stored;
 	if (lang_has_purchased == 1 && lang_has_stored == 1) 
 		return 1;
@@ -29,6 +31,7 @@ function is_purchased_and_stored(){
 
 function load_guide_buy() {
 	if (is_purchased_and_stored() == 1) {
+		voice_guide = 1;
 		load_page(template_lang+'trips.html', 'trips', trips[VOICE_GROUP], 'fade', false, VOICE_GROUP);
 	} else {
 		load_page(template_lang+'guide_buy.html', 'guide_buy', trips[VOICE_GROUP], 'fade', false);		

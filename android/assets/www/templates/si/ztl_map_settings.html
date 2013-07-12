@@ -1,0 +1,30 @@
+<script id="tpl_ztl_map_settings" type="text/html">
+<div id="ztl_map_settings" class="ztl_remove_from_page" style="overflow:hidden;">
+
+	<div class="ztl_content">	
+		<div class="event_filter_content">
+			<div class="close_button" onClick="">
+				<img src="assets/css/ztl_images/media_player_close.png">
+			</div>
+		</div>
+
+		<div class="ztl_item_details event_filter_content">
+
+			<div class="ztl_item_details_title">{{prikaz_title}}</div>
+			<div class="grey_line set_filter_line" style="margin-top:5px; margin-bottom:40px;"></div>
+			<div class="search_dropdown_container">
+				<select id="group_type" class="ztl_event_type_select">
+					<option value="{{tour_list_group}}">MyVisit</option>
+					<option value="{{voice_group}}">{{voice_guide}}</option>
+					<option value="{{inspired_group}}">{{inspired}}</option>
+				</select>
+			</div>
+
+			<div class="event_search_button_holder" style="padding-top:15px;">
+				<div class="ztl_red_button ztl_event_search_button" onClick="load_map_selection();">{{prikazi_button}}</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+</script>

@@ -153,6 +153,17 @@ function sync_my_visit(res) {
 	load_my_visit();
 }
 
+function add_to_myvisit(res) {
+	for (var i = 0; i<res.items.length; i++) {
+		console.log(res.items[i]);
+		add_to_my_visit(res.items[i].id, POI_GROUP, 0, 0, 0, 1);
+	}
+
+	alert(my_visit_transfer_complete_translation[settings.id_lang]);
+
+	load_my_visit();
+}
+
 function get_mobile_group(object_type) {
 	var tmp_group = 0;
 
@@ -209,9 +220,10 @@ function add_inspire_to_my_visit(id) {
 			for (var i=0; i<len; i++){
 				tmp_group = get_mobile_group(results.rows.item(i).ref_object_type);
 
-				add_to_my_visit(results.rows.item(i).ref_object, tmp_group, results.rows.item(i).ref_object_date_type, 0, 0);
+				add_to_my_visit(results.rows.item(i).ref_object, tmp_group, results.rows.item(i).ref_object_date_type, 0, 0, 1);
 		    }
 
+			alert(my_visit_transfer_complete_translation[settings.id_lang]);
 		    load_my_visit();
 		 });
 	});

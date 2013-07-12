@@ -154,11 +154,11 @@ synhronization_title_translation[5]	= "prevod";
 
 
 var synhronization_desc_translation = [];
-synhronization_desc_translation[1]	= "Za ogled te vsebine potrebujete podatkovno povezavo. Povezovanje s podatkovnim omreĹľjem lahko povzroÄŤi dodatne stroĹˇke.";
+synhronization_desc_translation[1]	= "Za ogled te vsebine potrebujete podatkovno povezavo. Povezovanje s podatkovnim omrežjem lahko povzroči dodatne stroške.";
 synhronization_desc_translation[2]	= "To view this content, you need a data connection. Connecting to data network may result in additional charges.";
-synhronization_desc_translation[3]	= "Um diese Inhalte anzuzeigen, benĂ¶tigen Sie eine Datenverbindung. AnschlieĂźen an ein Datennetz kann weitere Kosten verursachen.";
-synhronization_desc_translation[4]	= "Per visualizzare questo contenuto, Ă¨ necessaria una connessione dati. Connessione a una rete di dati, puĂ˛ comportare i costi supplementari.";
-synhronization_desc_translation[5]	= "Pour voir ce contenu, vous avez besoin d'une connexion de donnĂ©es. Connexion Ă  un rĂ©seau de donnĂ©es, peut entraĂ®ner des frais supplĂ©mentaires.";
+synhronization_desc_translation[3]	= "Um diese Inhalte anzuzeigen, benötigen Sie eine Datenverbindung. Anschließen an ein Datennetz kann weitere Kosten verursachen.";
+synhronization_desc_translation[4]	= "Per visualizzare questo contenuto, è necessaria una connessione dati. Connessione a una rete di dati, può comportare i costi supplementari.";
+synhronization_desc_translation[5]	= "Pour voir ce contenu, vous avez besoin d'une connexion de données. Connexion à un réseau de données, peut entraîner des frais supplémentaires.";
 
 var synronization_finished_translation = [];
 synronization_finished_translation[1]	= "Sinhronizacija končana";
@@ -324,7 +324,7 @@ my_visit_download_translation[4] = "prevod";
 my_visit_download_translation[5] = "prevod";
 
 var user_name_translation = [];
-//user_name_translation[1] = "UporabniÄąË‡ko ime";
+//user_name_translation[1] = "Uporabniško ime";
 user_name_translation[1] = "markodudic@gmail.com";
 user_name_translation[2] = "User name";
 user_name_translation[3] = "Benutzername";
@@ -402,6 +402,13 @@ clear_my_visit_translation[3] = "Löschen den MyVisit";
 clear_my_visit_translation[4] = "Svouta la MyVisit";
 clear_my_visit_translation[5] = "Vider le MyVisit";
 
+var add_to_myvisit_translation = [];
+add_to_myvisit_translation[1] = "Dodaj vse v MyVisit";
+add_to_myvisit_translation[2] = "prevod";
+add_to_myvisit_translation[3] = "prevod";
+add_to_myvisit_translation[4] = "prevod";
+add_to_myvisit_translation[5] = "prevod";
+
 var my_visit_transfer_complete_translation = [];
 my_visit_transfer_complete_translation[1] = "Prenos v myVisit opravljen";
 my_visit_transfer_complete_translation[2] = "Prenos v myVisit opravljen";
@@ -415,3 +422,28 @@ login_failed_translation[2] = "Neuspesna prijava";
 login_failed_translation[3] = "Neuspesna prijava";
 login_failed_translation[4] = "Neuspesna prijava";
 login_failed_translation[5] = "Neuspesna prijava";
+
+
+var inspired_translation = [];
+inspired_translation[1] = "Priporočeno";
+inspired_translation[2] = "Prevod";
+inspired_translation[3] = "Prevod";
+inspired_translation[4] = "Prevod";
+inspired_translation[5] = "Prevod";
+
+
+var prikaz_title_translation = [];
+prikaz_title_translation[1] = "IZBERI PRIKAZ";
+prikaz_title_translation[2] = "SELECT VIEW";
+prikaz_title_translation[3] = "ANSICHT WÄHLEN";
+prikaz_title_translation[4] = "SELEZIONARE LA VISTA";
+prikaz_title_translation[5] = "SÉLECTIONNEZ";
+
+
+var prikazi_button_translation = [];
+prikazi_button_translation[1] = "PRIKAŽI";
+prikazi_button_translation[2] = "SHOW ON MAP";
+prikazi_button_translation[3] = "STANDORTE ANZEIGEN";
+prikazi_button_translation[4] = "MOSTRA UBICAZIONI";
+prikazi_button_translation[5] = "AFFICHER L'EMPLACEMENTS";
+

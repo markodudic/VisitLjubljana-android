@@ -25,7 +25,7 @@ function is_updt_finished() {
 		updt_running  = 0;
 		spinner.stop();
 		alert(synronization_finished_translation[settings.id_lang]);
-		edit_settings();		
+		load_current_settings();		
 	}
 }
 

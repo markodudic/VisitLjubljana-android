@@ -21,11 +21,6 @@ function event_filter_toggle() {
 	}
 }
 
-function load_event_type() {
-	var tmp_query 	 = "SELECT id, name FROM ztl_event_category e WHERE e.id_language = "+settings.id_lang+" GROUP BY id, name";
-	var tmp_callback = "event_category_success";
-	generate_query(tmp_query, tmp_callback);
-}
 
 
 function filter_events()  {
@@ -73,44 +68,3 @@ function filter_events()  {
     generate_query(tmp_query, tmp_callback);
 }
 
-function load_event(id, save_history) {
-	swipe = 1;
-
-	if (save_history == 1)  {
-		var history_string = "fun--load_event--"+id+"__fade__false";
-		add_to_history(history_string);
-	}
-
-	var tmp_query 	 = "SELECT  e.id, et.title, et.intro, et.description, p.coord_x, p.coord_y, e.image FROM ztl_event e LEFT JOIN ztl_event_translation et ON et.id_event = e.id LEFT JOIN  ztl_event_timetable ett ON ett.id_event = e.id LEFT JOIN ztl_poi p ON p.id = ett.venue_id WHERE e.id = "+id+" AND et.id_language = "+settings.id_lang+" GROUP BY e.id"; 
-    var tmp_callback = "load_event_success";
-    generate_query(tmp_query, tmp_callback);
-}
-
-function load_tour(id, save_history) {
-	swipe = 1;
-
-	if (save_history == 1)  {
-		var history_string = "fun--load_tour--"+id+"__fade__false";
-		add_to_history(history_string);
-	}
-
-
-	var tmp_query = "SELECT t.id, tt.title, tt.short_description, tt.long_description FROM ztl_tour t LEFT JOIN ztl_tour_translation tt ON tt.id_tour = t.id WHERE t.id = "+id;
-
-	var tmp_callback = "load_tour_success";
-    generate_query(tmp_query, tmp_callback);
-}
-
-function load_single_info(id, save_history) {
-	swipe = 1;
-
-	if (save_history == 1)  {
-		var history_string = "fun--load_single_info--"+id+"__fade__false";
-		add_to_history(history_string);
-	}
-
-	//ko bo osbstajala tabela se popravi query
-	var tmp_query = "SELECT i.* FROM ztl_info i WHERE i.id_language = "+settings.id_lang+" AND i.id = "+id+" AND i.record_status = 1 GROUP BY i.id";
-	var tmp_callback = "load_info_success";
-    generate_query(tmp_query, tmp_callback);
-}

@@ -62,6 +62,7 @@ function load_poi_success(results) {
 
     swipe 		 = 1;
 	current 	 = trip_id;
+	console.log("RES SOUND="+res.items[0].sound);
 	sound_file	 = file+res.items[0].sound;
 	media_length = parseInt(results.rows.item(0).media_duration_value);
 
@@ -69,25 +70,6 @@ function load_poi_success(results) {
 	load_page(template_lang+'trip.html', 'trip', res.items[0], 'fade', true, results.rows.item(0).id_group);
 }
 
-//map poi
-function load_map_poi_coord_success(results) {
-    points =  new Array();
-
-    var len = results.rows.length;
-
-    for (var i=0; i<len; i++){
-    	var row = results.rows.item(i);
-    	if (row != undefined) {
-    		if ((row.coord_x > x0) && (row.coord_x < x1) && (row.coord_y > y0) && (row.coord_y < y1)) {
-    			points.push(new Array(row.coord_x, row.coord_y, 0, row.id, row.type));
-    		}
-    	}
-    }
-}
-
-function load_map_poi_data_success(results) {
-    poi_data = results.rows.item(0);
-}
 
 //eventi
 function events_success(results) {
@@ -334,6 +316,7 @@ function tour_success(results) {
     	//skrajsam dolzino
     	results.rows.item(i).title = unescape(results.rows.item(i).title);
     	results.rows.item(i).tour_category = unescape(results.rows.item(i).tour_category);
+    	results.rows.item(i).short_description = unescape(results.rows.item(i).short_description);
     	tmp = results.rows.item(i).title;
     	if (tmp.length > max_dolzina_title) {
     		results.rows.item(i).title = tmp.substring(0,max_dolzina_title)+"...";
@@ -341,6 +324,10 @@ function tour_success(results) {
     	tmp = results.rows.item(i).tour_category;
     	if (tmp.length > max_dolzina_title) {
     		results.rows.item(i).tour_category = tmp.substring(0,max_dolzina_title)+"...";
+    	}
+    	tmp = results.rows.item(i).short_description;
+    	if (tmp.length > max_dolzina_short_desc) {
+    		results.rows.item(i).short_description = tmp.substring(0,max_dolzina_short_desc)+"...";
     	}
     	res.items[i] = results.rows.item(i);
     }
@@ -408,7 +395,7 @@ function last_update_success(results) {
 		update_db();
 	} else {
 		alert(synronization_finished_translation[settings.id_lang]);
-		edit_settings();
+		load_current_settings();
 	}
 }
 
@@ -684,7 +671,7 @@ function populate_db_firstime() {
 		db.transaction(populateDB_ztl_poi, errorCB, function(tx) {
 			db.transaction(function(tx) {
 				//fix za poti do slik
-				tx.executeSql('update ztl_poi set image = '+file_uploads+' || image where image != "";', [], function(tx, res) {});
+				tx.executeSql('update ztl_poi set image = "'+file_uploads+'" || image where image != "";', [], function(tx, res) {});
 				
 				tx.executeSql('select count(*) as cnt from ztl_poi;', [], function(tx, res) {
 					console.log('4 >>>>>>>>>> ztl_poi res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
