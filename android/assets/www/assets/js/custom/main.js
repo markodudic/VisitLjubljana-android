@@ -378,6 +378,7 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				data.default_category 	= default_category_translation[settings.id_lang];
 				data.dots 		 		= 1;
 				voice_guide				= 0;
+				menu_icon				= 1;
 			} else if (div == "guide_buy") {
 				data.title 				= voice_guide_translation[settings.id_lang].toUpperCase();
 				data.guide_buy_desc 	= guide_buy_desc_translation[settings.id_lang].toUpperCase();
@@ -395,6 +396,7 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				data.download 						= download_translation[settings.id_lang];
 				data.logout 						= logout_translation[settings.id_lang];
 				data.dots 							= 0;
+				menu_icon							= 1;
 			} else if (div == "ztl_map") {
 				data = {};
 				data.title 					= map_translation[settings.id_lang];
@@ -481,6 +483,8 @@ function load_page(template, div, data, transition, reverse, id_group) {
 			}
 
 			
+			console.log("menu icon " + menu_icon);
+
 			$('.icon_'+menu_icon).attr("src","assets/css/ztl_images/icon_"+menu_icon+"_red.png");
 
 			
