@@ -8,17 +8,22 @@ var toltip_visible  = 0;
 var poi_data        = null; 
 var xy              = new Array();
 var curr_id;
-var curr_tip;
+var curr_type;
+var curr_group;
 var wgs;
 
 var current_position_xy;
 
-function load_show_map(id, type) {
+function load_show_map(id, type, group) {
 	curr_id = id;
 	curr_type = type;
+	curr_group = group;
 	load_page(template_lang+'ztl_map.html', 'ztl_map', null, 'fade', false);
 }
 
+function load_map_selection() {
+	load_show_map(0, $('#group_type').val(), 0)
+}
 
 //klicem iz main.js 445
 function init_map() {
@@ -30,29 +35,6 @@ function init_map() {
     init(function(feature) { 
         selectedFeature = feature; 
     });
-	
-    /*
-    map = new OpenLayers.Map({
-        div: "map",
-        theme: null,
-        controls: [
-            new OpenLayers.Control.Attribution(),
-            new OpenLayers.Control.TouchNavigation({
-                dragPanOptions: {
-                    enableKinetic: true
-                }
-            }),
-            new OpenLayers.Control.Zoom()
-        ],
-        layers: [
-            new OpenLayers.Layer.OSM("OpenStreetMap", null, {
-                transitionEffect: 'resize'
-            })
-        ],
-        center: new OpenLayers.LonLat(742000, 5861000),
-        zoom: 3
-    });
-    */
 }
 
 OpenLayers.Control.Click = OpenLayers.Class(OpenLayers.Control, {                
@@ -165,15 +147,6 @@ var init = function (onSelectFeatureFunction) {
         autoActivate:true,
         onSelect: onSelectFeatureFunction});
     
-    /*var geolocate = new OpenLayers.Control.Geolocate({
-        id: 'locate-control',
-        geolocationOptions: {
-            enableHighAccuracy: false,
-            maximumAge: 0,
-            timeout: 7000
-        }
-    });*/
-    
     map = new OpenLayers.Map({
         div: "map",
         theme: null,
@@ -184,7 +157,6 @@ var init = function (onSelectFeatureFunction) {
                     enableKinetic: true
                 }
             }),
-            //geolocate,
             selectControl
         ],
 
@@ -211,13 +183,20 @@ var init = function (onSelectFeatureFunction) {
     map.addControl(click);
     click.activate();
 
-    if( ! map.getCenter() ){
-    	var lonLat = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
-        map.setCenter (lonLat, zoom);
-    }
-
     get_poi_data();
-
+    
+    //pozicioniram center ce je ena tocka, ce ne pa na center karte
+    if ((curr_id != undefined) && (curr_id > 0)) {
+    	var point = transform (parseFloat(points[0][0])+correctionX, parseFloat(points[0][1])+correctionY);
+    	var lonLat = new OpenLayers.LonLat(point.lon, point.lat);
+    	map.setCenter (lonLat, zoom);
+	} else {
+	    if( ! map.getCenter() ){
+	    	var lonLat = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
+	        map.setCenter (lonLat, zoom);
+	    }		
+	}
+    
     var sprinters = getFeatures(0);
     var sprinters_my_pos = getFeatures(1);
 
@@ -231,7 +210,6 @@ var init = function (onSelectFeatureFunction) {
            if (points[i][2] == type) {
                 //na koordinatePOI-ja iz baze se doda 5.000.000 zato da bo v projekciji GK zona 5 oz. EPSG:31469    
                 //ne vem zakaj ampak koordinate po transformaciji strizejo za -350 in 550. GK koordinate so ok.
-        	    console.log("ID="+points[i][3]);
         	    var point = transform (parseFloat(points[i][0])+correctionX, parseFloat(points[i][1])+correctionY);
                 var attributes = {id: points[i][3], type: points[i][4]};
 
@@ -262,6 +240,7 @@ var init = function (onSelectFeatureFunction) {
     
     function onFeatureSelect(evt) {
         var feature = evt.feature;
+        curr_type = feature.attributes.type;
         load_content(feature.attributes.id);
         
         $("#ztl_cord").val(feature.attributes.id+"#"+poi_data.coord_x+"#"+poi_data.coord_y);
@@ -271,11 +250,11 @@ var init = function (onSelectFeatureFunction) {
         if (poi_data.title.length>max_dolzina_title) {
 			poi_data.title=poi_data.title.substring(0,max_dolzina_title)+"...";
 		}
-        $("#poi_title").html(poi_data.title.toUpperCase());
+        $("#poi_title").html(unescape(poi_data.title.toUpperCase()));
 		if (poi_data.address.length>max_dolzina_naslov) {
 			poi_data.address=poi_data.address.substring(0,max_dolzina_naslov)+"...";
 		}
-		$("#poi_address").html(poi_data.address);
+		$("#poi_address").html(unescape(poi_data.address));
         $(".map_info").click(function() {
        		load_page_content(feature.attributes.id, feature.attributes.type);        		
         }); 
@@ -302,29 +281,66 @@ function transform (lon, lat) {
 }
 
 function get_poi_data() {
+	points =  new Array();
 	if (curr_id != undefined) {
-		if (curr_type == EVENT_GROUP) { //event
-	       var tmp_query = 'SELECT '+curr_type+' as type, e.id, p.coord_x, p.coord_y FROM ztl_event e LEFT JOIN ztl_event_translation et ON et.id_event = e.id LEFT JOIN  ztl_event_timetable ett ON ett.id_event = e.id LEFT JOIN ztl_poi p ON p.id = ett.venue_id WHERE e.id = '+curr_id+' AND et.id_language = '+settings.id_lang+' GROUP BY e.id';
-	    } else { //poi
-	//       var tmp_query = 'SELECT 1 as type, zp.id, zp.coord_x, zp.coord_y FROM ztl_poi zp';
-	       var tmp_query = 'SELECT '+curr_type+' as type, zp.id, zp.coord_x, zp.coord_y FROM ztl_poi zp WHERE zp.id = '+curr_id;
-	    }
-	
-	    var tmp_callback = "load_map_poi_coord_success";
-	    generate_query(tmp_query, tmp_callback);
+		if (curr_type == VOICE_GROUP) {
+			load_map_coords(trips[VOICE_GROUP]);
+		} else if (curr_type == EVENT_GROUP) {
+		    load_map_coord(trips[EVENT_GROUP], curr_id);
+		} else if (curr_type == POI_GROUP) {
+		   	load_map_coord(trips[curr_group], curr_id);
+		} else if (curr_type == TOUR_LIST_GROUP) {
+			load_my_visit_map();
+		} else if (curr_type == INSPIRED_GROUP) {
+			load_inspired_map();
+		}
 	}
 }
 
 function load_content(id) {
     if (curr_type == EVENT_GROUP) {
         var tmp_query = 'SELECT  '+curr_type+' as type, e.id, et.title, p.address, p.post_number, p.post, p.coord_x, p.coord_y  FROM ztl_event e LEFT JOIN ztl_event_translation et ON et.id_event = e.id LEFT JOIN  ztl_event_timetable ett ON ett.id_event = e.id LEFT JOIN ztl_poi p ON p.id = ett.venue_id WHERE e.id = '+id+' AND et.id_language = '+settings.id_lang+' GROUP BY e.id';    
-    } else {
+    } else if ((curr_type == POI_GROUP) || (curr_type == VOICE_GROUP)) {
         var tmp_query = 'SELECT  '+curr_type+' as type, zp.*, zpt.title, zcg.id_group, zp.coord_x, zp.coord_y FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id WHERE zp.id IN ('+id+') AND zpt.id_language = '+settings.id_lang+' GROUP BY zp.id';
     }
     var tmp_callback    = "load_map_poi_data_success";
             
     generate_query(tmp_query, tmp_callback);
 }
+
+
+function load_map_coords(results) {
+    var len = results.items.length;
+
+	for (var i = 0; i<results.items.length; i++) {
+		add_point_on_map(results.items[i]);
+    }
+}
+
+function load_map_coord(results, id, type) {
+    var len = results.items.length;
+
+    for (var i = 0; i<results.items.length; i++) {
+    	if (results.items[i].id == id) {
+    		add_point_on_map(results.items[i], type);
+    		return;
+    	}
+    }
+}
+
+
+function add_point_on_map (row, type) {
+	if (row != undefined) {
+		if ((row.coord_x > x0) && (row.coord_x < x1) && (row.coord_y > y0) && (row.coord_y < y1)) {
+			if (type != undefined) {
+				points.push(new Array(row.coord_x, row.coord_y, 0, row.id, type));			
+			} else {
+				points.push(new Array(row.coord_x, row.coord_y, 0, row.id, row.type));
+			}
+		}
+	}
+}
+
 
 function load_page_content(id, type) {
 	if (type==EVENT_GROUP) {
@@ -334,6 +350,44 @@ function load_page_content(id, type) {
 	}
     
 }
+
+function load_map_poi_data_success(results) {
+    poi_data = results.rows.item(0);
+}
+
+function load_my_visit_map() {
+	var tmp_query = "SELECT id, ztl_group FROM ztl_my_visit";
+    var tmp_callback   = "load_map_success";
+    generate_query(tmp_query, tmp_callback);
+}
+
+function load_inspired_map() {
+	var tmp_query = "SELECT zic.ref_object as id, " + POI_GROUP + " ztl_group FROM ztl_inspired_category zic";
+    var tmp_callback   = "load_map_success";
+    generate_query(tmp_query, tmp_callback);
+}
+
+function load_map_success(results) {
+	var len = results.rows.length;
+    for (var i=0; i<len; i++){
+    	var id = results.rows.item(i).id;
+    	var group = results.rows.item(i).ztl_group;
+    	if (group == POI_GROUP){
+        	load_map_coord(trips[POI_ZAMENITOSTI_GROUP], id, POI_GROUP);
+    		load_map_coord(trips[POI_KULINARIKA_GROUP], id, POI_GROUP);
+    		load_map_coord(trips[POI_NASTANITVE_GROUP], id, POI_GROUP);
+    		load_map_coord(trips[POI_NAKUPOVANJE_GROUP], id, POI_GROUP);
+    		load_map_coord(trips[POI_ZABAVA_GROUP], id, POI_GROUP);
+    	} else if (group == VOICE_GROUP) {
+        	load_map_coord(trips[group], id, VOICE_GROUP);
+    	} else if (group == EVENT_GROUP) {
+        	load_map_coord(trips[group], id, EVENT_GROUP);
+    	}
+    }
+	
+}
+
+
 
 function show_system_maps() {
     source = new Proj4js.Proj('EPSG:31469');
