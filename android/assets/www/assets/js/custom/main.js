@@ -389,8 +389,6 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				data.my_visit_download_translation 	= my_visit_download_translation[settings.id_lang];
 				data.user_name						= user_name_translation[settings.id_lang];
 				data.password						= password_translation[settings.id_lang];
-				data.forgotten_pass					= forgotten_pass_translation[settings.id_lang];
-				data.register_translation			= register_translation[settings.id_lang];
 				data.login						    = login_translation[settings.id_lang];
 				data.my_visit_tours					= my_visit_tours_translation[settings.id_lang];
 				data.my_visit_poi					= my_visit_poi_translation[settings.id_lang];
