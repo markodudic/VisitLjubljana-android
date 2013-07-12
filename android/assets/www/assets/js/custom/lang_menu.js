@@ -1,4 +1,4 @@
-var lang ='{"language_menu":[{"title":"Vsebine","img1":"MyVisit - poiščite navdih","img2":"Prireditve","img3":"Znamenitosti","img4":"Kulinarika","img5":"Informacije","img6":"Ogledi in izleti","img7":"Nastanitve","img8":"Zabava","img9":"Nakupovanje"},{"title":"Content","img1":"MyVisit - get inspired","img2":"Events","img3":"Sights and attractions","img4":"Eating out","img5":"Visitor information","img6":"Tours and excursions","img7":"Accommodation","img8":"Entertainment","img9":"Shopping"},{"title":"Inhalt","img1":"MyVisit - lass dich inspirieren","img2":"Veranstaltungen","img3":"Sehenswürdigkeiten","img4":"Kulinarik","img5":"Informationen","img6":"Führungen und Ausflüge","img7":"Unterkünfte","img8":"Unterhaltung","img9":"Shopping"},{"title":"Contenuto","img1":"MyVisit - trova ispirazioni","img2":"Manifestazioni","img3":"Attrazioni","img4":"Gastronomia","img5":"Informazioni","img6":"Visite e gite","img7":"Allogio","img8":"Divertimento","img9":"Shopping"},{"title":"Content","img1":"MyVisit - laissez-vous insprirer","img2":"Evénements","img3":"Curiosités","img4":"Gastronomie","img5":"Info pour les visiteurs","img6":"Visites et excursions","img7":"Hébergement","img8":"Divertissement","img9":"Shopping"}]}';
+var lang ='{"language_menu":[{"title":"Vsebine","img1":"MyVisit - poiščite navdih","img2":"Prireditve","img3":"Znamenitosti","img4":"Kulinarika","img5":"Informacije","img6":"Ogledi in izleti","img7":"Nastanitve","img8":"Zabava","img9":"Nakupovanje"},{"title":"Content","img1":"MyVisit - get inspired","img2":"Events","img3":"Sights and attractions","img4":"Eating out","img5":"Visitor information","img6":"Tours and excursions","img7":"Accommodation","img8":"Entertainment","img9":"Shopping"},{"title":"Inhalt","img1":"MyVisit - lass dich inspirieren","img2":"Veranstaltungen","img3":"SehenswĂĽrdigkeiten","img4":"Kulinarik","img5":"Informationen","img6":"FĂĽhrungen und AusflĂĽge","img7":"UnterkĂĽnfte","img8":"Unterhaltung","img9":"Shopping"},{"title":"Contenuto","img1":"MyVisit - trova ispirazioni","img2":"Manifestazioni","img3":"Attrazioni","img4":"Gastronomia","img5":"Informazioni","img6":"Visite e gite","img7":"Allogio","img8":"Divertimento","img9":"Shopping"},{"title":"Content","img1":"MyVisit - laissez-vous insprirer","img2":"EvĂ©nements","img3":"CuriositĂ©s","img4":"Gastronomie","img5":"Info pour les visiteurs","img6":"Visites et excursions","img7":"HĂ©bergement","img8":"Divertissement","img9":"Shopping"}]}';
 lang = JSON.parse(lang);
 
 //veza med sliko in grupo
@@ -14,14 +14,14 @@ mm_pic_group[222] 	= "img8";
 mm_pic_group[220] 	= "img9";
 
 var voice_guide_translation = [];
-voice_guide_translation[1]	= "VodiÄŤ";
+voice_guide_translation[1]	= "Vodič";
 voice_guide_translation[2]	= "Guide";
 voice_guide_translation[3]	= "Führer";
 voice_guide_translation[4]	= "Guida";
 voice_guide_translation[5]	= "Guide";
 
 var voice_guide_translation_full = [];
-voice_guide_translation_full[1]	= "GLASOVNI VODIÄŚ";
+voice_guide_translation_full[1]	= "GLASOVNI VODIČ";
 voice_guide_translation_full[2]	= "AUDIO GUIDE";
 voice_guide_translation_full[3]	= "AUDIOFÜHRER";
 voice_guide_translation_full[4]	= "AUDIOGUIDA";
@@ -65,6 +65,8 @@ price_translation[4]	= "PREZZO";
 price_translation[5]	= "PRIX";
 
 
+
+
 var confirm_translation = [];
 confirm_translation[1]	= "POTRDI";
 confirm_translation[2]	= "GO";
@@ -73,7 +75,7 @@ confirm_translation[4]	= "INVIARE";
 confirm_translation[5]	= "ENVOYER";
 
 var events_translation = [];
-events_translation[1]	= "PRIKAĹ˝I PRIREDITVE";
+events_translation[1]	= "PRIKAŽI PRIREDITVE";
 events_translation[2]	= "FILTER EVENTS";
 events_translation[3]	= "VERANSTALTUNGEN FILTERN";
 events_translation[4]	= "FILTRARE LE MANIFESTAZIONI";
@@ -91,11 +93,11 @@ settings_translation[1]	= "Nastavitve";
 settings_translation[2]	= "Settings";
 settings_translation[3]	= "Einstellungen";
 settings_translation[4]	= "Impostazioni";
-settings_translation[5]	= "Réglages";
+settings_translation[5]	= "RĂ©Réglages";
 
 
 var my_visit_account_translation = [];
-my_visit_account_translation[1]	= "My Visit raÄŤun";
+my_visit_account_translation[1]	= "My Visit račun";
 my_visit_account_translation[2]	= "My Visit account";
 my_visit_account_translation[3]	= "My Visit account";
 my_visit_account_translation[4]	= "My Visit acconto";
@@ -161,12 +163,19 @@ synhronization_desc_translation[4]	= "Per visualizzare questo contenuto, è nece
 synhronization_desc_translation[5]	= "Pour voir ce contenu, vous avez besoin d'une connexion de données. Connexion à un réseau de données, peut entraîner des frais supplémentaires.";
 
 var synronization_finished_translation = [];
-synronization_finished_translation[1]	= "Sinhronizacija konÄŤana";
+synronization_finished_translation[1]	= "Sinhronizacija končana";
 synronization_finished_translation[2]	= "prevod";
 synronization_finished_translation[3]	= "prevod";
 synronization_finished_translation[4]	= "prevod";
 synronization_finished_translation[5]	= "prevod";
 
+
+var synhronization_button_translation = [];
+synhronization_button_translation[1]	= "PRENESI PODATKE";
+synhronization_button_translation[2]	= "SYNHRONIZATION";
+synhronization_button_translation[3]	= "SYNHRONIZATION";
+synhronization_button_translation[4]	= "SYNHRONIZATION";
+synhronization_button_translation[5]	= "SYNHRONIZATION";
 
 var synhronization_button_translation = [];
 synhronization_button_translation[1]	= "PRENESI PODATKE";
@@ -197,7 +206,7 @@ about_desc_translation[4]	= "Questo applizacione è stato finanziato dal Fondo E
 about_desc_translation[5]	= "Ce application bénéficie du soutien du FEDER.";
 
 var wifi_connection_translation = [];
-wifi_connection_translation[1]	= "PotrebujeĹˇ WIFI povezavo";
+wifi_connection_translation[1]	= "Potrebuješ WIFI povezavo";
 wifi_connection_translation[2]	= "You need wifi connection";
 wifi_connection_translation[3]	= "You need wifi connection";
 wifi_connection_translation[4]	= "You need wifi connection";
@@ -213,7 +222,7 @@ guide_buy_desc_translation[5]	= "PRÉSENTATION";
 
 
 var guide_buy_locations_translation = [];
-guide_buy_locations_translation[1]	= "SEZNAM ZANIMIVIH TOČK";
+guide_buy_locations_translation[1]	= "SEZNAM ZANIMIVIH TOÄŚK";
 guide_buy_locations_translation[2]	= "POINTS OF INTEREST";
 guide_buy_locations_translation[3]	= "INTERESSANTE PUNKTE";
 guide_buy_locations_translation[4]	= "ELENCO DEI PUNTI D'INTERESSE";
@@ -221,7 +230,7 @@ guide_buy_locations_translation[5]	= "LISTE DES CURIOSITÉS";
 
 
 var guide_buy_button_translation = [];
-guide_buy_button_translation[1]	= "PRENESI VODIÄŚ";
+guide_buy_button_translation[1]	= "PRENESI VODIČ";
 guide_buy_button_translation[2]	= "prevod";
 guide_buy_button_translation[3]	= "prevod";
 guide_buy_button_translation[4]	= "prevod";
@@ -229,7 +238,7 @@ guide_buy_button_translation[5]	= "prevod";
 
 
 var guide_buy_desc_text_translation = [];
-guide_buy_desc_text_translation[1]	= "Glasovni vodič vodič vam predstavlja 13 zanimivih točk in več mogočih poti, po katerih lahko pridete do njih.";
+guide_buy_desc_text_translation[1]	= "Glasovni vodiÄŤ vodiÄŤ vam predstavlja 13 zanimivih toÄŤk in veÄŤ mogoÄŤih poti, po katerih lahko pridete do njih.";
 guide_buy_desc_text_translation[2]	= "The audio guide features 13 points of interest in Ljubljana, their locations and different routes to get to them.";
 guide_buy_desc_text_translation[3]	= "Der Audioführer stellt Ihnen 13 interessante Punkte und mehrere mögliche Wege zu ihnen vor.";
 guide_buy_desc_text_translation[4]	= "La guida digitale illustra 13 punti d'interesse e i vari percorsi per raggiungerli.";
@@ -323,7 +332,7 @@ my_visit_download_translation[4] = "prevod";
 my_visit_download_translation[5] = "prevod";
 
 var user_name_translation = [];
-//user_name_translation[1] = "UporabniĹˇko ime";
+//user_name_translation[1] = "UporabniÄąË‡ko ime";
 user_name_translation[1] = "markodudic@gmail.com";
 user_name_translation[2] = "User name";
 user_name_translation[3] = "Benutzername";
@@ -374,7 +383,7 @@ select_view_translation[4] = "Cambia";
 select_view_translation[5] = "Changer de vue";
 
 var show_on_map_translation = [];
-show_on_map_translation[1] = "PrikaĹľi vse na zemljevidu";
+show_on_map_translation[1] = "Prikaži vse na zemljevidu";
 show_on_map_translation[2] = "Show all location details";
 show_on_map_translation[3] = "Alle Standorte einzeigen;
 show_on_map_translation[4] = "Mostra tutti su mappa";
@@ -384,8 +393,8 @@ var logout_translation = [];
 logout_translation[1] = "Odjava";
 logout_translation[2] = "Log out";
 logout_translation[3] = "Abmelden";
-logout_translation[4] = "Déconnexion";
-logout_translation[5] = "Esci";
+logout_translation[4] = "Esci";
+logout_translation[5] = "Déconnexion";
 
 var my_visit_sync_translation = [];
 my_visit_sync_translation[1] = "Sinhroniziraj";
