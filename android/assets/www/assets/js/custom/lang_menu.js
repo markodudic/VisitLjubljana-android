@@ -1,4 +1,4 @@
-var lang ='{"language_menu":[{"title":"Vsebine","img1":"MyVisit - poiščite navdih","img2":"Prireditve","img3":"Znamenitosti","img4":"Kulinarika","img5":"Informacije","img6":"Ogledi in izleti","img7":"Nastanitve","img8":"Zabava","img9":"Nakupovanje"},{"title":"Content","img1":"MyVisit - get inspired","img2":"Events","img3":"Sights and attractions","img4":"Eating out","img5":"Visitor information","img6":"Tours and excursions","img7":"Accommodation","img8":"Entertainment","img9":"Shopping"},{"title":"Inhalt","img1":"MyVisit - lass dich inspirieren","img2":"Veranstaltungen","img3":"SehenswÄ‚Ä˝rdigkeiten","img4":"Kulinarik","img5":"Informationen","img6":"FÄ‚Ä˝hrungen und AusflÄ‚Ä˝ge","img7":"UnterkÄ‚Ä˝nfte","img8":"Unterhaltung","img9":"Shopping"},{"title":"Contenuto","img1":"MyVisit - trova ispirazioni","img2":"Manifestazioni","img3":"Attrazioni","img4":"Gastronomia","img5":"Informazioni","img6":"Visite e gite","img7":"Allogio","img8":"Divertimento","img9":"Shopping"},{"title":"Content","img1":"MyVisit - laissez-vous insprirer","img2":"EvÄ‚Â©nements","img3":"CuriositÄ‚Â©s","img4":"Gastronomie","img5":"Info pour les visiteurs","img6":"Visites et excursions","img7":"HÄ‚Â©bergement","img8":"Divertissement","img9":"Shopping"}]}';
+var lang ='{"language_menu":[{"title":"Vsebine","img1":"MyVisit - poiščite navdih","img2":"Prireditve","img3":"Znamenitosti","img4":"Kulinarika","img5":"Informacije","img6":"Ogledi in izleti","img7":"Nastanitve","img8":"Zabava","img9":"Nakupovanje"},{"title":"Content","img1":"MyVisit - get inspired","img2":"Events","img3":"Sights and attractions","img4":"Eating out","img5":"Visitor information","img6":"Tours and excursions","img7":"Accommodation","img8":"Entertainment","img9":"Shopping"},{"title":"Inhalt","img1":"MyVisit - lass dich inspirieren","img2":"Veranstaltungen","img3":"Sehenswürdigkeiten","img4":"Kulinarik","img5":"Informationen","img6":"Führungen und Ausflüge","img7":"Unterkünfte","img8":"Unterhaltung","img9":"Shopping"},{"title":"Contenuto","img1":"MyVisit - trova ispirazioni","img2":"Manifestazioni","img3":"Attrazioni","img4":"Gastronomia","img5":"Informazioni","img6":"Visite e gite","img7":"Allogio","img8":"Divertimento","img9":"Shopping"},{"title":"Content","img1":"MyVisit - laissez-vous insprirer","img2":"Evénements","img3":"Curiosités","img4":"Gastronomie","img5":"Info pour les visiteurs","img6":"Visites et excursions","img7":"Hébergement","img8":"Divertissement","img9":"Shopping"}]}';
 lang = JSON.parse(lang);
 
 //veza med sliko in grupo
@@ -16,53 +16,52 @@ mm_pic_group[220] 	= "img9";
 var voice_guide_translation = [];
 voice_guide_translation[1]	= "Vodič";
 voice_guide_translation[2]	= "Guide";
-voice_guide_translation[3]	= "FĂĽhrung";
+voice_guide_translation[3]	= "Führer";
 voice_guide_translation[4]	= "Guida";
-voice_guide_translation[5]	= "Guidage";
+voice_guide_translation[5]	= "Guide";
 
 var voice_guide_translation_full = [];
-voice_guide_translation_full[1]	= "GLASOVNI VODIÄŚ";
-voice_guide_translation_full[2]	= "VOICE GUIDE";
-voice_guide_translation_full[3]	= "SPRACHFUHRUNG";
-voice_guide_translation_full[4]	= "GUIDA VOCALE";
-voice_guide_translation_full[5]	= "GUIDAGE VOCAL";
+voice_guide_translation_full[1]         = "GLASOVNI VODIČ";
+voice_guide_translation_full[2]         = "AUDIO GUIDE";
+voice_guide_translation_full[3]         = "AUDIOFÜHRER";
+voice_guide_translation_full[4]         = "AUDIOGUIDA";
+voice_guide_translation_full[5]         = "L'AUDIOGUIDE";
 
 
 var map_translation = [];
-map_translation[1]	= "ZEMLJEVID";
-map_translation[2]	= "MAP";
-map_translation[3]	= "MAP";
-map_translation[4]	= "MAPPA";
-map_translation[5]	= "MAP";
+map_translation[1]     = "ZEMLJEVID";
+map_translation[2]     = "MAP";
+map_translation[3]     = "KARTE";
+map_translation[4]     = "MAPPA";
+map_translation[5]     = "CARTE";
 
 var title_translation = [];
-title_translation[1]	= "NASLOV";
-title_translation[2]	= "ADDRESS";
-title_translation[3]	= "ANSCHRIFT";
-title_translation[4]	= "INDIRIZZO";
-title_translation[5]	= "ADRESSE";
+title_translation[1]      = "NASLOV";
+title_translation[2]      = "ADDRESS";
+title_translation[3]      = "ADRESSE";
+title_translation[4]      = "INDIRIZZO";
+title_translation[5]      = "ADRESSE";
 
 var description_translation = [];
-description_translation[1]	= "OPIS";
-description_translation[2]	= "DESCRIPTION";
-description_translation[3]	= "BESCHREIBUNG";
-description_translation[4]	= "DESCRIZIONE";
-description_translation[5]	= "DESCRIPTION";
+description_translation[1]      = "OPIS";
+description_translation[2]      = "DESCRIPTION";
+description_translation[3]      = "BESCHREIBUNG";
+description_translation[4]      = "DESCRIZIONE";
+description_translation[5]      = "DESCRIPTION";
 
 var venue_translation = [];
-venue_translation[1]	= "LOKACIJA";
-venue_translation[2]	= "VENUE";
-venue_translation[3]	= "VENUE";
-venue_translation[4]	= "VENUE";
-venue_translation[5]	= "VENUE";
-
+venue_translation[1]   = "LOKACIJA";
+venue_translation[2]   = "LOCATION";
+venue_translation[3]   = "STANDORT";
+venue_translation[4]   = "UBICAZIONE";
+venue_translation[5]   = "EMPLACEMENT";
 
 var price_translation = [];
-price_translation[1]	= "CENA";
-price_translation[2]	= "PRICE";
-price_translation[3]	= "PREIS";
-price_translation[4]	= "PREZZO";
-price_translation[5]	= "PRIX";
+price_translation[1]    = "CENA";
+price_translation[2]    = "PRICE";
+price_translation[3]    = "PREIS";
+price_translation[4]    = "PREZZO";
+price_translation[5]    = "PRIX";
 
 
 var confirm_translation = [];
