@@ -415,14 +415,12 @@ function last_update_success(results) {
 //my_visit
 function my_visit_success(results) {
 	my_visit_status = 0;
-    //var tmp_date    = new Date();
-	
-	var res 		 = {};
-    res.poi 		 = [];
-    res.evt 		 = [];
-    res.tour 		 = [];
-	
-	var filtered_arr = [];
+
+	var res 		      = {};
+    res.poi 		      = [];
+    res.evt 		      = [];
+    res.tour 		      = [];
+    res.my_visit_filter   = [];
 
 	var poi_wi 		 = "";
 	var evt_wi 		 = "";
@@ -454,15 +452,19 @@ function my_visit_success(results) {
     }
    
 	//myvisit poi
-	var j = 0;
-    var current_group = 0;
+	var j               = 0;
+    var current_group   = 0;
+    var cgi             = 0;
 
     if (res.has_poi == 1) {
     	poi_wi = poi_wi+"0";
-    	var tmp_query = 'SELECT zp.id, zp.address, zp.post_number, zp.post, zpt.title, zcg.id_group, zmi.start, zmi.end FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id LEFT JOIN ztl_my_visit zmi ON (zmi.id = zp.id AND zmi.ztl_group = '+POI_GROUP+') WHERE zp.id IN ('+poi_wi+') AND zpt.id_language = '+settings.id_lang+' AND zp.record_status = 1 GROUP BY zp.id';
-		
-        console.log("my_visit --- qverij --- "+tmp_query);
-
+    	
+        if (sql_filer_poi_cat > -1) {
+            var tmp_query = 'SELECT zp.id, zp.address, zp.post_number, zp.post, zpt.title, zcg.id_group, zmi.start, zmi.end FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id LEFT JOIN ztl_my_visit zmi ON (zmi.id = zp.id AND zmi.ztl_group = '+POI_GROUP+') WHERE zp.id IN ('+poi_wi+') AND zcg.id_group = '+sql_filer_poi_cat+' AND zpt.id_language = '+settings.id_lang+' AND zp.record_status = 1 GROUP BY zp.id';
+        } else {
+            var tmp_query = 'SELECT zp.id, zp.address, zp.post_number, zp.post, zpt.title, zcg.id_group, zmi.start, zmi.end FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id LEFT JOIN ztl_my_visit zmi ON (zmi.id = zp.id AND zmi.ztl_group = '+POI_GROUP+') WHERE zp.id IN ('+poi_wi+') AND zpt.id_language = '+settings.id_lang+' AND zp.record_status = 1 GROUP BY zp.id';            
+        }
+        
     	db.transaction(function(tx) {
 			 tx.executeSql(tmp_query, [], function(tx, res_poi) {
 
@@ -472,6 +474,13 @@ function my_visit_success(results) {
                     if (current_group < res_poi.rows.item(pi).id_group) {
                         var tmp_title = {};
                         tmp_title.group_name = main_menu[mm_pic_group[res_poi.rows.item(pi).id_group]];
+
+                        var tmp     = {};
+                        tmp.id      = res_poi.rows.item(pi).id_group;
+                        tmp.title   = main_menu[mm_pic_group[res_poi.rows.item(pi).id_group]];
+
+                        res.my_visit_filter[cgi] = tmp;
+                        cgi++;
 
                         res.poi[j] = tmp_title;
                         j++;
@@ -485,7 +494,6 @@ function my_visit_success(results) {
                     res.poi[j]  = res_poi.rows.item(pi);
                     j++;
                 }
-
 
     		 	my_visit_status++;
     		 	check_my_visit(res);
@@ -502,43 +510,26 @@ function my_visit_success(results) {
     if (res.has_evt == 1) {
     	evt_wi = evt_wi+"0";
 
-    	//var tmp_query 	 = "SELECT  e.id, et.title, ett.timetable_idx AS id_timetable, ett.venue, ett.date FROM ztl_event e LEFT JOIN ztl_event_translation et ON et.id_event = e.id LEFT JOIN  ztl_event_timetable ett ON ett.id_event = e.id WHERE e.id IN ("+evt_wi+") AND et.id_language = "+settings.id_lang; 
         var tmp_query    = "SELECT  e.id, et.title, zmi.start, zmi.end FROM ztl_event e LEFT JOIN ztl_event_translation et ON et.id_event = e.id LEFT JOIN ztl_my_visit zmi ON (zmi.id = e.id AND zmi.ztl_group = "+EVENT_GROUP+") WHERE e.id IN ("+evt_wi+") AND et.id_language = "+settings.id_lang; 
 
     	db.transaction(function(tx) {
 			tx.executeSql(tmp_query, [], function(tx, res_evt) {
 				var evt_len = res_evt.rows.length;
 
-                res.evt_group_name_translation = main_menu[mm_pic_group[0]];
+                res.evt_group_name_translation = main_menu[mm_pic_group[EVENT_GROUP]];
                 
+                //vrinem grupo
+                var tmp     = {};
+                tmp.id      = EVENT_GROUP;
+                tmp.title   = main_menu[mm_pic_group[EVENT_GROUP]];
+                res.my_visit_filter.unshift(tmp);
+
+
                 for (var ei = 0; ei<evt_len; ei++) {
                     res_evt.rows.item(ei).title = unescape(res_evt.rows.item(ei).title);
-					
-                    /*
-                    if (res_evt.rows.item(ei).start > 0) {
-
-                        tmp_date = new Date(res_evt.rows.item(ei).start * 1000);
-                        res_evt.rows.item(ei).start = return_formated_date(tmp_date);
-
-                    } else {
-                        es_evt.rows.item(ei).start = "";
-                    }
-
-                    if (res_evt.rows.item(ei).end > 0) {
-
-                        tmp_date = new Date(res_evt.rows.item(ei).end * 1000);
-                        res_evt.rows.item(ei).end = return_formated_date(tmp_date);
-
-                    } else {
-                        es_evt.rows.item(ei).end = "";
-                    }
-                    */
-
                     res.evt[k] = res_evt.rows.item(ei);
 					k++;
 				}
-
-                //console.log("aaaaaaaaa" + JSON.stringify(res.evt));
 
 				my_visit_status++;
 				check_my_visit(res);
@@ -553,7 +544,7 @@ function my_visit_success(results) {
     //myvisit tour
     var l = 0;
     var tmp_info_text = "";
-    if (res.has_evt == 1) {
+    if (res.has_tour == 1) {
         tour_wi = tour_wi+"0";
         var tmp_query = "SELECT t.id, tt.title, tt.short_description, zmi.start, zmi.end FROM ztl_tour t LEFT JOIN ztl_tour_translation tt ON tt.id_tour = t.id  LEFT JOIN ztl_my_visit zmi ON (zmi.id = t.id AND zmi.ztl_group = "+TOUR_GROUP+") WHERE t.id IN ("+tour_wi+")";
 
@@ -563,8 +554,14 @@ function my_visit_success(results) {
             tx.executeSql(tmp_query, [], function(tx, res_tour) {
                 var tour_len = res_tour.rows.length;
 
-                res.tour_group_name_translation = main_menu[mm_pic_group[2]];
+                res.tour_group_name_translation = main_menu[mm_pic_group[TOUR_GROUP]];
                 
+                var tmp     = {};
+                tmp.id      = TOUR_GROUP;
+                tmp.title   = main_menu[mm_pic_group[TOUR_GROUP]];
+                res.my_visit_filter.push(tmp);
+
+
                 for (var ti = 0; ti<tour_len; ti++) {
                  
                     tmp_info_text = unescape(res_tour.rows.item(ti).short_description);
@@ -591,7 +588,15 @@ function my_visit_success(results) {
 
 function check_my_visit(res) {
     if (my_visit_status == 3) {
-        console.log("my_visit --- st objektov: " + res.len);
+        sql_filter_group  = -1;
+        sql_filer_poi_cat = -1;
+
+        if (skip_filter_cat == 0) {
+            filter_cat = res.my_visit_filter;
+        } else {
+            res.my_visit_filter = filter_cat;
+            skip_filter_cat = 0;
+        }
 
         if (res.len > 0) {
            res.user = check_user();
