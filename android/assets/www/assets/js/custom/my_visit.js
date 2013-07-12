@@ -237,7 +237,9 @@ function my_visit_item_date(id, group) {
 }
 
 function render_time() {
-	var tmp_id = "";
+	var tmp_id 	  = "";
+	var hide_time = 0;
+	
 	$("[id^=non_formated_]" ).each(function() {
 		console.log("render time --- "+ $(this).attr('id'));
 		console.log("render time --- "+ $(this).val());
@@ -246,7 +248,14 @@ function render_time() {
 		if ($(this).val() > 0) {
 			tmp_id = $(this).attr('id').substring(4, $(this).attr('id').length);
 			
-			format_date($(this).val(), tmp_id);
+			var n = $(this).attr('id').indexOf("event");
+			if (n > 0){
+				hide_time = 0;
+			} else {
+				hide_time = 1;
+			}
+
+			format_date($(this).val(), tmp_id, hide_time);
 		}
 	});
 }
