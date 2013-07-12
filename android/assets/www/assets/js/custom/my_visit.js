@@ -129,7 +129,7 @@ function handle_web_login(res) {
 		$("#my_visit_password").val("");
 		alert(login_failed_translation[settings.id_lang]);
 	}
-}
+} 
 
 function sync_my_visit(res) {
 	var tmp_group = 0;
