@@ -205,6 +205,29 @@ function add_inspire_to_my_visit(id) {
 function my_visit_item_date(id, group) {
 	console.log("my_visit ---- id: "+id);
 	console.log("my_visit ---- group: "+group);
+
+	var myNewDate = new Date();
+	window.plugins.datePicker.show({
+		date : myNewDate,
+		mode : 'date', // date or time or blank for both
+		allowOldDates : false
+		}, function(returnDate) {
+			var newDate = new Date(returnDate);
+			console.log(newDate);
+			console.log(newDate.getTime());
+
+			var time = newDate.getTime() / 1000;
+			
+			console.log(time);
+
+			var tmp_query = "UPDATE ztl_my_visit SET start = "+time+" WHERE id = "+id+" AND ztl_group = "+group;
+			db.transaction(function(tx) {
+				 tx.executeSql(tmp_query, [], function(tx, results) {
+				    load_my_visit();
+				 });
+			});
+		}
+	);	
 }
 
 function render_time() {

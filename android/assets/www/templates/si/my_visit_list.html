@@ -65,6 +65,9 @@
 							<div class="ztl_list_header">{{title}}</div>
 							<div class="ztl_list_content_text">
 								{{#address}}{{address}},{{/address}}{{#post_number}} {{post_number}}{{/post_number}}{{#post}} {{post}}{{/post}}
+								<br>
+								<span id="formated_poi_start_{{id}}"></span>
+								<input type="hidden" id="non_formated_poi_start_{{id}}" value="{{start}}">	
 							</div>
 						</div>
 						<div class="my_visit_icons">
@@ -92,6 +95,9 @@
 						<div class="ztl_list_header">{{title}}</div>
 						<div class="ztl_list_content_text">
 							{{short_description}}
+							<br>
+							<span id="formated_tour_start_{{id}}"></span>
+							<input type="hidden" id="non_formated_tour_start_{{id}}" value="{{start}}">	
 						</div>
 					</div>
 					<div class="my_visit_icons">
