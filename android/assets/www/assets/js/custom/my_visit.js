@@ -5,7 +5,7 @@ var filter_cat;
 var sql_filter_group  = -1;
 var sql_filer_poi_cat = -1;
 
-function add_to_my_visit(id, ztl_group, type, start, end) {
+function add_to_my_visit(id, ztl_group, type, start, end, autmatic) {
 
 	console.log("my_visit -- id: "+id);
 	console.log("my_visit -- ztl_group: "+ztl_group);
@@ -17,6 +17,10 @@ function add_to_my_visit(id, ztl_group, type, start, end) {
     
     db.transaction(function(tx) {
 		 tx.executeSql(tmp_query, [], function(tx, res) {});
+
+		 if (autmatic != 1) {
+			alert(my_visit_transfer_complete_translation[settings.id_lang]);
+		}
 	});
 }
 
@@ -46,6 +50,8 @@ function load_my_visit_settings() {
 	if (tmp_user != false) {
 		res.logged_id = 1;
 		res.user 	  = check_user();
+	} else {
+		//alert
 	}
 
 	load_page(template_lang+'my_visit_settings.html', 'my_visit_settings', res, 'fade', false);
@@ -120,7 +126,8 @@ function handle_web_login(res) {
 		//tu se bodo se sinhronizirali podatki
 		sync_my_visit(res);
 	} else {
-		$("#my_visit_password").val("login failed");
+		$("#my_visit_password").val("");
+		alert(login_failed_translation[settings.id_lang]);
 	}
 }
 
@@ -136,8 +143,10 @@ function sync_my_visit(res) {
 			console.log(JSON.stringify(res[i]));
 
 			tmp_group = get_mobile_group(res[i].ref_object_type);
-			add_to_my_visit(res[i].ref_object, tmp_group, res[i].ref_object_date_type, res[i].ref_object_start, res[i].ref_object_end);
+			add_to_my_visit(res[i].ref_object, tmp_group, res[i].ref_object_date_type, res[i].ref_object_start, res[i].ref_object_end, 1);
 		}
+
+		alert(my_visit_transfer_complete_translation[settings.id_lang]);
 	}
 
 	//rediractam na my_visit

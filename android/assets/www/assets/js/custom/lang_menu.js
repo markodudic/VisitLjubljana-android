@@ -175,7 +175,6 @@ synhronization_button_translation[3]	= "ĂśBERTRAGEN VON DATEN";
 synhronization_button_translation[4]	= "TRASFERIRE I DATI";
 synhronization_button_translation[5]	= "TRANSFĂ‰RER DES DONNĂ‰ES";
 
-
 var about_version_translation = [];
 about_version_translation[1]	= "VERZIJA";
 about_version_translation[2]	= "VERSION";
@@ -402,3 +401,17 @@ clear_my_visit_translation[2] = "Clear MyVisit";
 clear_my_visit_translation[3] = "Löschen den MyVisit";
 clear_my_visit_translation[4] = "Svouta la MyVisit";
 clear_my_visit_translation[5] = "Vider le MyVisit";
+
+var my_visit_transfer_complete_translation = [];
+my_visit_transfer_complete_translation[1] = "Prenos v myVisit opravljen";
+my_visit_transfer_complete_translation[2] = "Prenos v myVisit opravljen";
+my_visit_transfer_complete_translation[3] = "Prenos v myVisit opravljen";
+my_visit_transfer_complete_translation[4] = "Prenos v myVisit opravljen";
+my_visit_transfer_complete_translation[5] = "Prenos v myVisit opravljen";
+
+var login_failed_translation = [];
+login_failed_translation[1] = "Neuspešna prijava";
+login_failed_translation[2] = "Neuspesna prijava";
+login_failed_translation[3] = "Neuspesna prijava";
+login_failed_translation[4] = "Neuspesna prijava";
+login_failed_translation[5] = "Neuspesna prijava";
