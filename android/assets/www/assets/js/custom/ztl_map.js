@@ -114,20 +114,20 @@ var init = function (onSelectFeatureFunction) {
         projection: "EPSG:900913",
         externalGraphic: "assets/map/images/map_point.png",
         graphicOpacity: 1.0,
-        graphicWidth: 16,
-        graphicHeight: 18,
-        graphicXOffset:-8,
-        graphicYOffset: -18
+        graphicWidth: 24,
+        graphicHeight: 27,
+        graphicXOffset:-12,
+        graphicYOffset: -27
     })
 
     var styleMap_my_pos = new OpenLayers.StyleMap({
         projection: "EPSG:900913",
         externalGraphic: "assets/map/images/you_are_here.png",
         graphicOpacity: 1.0,
-        graphicWidth: 50,
-        graphicHeight: 50,
-        graphicXOffset: -25,
-        graphicYOffset: -25
+        graphicWidth: 76,
+        graphicHeight: 76,
+        graphicXOffset: -38,
+        graphicYOffset: -38
     })
 
     var sprintersLayer = new OpenLayers.Layer.Vector("Sprinters", {
@@ -243,7 +243,7 @@ var init = function (onSelectFeatureFunction) {
         curr_type = feature.attributes.type;
         load_content(feature.attributes.id);
         
-        $("#ztl_cord").val(feature.attributes.id+"#"+poi_data.coord_x+"#"+poi_data.coord_y);
+    	$("#ztl_cord").val(feature.attributes.id+"#"+poi_data.coord_x+"#"+poi_data.coord_y);
         //zracunam razdaljo
         $("#ztl_distance_value").html(lineDistance( poi_data.coord_x, poi_data.coord_y, current_position_xy[0]-correctionX+myLocationCorrectionX, current_position_xy[1]-correctionY+myLocationCorrectionY ) + " km");
         
@@ -284,11 +284,11 @@ function get_poi_data() {
 	points =  new Array();
 	if (curr_id != undefined) {
 		if (curr_type == VOICE_GROUP) {
-			load_map_coords(trips[VOICE_GROUP]);
+			load_map_coords(trips[VOICE_GROUP], VOICE_GROUP);
 		} else if (curr_type == EVENT_GROUP) {
-		    load_map_coord(trips[EVENT_GROUP], curr_id);
+		    load_map_coord(trips[EVENT_GROUP], curr_id, EVENT_GROUP);
 		} else if (curr_type == POI_GROUP) {
-		   	load_map_coord(trips[curr_group], curr_id);
+		   	load_map_coord(trips[curr_group], curr_id, POI_GROUP);
 		} else if (curr_type == TOUR_LIST_GROUP) {
 			load_my_visit_map();
 		} else if (curr_type == INSPIRED_GROUP) {
@@ -298,7 +298,7 @@ function get_poi_data() {
 }
 
 function load_content(id) {
-    if (curr_type == EVENT_GROUP) {
+	if (curr_type == EVENT_GROUP) {
         var tmp_query = 'SELECT  '+curr_type+' as type, e.id, et.title, p.address, p.post_number, p.post, p.coord_x, p.coord_y  '+
 				        'FROM ztl_event e  '+
 				        'LEFT JOIN ztl_event_translation et ON et.id_event = e.id '+ 
@@ -321,11 +321,11 @@ function load_content(id) {
 }
 
 
-function load_map_coords(results) {
+function load_map_coords(results, type) {
     var len = results.items.length;
 
 	for (var i = 0; i<results.items.length; i++) {
-		add_point_on_map(results.items[i]);
+		add_point_on_map(results.items[i], type);
     }
 }
 
