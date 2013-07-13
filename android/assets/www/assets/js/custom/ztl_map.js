@@ -299,9 +299,21 @@ function get_poi_data() {
 
 function load_content(id) {
     if (curr_type == EVENT_GROUP) {
-        var tmp_query = 'SELECT  '+curr_type+' as type, e.id, et.title, p.address, p.post_number, p.post, p.coord_x, p.coord_y  FROM ztl_event e LEFT JOIN ztl_event_translation et ON et.id_event = e.id LEFT JOIN  ztl_event_timetable ett ON ett.id_event = e.id LEFT JOIN ztl_poi p ON p.id = ett.venue_id WHERE e.id = '+id+' AND et.id_language = '+settings.id_lang+' GROUP BY e.id';    
+        var tmp_query = 'SELECT  '+curr_type+' as type, e.id, et.title, p.address, p.post_number, p.post, p.coord_x, p.coord_y  '+
+				        'FROM ztl_event e  '+
+				        'LEFT JOIN ztl_event_translation et ON et.id_event = e.id '+ 
+				        'LEFT JOIN  ztl_event_timetable ett ON ett.id_event = e.id  '+
+				        'LEFT JOIN ztl_poi p ON p.id = ett.venue_id  '+
+				        'WHERE e.id = '+id+' AND et.id_language = '+settings.id_lang+' '+
+				        'GROUP BY e.id';    
     } else if ((curr_type == POI_GROUP) || (curr_type == VOICE_GROUP)) {
-        var tmp_query = 'SELECT  '+curr_type+' as type, zp.*, zpt.title, zcg.id_group, zp.coord_x, zp.coord_y FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id WHERE zp.id IN ('+id+') AND zpt.id_language = '+settings.id_lang+' GROUP BY zp.id';
+        var tmp_query = 'SELECT  '+curr_type+' as type, zp.*, zpt.title, zcg.id_group, zp.coord_x, zp.coord_y '+
+        				'FROM ztl_poi zp  '+
+				        'LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id  '+
+				        'LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category  '+
+				        'LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id  '+
+				        'WHERE zp.id IN ('+id+') AND zpt.id_language = '+settings.id_lang+' '+
+        				'GROUP BY zp.id';
     }
     var tmp_callback    = "load_map_poi_data_success";
             
@@ -356,13 +368,15 @@ function load_map_poi_data_success(results) {
 }
 
 function load_my_visit_map() {
-	var tmp_query = "SELECT id, ztl_group FROM ztl_my_visit";
+	var tmp_query = "SELECT id, ztl_group " +
+					"FROM ztl_my_visit";
     var tmp_callback   = "load_map_success";
     generate_query(tmp_query, tmp_callback);
 }
 
 function load_inspired_map() {
-	var tmp_query = "SELECT zic.ref_object as id, " + POI_GROUP + " ztl_group FROM ztl_inspired_category zic";
+	var tmp_query = "SELECT zic.ref_object as id, " + POI_GROUP + " ztl_group " +
+					"FROM ztl_inspired_category zic";
     var tmp_callback   = "load_map_success";
     generate_query(tmp_query, tmp_callback);
 }
@@ -387,7 +401,13 @@ function load_map_success(results) {
 	
 }
 
-
+function map_settings_toggle() {
+	$(".map_settings").toggle();
+	
+	$(".ztl_content").toggle();
+	$(".header").toggle();
+	$(".footer").toggle();
+}
 
 function show_system_maps() {
     source = new Proj4js.Proj('EPSG:31469');
