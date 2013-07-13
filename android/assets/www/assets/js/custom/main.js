@@ -9,6 +9,9 @@ var footer		  = "";
 //event_filter
 var event_filter  = "";
 
+//map_settings
+var map_settings  = "";
+
 //navigation
 var current		  = 0;
 var active_menu	  = 0;
@@ -258,6 +261,11 @@ function load_page(template, div, data, transition, reverse, id_group) {
 	if (event_filter == "") {
 		event_filter = load_template("event_filter.html", "#tpl_event_filter");
 	}
+
+	if (map_settings == "") {
+		map_settings = load_template("ztl_map_settings.html", "#tpl_ztl_map_settings");
+	}
+
 	
 	if (id_group != undefined) {
 		selected_group = id_group;
@@ -355,7 +363,7 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				data.synchronization	= synchronization_translation[settings.id_lang];
 				data.rate 				= rate_translation[settings.id_lang];
 				data.about				= about_translation[settings.id_lang];
-				voice_guide				=0;
+				voice_guide				= 0;
 			} else if (div == 'ztl_synhronization') {
 				data = {};
 				data.synhronization_title 	= synhronization_title_translation[settings.id_lang];
@@ -400,14 +408,6 @@ function load_page(template, div, data, transition, reverse, id_group) {
 			} else if (div == "ztl_map") {
 				data = {};
 				data.title 					= map_translation[settings.id_lang];
-			} else if (div == "inspired") {
-				data.page_title 	= main_menu['img1'];
-			} else if (div == "ztl_guide_settings") {
-				data = {};
-				data.show_on_map 		= show_on_map_translation[settings.id_lang];
-				data.add_to_myvisit		= add_to_myvisit_translation[settings.id_lang];
-			} else if (div == "ztl_map_settings") {
-				data = {};
 				data.voice_guide 		= voice_guide_translation[settings.id_lang];
 				data.inspired			= inspired_translation[settings.id_lang];
 				data.prikaz_title		= prikaz_title_translation[settings.id_lang];
@@ -415,8 +415,14 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				data.tour_list_group	= TOUR_LIST_GROUP;
 				data.voice_group		= VOICE_GROUP;
 				data.inspired_group		= INSPIRED_GROUP;
+			} else if (div == "inspired") {
+				data.page_title 	= main_menu['img1'];
+			} else if (div == "ztl_guide_settings") {
+				data = {};
+				data.show_on_map 		= show_on_map_translation[settings.id_lang];
+				data.add_to_myvisit		= add_to_myvisit_translation[settings.id_lang];
 			}
-
+			
 			if (voice_guide == 1)  {
 				if (div == 'trips') {
 					extra_div_id 		= "_voice_guide";
@@ -441,6 +447,10 @@ function load_page(template, div, data, transition, reverse, id_group) {
 			if ((div == 'events') || (div == 'event') || (div == 'filtered_events')) {
 				var html_event_filter = Mustache.to_html(event_filter, data);
 				html = html.replace('[[[event_filter]]]', html_event_filter);
+			}
+			if (div == 'ztl_map') {
+				var html_map_settings = Mustache.to_html(map_settings, data);
+				html = html.replace('[[[map_settings]]]', html_map_settings);
 			}
 
 			$('body').html(html);
@@ -630,11 +640,11 @@ function dprun(t) {
 
 
 function do_synhronization() {
-	if (navigator.network.connection.type == Connection.WIFI) {
+	//if (navigator.network.connection.type == Connection.WIFI) {
 		check_updates();
-	} else {
+	/*} else {
 	    alert(wifi_connection_translation[settings.id_lang]);
-	}
+	}*/
 
 }
 

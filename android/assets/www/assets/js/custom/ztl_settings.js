@@ -1,22 +1,28 @@
    			
 
 function load_current_settings() {
-	console.log("SETTINGS");
+	console.log("SETTINGS="+settings.reminder);
 	load_page(template_lang+'ztl_settings.html', 'ztl_settings', settings, 'fade', false);
+	reminder_toggle();
 }
 
 function choose_language() {
 	load_page('select_language.html', 'select_language', null, 'fade', false, 0);
 }
 
-function reminder_change() {
-	var reminder = 0;
-	if  ((settings.reminder == undefined) || (settings.reminder == 0)) {
-		var reminder = 1;
+function reminder_change(sel) {
+	localStorage.setItem('reminder', sel);
+	reminder_toggle();
+}
+
+function reminder_toggle() {
+	if ((localStorage.getItem('reminder') == null) || (localStorage.getItem('reminder') == 0)) {
+		$("#reminder_on").css('display','none');;
+		$("#reminder_off").css('display','inline');;
+	} else {
+		$("#reminder_on").css('display','inline');;
+		$("#reminder_off").css('display','none');;		
 	}
-	
-	settings.reminder = reminder;
-	save_mobile_settings();
 }
 
 function synhronization(){

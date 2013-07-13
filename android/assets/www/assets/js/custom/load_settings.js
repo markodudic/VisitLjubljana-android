@@ -49,7 +49,14 @@ function load_pois(id, trips_menu_id, save_history) {
 	} else {
 		group = id;
 		//$.getScript('./assets/js/custom/trips.js', function () {
-			var tmp_query 		= 'SELECT zp.*, zpt.title, zcg.id_group, zpt.description FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id WHERE zcg.id_group = '+group+' AND zpt.id_language = '+settings.id_lang+' AND zp.record_status = 1 GROUP BY zp.id';
+			var tmp_query 		= 	'SELECT zp.*, zpt.title, zcg.id_group, zpt.description ' + 
+									'FROM ztl_poi zp  ' + 
+									'LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id  ' + 
+									'LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category  ' + 
+									'LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id  ' + 
+									'WHERE zcg.id_group = '+group+' AND zpt.id_language = '+settings.id_lang+' AND zp.record_status = 1  ' + 
+									'GROUP BY zp.id '+
+									'ORDER BY zpt.title';
 			var tmp_callback	= "load_pois_success";
 			
 			generate_query(tmp_query, tmp_callback);
@@ -67,7 +74,14 @@ function load_trip_content(id, transition, reverse, save_history) {
 	trip_id 	= id;
 	sound_file 	= "";
 
-	var tmp_query 		= 'SELECT zp.*, zpt.title, zpt.description, zcg.id_group FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id WHERE zp.id = '+id+' AND zpt.id_language = '+settings.id_lang+' GROUP BY zp.id';
+	var tmp_query 		= 	'SELECT zp.*, zpt.title, zpt.description, zcg.id_group '+
+							'FROM ztl_poi zp '+
+							'LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id  '+
+							'LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category  '+
+							'LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id  '+
+							'WHERE zp.id = '+id+' AND zpt.id_language = '+settings.id_lang+' '+
+							'GROUP BY zp.id '+
+							'ORDER BY zpt.title';
 	var tmp_callback	= "load_poi_success";
 
 	generate_query(tmp_query, tmp_callback);
@@ -123,14 +137,24 @@ function load_events(save_history) {
 
 	trips_title[0] = main_menu['img2'];
 
-	var tmp_query    = "SELECT e.id, e.featured, et.title, ett.venue_id, ett.date, ett.date_first, p.coord_x, p.coord_y, ett.venue as poi_title, e.image FROM ztl_event e LEFT JOIN ztl_event_translation et ON et.id_event = e.id LEFT JOIN  ztl_event_timetable ett ON ett.id_event = e.id LEFT JOIN ztl_poi p ON p.id = ett.venue_id WHERE et.id_language = "+settings.id_lang+" AND e.record_status = 1 GROUP BY e.id ORDER BY e.id";
+	var tmp_query    = "SELECT e.id, e.featured, et.title, ett.venue_id, ett.date, ett.date_first, p.coord_x, p.coord_y, ett.venue as poi_title, e.image " +
+						"FROM ztl_event e " +
+						"LEFT JOIN ztl_event_translation et ON et.id_event = e.id " +
+						"LEFT JOIN  ztl_event_timetable ett ON ett.id_event = e.id " +
+						"LEFT JOIN ztl_poi p ON p.id = ett.venue_id " +
+						"WHERE et.id_language = "+settings.id_lang+" AND e.record_status = 1 " +
+						"GROUP BY e.id ORDER BY e.id "+
+						"ORDER BY ett.date_first";
 	var tmp_callback = "events_success";
     generate_query(tmp_query, tmp_callback); 
 }
 
 function load_tour_list(save_history)  {
 	swipe 			= 0;
-	var tmp_query    = "SELECT * FROM ztl_tour_category WHERE id_language = "+settings.id_lang+" AND record_status = 1";
+	var tmp_query    = "SELECT * " +
+						"FROM ztl_tour_category " +
+						"WHERE id_language = "+settings.id_lang+" AND record_status = 1 " +
+						"ORDER BY title";
 	var tmp_callback = "tour_list_success";
 
 	generate_query(tmp_query, tmp_callback); 
@@ -146,7 +170,15 @@ function load_tours(id_tour_category, save_history)  {
 
     trips_title[2] = main_menu['img6'];
 
-    var tmp_query = "SELECT t.id, tt.title, tt.short_description, ti.image, tc.id as tour_category_id, tc.title as tour_category FROM ztl_tour t LEFT JOIN ztl_tour_translation tt ON tt.id_tour = t.id LEFT JOIN ztl_tour_tour_category ttc ON ttc.id_tour = t.id LEFT JOIN ztl_tour_category tc ON ttc.id_tour_category = tc.id LEFT JOIN ztl_tour_images ti ON t.id = ti.id_tour WHERE tt.id_language = "+settings.id_lang+" AND ttc.id_tour_category = "+id_tour_category+" GROUP BY t.id";
+    var tmp_query = "SELECT t.id, tt.title, tt.short_description, ti.image, tc.id as tour_category_id, tc.title as tour_category " +
+    				"FROM ztl_tour t " +
+    				"LEFT JOIN ztl_tour_translation tt ON tt.id_tour = t.id " +
+    				"LEFT JOIN ztl_tour_tour_category ttc ON ttc.id_tour = t.id " +
+    				"LEFT JOIN ztl_tour_category tc ON ttc.id_tour_category = tc.id " +
+    				"LEFT JOIN ztl_tour_images ti ON t.id = ti.id_tour " +
+    				"WHERE tt.id_language = "+settings.id_lang+" AND ttc.id_tour_category = "+id_tour_category+" " +
+    				"GROUP BY t.id "+
+    				"ORDER BY tt.title";
     var tmp_callback   = "tour_success";
     generate_query(tmp_query, tmp_callback);
 }
@@ -161,7 +193,11 @@ function load_info(save_history)  {
 
     trips_title[1] = main_menu['img5'];
 
-    var tmp_query      = "SELECT i.* FROM ztl_info i WHERE i.id_language = "+settings.id_lang+" AND i.record_status = 1 GROUP BY i.id";
+    var tmp_query      = "SELECT i.* " +
+    					"FROM ztl_info i " +
+    					"WHERE i.id_language = "+settings.id_lang+" AND i.record_status = 1 " +
+    					"GROUP BY i.id "+
+    					"ORDER BY title";
     var tmp_callback   = "info_success";
     generate_query(tmp_query, tmp_callback);
 }
@@ -177,7 +213,12 @@ function load_inspired(save_history)  {
 
     trips_title[1] = main_menu['img5'];
 
-    var tmp_query      = "SELECT i.*, it.title, it.desc FROM ztl_inspired i LEFT JOIN ztl_inspired_translation it ON it.id_inspired = i.id WHERE it.id_language = "+settings.id_lang+" AND i.record_status = 1 GROUP BY i.id";
+    var tmp_query      = "SELECT i.*, it.title, it.desc " +
+    					"FROM ztl_inspired i " +
+    					"LEFT JOIN ztl_inspired_translation it ON it.id_inspired = i.id " +
+    					"WHERE it.id_language = "+settings.id_lang+" AND i.record_status = 1 " +
+    					"GROUP BY i.id "+
+						"ORDER BY it.title";
     var tmp_callback   = "inspired_success";
     generate_query(tmp_query, tmp_callback);
 }
@@ -191,7 +232,14 @@ function load_voice_guide(save_history) {
 
 	swipe		= 0;
 
-	var tmp_query 		= "SELECT zp.*, zpt.title, " + VOICE_GROUP + " as id_group, zp.coord_x, zp.coord_y FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id WHERE zpt.id_language = "+settings.id_lang+" AND sound != '' GROUP BY zp.id";
+	var tmp_query 		= "SELECT zp.*, zpt.title, " + VOICE_GROUP + " as id_group, zp.coord_x, zp.coord_y " +
+							"FROM ztl_poi zp " +
+							"LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id " +
+							"LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category " +
+							"LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id " +
+							"WHERE zpt.id_language = "+settings.id_lang+" AND sound != '' " +
+							"GROUP BY zp.id "+
+							"ORDER BY zpt.title";
 	var tmp_callback	= "load_pois_success";
 	
 	generate_query(tmp_query, tmp_callback);
@@ -200,7 +248,11 @@ function load_voice_guide(save_history) {
 
 
 function load_event_type() {
-	var tmp_query 	 = "SELECT id, name FROM ztl_event_category e WHERE e.id_language = "+settings.id_lang+" GROUP BY id, name";
+	var tmp_query 	 = 	"SELECT id, name +" +
+						"FROM ztl_event_category e " +
+						"WHERE e.id_language = "+settings.id_lang+" " +
+						"GROUP BY id, name "+
+						"ORDER BY name";
 	var tmp_callback = "event_category_success";
 	generate_query(tmp_query, tmp_callback);
 }
@@ -213,7 +265,13 @@ function load_event(id, save_history) {
 		add_to_history(history_string);
 	}
 
-	var tmp_query 	 = "SELECT  e.id, et.title, et.intro, et.description, p.coord_x, p.coord_y, e.image FROM ztl_event e LEFT JOIN ztl_event_translation et ON et.id_event = e.id LEFT JOIN  ztl_event_timetable ett ON ett.id_event = e.id LEFT JOIN ztl_poi p ON p.id = ett.venue_id WHERE e.id = "+id+" AND et.id_language = "+settings.id_lang+" GROUP BY e.id"; 
+	var tmp_query 	 = "SELECT  e.id, et.title, et.intro, et.description, p.coord_x, p.coord_y, e.image " +
+						"FROM ztl_event e " +
+						"LEFT JOIN ztl_event_translation et ON et.id_event = e.id " +
+						"LEFT JOIN  ztl_event_timetable ett ON ett.id_event = e.id " +
+						"LEFT JOIN ztl_poi p ON p.id = ett.venue_id " +
+						"WHERE e.id = "+id+" AND et.id_language = "+settings.id_lang+" " +
+						"GROUP BY e.id"; 
     var tmp_callback = "load_event_success";
     generate_query(tmp_query, tmp_callback);
 }
@@ -227,7 +285,10 @@ function load_tour(id, save_history) {
 	}
 
 
-	var tmp_query = "SELECT t.id, tt.title, tt.short_description, tt.long_description FROM ztl_tour t LEFT JOIN ztl_tour_translation tt ON tt.id_tour = t.id WHERE t.id = "+id;
+	var tmp_query = "SELECT t.id, tt.title, tt.short_description, tt.long_description " +
+					"FROM ztl_tour t " +
+					"LEFT JOIN ztl_tour_translation tt ON tt.id_tour = t.id " +
+					"WHERE t.id = "+id;
 
 	var tmp_callback = "load_tour_success";
     generate_query(tmp_query, tmp_callback);
@@ -242,7 +303,10 @@ function load_single_info(id, save_history) {
 	}
 
 	//ko bo osbstajala tabela se popravi query
-	var tmp_query = "SELECT i.* FROM ztl_info i WHERE i.id_language = "+settings.id_lang+" AND i.id = "+id+" AND i.record_status = 1 GROUP BY i.id";
+	var tmp_query = "SELECT i.* " +
+				"FROM ztl_info i " +
+				"WHERE i.id_language = "+settings.id_lang+" AND i.id = "+id+" AND i.record_status = 1 " +
+				"GROUP BY i.id";
 	var tmp_callback = "load_info_success";
     generate_query(tmp_query, tmp_callback);
 }
@@ -290,7 +354,7 @@ function save_mobile_settings() {
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
     	fileSystem.root.getFile("Android/data/com.innovatif.ztl/settings.json", {create: true, exclusive: false}, gotFileEntry, fail);
     }, null);
-    load_moblie_settings();
+    //load_moblie_settings();
 }
 
 function load_moblie_settings() {
@@ -343,7 +407,9 @@ function fail(error) {
 }
 
 function check_updates() {
-	var tmp_query    = "SELECT last_update AS lu FROM ztl_updates WHERE id_language = "+settings.id_lang;
+	var tmp_query    = "SELECT last_update AS lu " +
+						"FROM ztl_updates " +
+						"WHERE id_language = "+settings.id_lang;
     var tmp_callback = "last_update_success";
     generate_query(tmp_query, tmp_callback);
 }
