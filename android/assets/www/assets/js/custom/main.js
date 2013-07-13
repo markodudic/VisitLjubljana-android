@@ -56,31 +56,8 @@ function on_device_ready() {
 	load_settings();
 	init_gps();
 
-	/*var hash = window.location.hash;
-	hash = hash.replace(/^.*?#/,'');
-	var hash_split = hash.split(";");
-	
-	if (hash == "go_back") {
-		backstep 	= 1;
-		skip_update = 1;
-	} else if (hash == "voice_guide") {
-		$.getScript('./assets/js/custom/trips.js', function () {
-	        skip_update = 1;
-	        //load_voice_guide(1);
-			voice_guide = 1; 
-			load_page(template_lang+'trips.html', 'trips', trips[4], 'fade', false, 4);
-	    });	
-	} else 	if (hash == "lang_settings") {
-		swipe 			 = 0;
-		settings		 = new Object();
-		skip_update 	 = 1;
-		menu_select_lang = 1;
-	} else if (hash == "content") { 
-		skip_update = 1;
-	} else {*/
-		navigator.splashscreen.show();
-		skip_update = 0;
-	//}
+	navigator.splashscreen.show();
+	skip_update = 0;
 
 	//za test
 	//prvic napolnimo po izbiri jezika
@@ -457,7 +434,11 @@ function load_page(template, div, data, transition, reverse, id_group) {
 			window.scrollTo(0,0);
 			
 			if (swipe == 1) {
-				if (div != "main_menu") {
+//				if (div != "main_menu") {
+				if ((div == "trip") || 
+						(div == "event") || 
+						(div == "info") || 
+						(div == "tour")) {
 					var ts_div = "";
 					if (div == 'trip') {
 						ts_div 		= div+"_"+data['id'];

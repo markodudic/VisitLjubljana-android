@@ -143,8 +143,8 @@ function load_events(save_history) {
 						"LEFT JOIN  ztl_event_timetable ett ON ett.id_event = e.id " +
 						"LEFT JOIN ztl_poi p ON p.id = ett.venue_id " +
 						"WHERE et.id_language = "+settings.id_lang+" AND e.record_status = 1 " +
-						"GROUP BY e.id ORDER BY e.id "+
-						"ORDER BY ett.date_first";
+						"GROUP BY e.id ORDER BY e.id ";//+
+						//"ORDER BY ett.date_first";
 	var tmp_callback = "events_success";
     generate_query(tmp_query, tmp_callback); 
 }
@@ -248,7 +248,7 @@ function load_voice_guide(save_history) {
 
 
 function load_event_type() {
-	var tmp_query 	 = 	"SELECT id, name +" +
+	var tmp_query 	 = 	"SELECT id, name " +
 						"FROM ztl_event_category e " +
 						"WHERE e.id_language = "+settings.id_lang+" " +
 						"GROUP BY id, name "+
