@@ -56,7 +56,7 @@ function on_device_ready() {
 	load_settings();
 	init_gps();
 
-	navigator.splashscreen.show();
+	//navigator.splashscreen.show();
 	skip_update = 0;
 
 	//za test
@@ -72,7 +72,37 @@ function on_device_ready() {
 		localStorage.setItem('first_run', 0);
 	}
 
+	//skopiram bazo za backup
+	if (develop==1) copyDB();
 }
+
+
+function copy_success(entry) {
+    console.log("New Path: " + entry.fullPath);
+}
+
+function copy_fail(error) {
+	console.log(error.code+":"+FileError.NOT_FOUND_ERR);
+}
+
+
+
+function copyDB() {
+    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
+		fileSystem.root.getFile("/data/data/com.innovatif.ztl/databases/Database.db", null, function(fileEntry) {
+		    
+		    var parent = "/mnt/sdcard/Android/data/com.innovatif.ztl";
+		    var parentName = parent.substring(parent.lastIndexOf('/')+1);
+		    var parentEntry = new DirectoryEntry(parentName, parent);
+		    
+			fileEntry.copyTo(parentEntry, "Database.db", copy_success, copy_fail);
+		}, copy_fail);
+	} , null);  
+
+    
+}
+ 
+
 
 function reset_cache() {
 	show_spinner();
@@ -253,7 +283,7 @@ function load_page(template, div, data, transition, reverse, id_group) {
 		type:"GET",
 		url:template_root+template,
 		cache:false,
-		async:false,
+		async:true,
 		dataType: 'html',
 		success:function(temp){
 			var menu_icon 	 = 3;
@@ -422,12 +452,10 @@ function load_page(template, div, data, transition, reverse, id_group) {
 			html = html.replace('[[[ztl_footer]]]', footer);
 			
 			if ((div == 'events') || (div == 'event') || (div == 'filtered_events')) {
-				var html_event_filter = Mustache.to_html(event_filter, data);
-				html = html.replace('[[[event_filter]]]', html_event_filter);
+				html = html.replace('[[[event_filter]]]', Mustache.to_html(event_filter, data));
 			}
 			if (div == 'ztl_map') {
-				var html_map_settings = Mustache.to_html(map_settings, data);
-				html = html.replace('[[[map_settings]]]', html_map_settings);
+				html = html.replace('[[[map_settings]]]', Mustache.to_html(map_settings, data));
 			}
 
 			$('body').html(html);

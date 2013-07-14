@@ -19,9 +19,16 @@
 
 package com.innovatif.ztl;
 
-import android.os.Bundle;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
-import org.apache.cordova.*;
+import org.apache.cordova.Config;
+import org.apache.cordova.DroidGap;
+
+import android.os.Bundle;
 
 import com.google.analytics.tracking.android.EasyTracker;
 
@@ -32,7 +39,7 @@ public class ztl extends DroidGap
     {
         super.onCreate(savedInstanceState);
         super.setIntegerProperty("splashscreen", R.drawable.welcome);
-        super.loadUrl(Config.getStartUrl(), 2000);
+        super.loadUrl(Config.getStartUrl(), 3000);
         
         appView.setVerticalScrollBarEnabled(false);
         appView.setHorizontalScrollBarEnabled(false);
@@ -40,5 +47,47 @@ public class ztl extends DroidGap
         //analytics
         EasyTracker.getInstance().setContext(this);
         EasyTracker.getInstance().activityStart(this); // Add this method.
+        
+        //skopiram predpripravljeno bazo
+        try
+        {
+        	String pName = this.getClass().getPackage().getName();
+        	String dName = "/data/data/"+pName+"/databases/";
+        	String dbName = "Database.db";
+        	
+        	File f = new File(dName+dbName);
+        	System.out.println("DATABASE EXISTS="+f.exists());
+        	if(!f.exists()) {
+        		System.out.println("COPY DATABASE="+dName+dbName);
+            	copy(dbName,dName);
+        	}
+	    }
+	        catch (IOException e)
+	    {
+	     e.printStackTrace();
+	    }
     }
+    
+
+
+
+    //Copy Paste this function in the class where you used above part
+	void copy(String file, String folder) throws IOException 
+	{
+	
+	 File CheckDirectory;
+	 CheckDirectory = new File(folder);
+	 if (!CheckDirectory.exists())
+	 { 
+		 CheckDirectory.mkdir();
+	 }
+	 	InputStream in = getApplicationContext().getAssets().open(file);
+	    OutputStream out = new FileOutputStream(folder+file);
+	
+	    // Transfer bytes from in to out
+	    byte[] buf = new byte[1024];
+	    int len; while ((len = in.read(buf)) > 0) out.write(buf, 0, len);
+	    in.close(); out.close();
+	    
+	}    
 }
