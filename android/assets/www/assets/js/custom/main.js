@@ -49,6 +49,8 @@ var selected_group = -1;
 document.addEventListener("deviceready", on_device_ready, false);
 
 function on_device_ready() {
+	reinit();
+	
 	db 		= window.sqlitePlugin.openDatabase("Database", "1.0", "ztl", -1);
 	
 	pOld 	= new Proj4js.Point(0,0);

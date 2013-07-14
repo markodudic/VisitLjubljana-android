@@ -1,5 +1,9 @@
 var server_url = 'http://www.visitljubljana.com/';
 var develop = 0;
+//settings
+var SETTINGS_FILE           = "settings.js"
+var SETTINGS_FOLDER     	= "Android/data/com.innovatif.ztl/";
+var ASSETS_FOLDER     		= "/android_asset/www/";
 
 //grupe za cache
 var EVENT_GROUP 			= 0;
@@ -38,8 +42,8 @@ var media		 = "";
 var my_media 	 = null;
 var media_timer  = null;
 var media_length = 0;
-var file 		 = "/android_asset/www/uploads/mp3/";
-var file_alt 	 = "Android/data/com.innovatif.ztl/audio/"; //lokacija na SD kartici
+var file 		 = ASSETS_FOLDER+"uploads/mp3/";
+var file_alt 	 = SETTINGS_FOLDER+"audio/"; //lokacija na SD kartici
 var file_uploads = "/uploads/images/"; //lokacija slik v instalaciji - tabela ztl_poi se updejta prvem zagonu
 
 //cssless css
@@ -93,3 +97,11 @@ var myLocationCorrectionY = -50;
 var console = {};
 console.log = function(){};
 */
+
+//iOS overrides
+function reinit() {
+	if (device.platform == "iOS") {
+		SETTINGS_FOLDER     	= "com.innovatif.ztl/";
+		ASSETS_FOLDER     		= "www/";
+	}
+}
