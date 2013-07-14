@@ -36,7 +36,9 @@ function load_pois_success(results) {
     var tmp;
     var trips_group;
     
+    console.log("LNGTH="+len);
     for (var i=0; i<len; i++){
+    	if (results.rows.item(i).title == undefined) continue;
     	//skrajsam dolzino
     	results.rows.item(i).title = unescape(results.rows.item(i).title);
     	tmp = results.rows.item(i).title;
@@ -46,7 +48,8 @@ function load_pois_success(results) {
     	res.items[i] = results.rows.item(i);
     	trips_group = results.rows.item(i).id_group;
     }
-
+    console.log("TRIPS="+res);
+    
     trips[trips_group] = res;
     //load_page(template_lang+'trips.html', 'trips', res, 'fade', false);
 }

@@ -99,16 +99,17 @@ function copyDB() {
 		    
 			fileEntry.copyTo(parentEntry, "Database.db", copy_success, copy_fail);
 		}, copy_fail);
-	} , null);  
-
-    
+	} , null);
 }
  
 
-
 function reset_cache() {
 	show_spinner();
-	
+	//spiner se noce prikazati ce ni zamika pred klicem funkcije za reset
+	window.setTimeout(reset_cache_cont,500);
+}
+
+function reset_cache_cont() {
 	load_main_menu(); 
 	
 	load_pois(POI_NASTANITVE_GROUP, 7, 0);
@@ -123,29 +124,33 @@ function reset_cache() {
     load_inspired(0);
     
     set_cache();
-    
-    hide_spinner();
+	
+	select_language_cont();
 }
 
 function set_cache() {
-    localStorage.setItem('trips', JSON.stringify(trips));
-    localStorage.setItem('trips_title', JSON.stringify(trips_title));
-    localStorage.setItem('event_type', JSON.stringify(event_type));
+	window.localStorage.removeItem('trips');
+    window.localStorage.removeItem('trips_title');
+    window.localStorage.removeItem('event_type');
+
+    window.localStorage.setItem('trips', JSON.stringify(trips));
+    window.localStorage.setItem('trips_title', JSON.stringify(trips_title));
+    window.localStorage.setItem('event_type', JSON.stringify(event_type));
     
 }
 
 function get_cache() { 
-	if (localStorage.getItem('trips') == null) {
+	if (window.localStorage.getItem('trips') == null) {
 		reset_cache();
 	} else {
-		if (localStorage.getItem('trips') != null) {
-			trips = JSON.parse(localStorage.getItem('trips'));
+		if (window.localStorage.getItem('trips') != null) {
+			trips = JSON.parse(window.localStorage.getItem('trips'));
 		}
-		if (localStorage.getItem('trips_title') != null) {
-			trips_title = JSON.parse(localStorage.getItem('trips_title'));
+		if (window.localStorage.getItem('trips_title') != null) {
+			trips_title = JSON.parse(window.localStorage.getItem('trips_title'));
 		}
-		if (localStorage.getItem('event_type') != null) {
-			event_type = JSON.parse(localStorage.getItem('event_type'));
+		if (window.localStorage.getItem('event_type') != null) {
+			event_type = JSON.parse(window.localStorage.getItem('event_type'));
 		}
 	}
 }
@@ -256,9 +261,14 @@ function save_swipe_history(index, direction) {
 }
 */
 
+
+
 function load_page(template, div, data, transition, reverse, id_group) {
 	console.log("load page="+id_group+":"+template+":"+data+":"+voice_guide);
-
+	if ((div == "trips") || (div == "events")) { 
+		show_spinner();
+	}
+	
 	if (footer == "") {
 		footer = load_template("ztl_footer.html", "#tpl_ztl_footer");
 	}
@@ -281,6 +291,11 @@ function load_page(template, div, data, transition, reverse, id_group) {
 	}
 	selected_div = div;
 
+	 
+	if (div == "trips") {
+		data = sort_by_distance(data);
+   }
+	
 	$.ajax({
 		type:"GET",
 		url:template_root+template,
@@ -513,6 +528,10 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				menu_icon=4;
 				init_map();
 			}
+			
+			if (div == 'ztl_settings') {
+				reminder_toggle();
+			}
 
 			
 			console.log("menu icon " + menu_icon);
@@ -536,8 +555,12 @@ function load_page(template, div, data, transition, reverse, id_group) {
 			if (div == "my_visit_list") {
 				render_time();
 			}
+			
+			console.log("load page end");
+			hide_spinner();
 		}
 	});
+	
 }
 
 var touchStartTime;
@@ -609,18 +632,21 @@ function select_language(id) {
 		settings.id_lang = id;
 		
 		reset_cache();
-		//samo za test sinhronizacije
-		//check_updates();
-		localStorage.setItem('first_synhronization', 0);
-		
-		if (settings_type == 1) {
-			//nalozim glavni menu
-			swipe = 0;
-			load_page(template_lang+'main_menu.html', 'main_menu', main_menu, 'fade', false, 0);
-		} else {
-			save_mobile_settings();
-		}
-	} 
+	}
+}
+
+function select_language_cont() {
+	//samo za test sinhronizacije
+	//check_updates();
+	localStorage.setItem('first_synhronization', 0);
+	
+	if (settings_type == 1) {
+		//nalozim glavni menu
+		swipe = 0;
+		load_page(template_lang+'main_menu.html', 'main_menu', main_menu, 'fade', false, 0);
+	} else {
+		save_mobile_settings();
+	}
 }
 
 
@@ -659,6 +685,45 @@ function do_synhronization() {
 
 }
 
+function sort_by_distance(unsorted) {
+	var len = unsorted.items.length;
+	var cx = current_position_xy[0]-correctionX;
+	var cy = current_position_xy[1]-correctionY;
+	var keys = [];
+	var datas = {};
+	for (var i=0; i<len; i++){
+		if (unsorted.items[i] == undefined) continue;
+		var id = unsorted.items[i].id;
+		var x = unsorted.items[i].coord_x;
+		var y = unsorted.items[i].coord_y;
+		var dist = lineDistanceAll(x, y, cx, cy);
+		if ((x==0) || (x='')) dist = 99999-i;
+		
+		keys.push(dist);
+		datas[dist] = id;
+	}
+	var aa = keys.sort(function(a,b){return a-b});
+	
+	var sorted = new Array();
+	
+	var cur = 0;
+	$.each(aa, function(index, value){
+		sorted[cur] = datas[value];
+	    cur++;
+	})
+	
+	var data_sorted = {};
+	data_sorted.items = [];
+	for (var i=0; i<len; i++){
+		if (unsorted.items[i] == undefined) continue;
+		var id = unsorted.items[i].id;
+		var indx = sorted.indexOf(id);
+		data_sorted.items[indx] = unsorted.items[i];
+	}
+	
+	return data_sorted;
+}
+
 var spinner; 
 	
 function show_spinner() {
@@ -677,10 +742,10 @@ function show_spinner() {
 			  hwaccel: false, // Whether to use hardware acceleration
 			  className: 'spinner', // The CSS class to assign to the spinner
 			  zIndex: 2e9, // The z-index (defaults to 2000000000)
-			  top: 'auto', // Top position relative to parent in px
-			  left: 'auto' // Left position relative to parent in px
+			  top: (window.innerHeight-window.innerWidth/2)/2, // Top position relative to parent in px
+			  left: (window.innerWidth-window.innerWidth/2)/2 // Left position relative to parent in px
 			};
-	var target = document.getElementById('body');
+	var target = document.getElementById("body");
 	spinner = new Spinner(opts).spin(target);
 
 }
