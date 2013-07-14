@@ -337,7 +337,7 @@ function load_map_coords(results, type) {
 function load_map_coord(results, id, type) {
     var len = results.items.length;
 
-    for (var i = 0; i<results.items.length; i++) {
+    for (var i = 0; i<len; i++) {
     	if (results.items[i].id == id) {
     		add_point_on_map(results.items[i], type);
     		return;

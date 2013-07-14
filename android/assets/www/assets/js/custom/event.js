@@ -70,7 +70,7 @@ function filter_events()  {
 						"LEFT JOIN ztl_event_event_category eec ON eec.id_event = e.id " +
 						"LEFT JOIN ztl_poi p ON p.id = ett.venue_id " +
 						"WHERE et.id_language = "+settings.id_lang+" AND eec.id_event_category = "+$('#event_type').val()+" AND e.record_status = 1 AND date_first >= "+event_date_from_sql+" AND date_last <= "+event_date_to_sql+" " +
-						"GROUP BY ett.id  " +
+						"GROUP BY e.id  " +
 						"ORDER BY ett.date_first";
     } else {
     	var tmp_query    = "SELECT e.id, et.title, ett.venue_id, ett.date, ett.date_first, p.coord_x, p.coord_y, ett.venue as poi_title, e.image " +

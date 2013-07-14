@@ -67,3 +67,12 @@ function lineDistance( p1x, p1y, p2x, p2y ) {
        else
                return num.toFixed(3);
 }
+
+function lineDistanceAll( p1x, p1y, p2x, p2y ) {
+    var xs = p2x - p1x;
+    xs = xs * xs;
+    var ys = p2y - p1y;
+    ys = ys * ys;
+    //return Math.round( (Math.floor(Math.sqrt( xs + ys )/1000)) * 10 ) / 10;
+    return Math.sqrt( xs + ys )/1000;
+}

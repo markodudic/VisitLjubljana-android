@@ -1,9 +1,7 @@
    			
 
 function load_current_settings() {
-	console.log("SETTINGS="+settings.reminder);
 	load_page(template_lang+'ztl_settings.html', 'ztl_settings', settings, 'fade', false);
-	reminder_toggle();
 }
 
 function choose_language() {
