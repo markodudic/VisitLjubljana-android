@@ -171,9 +171,9 @@ synronization_finished_translation[5]	= "prevod";
 var synhronization_button_translation = [];
 synhronization_button_translation[1]	= "PRENESI PODATKE";
 synhronization_button_translation[2]	= "TRANSFER DATA";
-synhronization_button_translation[3]	= "ĂśBERTRAGEN VON DATEN";
+synhronization_button_translation[3]	= "ÜBERTRAGEN VON DATEN";
 synhronization_button_translation[4]	= "TRASFERIRE I DATI";
-synhronization_button_translation[5]	= "TRANSFĂ‰RER DES DONNĂ‰ES";
+synhronization_button_translation[5]	= "TRANSFÉRER DES DONNÉES";
 
 var about_version_translation = [];
 about_version_translation[1]	= "VERZIJA";

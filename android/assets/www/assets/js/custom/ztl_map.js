@@ -79,22 +79,7 @@ var init = function (onSelectFeatureFunction) {
     });
     
     $("#my_location").on('click', function(){
-        source = new Proj4js.Proj('EPSG:31469');
-        dest = new Proj4js.Proj('EPSG:900913');
-        
-        $(".txt_popup").hide();
-        
-        
-        //samo za test ce nisi v ljubljani
-        //current_position_xy[0] = 5462704;
-        //current_position_xy[1] = 5104170;
-        	
-        var center = transform(parseFloat(current_position_xy[0])+myLocationCorrectionX, parseFloat(current_position_xy[1])+myLocationCorrectionY);
-        var lonlat = new OpenLayers.LonLat(center.lon, center.lat); 
-        
-        sprintersLayer_my_pos.addFeatures(getFeaturesMyLocation(center.lon, center.lat));
-        
-        map.panTo(lonlat);
+    	showMyLocation(1);
     });
 
     var lonLat0 = new OpenLayers.LonLat(lon0, lat0).transform(new OpenLayers.Projection("EPSG:4326"), new OpenLayers.Projection("EPSG:900913"));
@@ -203,6 +188,7 @@ var init = function (onSelectFeatureFunction) {
     sprintersLayer.addFeatures(sprinters);
     sprintersLayer_my_pos.addFeatures(sprinters_my_pos);
 
+    showMyLocation(0);
     
     function getFeatures(type) {
         var features = new Array();
@@ -268,7 +254,26 @@ var init = function (onSelectFeatureFunction) {
        toltip_visible = 0;
     }
 
+
+    function showMyLocation(pan) {
+    	source = new Proj4js.Proj('EPSG:31469');
+    	dest = new Proj4js.Proj('EPSG:900913');
+    	
+    	$(".txt_popup").hide();
+    	
+    	//samo za test ce nisi v ljubljani
+    	//current_position_xy[0] = 5462704;
+    	//current_position_xy[1] = 5104170;
+    		
+    	var center = transform(parseFloat(current_position_xy[0])+myLocationCorrectionX, parseFloat(current_position_xy[1])+myLocationCorrectionY);
+    	var lonlat = new OpenLayers.LonLat(center.lon, center.lat); 
+    	sprintersLayer_my_pos.removeAllFeatures();
+    	sprintersLayer_my_pos.addFeatures(getFeaturesMyLocation(center.lon, center.lat));
+    	
+    	if (pan == 1) map.panTo(lonlat);
+    }
 };
+
 
 
 function transform (lon, lat) {
@@ -413,11 +418,16 @@ function show_system_maps() {
     source = new Proj4js.Proj('EPSG:31469');
     dest = new Proj4js.Proj('EPSG:4326');	//WGS84
 
+	var saddr = transform(parseFloat(current_position_xy[0])+myLocationCorrectionX, parseFloat(current_position_xy[1])+myLocationCorrectionY);
+	
     var x = parseFloat(poi_data.coord_x)+correctionX;
 	var y = parseFloat(poi_data.coord_y)+correctionY;   
-	var p = transform (x, y);
+	var daddr = transform (x, y);
 	
-	var  geo = 'geo:'+p.lat+','+p.lon+'?z=17';
+	//var geo = 'geo:'+p.lat+','+p.lon+'?z=17';
+	//var geo = "http://maps.google.com/maps?daddr="+daddr.lat+","+daddr.lon+"&z=17";
+	var geo = "https://maps.google.com/maps?saddr="+saddr.lat+","+saddr.lon+"&daddr="+daddr.lat+","+daddr.lon+"&sll="+daddr.lat+","+daddr.lon+"&mra=mift&z=17";
+	console.log(geo);
     window.open(geo,'_system');
 }
 

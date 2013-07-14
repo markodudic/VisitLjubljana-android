@@ -1,5 +1,5 @@
 var server_url = 'http://www.visitljubljana.com/';
-
+var develop = 0;
 
 //grupe za cache
 var EVENT_GROUP 			= 0;
