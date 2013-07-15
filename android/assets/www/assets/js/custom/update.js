@@ -209,7 +209,7 @@ function handle_poi_new(data) {
 			
 			var mds = "";
 			var mdv = "";
-			if (data[i].audioGuideLength == null) {
+			if (data[i].audioGuideLength != null) {
 				mdv = data[i].audioGuideLength;
 				var minutes = Math.floor(parseInt(mdv) / 60);
 				var seconds = parseInt(mdv) - minutes * 60;
