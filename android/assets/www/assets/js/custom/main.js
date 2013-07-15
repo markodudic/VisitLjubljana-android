@@ -74,6 +74,8 @@ function on_device_ready() {
 		localStorage.setItem('first_run', 0);
 	}
 
+	set_my_visit_notification();
+
 	//skopiram bazo za backup
 	if (develop==1) copyDB();
 }
