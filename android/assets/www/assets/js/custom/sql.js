@@ -49,6 +49,8 @@ function load_pois_success(results) {
     	if (results.rows.item(i).title == undefined) continue;
     	//skrajsam dolzino
     	results.rows.item(i).title = unescape(results.rows.item(i).title);
+     	results.rows.item(i).address = unescape(results.rows.item(i).address);
+     	results.rows.item(i).post = unescape(results.rows.item(i).post);
     	tmp = results.rows.item(i).title;
     	if (tmp.length > max_dolzina_title) {
     		results.rows.item(i).title = tmp.substring(0,max_dolzina_title)+"...";
