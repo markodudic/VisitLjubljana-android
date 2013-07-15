@@ -634,8 +634,7 @@ function decode(string) {
 
 //sql error
 function errorCB(err) {
-	console.log("err");
-	console.log(JSON.stringify(err));
+	console.log(">>> err "+JSON.stringify(err));
 }
 
 //ob prvem zagonu napolni bazo
@@ -919,21 +918,54 @@ function add_indexes() {
 	if (processed_files == 24) {
 		$.getScript('./assets/install_db/ztl_idx.js', function () {
 	        db.transaction(populateDB_ztl_tour_images, errorCB, function(tx) {
-	            console.log('99 >>>>>>>>>> ztl_idx');
-	            console.log("zagon --- postprocesiranje");
-
-	            //fix za slike
-	    		tx.executeSql('update ztl_poi set image = "'+file_uploads+'" || image where image != "";', [], function(tx, res) {});
-	    		
-	    		//fixi za audio
-	    		var sql =   'update ztl_poi_translation set sound=(select sound from ztl_poi where id_poi = ztl_poi.id), '+
-	    					'media_duration_string=(select media_duration_string from ztl_poi where id_poi = ztl_poi.id), '+
-	    					'media_duration_value=(select media_duration_value from ztl_poi where id_poi = ztl_poi.id) '+
-	    					'where ztl_poi_translation.id_language = 1 ';
-	    		tx.executeSql(sql, [], function(tx, res) {});
-	            
-	            console.log("zagon --- nalagam nastavitve po insertu");
-	            load_mobile();
+	        	db.transaction(function(tx) {
+	        		console.log('99 >>>>>>>>>> ztl_idx');
+	        		console.log("zagon +++ postprocesiranje");
+		        	tx.executeSql('select id, image from ztl_poi where image != "" ', [], function(tx, res) {
+		        		for (var i=0; i<res.rows.length; i++) {
+		        			var sqli = 'update ztl_poi set image = "'+file_uploads+res.rows.item(i).image+'" where id = '+res.rows.item(i).id;
+		        			console.log(sqli);
+		        			tx.executeSql(sqli, [], function(tx, res) {});
+		        		}
+		        	});
+	
+		        	tx.executeSql('select id, sound, media_duration_string, media_duration_value from ztl_poi where sound != "" ', [], function(tx, res) {
+		        		for (var i=0; i<res.rows.length; i++) {
+		        			var sqla = 'update ztl_poi_translation set sound = "'+res.rows.item(i).sound+'", media_duration_string = "'+res.rows.item(i).media_duration_string+'", media_duration_value = "'+res.rows.item(i).media_duration_value+'" where id_poi='+res.rows.item(i).id+' and id_language = 2';
+		        			console.log(sqla);
+		        			tx.executeSql(sqla, [], function(tx, res) {});
+		        		}
+		        	});
+		        	
+		            /*
+		            //fix za slike
+		            var sqli = 'update ztl_poi set image = "'+file_uploads+'" || image where image != ""';
+		    		tx.executeSql(sqli, [], function(tx, res) {
+		    			console.log("ztl_poi updated");
+		    		}, function(e) {
+		    			console.log("ztl_poi not updated");
+		    			console.log(JSON.stringify(e));
+		    			console.log(sqli);
+		    		});
+		    		
+		    		//fixi za audio
+		    		var sqla = 'update ztl_poi_translation set sound=(select sound from ztl_poi where id_poi = ztl_poi.id), '+
+		    					'media_duration_string=(select media_duration_string from ztl_poi where id_poi = ztl_poi.id), '+
+		    					'media_duration_value=(select media_duration_value from ztl_poi where id_poi = ztl_poi.id) '+
+		    					'where ztl_poi_translation.id_language = 2'; //za anglescino
+		    		
+		    		tx.executeSql(sqla, [], function(tx, res) {
+		    			console.log("ztl_poi_translation updated");
+		    		}, function(e) {
+		    			console.log("ztl_poi_translation not updated");
+		    			console.log(JSON.stringify(e));
+		    			console.log(sqla);
+		    		});
+		            */
+		        	
+		            console.log("zagon +++ nalagam nastavitve po insertu");
+		            load_mobile();
+	        	});
 	        });
 	    });
 	}	
