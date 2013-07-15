@@ -76,7 +76,6 @@ function load_pois(id, trips_menu_id, save_history) {
     }
 }
 
-//tmp 
 function load_trip_content(id, transition, reverse, save_history) {
 	if (save_history == 1)  {
 		var history_string = "fun--load_trip_content--"+id+"__"+transition+"__"+reverse;
@@ -111,15 +110,35 @@ function play_voice_guide(id) {
 		$(".footer").toggle();
 	
 		my_media = null;
-		console.log("SOUND="+sound_file);
 		load_media_file(sound_file);
+
+		current_position = 0;
+		tmp_pos 		 = 0;
+		canvas  		 = document.getElementById('myCanvas');
+		context			 = canvas.getContext('2d');
+		x 			 	 = canvas.width / 2;
+		y 			 	 = canvas.height / 2;
+		endPercent   	 = media_length+1;
+		curPerc      	 = 0;
+		media_koef 	 	 = media_length/100;
+		current 	 	 = 0;
+
+		context.lineWidth   = 15;
+		context.strokeStyle = '#ccc';
+
+		context.beginPath();
+		context.arc(x, y, radius, -(quart), ((circ) * 100) - quart, false);
+		context.stroke();
+
+		context.lineWidth   = 15;
+		context.strokeStyle = '#ed1b24';
 	}
 }
 
 function  load_media_file(file) {
 	my_media = new Media(file,
         function() {
-            console.log("Audio Success");
+            console.log("Audio Success *************************************");
         },
             function(err) {
                 console.log(err);
@@ -131,7 +150,6 @@ function  load_media_file(file) {
 function set_media_state(value) {
 	media_opened = value;
 }
-//tmp -- end
 
 function load_events(save_history) {
 	swipe_dir 	   = "";
