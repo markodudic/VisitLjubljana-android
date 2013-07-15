@@ -1,33 +1,19 @@
 var current_position = 0;
 var tmp_pos 		 = 0;
+var radius 			 = 100;
+var curPerc     	 = 0;
+var counterClockwise = false;
+var circ  			 = Math.PI * 2;
+var quart 			 = Math.PI / 2;
+var current 		 = 0;
 
 var media_timer;
-var canvas      = document.getElementById('myCanvas');
-var context     = canvas.getContext('2d');
-
-var x = canvas.width / 2;
-var y = canvas.height / 2;
-var radius      = 100;
-//var endPercent  = 100;
-var endPercent  = media_length+1;
-var curPerc     = 0;
-var counterClockwise = false;
-var circ  = Math.PI * 2;
-var quart = Math.PI / 2;
-
-context.lineWidth   = 15;
-context.strokeStyle = '#ccc';
-
-//context.clearRect(0, 0, canvas.width, canvas.height);
-context.beginPath();
-context.arc(x, y, radius, -(quart), ((circ) * 100) - quart, false);
-context.stroke();
-
-context.lineWidth   = 15;
-context.strokeStyle = '#ed1b24';
-
-var media_koef 	= media_length/100;
-var current 	= 0;
+var canvas;
+var context;
+var x;
+var y;
+var endPercent;
+var media_koef;
 
 function animate() {
   context.beginPath();
