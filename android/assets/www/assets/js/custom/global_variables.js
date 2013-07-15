@@ -69,7 +69,8 @@ var tmp_history = ["fun--load_main_screen--empty"];
 var max_dolzina_naslov = 25;
 var max_dolzina_poi_title = 30;
 var max_dolzina_title = 45;
-var max_dolzina_short_desc = 80;
+var max_dolzina_my_visit_tour_title = 25;
+var max_dolzina_short_desc = 60;
 
 //bbox ljubljane
 var lon0 = 14.434;
