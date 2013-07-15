@@ -40,8 +40,6 @@ function load_guide_buy() {
 
 //klik na gumb
 function buy_guide() {
-	//recimo da smo kupili, za vsak jezik svoj sku
-	
 	//sinhronizacija v update.js:644
 	update_audio();
 	
