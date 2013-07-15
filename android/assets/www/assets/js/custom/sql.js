@@ -515,7 +515,7 @@ function my_visit_success(results) {
     if (res.has_evt == 1) {
     	evt_wi = evt_wi+"0";
 
-        var tmp_query    = "SELECT  e.id, et.title, zmi.start, zmi.end FROM ztl_event e LEFT JOIN ztl_event_translation et ON et.id_event = e.id LEFT JOIN ztl_my_visit zmi ON (zmi.id = e.id AND zmi.ztl_group = "+EVENT_GROUP+") WHERE e.id IN ("+evt_wi+") AND et.id_language = "+settings.id_lang; 
+        var tmp_query    = "SELECT  e.id, et.title, zmi.start, zmi.end FROM ztl_event e LEFT JOIN ztl_event_translation et ON et.id_event = e.id LEFT JOIN ztl_my_visit zmi ON (zmi.id = e.id AND zmi.ztl_group = "+EVENT_GROUP+") WHERE e.id IN ("+evt_wi+") AND  e.record_status = 1 AND et.id_language = "+settings.id_lang; 
 
     	db.transaction(function(tx) {
 			tx.executeSql(tmp_query, [], function(tx, res_evt) {
@@ -556,7 +556,7 @@ function my_visit_success(results) {
     var tmp_info_text = "";
     if (res.has_tour == 1) {
         tour_wi = tour_wi+"0";
-        var tmp_query = "SELECT t.id, tt.title, tt.short_description, zmi.start, zmi.end FROM ztl_tour t LEFT JOIN ztl_tour_translation tt ON tt.id_tour = t.id  LEFT JOIN ztl_my_visit zmi ON (zmi.id = t.id AND zmi.ztl_group = "+TOUR_GROUP+") WHERE t.id IN ("+tour_wi+")";
+        var tmp_query = "SELECT t.id, tt.title, tt.short_description, zmi.start, zmi.end FROM ztl_tour t LEFT JOIN ztl_tour_translation tt ON tt.id_tour = t.id  LEFT JOIN ztl_my_visit zmi ON (zmi.id = t.id AND zmi.ztl_group = "+TOUR_GROUP+") WHERE t.id IN ("+tour_wi+") AND t.record_status = 1";
 
         db.transaction(function(tx) {
             tx.executeSql(tmp_query, [], function(tx, res_tour) {
