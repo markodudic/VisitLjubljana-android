@@ -753,7 +753,7 @@ function readFilesAudio() {
 	for (var i = 0; i < trips[VOICE_GROUP]['items'].length; i++) {
 		var filename  = trips[VOICE_GROUP]['items'][i]['sound'];
 		var filearray = filename.split("_");
-    	var url       = server_url+"file/"+filearray[0]+"/"+filearray[1]+filearray[2];
+    	var url       = server_url+"file/"+filearray[0]+"/"+filearray[1]+"_"+filearray[2];
 
     	//lokalno ime
 		var dlPath = DATADIR_audio.fullPath+"/"+filename;
