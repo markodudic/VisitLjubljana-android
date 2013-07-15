@@ -15,6 +15,7 @@ var wgs;
 var current_position_xy;
 
 function load_show_map(id, type, group) {
+	console.log(id+":"+type+":"+group);
 	curr_id = id;
 	curr_type = type;
 	curr_group = group;
@@ -192,6 +193,7 @@ var init = function (onSelectFeatureFunction) {
     
     function getFeatures(type) {
         var features = new Array();
+        console.log("points="+points.length);
         for (var i=0;i<points.length;i++) {
            if (points[i][2] == type) {
                 //na koordinatePOI-ja iz baze se doda 5.000.000 zato da bo v projekciji GK zona 5 oz. EPSG:31469    
@@ -336,18 +338,31 @@ function load_map_coords(results, type) {
 
 function load_map_coord(results, id, type) {
     var len = results.items.length;
-
+    console.log("LEN="+len+":"+id);
     for (var i = 0; i<len; i++) {
-    	if (results.items[i].id == id) {
+    	console.log("COMP="+i+":"+results.items[i].id+":"+id);
+        if (results.items[i].id == id) {
     		add_point_on_map(results.items[i], type);
     		return;
     	}
     }
+    //Za evente preverim se featured
+    if (curr_type == EVENT_GROUP) {
+    	if (trips[EVENT_GROUP].top_events_0.id == id) {
+    		add_point_on_map(trips[EVENT_GROUP].top_events_0, type);
+    	} else if (trips[EVENT_GROUP].top_events_1.id == id) {
+    		add_point_on_map(trips[EVENT_GROUP].top_events_1, type);
+    	} else if (trips[EVENT_GROUP].top_events_2.id == id) {
+    		add_point_on_map(trips[EVENT_GROUP].top_events_2, type);
+    	}
+    }
+
 }
 
 
 function add_point_on_map (row, type) {
-	if (row != undefined) {
+	console.log("row="+row+":"+type);
+    if (row != undefined) {
 		if ((row.coord_x > x0) && (row.coord_x < x1) && (row.coord_y > y0) && (row.coord_y < y1)) {
 			if (type != undefined) {
 				points.push(new Array(row.coord_x, row.coord_y, 0, row.id, type));			

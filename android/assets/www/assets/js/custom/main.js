@@ -759,8 +759,8 @@ function show_spinner() {
 			  hwaccel: false, // Whether to use hardware acceleration
 			  className: 'spinner', // The CSS class to assign to the spinner
 			  zIndex: 2e9, // The z-index (defaults to 2000000000)
-			  top: (window.innerHeight-window.innerWidth/4)/2, // Top position relative to parent in px
-			  left: (window.innerWidth-window.innerWidth/4)/2 // Left position relative to parent in px
+			  top: (window.innerHeight-window.innerWidth/3)/2, // Top position relative to parent in px
+			  left: (window.innerWidth-window.innerWidth/3)/2 // Left position relative to parent in px
 			};
 	var target = document.getElementById("body");
 	spinner = new Spinner(opts).spin(target);
