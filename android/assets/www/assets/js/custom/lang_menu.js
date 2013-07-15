@@ -460,6 +460,12 @@ ok_translation[3] = "V redu prevod";
 ok_translation[4] = "V redu prevod";
 ok_translation[5] = "V redu prevod";
 
+var notification_translation = [];
+notification_translation[1] = "Ljubljana and more: Dogodek se bo kmalu zacel ... preveri MyVisit";
+notification_translation[2] = "Ljubljana and more: Dogodek se bo kmalu zacel ... preveri MyVisit";
+notification_translation[3] = "Ljubljana and more: Dogodek se bo kmalu zacel ... preveri MyVisit";
+notification_translation[4] = "Ljubljana and more: Dogodek se bo kmalu zacel ... preveri MyVisit";
+notification_translation[5] = "Ljubljana and more: Dogodek se bo kmalu zacel ... preveri MyVisit";
 
 var my_visit_explain_translation = [];
 my_visit_explain_translation[1] = "S prijavo boste prenesli načrt izleta, ki ste ga predhodno ustvarili na spletnem mestu www.visitljubljana.com, v mobilno aplikacijo.\n\nOpozorilo: V primeru, da ste načrt izleta ustvarili tudi znotraj mobilne aplikacije, bo ta izbrisan oziroma prepisan z načrtom izleta, ki ste ga predhodno ustvarili na spletnem mestu.";

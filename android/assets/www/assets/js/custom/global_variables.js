@@ -93,6 +93,9 @@ var correctionY = 5000450;
 var myLocationCorrectionX = -100;
 var myLocationCorrectionY = -50;
 
+//notification refresh time in seconds
+var notification_refresh_time = 60;
+
 //za deploy - ne izpisujejo se komentarji
 /*
 var console = {};

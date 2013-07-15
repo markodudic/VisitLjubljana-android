@@ -341,6 +341,44 @@ function load_single_info(id, save_history) {
     generate_query(tmp_query, tmp_callback);
 }
 
+function set_my_visit_notification() {
+	console.log("my_visit_notification --- ");
+
+	if (localStorage.getItem('reminder') == 1) {
+		var current_time = new Date();
+		current_time = parseInt(current_time.getTime() / 1000);
+
+		//time check
+		var from = parseInt(current_time+3600-(notification_refresh_time/2));
+		var to   = parseInt(current_time+3600+(notification_refresh_time/2));
+
+		console.log("my_visit_notification --- current " + current_time);
+		console.log("my_visit_notification --- from " + from);
+		console.log("my_visit_notification --- to " + to);
+
+		var tmp_query = "SELECT count(id) AS nr "+
+						"FROM ztl_my_visit zmv " +
+						"WHERE zmv.start <= '"+from+"' "+ 
+						"AND zmv.start >= '"+to+"' "+
+						"AND ztl_group = "+EVENT_GROUP;
+
+		console.log("my_visit_notification sql --- "+ tmp_query);
+
+		db.transaction(function(tx) {
+			tx.executeSql(tmp_query, [], function(tx, res) {
+				console.log("my_visit_notification sql --- res "+res.rows.item(0).nr);
+
+				if (res.rows.item(0).nr > 0) {
+					//navigator.notification.alert(notification_translation[settings.id_lang], load_my_visit());
+				}
+
+				//navigator.notification.alert(notification_translation[settings.id_lang], load_my_visit());
+			});
+		});
+
+	}	
+}
+
 function load_mobile() {
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem){
         fileSystem.root.getFile(SETTINGS_FOLDER+SETTINGS_FILE, { create: false }, fileExists, fileDoesNotExist);
