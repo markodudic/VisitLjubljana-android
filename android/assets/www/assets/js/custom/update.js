@@ -24,8 +24,14 @@ function is_updt_finished() {
 		updt_finished = 0;
 		updt_running  = 0;
 		spinner.stop();
-		alert(synronization_finished_translation[settings.id_lang]);
-		load_current_settings();		
+		
+		navigator.notification.confirm(
+			synronization_finished_translation[settings.id_lang],
+	        onConfirm,
+	        synchronization_translation[settings.id_lang],
+	        ok_translation[settings.id_lang]
+		);
+		//load_current_settings();		
 	}
 }
 

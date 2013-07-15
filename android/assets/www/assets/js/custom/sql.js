@@ -403,8 +403,13 @@ function last_update_success(results) {
 	if (last_update < today)  {
 		update_db();
 	} else {
-		alert(synronization_finished_translation[settings.id_lang]);
-		load_current_settings();
+		navigator.notification.confirm(
+			synronization_finished_translation[settings.id_lang],
+	        onConfirm,
+	        synchronization_translation[settings.id_lang],
+	        ok_translation[settings.id_lang]
+		);
+//		load_current_settings();
 	}
 }
 

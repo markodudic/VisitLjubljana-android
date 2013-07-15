@@ -447,3 +447,17 @@ prikazi_button_translation[3] = "STANDORTE ANZEIGEN";
 prikazi_button_translation[4] = "MOSTRA UBICAZIONI";
 prikazi_button_translation[5] = "AFFICHER L'EMPLACEMENTS";
 
+
+var confirm_translation = [];
+confirm_translation[1] = "Prekliči, V redu";
+confirm_translation[2] = "Cancel, Ok";
+confirm_translation[3] = "Prevod";
+confirm_translation[4] = "Prevod";
+confirm_translation[5] = "Prevod";
+
+var ok_translation = [];
+ok_translation[1] = "V redu";
+ok_translation[2] = "Ok";
+ok_translation[3] = "Prevod";
+ok_translation[4] = "Prevod";
+ok_translation[5] = "Prevod";
