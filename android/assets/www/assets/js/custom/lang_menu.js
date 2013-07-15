@@ -321,14 +321,14 @@ my_visit_download_translation[1] = "Prenesi MyVisit s spletnega mesta";
 my_visit_download_translation[2] = "Import MyVisit from the website";
 my_visit_download_translation[3] = "Importieren MyVisit von der Website";
 my_visit_download_translation[4] = "Prenesi MyVisit s spletnega mesta prevod";
-my_visit_download_translation[5] = "Prenesi MyVisit s spletnega mesta prevod";
+my_visit_download_translation[5] = "Importer MyVisit depuis le site web";
 
 var user_name_translation = [];
 user_name_translation[1] = "Uporabniško ime";
 user_name_translation[2] = "User name";
 user_name_translation[3] = "Benutzername";
 user_name_translation[4] = "Uporabniško ime prevod";
-user_name_translation[5] = "Uporabniško ime prevod";
+user_name_translation[5] = "Nom d'utilisateur";
 
 var password_translation = [];
 password_translation[1] = "Geslo";
@@ -340,23 +340,23 @@ password_translation[5] = "Geslo prevod";
 var login_translation = [];
 login_translation[1] = "Prijava";
 login_translation[2] = "Log in";
-login_translation[3] = "Speichern";
+login_translation[3] = "Anmeldung";
 login_translation[4] = "Prijava prevod";
-login_translation[5] = "Prijava prevod";
+login_translation[5] = "Se connecter";
 
 var my_visit_tours_translation = [];
 my_visit_tours_translation[1] = "Poiščite navdih: vnaprej pripravljeni načrti izletov.";
 my_visit_tours_translation[2] = "Get inspired: Add one or more prepared lists to MyVisit.";
-my_visit_tours_translation[3] = "Poiščite navdih: vnaprej pripravljeni načrti izletov. prevod";
+my_visit_tours_translation[3] = "Lassen Sie sich inspirieren: vorbereitete Ausflugspläne als Vorschlag!";
 my_visit_tours_translation[4] = "Poiščite navdih: vnaprej pripravljeni načrti izletov. prevod";
-my_visit_tours_translation[5] = "Poiščite navdih: vnaprej pripravljeni načrti izletov. prevod";
+my_visit_tours_translation[5] = "Laissez-vous inspirer : Ajoutez à MyVisit une ou plusieurs listes préparées.";
 
 var my_visit_poi_translation = [];
 my_visit_poi_translation[1] = "Brskajte po vsebinah in dodajajte oglede, izlete, nastanitve, prireditve, znamenitosti itd.";
 my_visit_poi_translation[2] = "Browse the city tours, excursions, accommodation, events, sights etc. and add them to MyVisit.";
-my_visit_poi_translation[3] = "Brskajte po vsebinah in dodajajte oglede, izlete, nastanitve, prireditve, znamenitosti itd. prevod";
+my_visit_poi_translation[3] = "Browsen Sie durch die Inhalte und fügen Sie Besichtigungen, Ausflüge, Übernachtungen, Veranstaltungen, Sehenswürdigkeiten usw. hinzu!";
 my_visit_poi_translation[4] = "Brskajte po vsebinah in dodajajte oglede, izlete, nastanitve, prireditve, znamenitosti itd. prevod";
-my_visit_poi_translation[5] = "Brskajte po vsebinah in dodajajte oglede, izlete, nastanitve, prireditve, znamenitosti itd. prevod";
+my_visit_poi_translation[5] = "Parcourez les tours de la ville, les excursions, les hébergements, les événements, les curiosités, etc., et les ajouter à MyVisit.";
 
 var download_translation = [];
 download_translation[1] = "Prenesi";
@@ -459,3 +459,11 @@ ok_translation[2] = "Ok";
 ok_translation[3] = "V redu prevod";
 ok_translation[4] = "V redu prevod";
 ok_translation[5] = "V redu prevod";
+
+
+var my_visit_explain_translation = [];
+my_visit_explain_translation[1] = "S prijavo boste prenesli načrt izleta, ki ste ga predhodno ustvarili na spletnem mestu www.visitljubljana.com, v mobilno aplikacijo.\n\nOpozorilo: V primeru, da ste načrt izleta ustvarili tudi znotraj mobilne aplikacije, bo ta izbrisan oziroma prepisan z načrtom izleta, ki ste ga predhodno ustvarili na spletnem mestu.";
+my_visit_explain_translation[2] = "By logging in you will import the trip you have previously created at the www.visitljubljana.com website into the mobile app.\n\nWarning: In case you have already created a trip within the mobile app, it will be replaced by the trip you have previously created at the website.";
+my_visit_explain_translation[3] = "Mit der Anmeldung übertragen Sie Ihren Ausflugsplan, den Sie zuvor auf der Website www.visitljubljana.com zusammengestellt haben, In Ihre mobile App.\n\nHinweis: Falls Sie den Ausflugsplan auch innerhalb Ihrer mobilen App zusammengestellt haben, wird dieser gelöscht bzw. mit dem Ausflugsplan, den Sie zuvor auf der Website zusammengestellt haben, überschrieben.";
+my_visit_explain_translation[4] = "V redu prevod";
+my_visit_explain_translation[5] = "En vous connectant, vous importerez dans l'application mobile l'excursion préalablement projetée par vous sur le site web www.visitljubljana.com.\n\nAvertissement : Si vous avez également projeté l'excursion dans l'application mobile, elle sera remplacée par celle préalablement projetée par vous sur le site web.";

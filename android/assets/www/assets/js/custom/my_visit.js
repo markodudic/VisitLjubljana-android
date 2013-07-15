@@ -301,3 +301,12 @@ function filter_visits () {
 
 
 }
+
+function  my_visit_explain(){
+	navigator.notification.confirm(
+		my_visit_explain_translation[settings.id_lang],
+        null,
+        my_visit_download_translation[settings.id_lang],
+        ok_translation[settings.id_lang]
+	);
+}
