@@ -67,7 +67,7 @@ function on_device_ready() {
 		get_cache();
 	}
 
-	//document.addEventListener("backbutton", go_back, true);
+	document.addEventListener("backbutton", go_back, true);
 
 	if (localStorage.getItem(localStorage.key('first_run')) == null) {
 		localStorage.setItem('history', JSON.stringify(tmp_history));
@@ -154,8 +154,6 @@ function get_cache() {
 		}
 	}
 }
-
-
 
 
 function load_main_screen(save_history) {

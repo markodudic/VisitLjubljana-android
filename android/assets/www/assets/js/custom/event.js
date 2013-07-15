@@ -21,8 +21,6 @@ function event_filter_toggle() {
 	}
 }
 
-
-
 function filter_events()  {
 	var history_string = "fun--load_events--empty";
 	add_to_history(history_string);

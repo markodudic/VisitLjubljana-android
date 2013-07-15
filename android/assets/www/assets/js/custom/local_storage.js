@@ -17,25 +17,11 @@ function local_storage_load() {
 
 function go_back() {
 	var history = JSON.parse(localStorage.getItem('history'));
-	
-	console.log("localStorage --- " + JSON.stringify(history));
 
-	/*
-	media_opened = 0;
-	
 	if (media_opened == 1) {
-		$('body').html("");
-
-		current_position = 0;
-		tmp_pos 		 = 0;
-
-		current = 0;
-		curPerc = 0;
-
-		my_media.release();
-		load_trip_content(trip_id, 'fade', true, 0);
+		media_control_stop();
 		media_opened = 0;
-	} else {*/
+	} else {
 		if (history.length > 1) {
 			view_main_menu	= 0;
 			var history = local_storage_load();
@@ -114,5 +100,5 @@ function go_back() {
 			}
 			load_main_screen(0);
 		}
-	//}
+	}
 }
