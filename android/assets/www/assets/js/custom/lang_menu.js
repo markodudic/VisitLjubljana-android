@@ -113,8 +113,8 @@ var reminder_translation = [];
 reminder_translation[1]	= "Opomnik";
 reminder_translation[2]	= "Reminder";
 reminder_translation[3]	= "Mahnung";
-reminder_translation[4]	= "prevod";
-reminder_translation[5]	= "prevod";
+reminder_translation[4]	= "Opomnik prevod";
+reminder_translation[5]	= "Opomnik prevod";
 
 
 var set_language_translation = [];
@@ -140,17 +140,17 @@ about_translation[5]	= "Plus d'infos sur l'application";
 
 var synchronization_translation = [];
 synchronization_translation[1]	= "Sinhronizacija";
-synchronization_translation[2]	= "prevod";
-synchronization_translation[3]	= "prevod";
-synchronization_translation[4]	= "prevod";
-synchronization_translation[5]	= "prevod";
+synchronization_translation[2]	= "Sinhronizacija prevod";
+synchronization_translation[3]	= "Sinhronizacija prevod";
+synchronization_translation[4]	= "Sinhronizacija prevod";
+synchronization_translation[5]	= "Sinhronizacija prevod";
 
 var synhronization_title_translation = [];
 synhronization_title_translation[1]	= "PRENOS PODATKOV";
-synhronization_title_translation[2]	= "prevod";
-synhronization_title_translation[3]	= "prevod";
-synhronization_title_translation[4]	= "prevod";
-synhronization_title_translation[5]	= "prevod";
+synhronization_title_translation[2]	= "PRENOS PODATKOV prevod";
+synhronization_title_translation[3]	= "PRENOS PODATKOV prevod";
+synhronization_title_translation[4]	= "PRENOS PODATKOV prevod";
+synhronization_title_translation[5]	= "PRENOS PODATKOV prevod";
 
 
 var synhronization_desc_translation = [];
@@ -162,10 +162,10 @@ synhronization_desc_translation[5]	= "Pour voir ce contenu, vous avez besoin d'u
 
 var synronization_finished_translation = [];
 synronization_finished_translation[1]	= "Sinhronizacija končana";
-synronization_finished_translation[2]	= "prevod";
-synronization_finished_translation[3]	= "prevod";
-synronization_finished_translation[4]	= "prevod";
-synronization_finished_translation[5]	= "prevod";
+synronization_finished_translation[2]	= "Sinhronizacija končana prevod";
+synronization_finished_translation[3]	= "Sinhronizacija končana prevod";
+synronization_finished_translation[4]	= "Sinhronizacija končana prevod";
+synronization_finished_translation[5]	= "Sinhronizacija končana prevod";
 
 
 var synhronization_button_translation = [];
@@ -222,10 +222,10 @@ guide_buy_locations_translation[5]	= "LISTE DES CURIOSITÉS";
 
 var guide_buy_button_translation = [];
 guide_buy_button_translation[1]	= "PRENESI VODIČ";
-guide_buy_button_translation[2]	= "prevod";
-guide_buy_button_translation[3]	= "prevod";
-guide_buy_button_translation[4]	= "prevod";
-guide_buy_button_translation[5]	= "prevod";
+guide_buy_button_translation[2]	= "PRENESI VODIČ prevod";
+guide_buy_button_translation[3]	= "PRENESI VODIČ prevod";
+guide_buy_button_translation[4]	= "PRENESI VODIČ prevod";
+guide_buy_button_translation[5]	= "PRENESI VODIČ prevod";
 
 
 var guide_buy_desc_text_translation = [];
@@ -320,52 +320,50 @@ var my_visit_download_translation = [];
 my_visit_download_translation[1] = "Prenesi MyVisit s spletnega mesta";
 my_visit_download_translation[2] = "Import MyVisit from the website";
 my_visit_download_translation[3] = "Importieren MyVisit von der Website";
-my_visit_download_translation[4] = "prevod";
-my_visit_download_translation[5] = "prevod";
+my_visit_download_translation[4] = "Prenesi MyVisit s spletnega mesta prevod";
+my_visit_download_translation[5] = "Prenesi MyVisit s spletnega mesta prevod";
 
 var user_name_translation = [];
-//user_name_translation[1] = "Uporabniško ime";
-user_name_translation[1] = "markodudic@gmail.com";
+user_name_translation[1] = "Uporabniško ime";
 user_name_translation[2] = "User name";
 user_name_translation[3] = "Benutzername";
-user_name_translation[4] = "prevod";
-user_name_translation[5] = "prevod";
+user_name_translation[4] = "Uporabniško ime prevod";
+user_name_translation[5] = "Uporabniško ime prevod";
 
 var password_translation = [];
-//password_translation[1] = "Geslo";
-password_translation[1] = "okram";
+password_translation[1] = "Geslo";
 password_translation[2] = "Password";
 password_translation[3] = "Passwort";
-password_translation[4] = "Geslo";
-password_translation[5] = "Geslo";
+password_translation[4] = "Geslo prevod";
+password_translation[5] = "Geslo prevod";
 
 var login_translation = [];
 login_translation[1] = "Prijava";
 login_translation[2] = "Log in";
 login_translation[3] = "Speichern";
-login_translation[4] = "Prijava";
-login_translation[5] = "Prijava";
+login_translation[4] = "Prijava prevod";
+login_translation[5] = "Prijava prevod";
 
 var my_visit_tours_translation = [];
 my_visit_tours_translation[1] = "Poiščite navdih: vnaprej pripravljeni načrti izletov.";
 my_visit_tours_translation[2] = "Get inspired: Add one or more prepared lists to MyVisit.";
-my_visit_tours_translation[3] = "prevod";
-my_visit_tours_translation[4] = "prevod";
-my_visit_tours_translation[5] = "prevod";
+my_visit_tours_translation[3] = "Poiščite navdih: vnaprej pripravljeni načrti izletov. prevod";
+my_visit_tours_translation[4] = "Poiščite navdih: vnaprej pripravljeni načrti izletov. prevod";
+my_visit_tours_translation[5] = "Poiščite navdih: vnaprej pripravljeni načrti izletov. prevod";
 
 var my_visit_poi_translation = [];
 my_visit_poi_translation[1] = "Brskajte po vsebinah in dodajajte oglede, izlete, nastanitve, prireditve, znamenitosti itd.";
 my_visit_poi_translation[2] = "Browse the city tours, excursions, accommodation, events, sights etc. and add them to MyVisit.";
-my_visit_poi_translation[3] = "prevod";
-my_visit_poi_translation[4] = "prevod";
-my_visit_poi_translation[5] = "prevod";
+my_visit_poi_translation[3] = "Brskajte po vsebinah in dodajajte oglede, izlete, nastanitve, prireditve, znamenitosti itd. prevod";
+my_visit_poi_translation[4] = "Brskajte po vsebinah in dodajajte oglede, izlete, nastanitve, prireditve, znamenitosti itd. prevod";
+my_visit_poi_translation[5] = "Brskajte po vsebinah in dodajajte oglede, izlete, nastanitve, prireditve, znamenitosti itd. prevod";
 
 var download_translation = [];
 download_translation[1] = "Prenesi";
-download_translation[2] = "Prenesi";
-download_translation[3] = "Prenesi";
-download_translation[4] = "Prenesi";
-download_translation[5] = "Prenesi";
+download_translation[2] = "Prenesi prevod";
+download_translation[3] = "Prenesi prevod";
+download_translation[4] = "Prenesi prevod";
+download_translation[5] = "Prenesi prevod";
 
 var select_view_translation = [];
 select_view_translation[1] = "Izberi pogled";
@@ -404,32 +402,32 @@ clear_my_visit_translation[5] = "Vider le MyVisit";
 
 var add_to_myvisit_translation = [];
 add_to_myvisit_translation[1] = "Dodaj vse v MyVisit";
-add_to_myvisit_translation[2] = "prevod";
-add_to_myvisit_translation[3] = "prevod";
-add_to_myvisit_translation[4] = "prevod";
-add_to_myvisit_translation[5] = "prevod";
+add_to_myvisit_translation[2] = "Dodaj vse v MyVisit prevod";
+add_to_myvisit_translation[3] = "Dodaj vse v MyVisit prevod";
+add_to_myvisit_translation[4] = "Dodaj vse v MyVisit prevod";
+add_to_myvisit_translation[5] = "Dodaj vse v MyVisit prevod";
 
 var my_visit_transfer_complete_translation = [];
 my_visit_transfer_complete_translation[1] = "Prenos v myVisit opravljen";
-my_visit_transfer_complete_translation[2] = "Prenos v myVisit opravljen";
-my_visit_transfer_complete_translation[3] = "Prenos v myVisit opravljen";
-my_visit_transfer_complete_translation[4] = "Prenos v myVisit opravljen";
-my_visit_transfer_complete_translation[5] = "Prenos v myVisit opravljen";
+my_visit_transfer_complete_translation[2] = "Prenos v myVisit opravljen prevod";
+my_visit_transfer_complete_translation[3] = "Prenos v myVisit opravljen prevod";
+my_visit_transfer_complete_translation[4] = "Prenos v myVisit opravljen prevod";
+my_visit_transfer_complete_translation[5] = "Prenos v myVisit opravljen prevod";
 
 var login_failed_translation = [];
 login_failed_translation[1] = "Neuspešna prijava";
-login_failed_translation[2] = "Neuspesna prijava";
-login_failed_translation[3] = "Neuspesna prijava";
-login_failed_translation[4] = "Neuspesna prijava";
-login_failed_translation[5] = "Neuspesna prijava";
+login_failed_translation[2] = "Neuspesna prijava prevod";
+login_failed_translation[3] = "Neuspesna prijava prevod";
+login_failed_translation[4] = "Neuspesna prijava prevod";
+login_failed_translation[5] = "Neuspesna prijava prevod";
 
 
 var inspired_translation = [];
 inspired_translation[1] = "Priporočeno";
-inspired_translation[2] = "Prevod";
-inspired_translation[3] = "Prevod";
-inspired_translation[4] = "Prevod";
-inspired_translation[5] = "Prevod";
+inspired_translation[2] = "Priporočeno prevod";
+inspired_translation[3] = "Priporočeno prevod";
+inspired_translation[4] = "Priporočeno prevod";
+inspired_translation[5] = "Priporočeno prevod";
 
 
 var prikaz_title_translation = [];
@@ -448,16 +446,16 @@ prikazi_button_translation[4] = "MOSTRA UBICAZIONI";
 prikazi_button_translation[5] = "AFFICHER L'EMPLACEMENTS";
 
 
-var confirm_translation = [];
-confirm_translation[1] = "Prekliči, V redu";
-confirm_translation[2] = "Cancel, Ok";
-confirm_translation[3] = "Prevod";
-confirm_translation[4] = "Prevod";
-confirm_translation[5] = "Prevod";
+var confirm_popup_translation = [];
+confirm_popup_translation[1] = "Prekliči, V redu";
+confirm_popup_translation[2] = "Cancel, Ok";
+confirm_popup_translation[3] = "Prekliči, V redu prevod";
+confirm_popup_translation[4] = "Prekliči, V redu prevod";
+confirm_popup_translation[5] = "Prekliči, V redu prevod";
 
 var ok_translation = [];
 ok_translation[1] = "V redu";
 ok_translation[2] = "Ok";
-ok_translation[3] = "Prevod";
-ok_translation[4] = "Prevod";
-ok_translation[5] = "Prevod";
+ok_translation[3] = "V redu prevod";
+ok_translation[4] = "V redu prevod";
+ok_translation[5] = "V redu prevod";
