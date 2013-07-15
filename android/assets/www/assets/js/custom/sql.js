@@ -44,6 +44,7 @@ function load_pois_success(results) {
     var tmp;
     var trips_group;
     
+    console.log("LEN="+len);
     for (var i=0; i<len; i++){
     	if (results.rows.item(i).title == undefined) continue;
     	//skrajsam dolzino

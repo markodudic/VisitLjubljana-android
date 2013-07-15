@@ -21,7 +21,7 @@
 	
 		<div class="my_visit_settings_content">
 			<div class="left">
-				<img src="assets/css/ztl_images/my_visit_download.png" class="my_visit_questionmark">
+				<img src="assets/css/ztl_images/my_visit_download.png" class="my_visit_questionmark" onclick="my_visit_explain();">
 			</div>
 			<div class="right my_visit_download">
 				{{my_visit_download_translation}}
@@ -37,7 +37,7 @@
 				</div>
 				<br><br>
 				<div class="my_visit_login">
-					<img src="assets/css/ztl_images/my_visit_questionmark.png" class="my_visit_questionmark">&nbsp;&nbsp;&nbsp;&nbsp;
+					<img src="assets/css/ztl_images/my_visit_questionmark.png" class="my_visit_questionmark" onclick="my_visit_explain();">&nbsp;&nbsp;&nbsp;&nbsp;
 					<div class="ztl_red_button ztl_event_search_button my_visit_login_button" onClick="web_login(0);">{{download}}</div>
 				</div>
 			{{/logged_id}}
@@ -47,7 +47,7 @@
 				<input type="text" class="my_visit_input" id="my_visit_password" value="{{password}}" onClick="clear_field('my_visit_password');"> 
 				<br><br>
 				<div class="my_visit_login">
-					<img src="assets/css/ztl_images/my_visit_questionmark.png" class="my_visit_questionmark">&nbsp;&nbsp;&nbsp;&nbsp;
+					<img src="assets/css/ztl_images/my_visit_questionmark.png" class="my_visit_questionmark" onclick="my_visit_explain();">&nbsp;&nbsp;&nbsp;&nbsp;
 					<div class="ztl_red_button ztl_event_search_button my_visit_login_button" onClick="web_login(1);">{{login}}</div>
 				</div>
 			{{/logged_id}}
