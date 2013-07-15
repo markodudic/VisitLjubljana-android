@@ -1,0 +1,84 @@
+default_category_translation[2]	= "Choose category";
+default_category_translation[3]	= "Choose category";
+default_category_translation[4]	= "Choose category";
+default_category_translation[5]	= "Choose category";
+
+
+reminder_translation[4]	= "Opomnik";
+reminder_translation[5]	= "Opomnik";
+
+synchronization_translation[2]	= "Sinhronizacija";
+synchronization_translation[3]	= "Sinhronizacija";
+synchronization_translation[4]	= "Sinhronizacija";
+synchronization_translation[5]	= "Sinhronizacija";
+
+
+synhronization_title_translation[2]	= "PRENOS PODATKOV";
+synhronization_title_translation[3]	= "PRENOS PODATKOV";
+synhronization_title_translation[4]	= "PRENOS PODATKOV";
+synhronization_title_translation[5]	= "PRENOS PODATKOV";
+
+
+synronization_finished_translation[2]	= "Sinhronizacija konèana";
+synronization_finished_translation[3]	= "Sinhronizacija konèana";
+synronization_finished_translation[4]	= "Sinhronizacija konèana";
+synronization_finished_translation[5]	= "Sinhronizacija konèana";
+
+
+guide_buy_button_translation[2]	= "PRENESI VODIÈ";
+guide_buy_button_translation[3]	= "PRENESI VODIÈ";
+guide_buy_button_translation[4]	= "PRENESI VODIÈ";
+guide_buy_button_translation[5]	= "PRENESI VODIÈ";
+
+
+my_visit_download_translation[4] = "Prenesi MyVisit s spletnega mesta";
+
+
+user_name_translation[4] = "Uporabniško ime";
+
+password_translation[4] = "Geslo";
+password_translation[5] = "Geslo";
+
+login_translation[4] = "Prijava";
+login_translation[5] = "Prijava";
+
+my_visit_tours_translation[4] = "Poišèite navdih: vnaprej pripravljeni naèrti izletov.";
+
+
+my_visit_poi_translation[4] = "Brskajte po vsebinah in dodajajte oglede, izlete, nastanitve, prireditve, znamenitosti itd.";
+
+download_translation[2] = "Prenesi";
+download_translation[3] = "Prenesi";
+download_translation[4] = "Prenesi";
+download_translation[5] = "Prenesi";
+
+
+add_to_myvisit_translation[2] = "Dodaj vse v MyVisit";
+add_to_myvisit_translation[3] = "Dodaj vse v MyVisit";
+add_to_myvisit_translation[4] = "Dodaj vse v MyVisit";
+add_to_myvisit_translation[5] = "Dodaj vse v MyVisit";
+
+my_visit_transfer_complete_translation[2] = "Prenos v myVisit opravljen";
+my_visit_transfer_complete_translation[3] = "Prenos v myVisit opravljen";
+my_visit_transfer_complete_translation[4] = "Prenos v myVisit opravljen";
+my_visit_transfer_complete_translation[5] = "Prenos v myVisit opravljen";
+
+login_failed_translation[2] = "Neuspesna prijava";
+login_failed_translation[3] = "Neuspesna prijava";
+login_failed_translation[4] = "Neuspesna prijava";
+login_failed_translation[5] = "Neuspesna prijava";
+
+
+inspired_translation[2] = "Priporoèeno";
+inspired_translation[3] = "Priporoèeno";
+inspired_translation[4] = "Priporoèeno";
+inspired_translation[5] = "Priporoèeno";
+
+confirm_popup_translation[3] = "Preklièi, V redu";
+confirm_popup_translation[4] = "Preklièi, V redu";
+confirm_popup_translation[5] = "Preklièi, V redu";
+
+
+ok_translation[3] = "V redu";
+ok_translation[4] = "V redu";
+ok_translation[5] = "V redu";

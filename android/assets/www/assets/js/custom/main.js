@@ -115,15 +115,15 @@ function reset_cache_cont() {
 	load_main_menu(); 
 	
 	load_pois(POI_NASTANITVE_GROUP, 7, 0);
-    /*load_pois(POI_ZAMENITOSTI_GROUP, 3, 0);
+    load_pois(POI_ZAMENITOSTI_GROUP, 3, 0);
     load_pois(POI_KULINARIKA_GROUP, 4, 0);
     load_pois(POI_NAKUPOVANJE_GROUP, 9, 0);
     load_pois(POI_ZABAVA_GROUP, 8, 0);
     load_events(0);
     load_info(0);
-    load_tour_list(0);*/
+    load_tour_list(0);
     load_voice_guide(0);
-    //load_inspired(0);
+    load_inspired(0);
     
     set_cache();
 	
