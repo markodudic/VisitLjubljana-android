@@ -85,7 +85,8 @@ function load_trip_content(id, transition, reverse, save_history) {
 	trip_id 	= id;
 	sound_file 	= "";
 
-	var tmp_query 		= 	'SELECT zp.*, zpt.title, zpt.description, zcg.id_group '+
+	var tmp_query 		= 	'SELECT zp.id, zp.address, zp.post_number, zp.post, zp.phone, zp.email, zp.www, zp.coord_x, zp.coord_y, zp.image, zp.star, ' +
+							' 	zpt.title, zpt.description, zcg.id_group, zpt.sound, zpt.media_duration_value '+
 							'FROM ztl_poi zp '+
 							'LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id  '+
 							'LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category  '+
