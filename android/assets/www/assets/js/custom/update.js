@@ -203,7 +203,7 @@ function handle_poi_new(data) {
 			sql = "INSERT OR REPLACE INTO ztl_poi (id, address, post_number, post, phone, email, www, coord_x, coord_y, turisticna_kartica, ljubljana_quality, recommended_map, image, star, sound, record_status, from_db) ";
 			sql+= "VALUES ("+data[i].id+", '"+addslashes(data[i].address)+"', '"+data[i].postNumber+"','"+addslashes(data[i].post)+"','"+addslashes(data[i].phone)+"', ";
 			sql+= "'"+addslashes(data[i].email)+"', '"+addslashes(data[i].www)+"', '"+data[i].coord.x+"', '"+data[i].coord.y+"', '"+addslashes(data[i].turisticna_kartica)+"', '"+addslashes(data[i].ljubljanaQuality)+"', ";
-			sql+= "'"+data[i].recommended_map+"', '"+data[i].image+"', '"+data[i].star+"', '"+data[i].sound+"', 1, 0);";
+			sql+= "'"+data[i].recommended_map+"', '"+data[i].image+"', '"+data[i].star+"', '"+data[i].audio_guide+"', 1, 0);";
 			//console.log(sql);
 			tx.executeSql(sql, [], function(tx, res) {});
 			
@@ -220,7 +220,7 @@ function handle_poi_new(data) {
 			}
 			
 			sql = "INSERT OR REPLACE INTO ztl_poi_translation (id_poi, id_language, title, description, sound, media_duration_string, media_duration_value) ";
-			sql+= "VALUES ("+data[i].id+",  "+settings.id_lang+", '"+addslashes(data[i].title)+"', '"+addslashes(data[i].description)+"', '"+data[i].sound+"', '"+mds+"', '"+mdv+"');";
+			sql+= "VALUES ("+data[i].id+",  "+settings.id_lang+", '"+addslashes(data[i].title)+"', '"+addslashes(data[i].description)+"', '"+data[i].audio_guide+"', '"+mds+"', '"+mdv+"');";
 			//console.log(sql);
 			tx.executeSql(sql, [], function(tx, res) {});
 			
