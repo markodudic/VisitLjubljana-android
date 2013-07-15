@@ -5,11 +5,11 @@ var lang_has_stored    = 0;
 function read_audio_guides_settings() {
 	var stored_audio_guides = window.localStorage.getItem("audio_guides");
 	if (stored_audio_guides == null) {
-		var defaults = {"1": {"purchased": "0", "stored": "0"},
-						"2": {"purchased": "0", "stored": "1"},
-						"3": {"purchased": "0", "stored": "0"},
-						"4": {"purchased": "0", "stored": "0"},
-						"5": {"purchased": "0", "stored": "0"}};
+		var defaults = {"1": {"purchased": "1", "stored": "0"},
+						"2": {"purchased": "1", "stored": "1"},
+						"3": {"purchased": "1", "stored": "0"},
+						"4": {"purchased": "1", "stored": "0"},
+						"5": {"purchased": "1", "stored": "0"}};
 		localStorage.setItem('audio_guides', JSON.stringify(defaults));
 		audio_guides = defaults;
 	} else {
