@@ -1,5 +1,5 @@
 var server_url = 'http://www.visitljubljana.com/';
-var develop = 0;
+var develop = 1;
 //settings
 var SETTINGS_FILE           = "settings.js"
 var SETTINGS_FOLDER     	= "Android/data/com.innovatif.ztl/";
@@ -44,7 +44,7 @@ var media_timer  = null;
 var media_length = 0;
 var file 		 = ASSETS_FOLDER+"uploads/mp3/";
 var file_alt 	 = SETTINGS_FOLDER+"audio/"; //lokacija na SD kartici
-var file_uploads = "/uploads/images/"; //lokacija slik v instalaciji - tabela ztl_poi se updejta prvem zagonu
+var file_uploads = "./uploads/images/"; //lokacija slik v instalaciji - tabela ztl_poi se updejta prvem zagonu
 
 //cssless css
 var window_width = $(window).width();

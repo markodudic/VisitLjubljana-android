@@ -711,7 +711,7 @@ function sort_by_distance(unsorted) {
 		sorted[cur] = datas[value];
 	    cur++;
 	})
-	
+	 
 	var data_sorted = {};
 	data_sorted.items = [];
 	for (var i=0; i<len; i++){
