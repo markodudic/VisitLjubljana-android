@@ -273,7 +273,7 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				synhronization_desc_translation[settings.id_lang],
 		        onConfirm,
 		        synchronization_translation[settings.id_lang],
-		        confirm_translation[settings.id_lang]
+		        confirm_popup_translation[settings.id_lang]
 		    );
 		};
 	}
@@ -306,7 +306,7 @@ function load_page(template, div, data, transition, reverse, id_group) {
 	selected_div = div;
 
 	 
-	if (div == "trips") {
+	if ((div == "trips") && (voice_guide == 0)) {
 		data = sort_by_distance(data);
    }
 	
@@ -426,6 +426,7 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				voice_guide				= 0;
 				menu_icon				= 1;
 			} else if (div == "guide_buy") {
+				data = {};
 				data.title 				= voice_guide_translation[settings.id_lang].toUpperCase();
 				data.guide_buy_desc 	= guide_buy_desc_translation[settings.id_lang].toUpperCase();
 				data.guide_buy_desc_text= guide_buy_desc_text_translation[settings.id_lang].toUpperCase();

@@ -267,7 +267,7 @@ function load_voice_guide(save_history) {
 							"LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id " +
 							"LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category " +
 							"LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id " +
-							"WHERE zpt.id_language = "+settings.id_lang+" AND sound != '' " +
+							"WHERE zpt.id_language = "+settings.id_lang+" AND zpt.sound != '' " +
 							"GROUP BY zp.id "+
 							"ORDER BY zpt.title";
 	var tmp_callback	= "load_pois_success";
