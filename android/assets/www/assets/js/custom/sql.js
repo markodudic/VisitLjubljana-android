@@ -2,6 +2,7 @@ var callback		= "";
 var query 			= "";
 var my_visit_status = 0;
 
+/*
 function generate_query(q, cb) {
 	query 		= q;
 	callback	= cb;
@@ -17,7 +18,14 @@ function db_query(tx) {
 function db_success (tx, results) {
 	window[callback](results);
 }
+*/
 
+function generate_query(q, cb) {
+    db.transaction(function(tx) {
+        tx.executeSql(q, [], function(tx, res) {
+            window[cb](res);
+        });}, errorCB);
+}
 
 //preveri ce baza obstaja, ce ne klice funkcijo, ki jo napolni
 function check_db_success(results) {
