@@ -695,9 +695,6 @@ function populate_db_firstime() {
 	$.getScript('./assets/install_db/ztl_poi.js', function () {
 		db.transaction(populateDB_ztl_poi, errorCB, function(tx) {
 			db.transaction(function(tx) {
-				//fix za poti do slik
-				tx.executeSql('update ztl_poi set image = "'+file_uploads+'" || image where image != "";', [], function(tx, res) {});
-				
 				tx.executeSql('select count(*) as cnt from ztl_poi;', [], function(tx, res) {
 					console.log('4 >>>>>>>>>> ztl_poi res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
 					add_indexes();
@@ -923,10 +920,21 @@ function add_indexes() {
 		$.getScript('./assets/install_db/ztl_idx.js', function () {
 	        db.transaction(populateDB_ztl_tour_images, errorCB, function(tx) {
 	            console.log('99 >>>>>>>>>> ztl_idx');
+	            console.log("zagon --- postprocesiranje");
 
+	            //fix za slike
+	    		tx.executeSql('update ztl_poi set image = "'+file_uploads+'" || image where image != "";', [], function(tx, res) {});
+	    		
+	    		//fixi za audio
+	    		var sql =   'update ztl_poi_translation set sound=(select sound from ztl_poi where id_poi = ztl_poi.id), '+
+	    					'media_duration_string=(select media_duration_string from ztl_poi where id_poi = ztl_poi.id), '+
+	    					'media_duration_value=(select media_duration_value from ztl_poi where id_poi = ztl_poi.id) '+
+	    					'where ztl_poi_translation.id_language = 1 ';
+	    		tx.executeSql(sql, [], function(tx, res) {});
+	            
 	            console.log("zagon --- nalagam nastavitve po insertu");
 	            load_mobile();
 	        });
-	    });		
+	    });
 	}	
 }
