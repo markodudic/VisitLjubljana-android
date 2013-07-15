@@ -196,8 +196,8 @@ function handle_poi_new(data) {
 				data[i].star = 0;
 			}
 			
-			if (data[i].sound == null) {
-				data[i].sound = '';
+			if (data[i].audio_guide == null) {
+				data[i].audio_guide = '';
 			}
 			
 			sql = "INSERT OR REPLACE INTO ztl_poi (id, address, post_number, post, phone, email, www, coord_x, coord_y, turisticna_kartica, ljubljana_quality, recommended_map, image, star, sound, record_status, from_db) ";
@@ -220,7 +220,7 @@ function handle_poi_new(data) {
 			}
 			
 			sql = "INSERT OR REPLACE INTO ztl_poi_translation (id_poi, id_language, title, description, sound, media_duration_string, media_duration_value) ";
-			sql+= "VALUES ("+data[i].id+",  "+settings.id_lang+", '"+addslashes(data[i].title)+"', '"+addslashes(data[i].description)+"', '"+data[i].audio_guide+"', '"+mds+"', '"+mdv+"');";
+			sql+= "VALUES ("+data[i].id+",  "+settings.id_lang+", '"+addslashes(data[i].title)+"', '"+addslashes(data[i].description)+"', '"+addslashes(data[i].audio_guide)+"', '"+mds+"', '"+mdv+"');";
 			//console.log(sql);
 			tx.executeSql(sql, [], function(tx, res) {});
 			
