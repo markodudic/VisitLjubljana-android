@@ -12,7 +12,7 @@
 		<div class="header_shadow"></div>
 	</div>
 	<div class="media_payer">
-		<div style="width:95%; text-align:right; padding-top:20px;" onClick="media_control_stop(); set_media_state(0);">
+		<div style="width:95%; text-align:right; padding-top:20px;" onClick="set_media_state(0); media_control_stop();">
 			<img src="assets/css/ztl_images/media_player_close.png">
 		</div>
 		<div style="position:absolute; width:100%; height:80%; text-align:center; bottom:0;" onClick="media_control_toggle();">
@@ -63,7 +63,7 @@
 				</div>
 				<br>
 				{{#sound}}
-				<div onClick="play_voice_guide({{id}}); set_media_state(1);" class="ztl_grey_button" style="position:relative;">
+				<div onClick="set_media_state(1); play_voice_guide({{id}});" class="ztl_grey_button" style="position:relative;">
 					<div class="sound_img">
 						<img src="assets/css/ztl_images/icon_2.png" style="height:27px;">
 					</div> 
