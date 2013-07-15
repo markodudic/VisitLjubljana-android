@@ -591,7 +591,7 @@ var knownfiles = [];
 var DATADIR;
 
 function onFSSuccess(fileSystem) {
-	fileSystem.root.getDirectory("Android/data/com.innovatif.ztl",{create:true}, gotDir, onFSError);
+	fileSystem.root.getDirectory(SETTINGS_FOLDER,{create:true}, gotDir, onFSError);
 }
 
 function gotDir(d) {
@@ -713,7 +713,7 @@ var knownfiles_audio = [];
 var DATADIR_audio;
 
 function onFSSuccessAudio(fileSystem) {
-	fileSystem.root.getDirectory("Android/data/com.innovatif.ztl/audio",{create:true}, gotDirAudio, onFSError);
+	fileSystem.root.getDirectory(file_alt,{create:true}, gotDirAudio, onFSError);
 }
 
 function gotDirAudio(d) {
@@ -735,7 +735,7 @@ function readFilesAudio() {
 	for (var i = 0; i < trips[VOICE_GROUP]['items'].length; i++) {
 		var filename  = trips[VOICE_GROUP]['items'][i]['sound'];
 		var filearray = filename.split("_");
-    	var url       = "http://www.visitljubljana.com/file/"+filearray[0]+"/"+filearray[1]+filearray[2];
+    	var url       = server_url+"file/"+filearray[0]+"/"+filearray[1]+filearray[2];
 
     	//lokalno ime
 		var dlPath = DATADIR_audio.fullPath+"/"+filename;
