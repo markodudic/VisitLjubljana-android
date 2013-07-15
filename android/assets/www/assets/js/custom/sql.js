@@ -487,6 +487,10 @@ function my_visit_success(results) {
                     res_poi.rows.item(pi).group_name = "";
                     res_poi.rows.item(pi).title = unescape(res_poi.rows.item(pi).title);
 
+                    if (res_poi.rows.item(pi).title.length > max_dolzina_title) {
+                        res_poi.rows.item(pi).title.title = res_poi.rows.item(pi).title.substring(0,max_dolzina_title)+"...";
+                    }
+
                     res.poi[j]  = res_poi.rows.item(pi);
                     j++;
                 }
@@ -523,6 +527,11 @@ function my_visit_success(results) {
 
                 for (var ei = 0; ei<evt_len; ei++) {
                     res_evt.rows.item(ei).title = unescape(res_evt.rows.item(ei).title);
+
+                    if (res_evt.rows.item(ei).title.length > max_dolzina_title) {
+                        res_evt.rows.item(ei).title = res_evt.rows.item(ei).title.substring(0,max_dolzina_title)+"...";
+                    }
+
                     res.evt[k] = res_evt.rows.item(ei);
 					k++;
 				}
@@ -544,8 +553,6 @@ function my_visit_success(results) {
         tour_wi = tour_wi+"0";
         var tmp_query = "SELECT t.id, tt.title, tt.short_description, zmi.start, zmi.end FROM ztl_tour t LEFT JOIN ztl_tour_translation tt ON tt.id_tour = t.id  LEFT JOIN ztl_my_visit zmi ON (zmi.id = t.id AND zmi.ztl_group = "+TOUR_GROUP+") WHERE t.id IN ("+tour_wi+")";
 
-        console.log("my_visit "+tmp_query);
-
         db.transaction(function(tx) {
             tx.executeSql(tmp_query, [], function(tx, res_tour) {
                 var tour_len = res_tour.rows.length;
@@ -565,8 +572,12 @@ function my_visit_success(results) {
                         res_tour.rows.item(ti).short_description = tmp_info_text.substring(0,max_dolzina_short_desc)+"...";
                     }
 
-
                     res_tour.rows.item(ti).title = unescape(res_tour.rows.item(ti).title);
+
+                    if (res_tour.rows.item(ti).title.length > max_dolzina_my_visit_tour_title) {
+                        res_tour.rows.item(ti).title = res_tour.rows.item(ti).title.substring(0,max_dolzina_my_visit_tour_title)+"...";
+                    }
+                    
                     res.tour[l] = res_tour.rows.item(ti);
                     l++;
                 }
