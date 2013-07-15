@@ -49,6 +49,7 @@ public class ztl extends DroidGap
         EasyTracker.getInstance().activityStart(this); // Add this method.
         
         //skopiram predpripravljeno bazo
+        /*
         try
         {
         	String pName = this.getClass().getPackage().getName();
@@ -66,6 +67,7 @@ public class ztl extends DroidGap
 	    {
 	     e.printStackTrace();
 	    }
+	    */
     }
     
 
