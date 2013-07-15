@@ -445,7 +445,6 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				data.dots 							= 0;
 				menu_icon							= 1;
 			} else if (div == "ztl_map") {
-				data = {};
 				data.title 					= map_translation[settings.id_lang];
 				data.voice_guide 		= voice_guide_translation[settings.id_lang];
 				data.inspired			= inspired_translation[settings.id_lang];
