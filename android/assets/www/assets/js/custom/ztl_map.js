@@ -171,7 +171,7 @@ var init = function (onSelectFeatureFunction) {
     get_poi_data();
     
     //pozicioniram center ce je ena tocka, ce ne pa na center karte
-    if ((curr_id != undefined) && (curr_id > 0)) {
+    if ((curr_id != undefined) && (curr_id > 0) && (points != undefined) && (points[0] != undefined)) {
     	var point = transform (parseFloat(points[0][0])+correctionX, parseFloat(points[0][1])+correctionY);
     	var lonLat = new OpenLayers.LonLat(point.lon, point.lat);
     	map.setCenter (lonLat, zoom);

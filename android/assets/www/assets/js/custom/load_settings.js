@@ -272,7 +272,7 @@ function load_voice_guide(save_history) {
 							"GROUP BY zp.id "+
 							"ORDER BY zpt.title";
 	var tmp_callback	= "load_pois_success";
-	
+
 	generate_query(tmp_query, tmp_callback);
 }
 
