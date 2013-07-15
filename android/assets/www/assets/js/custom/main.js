@@ -261,10 +261,26 @@ function save_swipe_history(index, direction) {
 }
 */
 
-
+function onConfirm(buttonIndex) {
+	if (buttonIndex == 2) do_synhronization();
+    else load_main_screen();
+}
 
 function load_page(template, div, data, transition, reverse, id_group) {
-	console.log("load page="+id_group+":"+template+":"+data+":"+voice_guide);
+	console.log("load page="+id_group+":"+div+":"+data+":"+voice_guide);
+	
+	if ((div == "inspired") || (div == "events") || (div == "infos") || (div == "tours")) {
+		if ((data.items == undefined) || (data.items == null) || (data.items.length == 0)) {
+		navigator.notification.confirm(
+				synhronization_desc_translation[settings.id_lang],
+		        onConfirm,
+		        synchronization_translation[settings.id_lang],
+		        confirm_translation[settings.id_lang]
+		    );
+		};
+	}
+	
+	
 	if ((div == "trips") || (div == "events")) { 
 		show_spinner();
 	}
@@ -729,8 +745,8 @@ var spinner;
 function show_spinner() {
 	var opts = {
 			  lines: 13, // The number of lines to draw
-			  length: window.innerWidth/8, // The length of each line
-			  width: window.innerWidth/24, // The line thickness
+			  length: window.innerWidth/16, // The length of each line
+			  width: window.innerWidth/48, // The line thickness
 			  radius: 30, // The radius of the inner circle
 			  corners: 1, // Corner roundness (0..1)
 			  rotate: 0, // The rotation offset
@@ -742,8 +758,8 @@ function show_spinner() {
 			  hwaccel: false, // Whether to use hardware acceleration
 			  className: 'spinner', // The CSS class to assign to the spinner
 			  zIndex: 2e9, // The z-index (defaults to 2000000000)
-			  top: (window.innerHeight-window.innerWidth/2)/2, // Top position relative to parent in px
-			  left: (window.innerWidth-window.innerWidth/2)/2 // Left position relative to parent in px
+			  top: (window.innerHeight-window.innerWidth/4)/2, // Top position relative to parent in px
+			  left: (window.innerWidth-window.innerWidth/4)/2 // Left position relative to parent in px
 			};
 	var target = document.getElementById("body");
 	spinner = new Spinner(opts).spin(target);
@@ -751,7 +767,7 @@ function show_spinner() {
 }
 
 function hide_spinner() {
-	spinner.stop();
+	if (spinner != undefined) spinner.stop();
 }
 
 function format_date(date_string, id, hide_time) {
