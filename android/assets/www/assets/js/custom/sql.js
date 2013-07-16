@@ -75,10 +75,14 @@ function load_poi_success(results) {
     swipe 		 = 1;
 	current 	 = trip_id;
 	console.log("RES SOUND="+res.items[0].sound);
-	sound_file	 = file+res.items[0].sound;
+	
+	//lokacija za angleske file je drgje kot za ostale ((na SD kartici))
+	if (settings.id_lang == 2) {
+		sound_file	 = file+res.items[0].sound;
+	} else {
+		sound_file	 = file_alt+res.items[0].sound;
+	}
 	media_length = parseInt(results.rows.item(0).media_duration_value);
-
-
 	load_page(template_lang+'trip.html', 'trip', res.items[0], 'fade', true, results.rows.item(0).id_group);
 }
 
