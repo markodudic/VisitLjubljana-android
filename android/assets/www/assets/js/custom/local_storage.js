@@ -19,9 +19,13 @@ function local_storage_load() {
 function go_back() {
 	var history = JSON.parse(localStorage.getItem('history'));
 
-	console.log("local history --- " + JSON.stringify(history));
+	console.log("localstorage history - "+JSON.stringify(history));
 
-	if (media_opened == 1) {
+	if (my_visit_filter == 1) {
+		my_visit_settings_menu_toggle();
+		my_visit_filter = 0;
+	}
+	else if (media_opened == 1) {
 		media_control_stop();
 		media_opened = 0;
 	} else {
@@ -36,9 +40,6 @@ function go_back() {
 
 			history.pop();
 			localStorage.setItem('history', JSON.stringify(history));
-
-			console.log("local history --- goto-0: " + go_to[0]);
-			console.log("local history --- goto-1: " + go_to[1]);
 
 			if (go_to[0] == 'fun') {
 				slide 		= 0;
@@ -97,11 +98,26 @@ function go_back() {
 				if (go_to[1] == "load_info") {
 					//load_info(0);
 					load_page(template_lang+'infos.html', 'infos', trips[INFO_GROUP], 'fade', false, INFO_GROUP);
-				}		
-			} else if (go_to[0] == 'main_menu') {
-				console.log("local history --- main menu");
-				console.log("local history --- menu id: " + go_to[1]);
+				}
 
+				if (go_to[1] == "load_guide_buy") {
+					load_guide_buy();
+				}
+
+				if (go_to[1] == "load_show_map") {
+					load_guide_buy();
+				}
+
+				if (go_to[1] == "load_current_settings") {
+					load_current_settings();
+				}
+
+				if (go_to[1] == "load_tours_menu") {
+					load_page(template_lang+'tours.html', 'tours', trips[TOUR_LIST_GROUP].tours[params[0]], 'fade', false, params[0]);
+				}
+
+			} else if (go_to[0] == 'main_menu') {
+				voice_guide = 0;
 				if (go_to[1] == INSPIRED_GROUP) {
 					load_page(template_lang+'inspired.html', 'inspired', trips[INSPIRED_GROUP], 'fade', false, INSPIRED_GROUP);
 				}
@@ -137,7 +153,6 @@ function go_back() {
 				if (go_to[1] == POI_NAKUPOVANJE_GROUP) {
 					load_page(template_lang+'trips.html', 'trips', trips[POI_NAKUPOVANJE_GROUP], 'fade', false, POI_NAKUPOVANJE_GROUP);
 				}
-
 			} else {
 				if (main_menu == 0) {
 					view_main_menu = 1;
