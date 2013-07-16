@@ -69,15 +69,20 @@ function on_device_ready() {
 
 	document.addEventListener("backbutton", go_back, true);
 
+	/*
 	if (localStorage.getItem(localStorage.key('first_run')) == null) {
 		localStorage.setItem('history', JSON.stringify(tmp_history));
 		localStorage.setItem('first_run', 0);
 	}
+	*/
 
 	set_my_visit_notification();
 
 	//skopiram bazo za backup
 	if (develop==1) copyDB();
+
+	//ponastavim history
+	localStorage.setItem('history', JSON.stringify(tmp_history));
 }
 
 

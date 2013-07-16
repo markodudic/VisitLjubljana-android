@@ -12,11 +12,14 @@ function local_storage_load() {
 	} else {
 		history = tmp_history;
 	}
+
 	return history; 
 }
 
 function go_back() {
 	var history = JSON.parse(localStorage.getItem('history'));
+
+	console.log("local history --- " + JSON.stringify(history));
 
 	if (media_opened == 1) {
 		media_control_stop();
@@ -33,6 +36,9 @@ function go_back() {
 
 			history.pop();
 			localStorage.setItem('history', JSON.stringify(history));
+
+			console.log("local history --- goto-0: " + go_to[0]);
+			console.log("local history --- goto-1: " + go_to[1]);
 
 			if (go_to[0] == 'fun') {
 				slide 		= 0;
@@ -92,13 +98,52 @@ function go_back() {
 					//load_info(0);
 					load_page(template_lang+'infos.html', 'infos', trips[INFO_GROUP], 'fade', false, INFO_GROUP);
 				}		
-			}
+			} else if (go_to[0] == 'main_menu') {
+				console.log("local history --- main menu");
+				console.log("local history --- menu id: " + go_to[1]);
 
-		} else {
-			if (main_menu == 0) {
-				view_main_menu = 1;
+				if (go_to[1] == INSPIRED_GROUP) {
+					load_page(template_lang+'inspired.html', 'inspired', trips[INSPIRED_GROUP], 'fade', false, INSPIRED_GROUP);
+				}
+
+				if (go_to[1] == EVENT_GROUP) {
+					load_page(template_lang+'events.html', 'events', trips[EVENT_GROUP], 'fade', false, EVENT_GROUP);
+				}
+
+				if (go_to[1] == POI_ZAMENITOSTI_GROUP) {
+					load_page(template_lang+'trips.html', 'trips', trips[POI_ZAMENITOSTI_GROUP], 'fade', false, POI_ZAMENITOSTI_GROUP);
+				}
+
+				if (go_to[1] == POI_KULINARIKA_GROUP) {
+					load_page(template_lang+'trips.html', 'trips', trips[POI_KULINARIKA_GROUP], 'fade', false, POI_KULINARIKA_GROUP);
+				}
+
+				if (go_to[1] == INFO_GROUP) {
+					load_page(template_lang+'infos.html', 'infos', trips[INFO_GROUP], 'fade', false, INFO_GROUP);
+				}
+
+				if (go_to[1] == TOUR_LIST_GROUP) {
+					load_page(template_lang+'tour_category.html', 'tour_category', trips[TOUR_LIST_GROUP], 'fade', false, TOUR_LIST_GROUP);
+				}
+
+				if (go_to[1] == POI_NASTANITVE_GROUP) {
+					load_page(template_lang+'trips.html', 'trips', trips[POI_NASTANITVE_GROUP], 'fade', false, POI_NASTANITVE_GROUP);
+				}
+
+				if (go_to[1] == POI_ZABAVA_GROUP) {
+					load_page(template_lang+'trips.html', 'trips', trips[POI_ZABAVA_GROUP], 'fade', false, POI_ZABAVA_GROUP);
+				}
+
+				if (go_to[1] == POI_NAKUPOVANJE_GROUP) {
+					load_page(template_lang+'trips.html', 'trips', trips[POI_NAKUPOVANJE_GROUP], 'fade', false, POI_NAKUPOVANJE_GROUP);
+				}
+
+			} else {
+				if (main_menu == 0) {
+					view_main_menu = 1;
+				}
+				load_main_screen(0);
 			}
-			load_main_screen(0);
 		}
 	}
 }
