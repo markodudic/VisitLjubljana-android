@@ -3,6 +3,8 @@ function add_to_history(history_string) {
 	
 	history.push(history_string);
 	localStorage.setItem('history', JSON.stringify(history));
+
+	console.log("localStorage history - "+ JSON.stringify(history));
 }
 
 function local_storage_load() {
@@ -114,6 +116,10 @@ function go_back() {
 
 				if (go_to[1] == "load_tours_menu") {
 					load_page(template_lang+'tours.html', 'tours', trips[TOUR_LIST_GROUP].tours[params[0]], 'fade', false, params[0]);
+				}
+
+				if (go_to[1] == "filter_visits") {
+					filter_visits(params[0]);
 				}
 
 			} else if (go_to[0] == 'main_menu') {
