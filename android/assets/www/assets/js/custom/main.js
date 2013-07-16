@@ -44,6 +44,9 @@ var skip_update 	 = 0;
 var menu_select_lang = 0;
 var update_running 	 = 0;
 
+//analytics
+var gaPlugin;
+
 var selected_group = -1;
 
 document.addEventListener("deviceready", on_device_ready, false);
@@ -83,8 +86,19 @@ function on_device_ready() {
 
 	//ponastavim history
 	localStorage.setItem('history', JSON.stringify(tmp_history));
+	
+	//analytics
+    gaPlugin = window.plugins.gaPlugin;
+    gaPlugin.init(nativePluginResultHandler, nativePluginErrorHandler, "UA-4832430-3", 10);
 }
 
+function nativePluginResultHandler (result) {
+	//console.log('nativePluginResultHandler: '+result);
+}
+
+function nativePluginErrorHandler (error) {
+	//console.log('nativePluginErrorHandler: '+error);
+}
 
 function copy_success(entry) {
     console.log("New Path: " + entry.fullPath);
@@ -93,8 +107,6 @@ function copy_success(entry) {
 function copy_fail(error) {
 	console.log(error.code+":"+FileError.NOT_FOUND_ERR);
 }
-
-
 
 function copyDB() {
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
