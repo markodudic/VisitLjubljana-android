@@ -194,11 +194,10 @@ function my_visit_settings_menu_toggle() {
 	$(".header").toggle();
 	$(".footer").toggle();
 
-	/*
+
 	if ($('.event_filter').is(':visible')) {
-		get_active_my_visti_categories();
+		my_visit_filter = 1;
 	}
-	*/
 }
 
 function add_inspire_to_my_visit(id) {

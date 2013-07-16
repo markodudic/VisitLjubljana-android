@@ -32,6 +32,8 @@ var media_opened  = 0;
 //var media_poi_id  = 0;
 var voice_guide   = 0;
 
+var my_visit_filter = 0;
+
 //history
 var view_main_menu 	= 1;
 var current_div		= "";
@@ -72,13 +74,7 @@ function on_device_ready() {
 
 	document.addEventListener("backbutton", go_back, true);
 
-	/*
-	if (localStorage.getItem(localStorage.key('first_run')) == null) {
-		localStorage.setItem('history', JSON.stringify(tmp_history));
-		localStorage.setItem('first_run', 0);
-	}
-	*/
-
+	//to je traba dat v zanko, ki se izvrsi 1x na minuto
 	set_my_visit_notification();
 
 	//skopiram bazo za backup
@@ -264,20 +260,6 @@ function swipe_left_handler() {
 	}
 }
 
-/*
-function save_swipe_history(index, direction) {
-	if (direction == true) {
-		direction = false;
-	} else {
-		direction = true;
-	}
-
-	var history_string = "fun--load_trip_content--"+index+"__slide__"+direction;
-	add_to_history(history_string);
-	
-}
-*/
-
 function onConfirm(buttonIndex) {
 	if (buttonIndex == 2) do_synhronization();
     else load_main_screen();
@@ -407,6 +389,7 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				if (data.star != 0) {
 					data.shadow="true";
 				}
+				menu_icon 	= 3;
 			} else if (div == 'main_menu') {
 				view_main_menu 	= 1;
 				voice_guide		= 0;
