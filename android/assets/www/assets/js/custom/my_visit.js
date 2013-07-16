@@ -262,8 +262,21 @@ function render_time() {
 	});
 }
 
-function filter_visits () {
-	var id_filter 	= parseInt($("#visit_type").val());
+function filter_visits (history_filter) {
+	var id_filter;
+
+	if (history_filter > -1) {
+		id_filter = history_filter;
+	} else {
+		id_filter = parseInt($("#visit_type").val());
+
+		var history_string = "fun--filter_visits--"+id_filter+"__false";
+		add_to_history(history_string);
+	}
+
+
+	console.log("localStorage history --- id filter " +id_filter );
+
 	skip_filter_cat = 1;
 
 	if (id_filter == EVENT_GROUP) {
@@ -275,7 +288,11 @@ function filter_visits () {
 		sql_filer_poi_cat = id_filter;
 	}
 
+	
+
 	load_my_visit(0, id_filter);
+
+
 }
 
 function  my_visit_explain(){
