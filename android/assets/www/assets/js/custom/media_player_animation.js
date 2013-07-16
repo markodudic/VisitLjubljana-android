@@ -70,6 +70,7 @@ function media_control_toggle() {
 
 
 function media_control_start() { 
+	gaPlugin.trackEvent(nativePluginResultHandler, nativePluginErrorHandler, "ActionUserInterface", "ButtonPress", "PlayAudioGuide", trip_id);
 	$('.player_control_image').attr('src', 'assets/css/ztl_images/media_player_play_pause.png');
 	media_timer = window.setInterval(function() {animate()}, 1000);
 	play();
