@@ -265,17 +265,21 @@ function onConfirm(buttonIndex) {
     else load_main_screen();
 }
 
+function synhronization_prompt() {
+	navigator.notification.confirm(
+			synhronization_desc_translation[settings.id_lang],
+	        onConfirm,
+	        synchronization_translation[settings.id_lang],
+	        confirm_popup_translation[settings.id_lang]
+	    );
+}
+
 function load_page(template, div, data, transition, reverse, id_group) {
 	console.log("load page="+id_group+":"+div+":"+data+":"+voice_guide);
 	
 	if ((div == "inspired") || (div == "events") || (div == "infos") || (div == "tour_category")) {
 		if ((data == undefined) || (data.items == undefined) || (data.items == null) || (data.items.length == 0)) {
-		navigator.notification.confirm(
-				synhronization_desc_translation[settings.id_lang],
-		        onConfirm,
-		        synchronization_translation[settings.id_lang],
-		        confirm_popup_translation[settings.id_lang]
-		    );
+			synhronization_prompt()
 		};
 	}
 	

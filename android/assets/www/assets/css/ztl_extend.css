@@ -133,6 +133,15 @@ a:active {text-decoration:none; color:#ed1c24; font-size:1.0em;}
     padding:0px 25px 0px 0px;
 }
 
+.header_synhronization {
+    float:right;
+    background-image:url('ztl_images/sinroniziraj.png');
+    background-repeat:no-repeat;
+    height:24px;
+    width:24px;
+    padding:0px 25px 0px 0px;
+}
+
 .header_shadow {
 	background: -moz-linear-gradient(top,  rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%); /* FF3.6+ */
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,1)), color-stop(100%,rgba(0,0,0,0))); /* Chrome,Safari4+ */
