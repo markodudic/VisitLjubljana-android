@@ -6,15 +6,8 @@ var sql_filter_group  = -1;
 var sql_filer_poi_cat = -1;
 
 function add_to_my_visit(id, ztl_group, type, start, end, autmatic) {
-
-	console.log("my_visit -- id: "+id);
-	console.log("my_visit -- ztl_group: "+ztl_group);
-	console.log("my_visit -- type: "+type);
-	console.log("my_visit -- start: "+start);
-	console.log("my_visit -- end: "+end);
-
 	var tmp_query = "INSERT OR REPLACE INTO ztl_my_visit (id, ztl_group, type, start, end) VALUES ("+id+", "+ztl_group+", "+type+", "+start+", "+end+");";
-    
+
     db.transaction(function(tx) {
 		 tx.executeSql(tmp_query, [], function(tx, res) {});
 
@@ -140,7 +133,6 @@ function sync_my_visit(res) {
 		clear_my_visit();
 
 		for (var i = 0; i<res.length; i++) {
-			console.log(JSON.stringify(res[i]));
 
 			tmp_group = get_mobile_group(res[i].ref_object_type);
 			add_to_my_visit(res[i].ref_object, tmp_group, res[i].ref_object_date_type, res[i].ref_object_start, res[i].ref_object_end, 1);
@@ -155,7 +147,6 @@ function sync_my_visit(res) {
 
 function add_to_myvisit(res) {
 	for (var i = 0; i<res.items.length; i++) {
-		console.log(res.items[i]);
 		add_to_my_visit(res.items[i].id, POI_GROUP, 0, 0, 0, 1);
 	}
 
@@ -230,9 +221,6 @@ function add_inspire_to_my_visit(id) {
 }
 
 function my_visit_item_date(id, group) {
-	console.log("my_visit ---- id: "+id);
-	console.log("my_visit ---- group: "+group);
-
 	var myNewDate = new Date();
 	window.plugins.datePicker.show({
 		date : myNewDate,
@@ -240,12 +228,9 @@ function my_visit_item_date(id, group) {
 		allowOldDates : false
 		}, function(returnDate) {
 			var newDate = new Date(returnDate);
-			console.log(newDate);
-			console.log(newDate.getTime());
 
 			var time = newDate.getTime() / 1000;
-			
-			console.log(time);
+
 
 			var tmp_query = "UPDATE ztl_my_visit SET start = "+time+" WHERE id = "+id+" AND ztl_group = "+group;
 			db.transaction(function(tx) {
@@ -262,9 +247,6 @@ function render_time() {
 	var hide_time = 0;
 	
 	$("[id^=non_formated_]" ).each(function() {
-		console.log("render time --- "+ $(this).attr('id'));
-		console.log("render time --- "+ $(this).val());
-		console.log("render time ------------------------------------ ");
 
 		if ($(this).val() > 0) {
 			tmp_id = $(this).attr('id').substring(4, $(this).attr('id').length);
@@ -295,11 +277,6 @@ function filter_visits () {
 	}
 
 	load_my_visit(0, id_filter);
-
-	console.log("my_visit --- visit filter");
-	console.log("my_visit ---"+id_filter);
-
-
 }
 
 function  my_visit_explain(){
