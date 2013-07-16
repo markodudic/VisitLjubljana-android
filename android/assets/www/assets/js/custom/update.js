@@ -738,22 +738,27 @@ function gotFilesAudio(entries) {
 }
 
 function readFilesAudio() {
-	for (var i = 0; i < trips[VOICE_GROUP]['items'].length; i++) {
-		var filename  = trips[VOICE_GROUP]['items'][i]['sound'];
-		var filearray = filename.split("_");
-    	var url       = server_url+"file/"+filearray[0]+"/"+filearray[1]+"_"+filearray[2];
-
-    	//lokalno ime
-		var dlPath = DATADIR_audio.fullPath+"/"+filename;
-		
-    	//samo nove datoteke
-    	if (knownfiles_audio.indexOf(filename) == -1) {
-			var ft = new FileTransfer();
-			ft.download(url, dlPath, function() {
-				console.log("new local file audio "+dlPath);
-			}, onFSError);
-		}
-	}
+	//tto nima podatkov o audio guidih: trips[VOICE_GROUP]
+	db.transaction(function(tx) {
+		tx.executeSql('select * from ztl_poi_translation where sound != "" and id_language = '+settings.id_lang, [], function(tx, res) {
+	        for (var i=0; i<res.rows.length; i++) {
+	    		var filename  = res.rows.item(i).sound;
+	    		var filearray = filename.split("_");
+	        	var url       = server_url+"file/"+filearray[0]+"/"+filearray[1]+"_"+filearray[2];
+	
+	        	//lokalno ime
+	    		var dlPath = DATADIR_audio.fullPath+"/"+filename;
+	    		
+	        	//samo nove datoteke
+	        	if (knownfiles_audio.indexOf(filename) == -1) {
+	    			var ft = new FileTransfer();
+	    			ft.download(url, dlPath, function() {
+	    				console.log("new local file audio "+dlPath);
+	    			}, onFSError);
+	    		}
+	        }
+		});
+	});
 }
 
 /*********************** UTILS ***********************/ 

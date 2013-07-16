@@ -99,6 +99,10 @@ function media_control_stop() {
 }
 
 function play() {
+
+	console.log(JSON.stringify(my_media));
+	
+	
 	if (my_media != null) {
 		
 		if (current_position > 0) {
