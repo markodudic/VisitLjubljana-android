@@ -195,32 +195,20 @@ function handle_poi_new(data) {
 			if (data[i].star == null) {
 				data[i].star = 0;
 			}
-			
-			if (data[i].audio_guide == null) {
-				data[i].audio_guide = '';
-			}
-			
-			sql = "INSERT OR REPLACE INTO ztl_poi (id, address, post_number, post, phone, email, www, coord_x, coord_y, turisticna_kartica, ljubljana_quality, recommended_map, image, star, sound, record_status, from_db) ";
+					
+			sql = "INSERT OR REPLACE INTO ztl_poi (id, address, post_number, post, phone, email, www, coord_x, coord_y, turisticna_kartica, ljubljana_quality, recommended_map, image, star, record_status, from_db) ";
 			sql+= "VALUES ("+data[i].id+", '"+addslashes(data[i].address)+"', '"+data[i].postNumber+"','"+addslashes(data[i].post)+"','"+addslashes(data[i].phone)+"', ";
 			sql+= "'"+addslashes(data[i].email)+"', '"+addslashes(data[i].www)+"', '"+data[i].coord.x+"', '"+data[i].coord.y+"', '"+addslashes(data[i].turisticna_kartica)+"', '"+addslashes(data[i].ljubljanaQuality)+"', ";
-			sql+= "'"+data[i].recommended_map+"', '"+data[i].image+"', '"+data[i].star+"', '"+data[i].audio_guide+"', 1, 0);";
+			sql+= "'"+data[i].recommended_map+"', '"+data[i].image+"', '"+data[i].star+"', 1, 0);";
 			//console.log(sql);
 			tx.executeSql(sql, [], function(tx, res) {});
-			
-			var mds = "";
-			var mdv = "";
-			if (data[i].audioGuideLength != null) {
-				mdv = data[i].audioGuideLength;
-				var minutes = Math.floor(parseInt(mdv) / 60);
-				var seconds = parseInt(mdv) - minutes * 60;
-				if (seconds < 10) {
-					seconds = "0"+seconds;
-				}
-				mds = minutes+":"+seconds;
-			}
-			
+				
+			//kveri ne updejta fildov za sound !
 			sql = "INSERT OR REPLACE INTO ztl_poi_translation (id_poi, id_language, title, description, sound, media_duration_string, media_duration_value) ";
-			sql+= "VALUES ("+data[i].id+",  "+settings.id_lang+", '"+addslashes(data[i].title)+"', '"+addslashes(data[i].description)+"', '"+addslashes(data[i].audio_guide)+"', '"+mds+"', '"+mdv+"');";
+			sql+= "VALUES ("+data[i].id+",  "+settings.id_lang+", '"+addslashes(data[i].title)+"', '"+addslashes(data[i].description)+"', ";
+			sql+= "(SELECT sound FROM ztl_poi_translation WHERE id_poi = "+data[i].id+" AND id_language = "+settings.id_lang+"),";
+			sql+= "(SELECT media_duration_string FROM ztl_poi_translation WHERE id_poi = "+data[i].id+" AND id_language = "+settings.id_lang+"),";
+			sql+= "(SELECT media_duration_value FROM ztl_poi_translation WHERE id_poi = "+data[i].id+" AND id_language = "+settings.id_lang+"))";
 			//console.log(sql);
 			tx.executeSql(sql, [], function(tx, res) {});
 			
