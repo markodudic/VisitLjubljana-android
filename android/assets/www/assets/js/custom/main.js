@@ -74,9 +74,6 @@ function on_device_ready() {
 
 	document.addEventListener("backbutton", go_back, true);
 
-	//to je traba dat v zanko, ki se izvrsi 1x na minuto
-	set_my_visit_notification();
-
 	//skopiram bazo za backup
 	if (develop==1) copyDB();
 
@@ -86,6 +83,8 @@ function on_device_ready() {
 	//analytics
     gaPlugin = window.plugins.gaPlugin;
     gaPlugin.init(nativePluginResultHandler, nativePluginErrorHandler, "UA-4832430-3", 10);
+
+    window.setInterval(set_my_visit_notification, 60000);
 }
 
 function nativePluginResultHandler (result) {
@@ -351,22 +350,12 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				data.potrdi_button 	= confirm_translation[settings.id_lang];
 				$('body').html("");
 			} else if (div == 'filtered_events') {
-				
-				console.log("filter eventi vsi ---"+JSON.stringify(event_type));
-				console.log("filter eventi dolzina ---"+event_type.length);
-				
 				for (var ei=0; ei<event_type.length; ei++) {
-					console.log("filter eventi posamezen --- index "+ei);
-					console.log("filter eventi posamezen ---"+JSON.stringify(event_type[ei]));
-					
 					event_type[ei].filter_selected = "";
 					if (event_category_filter == event_type[ei].id){
 						event_type[ei].filter_selected = "SELECTED";
-					}
-					
+					}	
 				}
-
-				console.log("filter eventi vsi ---"+JSON.stringify(event_type));
 
 				if (event_date_from_sql == 0) {
 					data.event_date_from_sql = "";
@@ -686,7 +675,7 @@ function load_template(src, tpl) {
 			tmp = $(temp).filter(tpl).html();
 		}
 	});
-	console.log("TMP="+tmp);
+	//console.log("TMP="+tmp);
 	return tmp;
 }
 

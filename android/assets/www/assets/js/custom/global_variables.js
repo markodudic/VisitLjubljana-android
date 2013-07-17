@@ -30,6 +30,8 @@ var ZTL_POI_GROUP 	= 10027;
 
 var UPDATE_GROUPS	= 5;
 
+var APP_NAME = "Visit Ljubljana and more";
+
 //gps
 var watchID 	= null;
 var source  	= null;
