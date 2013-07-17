@@ -279,8 +279,8 @@ function info_success(results) {
     	//skrajsam dolzino
     	results.rows.item(i).title = unescape(results.rows.item(i).title);
     	tmp = results.rows.item(i).title;
-    	if (tmp.length > max_dolzina_title) {
-    		results.rows.item(i).title = tmp.substring(0,max_dolzina_title)+"...";
+    	if (tmp.length > max_dolzina_title_info) {
+    		results.rows.item(i).title = tmp.substring(0,max_dolzina_title_info)+"...";
     	}
     	
     	res.items[i] = results.rows.item(i);
@@ -321,6 +321,10 @@ function inspired_success(results) {
     	tmp = results.rows.item(i).title;
     	if (tmp.length > max_dolzina_title) {
     		results.rows.item(i).title = tmp.substring(0,max_dolzina_title)+"...";
+    	}
+    	tmp = results.rows.item(i).desc;
+    	if (tmp.length > max_dolzina_short_desc) {
+    		results.rows.item(i).desc = tmp.substring(0,max_dolzina_short_desc)+"...";
     	}
     	
     	res.items[i] = results.rows.item(i);
