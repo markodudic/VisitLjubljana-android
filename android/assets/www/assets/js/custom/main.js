@@ -19,6 +19,7 @@ var group 		  = 0;
 var trips   	  = {}; //0-event, 1-info, 2-tour, 4 - voice, 5 - filtered events, 6 - tour list
 var trips_title   = {}; //0-event, 1-info, 2-tour
 var tours		  = {};  //toure po kategorijah. ID kategorije je key
+var poigroups_map = {};  //poigroups. ID grupe je key
 var selected_div  = null;
 var main_menu     = null;
 var swipe		  = 0;
@@ -71,7 +72,11 @@ function on_device_ready() {
 	if (localStorage.getItem(localStorage.key('first_run')) != null) {
 		get_cache();
 	}
-
+	poigroups_map[POI_ZAMENITOSTI_GROUP] 	= POI_ZAMENITOSTI_POI_GROUPS;
+	poigroups_map[POI_KULINARIKA_GROUP] 	= POI_KULINARIKA_POI_GROUPS;
+	poigroups_map[POI_ZABAVA_GROUP] 		= POI_ZABAVA_POI_GROUPS;
+	poigroups_map[POI_NAKUPOVANJE_GROUP] 	= POI_NAKUPOVANJE_POI_GROUPS;
+    
 	document.addEventListener("backbutton", go_back, true);
 
 	//skopiram bazo za backup
@@ -126,11 +131,14 @@ function reset_cache() {
 function reset_cache_cont() {
 	load_main_menu(); 
 	
-	load_pois(POI_NASTANITVE_GROUP, 7, 0);
+	//pois
     load_pois(POI_ZAMENITOSTI_GROUP, 3, 0);
     load_pois(POI_KULINARIKA_GROUP, 4, 0);
-    load_pois(POI_NAKUPOVANJE_GROUP, 9, 0);
     load_pois(POI_ZABAVA_GROUP, 8, 0);
+    load_pois(POI_NAKUPOVANJE_GROUP, 9, 0);
+	load_pois(POI_NASTANITVE_GROUP, 7, 0);
+
+    //ostali podatki
     load_events(0);
     load_info(0);
     load_tour_list(0);
@@ -259,31 +267,48 @@ function swipe_left_handler() {
 	}
 }
 
-function onConfirm(buttonIndex) {
-	if (buttonIndex == 2) {
-		do_synhronization();
-	} else {
-		if (curr_div == "events") {
-			load_page(template_lang+'events.html', 'events', trips[EVENT_GROUP], 'fade', false, EVENT_GROUP);
-		} else if (curr_div == "inspired") {
-			load_page(template_lang+'inspired.html', 'inspired', trips[INSPIRED_GROUP], 'fade', false, INSPIRED_GROUP);
-		} else if (curr_div == "infos") {
-			load_page(template_lang+'infos.html', 'infos', trips[INFO_GROUP], 'fade', false, INFO_GROUP);
-		} else if (curr_div == "tour_category") {
-			load_page(template_lang+'tour_category.html', 'tour_category', trips[TOUR_LIST_GROUP], 'fade', false, TOUR_LIST_GROUP);
-		}
-	}
-}
- 
-var curr_div;
 function synhronization_prompt(div) {
-	curr_div = div;
 	navigator.notification.confirm(
 			synhronization_desc_translation[settings.id_lang],
 	        onConfirm,
 	        synchronization_translation[settings.id_lang],
 	        confirm_popup_translation[settings.id_lang]
 	    );
+}
+
+function onConfirm(buttonIndex) {
+	if (buttonIndex == 2) {
+		do_synhronization();
+	} else {
+		load_main_screen();
+	}
+}
+ 
+function load_current_div(){
+	if (selected_div == "events") {
+		load_page(template_lang+'events.html', 'events', trips[EVENT_GROUP], 'fade', false, EVENT_GROUP);
+	} else if (selected_div == "inspired") {
+		load_page(template_lang+'inspired.html', 'inspired', trips[INSPIRED_GROUP], 'fade', false, INSPIRED_GROUP);
+	} else if (selected_div == "infos") {
+		load_page(template_lang+'infos.html', 'infos', trips[INFO_GROUP], 'fade', false, INFO_GROUP);
+	} else if (selected_div == "tour_category") {
+		load_page(template_lang+'tour_category.html', 'tour_category', trips[TOUR_LIST_GROUP], 'fade', false, TOUR_LIST_GROUP);
+	}	
+}
+
+function synhronization_force() {
+	navigator.notification.confirm(
+			synhronization_desc_translation[settings.id_lang],
+	        onConfirmForce,
+	        synchronization_translation[settings.id_lang],
+	        confirm_popup_translation[settings.id_lang]
+	    );
+}
+
+function onConfirmForce(buttonIndex) {
+	if (buttonIndex == 2) {
+		do_synhronization();
+	}
 }
 
 function load_page(template, div, data, transition, reverse, id_group) {
@@ -675,7 +700,6 @@ function load_template(src, tpl) {
 			tmp = $(temp).filter(tpl).html();
 		}
 	});
-	//console.log("TMP="+tmp);
 	return tmp;
 }
 
@@ -758,6 +782,8 @@ function do_synhronization() {
 }
 
 function sort_by_distance(unsorted) {
+	if (unsorted == undefined) return;
+	
 	var len = unsorted.items.length;
 	var cx = current_position_xy[0]-correctionX;
 	var cy = current_position_xy[1]-correctionY;
@@ -848,4 +874,8 @@ function format_date(date_string, id, hide_time) {
     function () {alert('Error getting dateString\n');},
     {formatLength:'short', selector:selector}
     );
+}
+
+function opacity(el) {
+	el.css({ opacity: 0.3 });
 }

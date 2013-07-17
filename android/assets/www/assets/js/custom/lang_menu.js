@@ -462,10 +462,10 @@ ok_translation[5] = "V redu prevod";
 
 var notification_translation = [];
 notification_translation[1] = "Dogodek se bo kmalu zacel ... preveri MyVisit";
-notification_translation[2] = "Dogodek se bo kmalu zacel ... preveri MyVisit";
-notification_translation[3] = "Dogodek se bo kmalu zacel ... preveri MyVisit";
-notification_translation[4] = "Dogodek se bo kmalu zacel ... preveri MyVisit";
-notification_translation[5] = "Dogodek se bo kmalu zacel ... preveri MyVisit";
+notification_translation[2] = "The event will start soon … check MyVisit";
+notification_translation[3] = "Die Veranstaltung startet in Kürze ... Prüfen Sie MyVisit.";
+notification_translation[4] = "L'evento avrà inizio a breve ... Controllare MyVisit.";
+notification_translation[5] = "L'événement va commencer sous peu ... Vérifiez MyVisit.";
 
 var my_visit_explain_translation = [];
 my_visit_explain_translation[1] = "S prijavo boste prenesli načrt izleta, ki ste ga predhodno ustvarili na spletnem mestu www.visitljubljana.com, v mobilno aplikacijo.\n\nOpozorilo: V primeru, da ste načrt izleta ustvarili tudi znotraj mobilne aplikacije, bo ta izbrisan oziroma prepisan z načrtom izleta, ki ste ga predhodno ustvarili na spletnem mestu.";
@@ -476,7 +476,8 @@ my_visit_explain_translation[5] = "En vous connectant, vous importerez dans l'ap
 
 var from_bigger_than_to_translation = [];
 from_bigger_than_to_translation[1] = "Napaka: Datum začetka je večji kot datum konca!";
-from_bigger_than_to_translation[2] = "Napaka: Datum od je večji kot datum do!";
-from_bigger_than_to_translation[3] = "Napaka: Datum od je večji kot datum do!";
-from_bigger_than_to_translation[4] = "Napaka: Datum od je večji kot datum do!";
-from_bigger_than_to_translation[5] = "Napaka: Datum od je večji kot datum do!";
+from_bigger_than_to_translation[2] = "Error: The start date must not be later than the end date!";
+from_bigger_than_to_translation[3] = "Fehler: Das Startdatum darf nicht später als das Endedatum sein!";
+from_bigger_than_to_translation[4] = "Errore: Data di inizio non può essere posteriore alla data di fine!";
+from_bigger_than_to_translation[5] = "Erreur: date de commencement ne peut pas être postérieure à la date de fin!";
+

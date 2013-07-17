@@ -45,7 +45,6 @@ function load_pois(id, trips_menu_id, save_history) {
 	trips_title[id] = main_menu['img'+tmi];
 	
 	if (id == 0) {
-		alert('menu nima nastavljenih vsebin');
 	} else {
 		group = id;
 		//samo za test

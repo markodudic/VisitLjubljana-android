@@ -25,12 +25,15 @@ function is_updt_finished() {
 		updt_running  = 0;
 		spinner.stop();
 		
+		load_current_div();
+		/*
 		navigator.notification.confirm(
 			synronization_finished_translation[settings.id_lang],
-	        onConfirm,
+	        load_current_div,
 	        synchronization_translation[settings.id_lang],
 	        ok_translation[settings.id_lang]
 		);
+		*/
 		//load_current_settings();		
 	}
 }
@@ -498,8 +501,8 @@ function update_inspired(url) {
 		success : function(data) {
 			console.log(" >>>>>>>>>> ok");
 			
-			//truncate
-			db.transaction(function(tx) {tx.executeSql('delete from ztl_inspired where id_language = '+settings.id_lang+';', [], function(tx, res) {});});
+			//truncate samo za trenutni jezik
+			db.transaction(function(tx) {tx.executeSql('delete from ztl_inspired where id in (select id_inspired from ztl_inspired_translation where id_language = '+settings.id_lang+');', [], function(tx, res) {});});
 			//handle_inspired_deleted(data['deleted']);
 			handle_inspired(data['getInspired']);
 		    load_inspired(0);
@@ -575,7 +578,7 @@ function update_info(url) {
 		success : function(data) {
 			console.log(" >>>>>>>>>> ok");
 			
-			//truncate
+			//truncate samo za trenutni jezik
 			db.transaction(function(tx) {tx.executeSql('delete from ztl_info where id_language = '+settings.id_lang+';', [], function(tx, res) {});});
 			//handle_info_deleted(data['deleted']);
 			handle_info(data['info']);

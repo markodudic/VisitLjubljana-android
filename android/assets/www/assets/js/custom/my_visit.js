@@ -12,9 +12,18 @@ function add_to_my_visit(id, ztl_group, type, start, end, autmatic) {
 		 tx.executeSql(tmp_query, [], function(tx, res) {});
 
 		 if (autmatic != 1) {
-			alert(my_visit_transfer_complete_translation[settings.id_lang]);
+			 my_visit_transfer_complete();
 		}
 	});
+}
+
+function my_visit_transfer_complete() {
+	navigator.notification.confirm(
+			my_visit_transfer_complete_translation[settings.id_lang],
+			null,
+	        my_visit_page_title_translation[settings.id_lang],
+	        ok_translation[settings.id_lang]
+	);	
 }
 
 function load_my_visit(save_history, filter_group) {
@@ -120,7 +129,12 @@ function handle_web_login(res) {
 		sync_my_visit(res);
 	} else {
 		$("#my_visit_password").val("");
-		alert(login_failed_translation[settings.id_lang]);
+		navigator.notification.confirm(
+				login_failed_translation[settings.id_lang],
+				null,
+		        my_visit_page_title_translation[settings.id_lang],
+		        ok_translation[settings.id_lang]
+		);	
 	}
 } 
 
@@ -138,7 +152,7 @@ function sync_my_visit(res) {
 			add_to_my_visit(res[i].ref_object, tmp_group, res[i].ref_object_date_type, res[i].ref_object_start, res[i].ref_object_end, 1);
 		}
 
-		alert(my_visit_transfer_complete_translation[settings.id_lang]);
+		my_visit_transfer_complete();
 	}
 
 	//rediractam na my_visit
@@ -150,7 +164,7 @@ function add_to_myvisit(res) {
 		add_to_my_visit(res.items[i].id, POI_GROUP, 0, 0, 0, 1);
 	}
 
-	alert(my_visit_transfer_complete_translation[settings.id_lang]);
+	my_visit_transfer_complete();
 
 	load_my_visit();
 }
@@ -213,7 +227,7 @@ function add_inspire_to_my_visit(id) {
 				add_to_my_visit(results.rows.item(i).ref_object, tmp_group, results.rows.item(i).ref_object_date_type, 0, 0, 1);
 		    }
 
-			alert(my_visit_transfer_complete_translation[settings.id_lang]);
+			my_visit_transfer_complete();
 		    load_my_visit();
 		 });
 	});
