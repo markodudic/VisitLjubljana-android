@@ -10,8 +10,16 @@ mm_pic_group[2]		= "img6";
 mm_pic_group[215] 	= "img7";
 mm_pic_group[217] 	= "img3";
 mm_pic_group[219] 	= "img4";
-mm_pic_group[222] 	= "img8";
 mm_pic_group[220] 	= "img9";
+mm_pic_group[222] 	= "img8";
+
+//to do
+//manjka se --- za glavni menu smo jih na roko prevedli //zato je v myvisit tut prazno vmes -- ali se se ti dodajo v lang tabelo?
+mm_pic_group[218] 	= "manjka prevod grupa 218";
+mm_pic_group[221] 	= "manjka prevod grupa 221";
+mm_pic_group[224] 	= "manjka prevod grupa 224";
+mm_pic_group[225] 	= "manjka prevod grupa 225";
+mm_pic_group[227] 	= "manjka prevod grupa 227";
 
 var voice_guide_translation = [];
 voice_guide_translation[1]	= "Vodič";
@@ -26,7 +34,6 @@ voice_guide_translation_full[2]         = "AUDIO GUIDE";
 voice_guide_translation_full[3]         = "AUDIOFÜHRER";
 voice_guide_translation_full[4]         = "AUDIOGUIDA";
 voice_guide_translation_full[5]         = "L'AUDIOGUIDE";
-
 
 var map_translation = [];
 map_translation[1]     = "ZEMLJEVID";

@@ -255,6 +255,26 @@ function my_visit_item_date(id, group) {
 	);	
 }
 
+function my_visit_get_event_date(id) {
+	console.log("myvisit my_visit_event_item_date");
+	console.log("myvisit id: "+id);
+
+	var tmp_query 	 = "SELECT et.venue, et.date, et.timetable_idx as id_time FROM ztl_event_timetable et WHERE et.id_event = "+id+" AND et.id_language = "+settings.id_lang+" GROUP BY et.venue, et.date";
+
+	console.log("myVisit --- query: "+tmp_query);
+
+	db.transaction(function(tx) {
+		 tx.executeSql(tmp_query, [], function(tx, results) {
+		 	console.log("myvisit res: "+ JSON.stringify(results));
+
+		 	var len = results.rows.length;
+			for (var i=0; i<len; i++){
+				console.log("myvisit --- res " + JSON.stringify(results.rows.item(i)));
+		    }
+		 });
+	});
+}
+
 function render_time() {
 	var tmp_id 	  = "";
 	var hide_time = 0;
