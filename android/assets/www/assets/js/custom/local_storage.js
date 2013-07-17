@@ -22,6 +22,8 @@ function go_back() {
 	var history = JSON.parse(localStorage.getItem('history'));
 
 	console.log("localstorage history - "+JSON.stringify(history));
+	console.log("localstorage history - my_visit_filter: "+ my_visit_filter)
+
 
 	if (my_visit_filter == 1) {
 		my_visit_settings_menu_toggle();
@@ -42,6 +44,9 @@ function go_back() {
 
 			history.pop();
 			localStorage.setItem('history', JSON.stringify(history));
+
+			console.log("localstorage history - goto0: "+go_to[0]);
+			console.log("localstorage history - goto1: "+go_to[1]);
 
 			if (go_to[0] == 'fun') {
 				slide 		= 0;
@@ -119,6 +124,7 @@ function go_back() {
 				}
 
 				if (go_to[1] == "filter_visits") {
+					console.log("localstorage history -- filter");
 					filter_visits(params[0]);
 				}
 
