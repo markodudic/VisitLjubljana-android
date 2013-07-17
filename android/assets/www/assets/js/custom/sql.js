@@ -417,7 +417,7 @@ function last_update_success(results) {
 	        ok_translation[settings.id_lang]
 		);
 //		load_current_settings();
-	}
+	} 
 }
 
 //my_visit

@@ -54,35 +54,44 @@ function check_update_success(results) {
 		lang_code = "fr";
 	}
 	
-	//updatam poi-je
-	var pois = new Array();
-	db.transaction(function(tx) {
-	    tx.executeSql("select id from ztl_poi;", [], function(tx, res) {
-	        for (var i=0; i<res.rows.length; i++) {
-        		pois[i] = res.rows.item(i).id;
-	        }
-	        update_poi(server_url+lang_code+'/mobile_app/poi.json?datemodified='+results.rows.item(0).last_update, pois);
-	    });
-	});
-		        
-	//updatam dogodke. prvic vse
-	if (localStorage.getItem('first_synhronization') == 0) {
-		update_event(server_url+lang_code+'/mobile_app/event.json');
+	if (populateDB == 1) {
+		//za pripravo baze napolni vse podatke
+		updt_finished++;
+		update_poi(server_url+lang_code+'/mobile_app/poi.json');
     	update_tour(server_url+lang_code+'/mobile_app/tour.json');
-    	localStorage.setItem('first_synhronization', 1);
+	    update_info(server_url+lang_code+'/mobile_app/info.json');
+	    update_inspired(server_url+lang_code+'/mobile_app/inspired.json');
 	} else {
-		//pol pa samo od datuma
-		var events = new Array();
+		//updatam poi-je
+		var pois = new Array();
 		db.transaction(function(tx) {
-			tx.executeSql("select id from ztl_event;", [], function(tx, res) {
-				for (var i=0; i<res.rows.length; i++) {
-					events[i] = res.rows.item(i).id;
-				}
-				update_event_deleted(server_url+lang_code+'/mobile_app/event.json?datemodified='+results.rows.item(0).last_update, events);
-			});
+		    tx.executeSql("select id from ztl_poi;", [], function(tx, res) {
+		        for (var i=0; i<res.rows.length; i++) {
+	        		pois[i] = res.rows.item(i).id;
+		        }
+		        update_poi_deleted(server_url+lang_code+'/mobile_app/poi.json?datemodified='+results.rows.item(0).last_update, pois);
+		    });
 		});
-    
-		//updatam ogled. 
+			        
+		//updatam dogodke. prvic vse
+		if (localStorage.getItem('first_synhronization') == 0) {
+			update_event(server_url+lang_code+'/mobile_app/event.json');
+	    	localStorage.setItem('first_synhronization', 1);
+		} else {
+			//pol pa samo od datuma
+			var events = new Array();
+			db.transaction(function(tx) {
+				tx.executeSql("select id from ztl_event;", [], function(tx, res) {
+					for (var i=0; i<res.rows.length; i++) {
+						events[i] = res.rows.item(i).id;
+					}
+					update_event_deleted(server_url+lang_code+'/mobile_app/event.json?datemodified='+results.rows.item(0).last_update, events);
+				});
+			});
+	    
+		}
+	
+		//updatam oglede. vedno samo nove
 	    var tours = new Array();
 		db.transaction(function(tx) {
 		    tx.executeSql("select id from ztl_tour;", [], function(tx, res) {
@@ -92,17 +101,22 @@ function check_update_success(results) {
 		        update_tour_deleted(server_url+lang_code+'/mobile_app/tour.json?datemodified='+results.rows.item(0).last_update, tours); 
 		    });
 		});
-	}
 	
-	//updatam info. vedno vse
-    update_info(server_url+lang_code+'/mobile_app/info.json');
-    update_inspired(server_url+lang_code+'/mobile_app/inspired.json');
+		//updatam info. vedno vse
+	    update_info(server_url+lang_code+'/mobile_app/info.json');
+	    update_inspired(server_url+lang_code+'/mobile_app/inspired.json');
+	}
 }
 
 /*********************** POI ***********************/
 
-function update_poi(url, pois) {
+function update_poi_deleted(url, pois) {
 	url = url+'&pois='+pois.join(",");
+	update_poi(url);
+}
+
+
+function update_poi(url, pois) {
 	console.log("update DB " +  url);
 	$.ajax( {
 		url : url,
@@ -144,10 +158,12 @@ function handle_poi(data) {
 function handle_poi_deleted(data) {
 	db.transaction(function(tx) {
 		var sql = "";
-		for (var i = 0; i < data.length; i++) {
-			sql = "UPDATE ztl_poi SET record_status = 0 WHERE id = "+data[i];
-			//console.log(sql);
-			tx.executeSql(sql, [], function(tx, res) {});
+		if (data != null) {
+			for (var i = 0; i < data.length; i++) {
+				sql = "UPDATE ztl_poi SET record_status = 0 WHERE id = "+data[i];
+				//console.log(sql);
+				tx.executeSql(sql, [], function(tx, res) {});
+			}
 		}
 	});
 }
@@ -189,17 +205,21 @@ function handle_poi_new(data) {
 		for (var i = 0; i < data.length; i++) {
 
 			if (data[i].image == null) {
-				data[i].image = '';
+				data[i].image = '';			
 			}
 			
 			if (data[i].star == null) {
 				data[i].star = 0;
 			}
-					
-			sql = "INSERT OR REPLACE INTO ztl_poi (id, address, post_number, post, phone, email, www, coord_x, coord_y, turisticna_kartica, ljubljana_quality, recommended_map, image, star, record_status, from_db) ";
+
+			if (data[i].poigroups == null) {
+				data[i].poigroups = '';
+			}
+
+			sql = "INSERT OR REPLACE INTO ztl_poi (id, address, post_number, post, phone, email, www, coord_x, coord_y, turisticna_kartica, ljubljana_quality, recommended_map, image, star, poigroups, record_status, from_db) ";
 			sql+= "VALUES ("+data[i].id+", '"+addslashes(data[i].address)+"', '"+data[i].postNumber+"','"+addslashes(data[i].post)+"','"+addslashes(data[i].phone)+"', ";
 			sql+= "'"+addslashes(data[i].email)+"', '"+addslashes(data[i].www)+"', '"+data[i].coord.x+"', '"+data[i].coord.y+"', '"+addslashes(data[i].turisticna_kartica)+"', '"+addslashes(data[i].ljubljanaQuality)+"', ";
-			sql+= "'"+data[i].recommended_map+"', '"+data[i].image+"', '"+data[i].star+"', 1, 0);";
+			sql+= "'"+data[i].recommended_map+"', '"+data[i].image+"', '"+data[i].star+"', '"+data[i].poigroups+"', 1, 0);";
 			//console.log(sql);
 			tx.executeSql(sql, [], function(tx, res) {});
 				
@@ -410,26 +430,30 @@ function handle_tour(data) {
 
 		//h inddex !
 		for (var h = 0; h < data.length; h++) {
-			sql = "INSERT INTO ztl_tour_category (id,id_language,title,record_status) VALUES ("+h+", "+settings.id_lang+", '"+addslashes(data[h].title)+"', 1);";
+			sql = "INSERT OR REPLACE INTO ztl_tour_category (id,id_language,title,record_status) VALUES ("+h+", "+settings.id_lang+", '"+addslashes(data[h].title)+"', 1);";
 			tx.executeSql(sql, [], function(tx, res) {});
 			
 			for (var i = 0; i<data[h].objects.length; i++) {
-				sql = "INSERT INTO ztl_tour_tour_category (id_tour, id_tour_category) VALUES ("+data[h].objects[i].id+","+h+")";
+				sql = "INSERT OR REPLACE INTO ztl_tour_tour_category (id_tour, id_tour_category) VALUES ("+data[h].objects[i].id+","+h+")";
 				tx.executeSql(sql, [], function(tx, res) {});
 				
-				sql = "INSERT INTO ztl_tour (id, turisticna_kartica, validity_from, validity_to, record_status) VALUES ("+data[h].objects[i].id+", '"+data[h].objects[i].turisticna_kartica+"', '"+data[h].objects[i].validity_from+"', '"+data[h].objects[i].validity_to+"', 1)";
+				sql = "INSERT OR REPLACE INTO ztl_tour (id, turisticna_kartica, validity_from, validity_to, record_status) VALUES ("+data[h].objects[i].id+", '"+data[h].objects[i].turisticna_kartica+"', '"+data[h].objects[i].validity_from+"', '"+data[h].objects[i].validity_to+"', 1)";
 				tx.executeSql(sql, [], function(tx, res) {});
 				
-				sql = "INSERT INTO ztl_tour_translation (id_tour, id_language, title, short_description, long_description) VALUES ("+data[h].objects[i].id+", "+settings.id_lang+", '"+addslashes(data[h].objects[i].title)+"', '"+addslashes(data[h].objects[i].short_description)+"', '"+addslashes(data[h].objects[i].long_description)+"')";
+				sql = "INSERT OR REPLACE INTO ztl_tour_translation (id_tour, id_language, title, short_description, long_description) VALUES ("+data[h].objects[i].id+", "+settings.id_lang+", '"+addslashes(data[h].objects[i].title)+"', '"+addslashes(data[h].objects[i].short_description)+"', '"+addslashes(data[h].objects[i].long_description)+"')";
 				tx.executeSql(sql, [], function(tx, res) {});
 				
 				for (var j = 0; j < data[h].objects[i].chaters.length; j++) {
-					sql = "INSERT INTO ztl_tour_chaters (id_tour, id_language, tour_idx, title, content) VALUES ("+data[h].objects[i].id+", "+settings.id_lang+", "+j+", '"+addslashes(data[h].objects[i].chaters[j].title)+"', '"+addslashes(data[h].objects[i].chaters[j].content)+"')";
+					sql = "INSERT OR REPLACE INTO ztl_tour_chaters (id_tour, id_language, tour_idx, title, content) VALUES ("+data[h].objects[i].id+", "+settings.id_lang+", "+j+", '"+addslashes(data[h].objects[i].chaters[j].title)+"', '"+addslashes(data[h].objects[i].chaters[j].content)+"')";
 					tx.executeSql(sql, [], function(tx, res) {});
 				}
 		
+				if (data[h].objects[i].image == null) {
+					data[h].objects[i].image = "";
+				}
+
 				//for (var j = 0; j < data[i].images.length; j++) {
-					sql = "INSERT INTO ztl_tour_images (id_tour, tour_idx, image) VALUES ("+data[h].objects[i].id+", "+j+", '"+data[h].objects[i].image+"')";
+					sql = "INSERT OR REPLACE INTO ztl_tour_images (id_tour, tour_idx, image) VALUES ("+data[h].objects[i].id+", "+j+", '"+data[h].objects[i].image+"')";
 					tx.executeSql(sql, [], function(tx, res) {});
 				//}
 			}
@@ -455,7 +479,6 @@ function handle_tour(data) {
 		});
 	});	
 }
-
 /*********************** INSPIRED ***********************/
 
 function update_inspired(url) {
@@ -476,7 +499,7 @@ function update_inspired(url) {
 			console.log(" >>>>>>>>>> ok");
 			
 			//truncate
-			db.transaction(function(tx) {tx.executeSql('delete from ztl_inspired;', [], function(tx, res) {});});
+			db.transaction(function(tx) {tx.executeSql('delete from ztl_inspired where id_language = '+settings.id_lang+';', [], function(tx, res) {});});
 			//handle_inspired_deleted(data['deleted']);
 			handle_inspired(data['getInspired']);
 		    load_inspired(0);
@@ -553,7 +576,7 @@ function update_info(url) {
 			console.log(" >>>>>>>>>> ok");
 			
 			//truncate
-			db.transaction(function(tx) {tx.executeSql('delete from ztl_info;', [], function(tx, res) {});});
+			db.transaction(function(tx) {tx.executeSql('delete from ztl_info where id_language = '+settings.id_lang+';', [], function(tx, res) {});});
 			//handle_info_deleted(data['deleted']);
 			handle_info(data['info']);
 		    load_info(0);
@@ -581,6 +604,10 @@ function handle_info(data) {
 	db.transaction(function(tx) {
 		var sql = "";
 		for (var i = 0; i < data.length; i++) {
+			if (data[i].objects[0].image == null) {
+				data[i].objects[0].image = '';			
+			}
+
 			sql = "INSERT INTO ztl_info (id, id_language, title, image, content, record_status) VALUES ("+data[i].objects[0].id+", "+settings.id_lang+", '"+addslashes(data[i].objects[0].title)+"', '"+data[i].objects[0].image+"', '"+addslashes(data[i].objects[0].content)+"', 1)";
 			tx.executeSql(sql, [], function(tx, res) {});
 		}
@@ -640,6 +667,28 @@ function readFiles() {
 		});
 
 
+		tx.executeSql('select * from ztl_poi where image != ""', [], function(tx, res) {
+	        for (var i=0; i<res.rows.length; i++) {
+	        	var url      = res.rows.item(i).image;
+	        	var filename = url.split("/").slice(-1)[0];
+	        	filename = $.trim(filename);
+
+	        	//filename ni prazen && ni na lokalnem FS && se zacne s http
+	        	if (filename != "" && url.indexOf(DATADIR.fullPath) != 0 && url.indexOf("http") == 0) {
+	    			var dlPath = DATADIR.fullPath+"/"+filename;
+	    			var updt_sql1 = 'update ztl_poi set image = "'+dlPath+'" where id='+res.rows.item(i).id+';';
+					tx.executeSql(updt_sql1, [], function(tx, res) {});	
+					
+		        	if (knownfiles.indexOf(filename) == -1) {
+	        			var ft = new FileTransfer();
+	        			ft.download(url, dlPath, function() {
+	        				console.log("==== new local file ztl_poi "+dlPath);
+	        			}, onFSError);
+	    			}
+    			}
+	        }
+		});
+		
 		tx.executeSql('select * from ztl_event where image != ""', [], function(tx, res) {
 	        for (var i=0; i<res.rows.length; i++) {
 	        	var url      = res.rows.item(i).image;

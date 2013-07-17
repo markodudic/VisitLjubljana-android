@@ -13,7 +13,8 @@ var curr_group;
 var wgs;
 
 var current_position_xy;
-
+var current_position_center;
+	
 function load_show_map(id, type, group) {
 	console.log(id+":"+type+":"+group);
 	curr_id = id;
@@ -83,6 +84,7 @@ var init = function (onSelectFeatureFunction) {
     	showMyLocation(1);
     });
 
+    //TODO popravi na nove
     var lonLat0 = new OpenLayers.LonLat(lon0, lat0).transform(new OpenLayers.Projection("EPSG:4326"), new OpenLayers.Projection("EPSG:900913"));
     var lonLat1 = new OpenLayers.LonLat(lon1, lat1).transform(new OpenLayers.Projection("EPSG:4326"), new OpenLayers.Projection("EPSG:900913"));
     extent.extend(lonLat0);
@@ -157,8 +159,10 @@ var init = function (onSelectFeatureFunction) {
 
     
     var layer_tiles = new OpenLayers.Layer.OSM("Local Tiles", "assets/map/tiles/${z}/${x}/${y}.png", 
-        {zoomOffset:13,
-        resolutions: [19.1092570678711,9.55462853393555,4.77731426696777,2.38865713348389,1.19432856674194], 
+        {zoomOffset:10,
+        resolutions: [152.8740565429688,76.4370282714844,38.2185141357422,19.1092570678711,9.55462853393555], 
+        //zoomOffset:13,
+        //resolutions: [19.1092570678711,9.55462853393555,4.77731426696777,2.38865713348389,1.19432856674194], 
         alpha: true, 
         isBaseLayer: true}
     );
@@ -169,19 +173,9 @@ var init = function (onSelectFeatureFunction) {
     map.addControl(click);
     click.activate();
 
-    get_poi_data();
+    var bounds = new OpenLayers.Bounds();
     
-    //pozicioniram center ce je ena tocka, ce ne pa na center karte
-    if ((curr_id != undefined) && (curr_id > 0) && (points != undefined) && (points[0] != undefined)) {
-    	var point = transform (parseFloat(points[0][0])+correctionX, parseFloat(points[0][1])+correctionY);
-    	var lonLat = new OpenLayers.LonLat(point.lon, point.lat);
-    	map.setCenter (lonLat, zoom);
-	} else {
-	    if( ! map.getCenter() ){
-	    	var lonLat = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
-	        map.setCenter (lonLat, zoom);
-	    }		
-	}
+    get_poi_data();
     
     var sprinters = getFeatures(0);
     var sprinters_my_pos = getFeatures(1);
@@ -190,7 +184,22 @@ var init = function (onSelectFeatureFunction) {
     sprintersLayer_my_pos.addFeatures(sprinters_my_pos);
 
     showMyLocation(0);
-    
+
+    //pozicioniram center na vse tocke in trenutno lokacije, ce ne pa na center ljubljane
+    if (curr_type != undefined) {
+    	//var point = transform (parseFloat(points[0][0])+correctionX, parseFloat(points[0][1])+correctionY);
+    	//var lonLat = new OpenLayers.LonLat(point.lon, point.lat);
+        //map.setCenter (lonLat);
+    	//bounds.extendXY(current_position_center.lon, current_position_center.lat);
+    	var pixel = bounds.getCenterPixel();
+    	map.zoomToExtent(bounds, true);
+	} else {
+	    if( ! map.getCenter() ){
+	    	var lonLat = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
+	        map.setCenter (lonLat, zoom);
+	    }		
+	}
+        
     function getFeatures(type) {
         var features = new Array();
         console.log("points="+points.length);
@@ -200,6 +209,8 @@ var init = function (onSelectFeatureFunction) {
                 //ne vem zakaj ampak koordinate po transformaciji strizejo za -350 in 550. GK koordinate so ok.
         	    var point = transform (parseFloat(points[i][0])+correctionX, parseFloat(points[i][1])+correctionY);
                 var attributes = {id: points[i][3], type: points[i][4]};
+    			
+                bounds.extendXY(point.lon, point.lat);
 
                 feature = new OpenLayers.Feature.Vector(new OpenLayers.Geometry.Point(point.lon, point.lat), attributes);
                 features.push(feature);
@@ -267,10 +278,10 @@ var init = function (onSelectFeatureFunction) {
     	//current_position_xy[0] = 5462704;
     	//current_position_xy[1] = 5104170;
     		
-    	var center = transform(parseFloat(current_position_xy[0])+myLocationCorrectionX, parseFloat(current_position_xy[1])+myLocationCorrectionY);
-    	var lonlat = new OpenLayers.LonLat(center.lon, center.lat); 
+    	current_position_center = transform(parseFloat(current_position_xy[0])+myLocationCorrectionX, parseFloat(current_position_xy[1])+myLocationCorrectionY);
+    	var lonlat = new OpenLayers.LonLat(current_position_center.lon, current_position_center.lat); 
     	sprintersLayer_my_pos.removeAllFeatures();
-    	sprintersLayer_my_pos.addFeatures(getFeaturesMyLocation(center.lon, center.lat));
+    	sprintersLayer_my_pos.addFeatures(getFeaturesMyLocation(current_position_center.lon, current_position_center.lat));
     	
     	if (pan == 1) map.panTo(lonlat);
     }
@@ -320,7 +331,7 @@ function load_content(id) {
 				        'LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category  '+
 				        'LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id  '+
 				        'WHERE zp.id IN ('+id+') AND zpt.id_language = '+settings.id_lang+' '+
-        				'GROUP BY zp.id';
+				        'GROUP BY zp.id';
     }
     var tmp_callback    = "load_map_poi_data_success";
             
@@ -338,10 +349,8 @@ function load_map_coords(results, type) {
 
 function load_map_coord(results, id, type) {
     var len = results.items.length;
-    console.log("LEN="+len+":"+id);
     for (var i = 0; i<len; i++) {
-    	console.log("COMP="+i+":"+results.items[i].id+":"+id);
-        if (results.items[i].id == id) {
+    	if (results.items[i].id == id) {
     		add_point_on_map(results.items[i], type);
     		return;
     	}
@@ -361,15 +370,14 @@ function load_map_coord(results, id, type) {
 
 
 function add_point_on_map (row, type) {
-	console.log("row="+row+":"+type);
     if (row != undefined) {
-		if ((row.coord_x > x0) && (row.coord_x < x1) && (row.coord_y > y0) && (row.coord_y < y1)) {
+		//if ((row.coord_x > x0) && (row.coord_x < x1) && (row.coord_y > y0) && (row.coord_y < y1)) {
 			if (type != undefined) {
 				points.push(new Array(row.coord_x, row.coord_y, 0, row.id, type));			
 			} else {
 				points.push(new Array(row.coord_x, row.coord_y, 0, row.id, row.type));
 			}
-		}
+		//}
 	}
 }
 

@@ -50,7 +50,7 @@ function load_pois(id, trips_menu_id, save_history) {
 		group = id;
 		//samo za test
 		var limit = "";
-		if (group == POI_KULINARIKA_GROUP) limit = " LIMIT 30 ";
+		//if (group == POI_KULINARIKA_GROUP) limit = " LIMIT 30 ";
 		
 		/*var tmp_query 		= 	'SELECT zp.*, zpt.title, zcg.id_group, zpt.description ' + 
 								'FROM ztl_poi zp  ' + 

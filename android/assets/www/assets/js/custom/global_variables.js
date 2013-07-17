@@ -1,5 +1,8 @@
 var server_url = 'http://www.visitljubljana.com/';
 var develop = 1;
+var populateDB = 0;
+
+
 //settings
 var SETTINGS_FILE           = "settings.js"
 var SETTINGS_FOLDER     	= "Android/data/com.innovatif.ztl/";
@@ -72,11 +75,17 @@ var max_dolzina_title = 45;
 var max_dolzina_my_visit_tour_title = 25;
 var max_dolzina_short_desc = 60;
 
-//bbox ljubljane
+//regija
+//14.106,45.793 x 15.054,46.269
+var lon0 = 14.106;
+var lat0 = 45.793;
+var lon1 = 15.054;
+var lat1 = 46.269;
+/* ljubljana
 var lon0 = 14.434;
 var lat0 = 46;
 var lon1 = 14.587;
-var lat1 = 46.1;
+var lat1 = 46.1;*/
 var x0 = 456516;
 var y0 = 95835;
 var x1 = 467838;
