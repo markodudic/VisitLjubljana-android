@@ -259,10 +259,14 @@ function my_visit_get_event_date(id) {
 	console.log("myvisit my_visit_event_item_date");
 	console.log("myvisit id: "+id);
 
-	var tmp_query 	 = "SELECT et.venue, et.date, et.timetable_idx as id_time FROM ztl_event_timetable et WHERE et.id_event = "+id+" AND et.id_language = "+settings.id_lang+" GROUP BY et.venue, et.date";
+	var tmp_query 	 = "SELECT et.date_first, et.date_last FROM ztl_event_timetable et WHERE et.id_event = "+id+" AND et.id_language = "+settings.id_lang+" GROUP BY et.venue, et.date";
 
 	console.log("myVisit --- query: "+tmp_query);
 
+	var date_first 		= 0;
+	var date_last  		= 0;
+	var current_time	= new Date();
+	var current_time	= parseInt(current_time.getTime()/1000);
 	db.transaction(function(tx) {
 		 tx.executeSql(tmp_query, [], function(tx, results) {
 		 	console.log("myvisit res: "+ JSON.stringify(results));
@@ -270,6 +274,48 @@ function my_visit_get_event_date(id) {
 		 	var len = results.rows.length;
 			for (var i=0; i<len; i++){
 				console.log("myvisit --- res " + JSON.stringify(results.rows.item(i)));
+
+				date_first = results.rows.item(i).date_first;
+				date_last  = results.rows.item(i).date_last;
+
+				console.log("myvisit ************************************");
+
+				console.log("myvisit --- date curr : "+current_time);
+				console.log("myvisit --- date first: "+date_first);
+				console.log("myvisit --- date last : "+date_last);
+
+				console.log("myvisit ************************************");
+
+
+				//pogoji, s katerimi se nastavi casovni interval
+				//datuma konca ni treba preverjat, ker ce ni verjaven se ne da kliknt na gumb ki pripelje sem.
+				
+				//preverim ali gre za enkratni dogodek -- first in end date sta enaka
+				if (date_first == date_last) {
+					//enkratni dogodek
+
+					console.log("myvisit --- enkratni dogodek ---");
+
+				} else {
+					//vecdnevni dogodek
+					console.log("myvisit --- ponavljajoc dogodek ---");
+
+					if (date_first < current_time) {
+						//ce je dogodek ze aktiven
+						date_first = current_time;
+					}
+
+				}
+
+				console.log("myvisit 1************************************");
+
+				console.log("myvisit --- 1date curr : "+current_time);
+				console.log("myvisit --- 1date first: "+date_first);
+				console.log("myvisit --- 1date last : "+date_last);
+
+				console.log("myvisit 1************************************");
+
+				console.log("myvisit prekonventiram datume in izpisem formo");
 		    }
 		 });
 	});
