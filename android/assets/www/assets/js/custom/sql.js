@@ -543,9 +543,6 @@ function my_visit_success(results) {
                     j++;
                 }
 
-
-                console.log("myvisit query poi" + JSON.stringify(res.poi));
-
     		 	my_visit_status++;
     		 	check_my_visit(res);
 			 });
@@ -558,12 +555,13 @@ function my_visit_success(results) {
 
     //myvisit event
     var k = 0;
+    var curr_time = new Date();
+    curr_time = parseInt(curr_time.getTime() / 1000);
+
     if (res.has_evt == 1) {
     	evt_wi = evt_wi+"0";
 
-        var tmp_query    = "SELECT  e.id, et.title, zmi.start, zmi.end FROM ztl_event e LEFT JOIN ztl_event_translation et ON et.id_event = e.id LEFT JOIN ztl_my_visit zmi ON (zmi.id = e.id AND zmi.ztl_group = "+EVENT_GROUP+") WHERE e.id IN ("+evt_wi+") AND  e.record_status = 1 AND et.id_language = "+settings.id_lang; 
-
-        console.log("myvisit query event" + tmp_query);
+        var tmp_query  = "SELECT e.id, et.title, zmi.start, zmi.end, ett.date_last, e.record_status FROM ztl_event e LEFT JOIN ztl_event_translation et ON et.id_event = e.id LEFT JOIN ztl_event_timetable ett ON ett.id_event = e.id LEFT JOIN ztl_my_visit zmi ON (zmi.id = e.id AND zmi.ztl_group = "+EVENT_GROUP+") WHERE e.id IN ("+evt_wi+") AND et.id_language = "+settings.id_lang+" GROUP BY e.id ORDER BY  ett.date_last DESC";
 
     	db.transaction(function(tx) {
 			tx.executeSql(tmp_query, [], function(tx, res_evt) {
@@ -585,6 +583,12 @@ function my_visit_success(results) {
                         res_evt.rows.item(ei).title = res_evt.rows.item(ei).title.substring(0,max_dolzina_title)+"...";
                     }
 
+                     if ((res_evt.rows.item(ei).record_status == 0) || (res_evt.rows.item(ei).date_last < curr_time)) {
+                        res_evt.rows.item(ei).visible = "";
+                    } else {
+                        res_evt.rows.item(ei).visible = true;
+                    }
+
                     res.evt[k] = res_evt.rows.item(ei);
 					k++;
 				}
@@ -598,15 +602,12 @@ function my_visit_success(results) {
     	check_my_visit(res);
     }
 
-
     //myvisit tour
     var l = 0;
     var tmp_info_text = "";
     if (res.has_tour == 1) {
         tour_wi = tour_wi+"0";
-        var tmp_query = "SELECT t.id, tt.title, tt.short_description, zmi.start, zmi.end FROM ztl_tour t LEFT JOIN ztl_tour_translation tt ON tt.id_tour = t.id  LEFT JOIN ztl_my_visit zmi ON (zmi.id = t.id AND zmi.ztl_group = "+TOUR_GROUP+") WHERE t.id IN ("+tour_wi+")";
-
-        console.log("myvisit query tour" + tmp_query);
+        var tmp_query = "SELECT t.id, t.record_status, tt.title, tt.short_description, zmi.start, zmi.end FROM ztl_tour t LEFT JOIN ztl_tour_translation tt ON tt.id_tour = t.id  LEFT JOIN ztl_my_visit zmi ON (zmi.id = t.id AND zmi.ztl_group = "+TOUR_GROUP+") WHERE t.id IN ("+tour_wi+")";
 
         db.transaction(function(tx) {
             tx.executeSql(tmp_query, [], function(tx, res_tour) {
@@ -633,6 +634,12 @@ function my_visit_success(results) {
                         res_tour.rows.item(ti).title = res_tour.rows.item(ti).title.substring(0,max_dolzina_my_visit_tour_title)+"...";
                     }
                     
+                    if (res_tour.rows.item(ti).record_status == 0) {
+                        res_tour.rows.item(ti).visible = "";
+                    } else {
+                        res_tour.rows.item(ti).visible = true;
+                    }
+
                     res.tour[l] = res_tour.rows.item(ti);
                     l++;
                 }
