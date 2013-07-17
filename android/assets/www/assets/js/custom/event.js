@@ -54,7 +54,12 @@ function filter_events()  {
 	event_call_from_history = 0;
 
 	if (event_date_from_sql > event_date_to_sql) {
-		alert(from_bigger_than_to_translation[settings.id_lang]);
+		navigator.notification.confirm(
+				from_bigger_than_to_translation[settings.id_lang],
+				null,
+		        events_translation[settings.id_lang],
+		        ok_translation[settings.id_lang]
+		);	
 	} else {
 		//event_filter_toggle();
 

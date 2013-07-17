@@ -44,9 +44,11 @@ function load_pois_success(results) {
     var tmp;
     var trips_group;
     
-    console.log("LEN="+len);
+    var rec = 0;
     for (var i=0; i<len; i++){
     	if (results.rows.item(i).title == undefined) continue;
+    	trips_group = results.rows.item(i).id_group;
+
     	//skrajsam dolzino
     	results.rows.item(i).title = unescape(results.rows.item(i).title);
      	results.rows.item(i).address = unescape(results.rows.item(i).address);
@@ -55,10 +57,26 @@ function load_pois_success(results) {
     	if (tmp.length > max_dolzina_title) {
     		results.rows.item(i).title = tmp.substring(0,max_dolzina_title)+"...";
     	}
-    	res.items[i] = results.rows.item(i);
-    	trips_group = results.rows.item(i).id_group;
+    	
+    	//filtriram po poigrupah
+    	if ((trips_group == POI_ZAMENITOSTI_GROUP) ||
+    		(trips_group == POI_KULINARIKA_GROUP) ||
+    		(trips_group == POI_NAKUPOVANJE_GROUP) ||
+    		(trips_group == POI_ZABAVA_GROUP)) {
+    		var poigroup = results.rows.item(i).poigroups;
+    	    var poigroups = poigroups_map[trips_group];
+    		for (var j=0; j<poigroups.length; j++){
+    			if (poigroup.indexOf(poigroups[j]) != -1) {
+    		    	res.items[rec] = results.rows.item(i);
+    		    	rec++;
+    		    	break;
+    			}
+    		}
+    	} else {
+	    	res.items[i] = results.rows.item(i);
+    	}
     }
-    
+	
     trips[trips_group] = res;
     //load_page(template_lang+'trips.html', 'trips', res, 'fade', false);
 }
@@ -70,7 +88,13 @@ function load_poi_success(results) {
     res.items = [];
     	 
 	results.rows.item(0).title = unescape(results.rows.item(0).title);
-    res.items[0] = results.rows.item(0);
+	results.rows.item(0).address = unescape(results.rows.item(0).address);
+	results.rows.item(0).post = unescape(results.rows.item(0).post);
+	results.rows.item(0).phone = unescape(results.rows.item(0).phone);
+	results.rows.item(0).email = unescape(results.rows.item(0).email);
+	results.rows.item(0).www = unescape(results.rows.item(0).www);
+	results.rows.item(0).description = unescape(results.rows.item(0).description);
+	res.items[0] = results.rows.item(0);
 
     swipe 		 = 1;
 	current 	 = trip_id;
@@ -412,11 +436,10 @@ function last_update_success(results) {
 	} else {
 		navigator.notification.confirm(
 			synronization_finished_translation[settings.id_lang],
-	        onConfirm,
+			load_current_div,
 	        synchronization_translation[settings.id_lang],
 	        ok_translation[settings.id_lang]
 		);
-//		load_current_settings();
 	} 
 }
 
@@ -498,7 +521,9 @@ function my_visit_success(results) {
 
                     res_poi.rows.item(pi).group_name = "";
                     res_poi.rows.item(pi).title = unescape(res_poi.rows.item(pi).title);
-
+                    res_poi.rows.item(pi).address = unescape(res_poi.rows.item(pi).address);
+                    res_poi.rows.item(pi).post = unescape(res_poi.rows.item(pi).post);
+                	
                     if (res_poi.rows.item(pi).title.length > max_dolzina_title) {
                         res_poi.rows.item(pi).title.title = res_poi.rows.item(pi).title.substring(0,max_dolzina_title)+"...";
                     }
