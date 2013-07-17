@@ -80,7 +80,10 @@
 				<div class="ztl_item_details ztl_item_details_text">
 						{{#address}}{{address}},{{/address}}{{#post_number}} {{post_number}}{{/post_number}}{{#post}} {{post}}{{/post}}<br>
 					{{#phone}}
-						<div class="red"><img src="assets/css/ztl_images/phone.png" style="height:20px;"> {{phone}}</div>
+						<div class="red">
+							<img src="assets/css/ztl_images/phone.png" style="height:20px;">
+							<a href="tel:{{phone}}">{{phone}}</a>
+						</div>
 					{{/phone}}
 					{{#email}}
 						<div class="red">

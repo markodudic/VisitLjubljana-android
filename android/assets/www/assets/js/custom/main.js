@@ -261,11 +261,24 @@ function swipe_left_handler() {
 }
 
 function onConfirm(buttonIndex) {
-	if (buttonIndex == 2) do_synhronization();
-    else load_main_screen();
+	if (buttonIndex == 2) {
+		do_synhronization();
+	} else {
+		if (curr_div == "events") {
+			load_page(template_lang+'events.html', 'events', trips[EVENT_GROUP], 'fade', false, EVENT_GROUP);
+		} else if (curr_div == "inspired") {
+			load_page(template_lang+'inspired.html', 'inspired', trips[INSPIRED_GROUP], 'fade', false, INSPIRED_GROUP);
+		} else if (curr_div == "infos") {
+			load_page(template_lang+'infos.html', 'infos', trips[INFO_GROUP], 'fade', false, INFO_GROUP);
+		} else if (curr_div == "tour_category") {
+			load_page(template_lang+'tour_category.html', 'tour_category', trips[TOUR_LIST_GROUP], 'fade', false, TOUR_LIST_GROUP);
+		}
+	}
 }
-
-function synhronization_prompt() {
+ 
+var curr_div;
+function synhronization_prompt(div) {
+	curr_div = div;
 	navigator.notification.confirm(
 			synhronization_desc_translation[settings.id_lang],
 	        onConfirm,
@@ -279,7 +292,7 @@ function load_page(template, div, data, transition, reverse, id_group) {
 	
 	if ((div == "inspired") || (div == "events") || (div == "infos") || (div == "tour_category")) {
 		if ((data == undefined) || (data.items == undefined) || (data.items == null) || (data.items.length == 0)) {
-			synhronization_prompt()
+			synhronization_prompt(div)
 		};
 	}
 	
@@ -749,11 +762,11 @@ var spinner;
 	
 function show_spinner() {
 	var opts = {
-			  lines: 13, // The number of lines to draw
-			  length: window.innerWidth/16, // The length of each line
+			  lines: 25, // The number of lines to draw
+			  length: window.innerWidth/24, // The length of each line
 			  width: window.innerWidth/48, // The line thickness
-			  radius: 30, // The radius of the inner circle
-			  corners: 1, // Corner roundness (0..1)
+			  radius: 40, // The radius of the inner circle
+			  corners: 0.5, // Corner roundness (0..1)
 			  rotate: 0, // The rotation offset
 			  direction: 1, // 1: clockwise, -1: counterclockwise
 			  color: '#ff0000', // #rgb or #rrggbb

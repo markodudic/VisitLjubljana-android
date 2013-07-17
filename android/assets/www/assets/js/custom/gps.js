@@ -38,18 +38,23 @@ function onSuccess_gps(position) {
 	    	   geo_stuff[1] != "" && geo_stuff[2] != "" && 
 	    	   geo_stuff[1] != undefined  && geo_stuff[2] != undefined) {
 	    	   $("div.ztl_img_distance_container").show();
-	    	   $("div#ztl_distance_value_"+geo_stuff[0]).html(lineDistance(px, py, geo_stuff[1], geo_stuff[2])+" km");
+	    	   var dist = lineDistance(px, py, geo_stuff[1], geo_stuff[2]);
+	    	   if (dist > 1) {
+	    		   $("div#ztl_distance_value_"+geo_stuff[0]).html(dist+" km");
+	    	   } else {
+	    		   $("div#ztl_distance_value_"+geo_stuff[0]).html(dist*1000+" m");	    		   
+	    	   }
 	       } else {
 	    	   $("div.ztl_img_distance_container").hide();
 	       }
 	       
-	       var bbox = (geo_stuff[1] > x0) && (geo_stuff[1] < x1) && (geo_stuff[2] > y0) && (geo_stuff[2] < y1);
+	       /*var bbox = (geo_stuff[1] > x0) && (geo_stuff[1] < x1) && (geo_stuff[2] > y0) && (geo_stuff[2] < y1);
 	       if (bbox) {
 	    	   $("div#map_button").attr('class','ztl_red_button ztl_item_left_button');;
 	       } else {
 	    	   $("div#map_button").attr('class','ztl_grey_button ztl_grey_button_map ztl_item_left_button');
 	    	   $("div#map_button").removeAttr('onclick');
-	       }
+	       }*/
 	   	}); 
     }
 }
