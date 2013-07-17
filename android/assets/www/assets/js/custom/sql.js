@@ -370,7 +370,7 @@ function tour_success(results) {
     		results.rows.item(i).tour_category = tmp.substring(0,max_dolzina_title)+"...";
     	}
     	tmp = results.rows.item(i).short_description;
-    	if (tmp.length > max_dolzina_short_desc) {
+    	if (tmp.length > max_dolzina_title_info) {
     		results.rows.item(i).short_description = tmp.substring(0,max_dolzina_short_desc)+"...";
     	}
     	res.items[i] = results.rows.item(i);
