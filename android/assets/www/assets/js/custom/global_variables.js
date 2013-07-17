@@ -79,7 +79,8 @@ var tmp_history = ["fun--load_main_screen--empty"];
 //text dolzina max
 var max_dolzina_naslov = 25;
 var max_dolzina_poi_title = 30;
-var max_dolzina_title = 45;
+var max_dolzina_title = 25;
+var max_dolzina_title_info = 100;
 var max_dolzina_my_visit_tour_title = 25;
 var max_dolzina_short_desc = 60;
 
