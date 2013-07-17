@@ -173,8 +173,8 @@ function load_events(save_history) {
 						"LEFT JOIN  ztl_event_timetable ett ON ett.id_event = e.id " +
 						"LEFT JOIN ztl_poi p ON p.id = ett.venue_id " +
 						"WHERE et.id_language = "+settings.id_lang+" AND e.record_status = 1 " +
-						"GROUP BY e.id "+
-						"ORDER BY ett.date_first";
+						"GROUP BY e.id ";
+						//"ORDER BY ett.date_first";
 	var tmp_callback = "events_success";
     generate_query(tmp_query, tmp_callback); 
 }
@@ -206,7 +206,7 @@ function load_tours(id_tour_category, save_history)  {
     				"LEFT JOIN ztl_tour_tour_category ttc ON ttc.id_tour = t.id " +
     				"LEFT JOIN ztl_tour_category tc ON ttc.id_tour_category = tc.id " +
     				"LEFT JOIN ztl_tour_images ti ON t.id = ti.id_tour " +
-    				"WHERE tt.id_language = "+settings.id_lang+" AND ttc.id_tour_category = "+id_tour_category+" " +
+    				"WHERE tt.id_language = "+settings.id_lang+" AND tc.id_language = 1 AND ttc.id_tour_category = "+id_tour_category+" " +
     				"GROUP BY t.id "+
     				"ORDER BY tt.title";
     var tmp_callback   = "tour_success";
@@ -229,6 +229,25 @@ function load_info(save_history)  {
     					"GROUP BY i.id "+
     					"ORDER BY title";
     var tmp_callback   = "info_success";
+    generate_query(tmp_query, tmp_callback);
+}
+
+function load_poigroup(save_history)  {
+	swipe_dir 	= "";
+    swipe 		= 0;
+    if (save_history == 1)  {
+        var history_string = "fun--load_poigroup--empty";
+        add_to_history(history_string);
+    }
+
+    trips_title[8] = main_menu['img10'];
+
+    var tmp_query      = "SELECT pg.* " +
+    					"FROM ztl_poigroup pg " +
+    					"WHERE pg.id_language = "+settings.id_lang+" AND pg.record_status = 1 " +
+    					"GROUP BY pg.id "+
+    					"ORDER BY title";
+    var tmp_callback   = "poigroup_success";
     generate_query(tmp_query, tmp_callback);
 }
 
@@ -338,6 +357,26 @@ function load_single_info(id, save_history) {
 				"WHERE i.id_language = "+settings.id_lang+" AND i.id = "+id+" AND i.record_status = 1 " +
 				"GROUP BY i.id";
 	var tmp_callback = "load_info_success";
+    generate_query(tmp_query, tmp_callback);
+}
+
+function load_single_poigroup(id, save_history) {
+	swipe = 1;
+
+	if (save_history == 1)  {
+		var history_string = "fun--load_single_poigroup--"+id+"__fade__false";
+		add_to_history(history_string);
+	}
+
+	//ko bo osbstajala tabela se popravi query
+	var tmp_query 		= 	"SELECT zp.*, zpt.title title, "+group+" id_group, zpt.description description " +
+						"FROM (select * from ztl_poi WHERE record_status = 1) zp " +
+						"LEFT JOIN (select * from ztl_poi_translation where id_language = "+settings.id_lang+") zpt ON zpt.id_poi = zp.id " +  
+						"WHERE zpt.id_language = "+settings.id_lang+" AND zp.poigroups LIKE '%"+id+"%' " +				
+						"GROUP BY zp.id " +
+						"ORDER BY zpt.title ";
+	
+	var tmp_callback = "load_poigroup_success";
     generate_query(tmp_query, tmp_callback);
 }
 

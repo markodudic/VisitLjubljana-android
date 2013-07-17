@@ -78,7 +78,8 @@ function on_device_ready() {
 	poigroups_map[POI_NAKUPOVANJE_GROUP] 	= POI_NAKUPOVANJE_POI_GROUPS;
     
 	document.addEventListener("backbutton", go_back, true);
-
+	lang_code = "si";
+	update_poigroup(server_url+lang_code+'/mobile_app/poigroup.json');
 	//skopiram bazo za backup
 	if (develop==1) copyDB();
 
@@ -144,6 +145,7 @@ function reset_cache_cont() {
     load_tour_list(0);
     load_voice_guide(0);
     load_inspired(0);
+    load_poigroup(0);
     
     set_cache();
 	
@@ -223,6 +225,9 @@ function swipe_right_handler() {
 				} else if (swipe_group == 4) {
 					swipe_dir = "right";
 					load_single_info(res.items[j].id);
+				} else if (swipe_group == 5) {
+					swipe_dir = "right";
+					load_single_poigroup(res.items[j].id);
 				}
 			}
 		}
@@ -262,6 +267,9 @@ function swipe_left_handler() {
 			} else if (swipe_group == 4) {
 				swipe_dir = "left";
 				load_single_info(res.items[j].id);
+			} else if (swipe_group == 5) {
+				swipe_dir = "left";
+				load_single_poigroup(res.items[j].id);
 			}
 		}
 	}
@@ -314,7 +322,7 @@ function onConfirmForce(buttonIndex) {
 function load_page(template, div, data, transition, reverse, id_group) {
 	console.log("load page="+id_group+":"+div+":"+data+":"+voice_guide);
 	
-	if ((div == "inspired") || (div == "events") || (div == "infos") || (div == "tour_category")) {
+	if ((div == "inspired") || (div == "events") || (div == "infos") || (div == "tour_category") || (div == "poigroups")) {
 		if ((data == undefined) || (data.items == undefined) || (data.items == null) || (data.items.length == 0)) {
 			synhronization_prompt(div)
 		};
@@ -438,6 +446,8 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				if (data.item.title.length>max_dolzina_naslov) {
 					data.item.title=data.item.title.substring(0,max_dolzina_naslov)+"...";
 				}
+			} else if (div == 'poigroups') {
+				data.page_title 	= trips_title[id_group];
 			} else if (div == 'trip') {
 				data.ztl_item_details_description = description_translation[settings.id_lang];
 				data.map_button 				= map_translation[settings.id_lang];
@@ -639,7 +649,6 @@ function load_page(template, div, data, transition, reverse, id_group) {
 			hide_spinner();
 		}
 	});
-	
 }
 
 var touchStartTime;
@@ -843,6 +852,7 @@ function show_spinner() {
 			  top: (window.innerHeight-window.innerWidth/3)/2, // Top position relative to parent in px
 			  left: (window.innerWidth-window.innerWidth/3)/2 // Left position relative to parent in px
 			};
+	//$('body').wrap('<div class="overlay" />');
 	var target = document.getElementById("body");
 	spinner = new Spinner(opts).spin(target);
 

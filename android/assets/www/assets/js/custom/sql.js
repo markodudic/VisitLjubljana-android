@@ -66,10 +66,12 @@ function load_pois_success(results) {
     		var poigroup = results.rows.item(i).poigroups;
     	    var poigroups = poigroups_map[trips_group];
     		for (var j=0; j<poigroups.length; j++){
-    			if (poigroup.indexOf(poigroups[j]) != -1) {
-    		    	res.items[rec] = results.rows.item(i);
-    		    	rec++;
-    		    	break;
+    			if (poigroup != undefined) {
+	    			if (poigroup.indexOf(poigroups[j]) != -1) {
+	    		    	res.items[rec] = results.rows.item(i);
+	    		    	rec++;
+	    		    	break;
+	    			}
     			}
     		}
     	} else {
@@ -307,6 +309,61 @@ function load_info_success(results) {
     	load_page(template_lang+'info.html', 'info', res, 'fade', true);
     }
 }
+
+
+//poigroup
+function poigroup_success(results) {
+	var res = {};
+    res.items = [];
+    var len = results.rows.length;
+    var tmp;
+    for (var i=0; i<len; i++){
+    	//skrajsam dolzino
+    	results.rows.item(i).title = unescape(results.rows.item(i).title);
+    	results.rows.item(i).desc = unescape(results.rows.item(i).desc);
+    	tmp = results.rows.item(i).title;
+    	if (tmp.length > max_dolzina_title) {
+    		results.rows.item(i).title = tmp.substring(0,max_dolzina_title)+"...";
+    	}
+    	tmp = results.rows.item(i).desc;
+    	if (tmp.length > max_dolzina_title_info) {
+    		results.rows.item(i).desc = tmp.substring(0,max_dolzina_title_info)+"...";
+    	}
+    	
+    	res.items[i] = results.rows.item(i);
+    }
+
+    trips[POIGROUP_GROUP] = res;
+}
+
+//nalozi poije poigrupe
+function load_poigroup_success(results) {
+	var res = {};
+    res.items = [];
+    var len = results.rows.length;
+    var tmp;
+    var trips_group;
+    
+    var rec = 0;
+    for (var i=0; i<len; i++){
+    	if (results.rows.item(i).title == undefined) continue;
+    	trips_group = results.rows.item(i).id_group;
+
+    	//skrajsam dolzino
+    	results.rows.item(i).title = unescape(results.rows.item(i).title);
+     	results.rows.item(i).address = unescape(results.rows.item(i).address);
+     	results.rows.item(i).post = unescape(results.rows.item(i).post);
+    	tmp = results.rows.item(i).title;
+    	if (tmp.length > max_dolzina_title) {
+    		results.rows.item(i).title = tmp.substring(0,max_dolzina_title)+"...";
+    	}
+    	
+    	res.items[i] = results.rows.item(i);
+    }
+	
+    load_page(template_lang+'trips.html', 'trips', res, 'fade', false, POIGROUP_GROUP);
+}
+
 
 //inspired
 function inspired_success(results) {
@@ -957,6 +1014,17 @@ function populate_db_firstime() {
 		});
 	});
 
+	$.getScript('./assets/install_db/ztl_poigroup.js', function () {
+		db.transaction(populateDB_ztl_poigroup, errorCB, function(tx) {
+			db.transaction(function(tx) {
+				tx.executeSql('select count(*) as cnt from ztl_poigroup;', [], function(tx, res) {
+					console.log('41 >>>>>>>>>> ztl_poigroup res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+					add_indexes();
+				});
+			});
+		});
+	});
+	
 	$.getScript('./assets/install_db/ztl_my_visit.js', function () {
 		db.transaction(populateDB_ztl_my_visit, errorCB, function(tx) {
 			db.transaction(function(tx) {

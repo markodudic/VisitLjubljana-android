@@ -64,6 +64,7 @@ function check_update_success(results) {
     	update_tour(server_url+lang_code+'/mobile_app/tour.json');
 	    update_info(server_url+lang_code+'/mobile_app/info.json');
 	    update_inspired(server_url+lang_code+'/mobile_app/inspired.json');
+	    update_poigroup(server_url+lang_code+'/mobile_app/poigroup.json');
 	} else {
 		//updatam poi-je
 		var pois = new Array();
@@ -108,6 +109,7 @@ function check_update_success(results) {
 		//updatam info. vedno vse
 	    update_info(server_url+lang_code+'/mobile_app/info.json');
 	    update_inspired(server_url+lang_code+'/mobile_app/inspired.json');
+	    update_poigroup(server_url+lang_code+'/mobile_app/poigroup.json');
 	}
 }
 
@@ -228,7 +230,7 @@ function handle_poi_new(data) {
 				
 			//kveri ne updejta fildov za sound !
 			sql = "INSERT OR REPLACE INTO ztl_poi_translation (id_poi, id_language, title, description, sound, media_duration_string, media_duration_value) ";
-			sql+= "VALUES ("+data[i].id+",  "+settings.id_lang+", '"+addslashes(data[i].title)+"', '"+addslashes(data[i].description)+"', ";
+			sql+= "VALUES ("+data[i].id+",  "+settings.id_lang+", '"+addslashes(data[i].title)+"', '"+addslashes(data[i].desc)+"', ";
 			sql+= "(SELECT sound FROM ztl_poi_translation WHERE id_poi = "+data[i].id+" AND id_language = "+settings.id_lang+"),";
 			sql+= "(SELECT media_duration_string FROM ztl_poi_translation WHERE id_poi = "+data[i].id+" AND id_language = "+settings.id_lang+"),";
 			sql+= "(SELECT media_duration_value FROM ztl_poi_translation WHERE id_poi = "+data[i].id+" AND id_language = "+settings.id_lang+"))";
@@ -621,6 +623,69 @@ function handle_info(data) {
 	});	
 }
 
+
+/*********************** POIGROUP ***********************/
+
+function update_poigroup(url) {
+	console.log("update DB " +  url);
+	$.ajax( {
+		url : url,
+		dataType : 'json',
+		beforeSend : function(xhr) {
+	          xhr.setRequestHeader("Authorization", "Basic RWlqdTN6YW86dXRoMWplaUY=");
+		},
+		error : function(xhr, ajaxOptions, thrownError) {
+			//napaka
+			console.log(" >>>>>>>>>> failed "+url);
+			console.log(JSON.stringify(thrownError));
+			is_updt_finished();
+		},
+		success : function(data) {
+			console.log(" >>>>>>>>>> ok");
+			
+			//truncate samo za trenutni jezik
+			db.transaction(function(tx) {tx.executeSql('delete from ztl_poigroup where id_language = '+settings.id_lang+';', [], function(tx, res) {});});
+			//handle_poigroup_deleted(data['deleted']);
+			handle_poigroup(data['poisgroups']);
+		    load_poigroup(0);
+		    set_cache();
+		    console.log("XXX >>> poigroup");
+			is_updt_finished();
+		}
+	});
+}
+
+function handle_poigroup_deleted(data) {
+	db.transaction(function(tx) {
+		var sql = "";
+		if (data != null) {
+			for (var i = 0; i < data.length; i++) {
+				sql = "UPDATE ztl_poigroup SET record_status = 0 WHERE id = "+data[i];
+				//console.log(sql);
+				tx.executeSql(sql, [], function(tx, res) {});
+			}
+		}
+	});
+}
+
+function handle_poigroup(data) {
+	db.transaction(function(tx) {
+		var sql = "";
+		for (var i = 0; i < data.length; i++) {
+			if (data[i].image == null) {
+				data[i].image = '';			
+			}
+
+			sql = "INSERT INTO ztl_poigroup (id, id_language, title, image, desc, record_status) VALUES ("+data[i].id+", "+settings.id_lang+", '"+addslashes(data[i].title)+"', '"+data[i].image+"', '"+addslashes(data[i].desc)+"', 1)";
+			tx.executeSql(sql, [], function(tx, res) {});
+		}
+		
+		tx.executeSql('select count(*) as cnt from ztl_poigroup;', [], function(tx, res) {
+			console.log('+41 >>>>>>>>>> ztl_poigroup res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+		});
+	});	
+}
+
 /*********************** IMAGES ***********************/
 
 var knownfiles = [];
@@ -757,6 +822,29 @@ function readFiles() {
     			}
 	        }
 		});
+		
+		tx.executeSql('select * from ztl_poigroups where image != ""', [], function(tx, res) {
+	        for (var i=0; i<res.rows.length; i++) {
+	        	var url      = res.rows.item(i).image;
+	        	var filename = url.split("/").slice(-1)[0];
+	        	filename = $.trim(filename);
+
+	        	//filename ni prazen && ni na lokalnem FS && se zacne s http
+	        	if (filename != "" && url.indexOf(DATADIR.fullPath) != 0 && url.indexOf("http") == 0) {
+	    			var dlPath = DATADIR.fullPath+"/"+filename;
+	    			var updt_sql3 = 'update ztl_poigroups set image = "'+dlPath+'" where id='+res.rows.item(i).id+';';
+					tx.executeSql(updt_sql3, [], function(tx, res) {});	
+					
+		        	if (knownfiles.indexOf(filename) == -1) {
+	        			var ft = new FileTransfer();
+	        			ft.download(url, dlPath, function() {
+	        				console.log("==== new local file ztl_poigroups "+dlPath);
+	        			}, onFSError);
+	    			}
+    			}
+	        }
+		});
+		
 	});
 }
 
