@@ -124,10 +124,13 @@ function go_back() {
 				}
 
 				if (go_to[1] == "filter_visits") {
-					console.log("localstorage history -- filter");
 					filter_visits(params[0]);
 				}
 
+				if (go_to[1] == "filter_events") {
+					event_call_from_history = 1;
+					filter_events();
+				}
 			} else if (go_to[0] == 'main_menu') {
 				voice_guide = 0;
 				if (go_to[1] == INSPIRED_GROUP) {

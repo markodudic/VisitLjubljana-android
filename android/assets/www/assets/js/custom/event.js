@@ -7,6 +7,7 @@ var event_date_to 		 	= "";
 var event_date_from_sql  	= 0;
 var event_date_to_sql 	 	= 0;
 var event_category_filter 	= 0;
+var event_call_from_history = 0;
 
 function event_filter_toggle() {
 	$(".event_filter").toggle();
@@ -23,31 +24,39 @@ function event_filter_toggle() {
 }
 
 function filter_events()  {
-	var history_string = "fun--load_events--empty";
-	add_to_history(history_string);
-
 	swipe = 0;
 
-	event_title    		 = "";
-	event_date_from 	 = "";
-	event_date_to 		 = "";
-	event_date_from_sql  = 0;
-	event_date_to_sql 	 = 0;
+	if (event_call_from_history == 0) {
+		var history_string = "fun--filter_events--empty";
+		add_to_history(history_string);
 
-	if ($('#ztl_trip_filter_date_from').val() != '') {
-		event_date_from 	= $('#ztl_trip_filter_date_from').val();
-		event_date_from_sql = $('#ztl_trip_filter_date_from_hidden').val();
+		event_title    		 = "";
+		event_date_from 	 = "";
+		event_date_to 		 = "";
+		event_date_from_sql  = 0;
+		event_date_to_sql 	 = 0;
+
+		if ($('#ztl_trip_filter_date_from').val() != '') {
+			event_date_from 	= $('#ztl_trip_filter_date_from').val();
+			event_date_from_sql = $('#ztl_trip_filter_date_from_hidden').val();
+		}
+
+		if ($('#ztl_trip_filter_date_to').val() != '') {
+			event_date_to 		= $('#ztl_trip_filter_date_to').val();
+			event_date_to_sql	= $('#ztl_trip_filter_date_to_hidden').val();
+		}
+
+		event_category_filter = $('#event_type').val();
+
+		event_filter_toggle();
 	}
 
-	if ($('#ztl_trip_filter_date_to').val() != '') {
-		event_date_to 		= $('#ztl_trip_filter_date_to').val();
-		event_date_to_sql	= $('#ztl_trip_filter_date_to_hidden').val();
-	}
+	event_call_from_history = 0;
 
 	if (event_date_from_sql > event_date_to_sql) {
 		alert(from_bigger_than_to_translation[settings.id_lang]);
 	} else {
-		event_filter_toggle();
+		//event_filter_toggle();
 
 		if ($('#event_type').val() > 0) {
 			var tmp_query 	 = "SELECT name " +
@@ -66,13 +75,13 @@ function filter_events()  {
 		}
 
 		if ($('#event_type').val() > 0) {
-			event_category_filter = $('#event_type').val();
+			
 			var tmp_query    = "SELECT e.id, et.title, ett.venue_id, ett.date, ett.date_first, p.coord_x, p.coord_y, ett.venue as poi_title, e.image " +
 							"FROM ztl_event e LEFT JOIN ztl_event_translation et ON et.id_event = e.id " +
 							"LEFT JOIN  ztl_event_timetable ett ON ett.id_event = e.id " +
 							"LEFT JOIN ztl_event_event_category eec ON eec.id_event = e.id " +
 							"LEFT JOIN ztl_poi p ON p.id = ett.venue_id " +
-							"WHERE et.id_language = "+settings.id_lang+" AND eec.id_event_category = "+$('#event_type').val()+" AND e.record_status = 1 AND date_first >= "+event_date_from_sql+" AND date_last <= "+event_date_to_sql+" " +
+							"WHERE et.id_language = "+settings.id_lang+" AND eec.id_event_category = "+event_category_filter+" AND e.record_status = 1 AND date_first >= "+event_date_from_sql+" AND date_last <= "+event_date_to_sql+" " +
 							"GROUP BY e.id  " +
 							"ORDER BY ett.date_first";
 	    } else {
