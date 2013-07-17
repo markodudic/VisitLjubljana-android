@@ -11,18 +11,18 @@
 					<select id="event_type" class="ztl_event_type_select">
 						<option value="0">{{default_category}}</option>
 						{{#categories}}
-							<option value="{{id}}">{{name}}</option>
+							<option value="{{id}}" {{filter_selected}}>{{name}}</option>
 						{{/categories}}
 					</select>
 				</div>
 				<div style="padding-bottom:15px; padding-top:15px;">
 					<div class="event_search_filds_left">
-						<input type="text" id="ztl_trip_filter_date_from" class="ztl_event_search_field" onClick="dprun(this)" >
-						<input type="hidden" id="ztl_trip_filter_date_from_hidden">
+						<input type="text" id="ztl_trip_filter_date_from" class="ztl_event_search_field" onClick="dprun(this)" value="{{event_date_from}}">
+						<input type="hidden" id="ztl_trip_filter_date_from_hidden" value="{{event_date_from_sql}}">
 					</div>
 					<div class="event_search_filds_right">
-						<input type="text" id="ztl_trip_filter_date_to" class="ztl_event_search_field" onFocus="dprun(this)" >
-						<input type="hidden" id="ztl_trip_filter_date_to_hidden">
+						<input type="text" id="ztl_trip_filter_date_to" class="ztl_event_search_field" onFocus="dprun(this)" value="{{event_date_to}}">
+						<input type="hidden" id="ztl_trip_filter_date_to_hidden" value="{{event_date_to_sql}}">
 					</div>
 				</div>
 				<div style="clear:both;"></div>

@@ -351,12 +351,43 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				data.potrdi_button 	= confirm_translation[settings.id_lang];
 				$('body').html("");
 			} else if (div == 'filtered_events') {
-				data.page_title 	= trips_title[id_group];
-				data.categories 	= event_type;
-				data.page_title 	= trips_title[id_group];
-				data.events_title 	= events_translation[settings.id_lang];
-				data.default_category = default_category_translation[settings.id_lang];
-				data.potrdi_button 	= confirm_translation[settings.id_lang];
+				
+				console.log("filter eventi vsi ---"+JSON.stringify(event_type));
+				console.log("filter eventi dolzina ---"+event_type.length);
+				
+				for (var ei=0; ei<event_type.length; ei++) {
+					console.log("filter eventi posamezen --- index "+ei);
+					console.log("filter eventi posamezen ---"+JSON.stringify(event_type[ei]));
+					
+					event_type[ei].filter_selected = "";
+					if (event_category_filter == event_type[ei].id){
+						event_type[ei].filter_selected = "SELECTED";
+					}
+					
+				}
+
+				console.log("filter eventi vsi ---"+JSON.stringify(event_type));
+
+				if (event_date_from_sql == 0) {
+					data.event_date_from_sql = "";
+				} else {
+					data.event_date_from_sql = event_date_from_sql;
+				}
+
+				if (event_date_to_sql == 0) {
+					data.event_date_to_sql = "";
+				} else {
+					data.event_date_to_sql = event_date_to_sql;
+				}
+
+				data.event_date_from	= event_date_from;
+				data.event_date_to		= event_date_to;
+				data.page_title 		= trips_title[id_group];
+				data.categories 		= event_type;
+				data.page_title 		= trips_title[id_group];
+				data.events_title 		= events_translation[settings.id_lang];
+				data.default_category 	= default_category_translation[settings.id_lang];
+				data.potrdi_button 		= confirm_translation[settings.id_lang];
 				$('body').html("");
 			} else if (div == 'event') {
 				data.categories 				= event_type;
@@ -655,7 +686,7 @@ function load_template(src, tpl) {
 			tmp = $(temp).filter(tpl).html();
 		}
 	});
-	//console.log("TMP="+tmp);
+	console.log("TMP="+tmp);
 	return tmp;
 }
 
