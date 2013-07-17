@@ -34,17 +34,13 @@ body {
     background-color:#303030;
 }
 
-.overlay
-{
-    width: 100%;
+
+.overlay { 
+    position: relative;
     height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    //display: none;
-    z-index: 9999;
-    background: rgb(0,0,0);
-    background: rgba(0,0,0,0.7);
+    width: 100%;
+    z-index: 999999;
+    background-color: rgba(9,9,0,0.7);
 }
 
 
