@@ -3,8 +3,6 @@ function add_to_history(history_string) {
 	
 	history.push(history_string);
 	localStorage.setItem('history', JSON.stringify(history));
-
-	console.log("localStorage history - "+ JSON.stringify(history));
 }
 
 function local_storage_load() {
@@ -20,10 +18,6 @@ function local_storage_load() {
 
 function go_back() {
 	var history = JSON.parse(localStorage.getItem('history'));
-
-	console.log("localstorage history - "+JSON.stringify(history));
-	console.log("localstorage history - my_visit_filter: "+ my_visit_filter)
-
 
 	if (my_visit_filter == 1) {
 		my_visit_settings_menu_toggle();
@@ -44,9 +38,6 @@ function go_back() {
 
 			history.pop();
 			localStorage.setItem('history', JSON.stringify(history));
-
-			console.log("localstorage history - goto0: "+go_to[0]);
-			console.log("localstorage history - goto1: "+go_to[1]);
 
 			if (go_to[0] == 'fun') {
 				slide 		= 0;
