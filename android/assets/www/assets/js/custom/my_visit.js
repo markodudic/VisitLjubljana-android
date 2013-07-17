@@ -289,7 +289,7 @@ function filter_visits (history_filter) {
 	}
 
 	
-
+	my_visit_filter = 0;
 	load_my_visit(0, id_filter);
 
 
