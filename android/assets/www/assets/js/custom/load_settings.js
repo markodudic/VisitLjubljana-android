@@ -344,27 +344,30 @@ function load_single_info(id, save_history) {
 
 function set_my_visit_notification() {
 	if (localStorage.getItem('reminder') == 1) {
-		var current_time = new Date();
-		current_time = parseInt(current_time.getTime() / 1000);
+		if (device.platform == "iOS") {
 
-		//time check
-		var from = parseInt(current_time+3600-(notification_refresh_time/2));
-		var to   = parseInt(current_time+3600+(notification_refresh_time/2));
+		} else {
+			var current_time = new Date();
+			current_time = parseInt(current_time.getTime() / 1000);
 
-		var tmp_query = "SELECT count(id) AS nr "+
-						"FROM ztl_my_visit zmv " +
-						"WHERE zmv.start <= '"+from+"' "+ 
-						"AND zmv.start >= '"+to+"' "+
-						"AND ztl_group = "+EVENT_GROUP;
+			//time check
+			var from = parseInt(current_time+3600-(notification_refresh_time/2));
+			var to   = parseInt(current_time+3600+(notification_refresh_time/2));
 
-		db.transaction(function(tx) {
-			tx.executeSql(tmp_query, [], function(tx, res) {
-				if (res.rows.item(0).nr > 0) {
-					window.plugins.statusBarNotification.notify("Ljubljana and more", notification_translation[settings.id_lang]);
-				}
+			var tmp_query = "SELECT count(id) AS nr "+
+							"FROM ztl_my_visit zmv " +
+							"WHERE zmv.start <= '"+from+"' "+ 
+							"AND zmv.start >= '"+to+"' "+
+							"AND ztl_group = "+EVENT_GROUP;
+
+			db.transaction(function(tx) {
+				tx.executeSql(tmp_query, [], function(tx, res) {
+					if (res.rows.item(0).nr > 0) {
+						window.plugins.statusBarNotification.notify(APP_NAME, notification_translation[settings.id_lang]);
+					}
+				});
 			});
-		});
-
+		}
 	}	
 }
 
