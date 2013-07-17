@@ -73,25 +73,48 @@
 		</li>
 	{{/evt_group_name_translation}}
 	{{#evt}}
-		<li class="ztl_list_li" id="my_visit_{{id}}">
-			<div class="ztl_list_item">
-				<div class="my_visit_content">
-					<div class="my_visit_text" onClick="load_event({{id}}, 1);">
-						<div class="ztl_list_header">{{title}}</div>
-						<div class="ztl_list_content_text">
-							<span id="formated_event_start_{{id}}"></span>
-							<input type="hidden" id="non_formated_event_start_{{id}}" value="{{start}}">						
-							<br>
-							{{venue}}
+		{{#visible}}
+			<li class="ztl_list_li" id="my_visit_{{id}}">
+				<div class="ztl_list_item">
+					<div class="my_visit_content">
+						<div class="my_visit_text" onClick="load_event({{id}}, 1);">
+							<div class="ztl_list_header">{{title}}</div>
+							<div class="ztl_list_content_text">
+								<span id="formated_event_start_{{id}}"></span>
+								<input type="hidden" id="non_formated_event_start_{{id}}" value="{{start}}">						
+								<br>
+								{{venue}}
+							</div>
+						</div>
+						<div class="my_visit_icons">
+							<img onClick="my_visit_get_event_date({{id}}, EVENT_GROUP);" src="assets/css/ztl_images/my_visit_calendar.png" class="my_visit_list_image">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<span onClick="delete_from_my_visit({{id}}, EVENT_GROUP);"><img src="assets/css/ztl_images/my_visit_delete.png" class="my_visit_list_image"></span>
 						</div>
 					</div>
-					<div class="my_visit_icons">
-						<img onClick="my_visit_get_event_date({{id}}, EVENT_GROUP);" src="assets/css/ztl_images/my_visit_calendar.png" class="my_visit_list_image">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<span onClick="delete_from_my_visit({{id}}, EVENT_GROUP);"><img src="assets/css/ztl_images/my_visit_delete.png" class="my_visit_list_image"></span>
+				</div>
+			</li>
+		{{/visible}}
+		{{^visible}}
+			<li class="ztl_list_li" id="my_visit_{{id}}" style="opacity:0.5;">
+				<div class="ztl_list_item">
+					<div class="my_visit_content">
+						<div class="my_visit_text">
+							<div class="ztl_list_header">{{title}}</div>
+							<div class="ztl_list_content_text">
+								<span id="formated_event_start_{{id}}"></span>
+								<input type="hidden" id="non_formated_event_start_{{id}}" value="{{start}}">						
+								<br>
+								{{venue}}
+							</div>
+						</div>
+						<div class="my_visit_icons">
+							<img src="assets/css/ztl_images/my_visit_calendar.png" class="my_visit_list_image">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<span onClick="delete_from_my_visit({{id}}, EVENT_GROUP);"><img src="assets/css/ztl_images/my_visit_delete.png" class="my_visit_list_image"></span>
+						</div>
 					</div>
 				</div>
-			</div>
-		</li>
+			</li>
+		{{/visible}}
 	{{/evt}}
 	{{#poi}}
 		{{#group_name}}
@@ -156,25 +179,48 @@
 		</li>
 	{{/tour_group_name_translation}}
 	{{#tour}}
-		<li class="ztl_list_li" id="my_visit_{{id}}">
-			<div class="ztl_list_item">
-				<div class="my_visit_content">
-					<div class="my_visit_text" onClick="load_tour({{id}}, 1);">
-						<div class="ztl_list_header">{{title}}</div>
-						<div class="ztl_list_content_text">
-							{{short_description}}
-							<br>
-							<span id="formated_tour_start_{{id}}"></span>
-							<input type="hidden" id="non_formated_tour_start_{{id}}" value="{{start}}">	
+		{{#visible}}
+			<li class="ztl_list_li" id="my_visit_{{id}}">
+				<div class="ztl_list_item">
+					<div class="my_visit_content">
+						<div class="my_visit_text" onClick="load_tour({{id}}, 1);">
+							<div class="ztl_list_header">{{title}}</div>
+							<div class="ztl_list_content_text">
+								{{short_description}}
+								<br>
+								<span id="formated_tour_start_{{id}}"></span>
+								<input type="hidden" id="non_formated_tour_start_{{id}}" value="{{start}}">	
+							</div>
+						</div>
+						<div class="my_visit_icons">
+							<img onClick="my_visit_item_date({{id}}, TOUR_GROUP);" src="assets/css/ztl_images/my_visit_calendar.png" class="my_visit_list_image">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<span onClick="delete_from_my_visit({{id}}, TOUR_GROUP);"><img src="assets/css/ztl_images/my_visit_delete.png" class="my_visit_list_image"></span>
 						</div>
 					</div>
-					<div class="my_visit_icons">
-						<img onClick="my_visit_item_date({{id}}, TOUR_GROUP);" src="assets/css/ztl_images/my_visit_calendar.png" class="my_visit_list_image">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<span onClick="delete_from_my_visit({{id}}, TOUR_GROUP);"><img src="assets/css/ztl_images/my_visit_delete.png" class="my_visit_list_image"></span>
+				</div>
+			</li>
+		{{/visible}}
+		{{^visible}}
+			<li class="ztl_list_li" id="my_visit_{{id}}" style="opacity:0.5;">
+				<div class="ztl_list_item">
+					<div class="my_visit_content">
+						<div class="my_visit_text">
+							<div class="ztl_list_header">{{title}}</div>
+							<div class="ztl_list_content_text">
+								{{short_description}}
+								<br>
+								<span id="formated_tour_start_{{id}}"></span>
+								<input type="hidden" id="non_formated_tour_start_{{id}}" value="{{start}}">	
+							</div>
+						</div>
+						<div class="my_visit_icons">
+							<img src="assets/css/ztl_images/my_visit_calendar.png" class="my_visit_list_image">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<span onClick="delete_from_my_visit({{id}}, TOUR_GROUP);"><img src="assets/css/ztl_images/my_visit_delete.png" class="my_visit_list_image"></span>
+						</div>
 					</div>
 				</div>
-			</div>
-		</li>
+			</li>
+		{{/visible}}
 	{{/tour}}
 	</div>
 	</div>
