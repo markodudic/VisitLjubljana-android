@@ -369,10 +369,13 @@ function load_single_poigroup(id, save_history) {
 	}
 
 	//ko bo osbstajala tabela se popravi query
-	var tmp_query 		= 	"SELECT zp.*, zpt.title title, "+group+" id_group, zpt.description description " +
+	var tmp_query 		= 	"SELECT zp.*, zpt.title title, "+group+" id_group, zpt.description description, pg.id poigroup_id, pg.title poigroup_title " +
 						"FROM (select * from ztl_poi WHERE record_status = 1) zp " +
 						"LEFT JOIN (select * from ztl_poi_translation where id_language = "+settings.id_lang+") zpt ON zpt.id_poi = zp.id " +  
-						"WHERE zpt.id_language = "+settings.id_lang+" AND zp.poigroups LIKE '%"+id+"%' " +				
+						", ztl_poigroup pg " +  
+						"WHERE zpt.id_language = "+settings.id_lang+" AND " +
+						"		zp.poigroups LIKE '%"+id+"%' AND " +				
+						"		pg.id = " + id + " " +				
 						"GROUP BY zp.id " +
 						"ORDER BY zpt.title ";
 	

@@ -100,7 +100,6 @@ function load_poi_success(results) {
 
     swipe 		 = 1;
 	current 	 = trip_id;
-	console.log("RES SOUND="+res.items[0].sound);
 	
 	//lokacija za angleske file je drgje kot za ostale ((na SD kartici))
 	if (settings.id_lang == 2) {
@@ -353,6 +352,7 @@ function load_poigroup_success(results) {
     	results.rows.item(i).title = unescape(results.rows.item(i).title);
      	results.rows.item(i).address = unescape(results.rows.item(i).address);
      	results.rows.item(i).post = unescape(results.rows.item(i).post);
+     	results.rows.item(i).poigroup_title = unescape(results.rows.item(i).poigroup_title);
     	tmp = results.rows.item(i).title;
     	if (tmp.length > max_dolzina_title) {
     		results.rows.item(i).title = tmp.substring(0,max_dolzina_title)+"...";

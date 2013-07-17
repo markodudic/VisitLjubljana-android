@@ -38,6 +38,7 @@ var my_visit_filter = 0;
 //history
 var view_main_menu 	= 1;
 var current_div		= "";
+var curr_poigroup_id = 0;
 
 //iscroll
 var myScroll;
@@ -78,8 +79,7 @@ function on_device_ready() {
 	poigroups_map[POI_NAKUPOVANJE_GROUP] 	= POI_NAKUPOVANJE_POI_GROUPS;
     
 	document.addEventListener("backbutton", go_back, true);
-	lang_code = "si";
-	update_poigroup(server_url+lang_code+'/mobile_app/poigroup.json');
+
 	//skopiram bazo za backup
 	if (develop==1) copyDB();
 
@@ -299,6 +299,8 @@ function load_current_div(){
 		load_page(template_lang+'inspired.html', 'inspired', trips[INSPIRED_GROUP], 'fade', false, INSPIRED_GROUP);
 	} else if (selected_div == "infos") {
 		load_page(template_lang+'infos.html', 'infos', trips[INFO_GROUP], 'fade', false, INFO_GROUP);
+	} else if (selected_div == "poigroups") {
+		load_page(template_lang+'poigroup.html', 'poigroup', trips[POIGROUP_GROUP], 'fade', false, POIGROUP_GROUP);
 	} else if (selected_div == "tour_category") {
 		load_page(template_lang+'tour_category.html', 'tour_category', trips[TOUR_LIST_GROUP], 'fade', false, TOUR_LIST_GROUP);
 	}	
@@ -349,13 +351,7 @@ function load_page(template, div, data, transition, reverse, id_group) {
 		map_settings = load_template("ztl_map_settings.html", "#tpl_ztl_map_settings");
 	}
 
-	
-	if (id_group != undefined) {
-		selected_group = id_group;
-	}
-	selected_div = div;
-
-	 
+ 
 	if ((div == "trips") && (voice_guide == 0)) {
 		data = sort_by_distance(data);
    }
@@ -374,6 +370,11 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				extra_div_id 		= "_"+id_group;
 				data.extra_div_id 	= id_group;
 				data.page_title 	= trips_title[id_group];
+				if (id_group == POIGROUP_GROUP) {
+					curr_poigroup_id = data.items[0].poigroup_id;
+					data.page_title = data.items[0].poigroup_title;
+					data.poigroup = 1;
+				}
 			} else if (div == 'events') {
 				data.categories 	= event_type;
 				data.page_title 	= trips_title[id_group];
@@ -461,6 +462,10 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				if (data.star != 0) {
 					data.shadow="true";
 				}
+				if (selected_group == POIGROUP_GROUP) {
+					data.poigroup 	= 1;
+					data.id_poigroup = curr_poigroup_id;
+				}
 				menu_icon 	= 3;
 			} else if (div == 'main_menu') {
 				view_main_menu 	= 1;
@@ -546,6 +551,11 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				data.id_group 		= VOICE_GROUP;
 				menu_icon 			= 2;
 			} 
+
+			if (id_group != undefined) {
+				selected_group = id_group;
+			}
+			selected_div = div;
 			
 			var res = $(temp).filter('#tpl_'+div).html();
 			

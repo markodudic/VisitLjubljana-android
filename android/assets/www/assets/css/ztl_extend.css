@@ -187,14 +187,10 @@ a:active {text-decoration:none; color:#ed1c24; font-size:1.0em;}
     padding-bottom:30px;
 }
 
-.ztl_distance_poi {
-    font-family: 'robotocondensed';
-    font-size:1.2em;
-    padding-right: 4%;
-}
 
 .ztl_distance_arrow_img {
     padding-top: 10px;
+    padding-right: 25px;
     height:20px;
 }
 
@@ -268,7 +264,7 @@ a:active {text-decoration:none; color:#ed1c24; font-size:1.0em;}
 
 @media (max-width: 320px){
     .ztl_content {
-        padding-top: 40px;
+        padding-top: 44px;
         padding-bottom: 50px;
     }
     
@@ -289,7 +285,7 @@ a:active {text-decoration:none; color:#ed1c24; font-size:1.0em;}
 
 @media (min-width: 321px) and (max-width: 360px){
     .ztl_content {
-        padding-top: 44px;
+        padding-top: 48px;
         padding-bottom: 52px;
     }
     
@@ -311,7 +307,7 @@ a:active {text-decoration:none; color:#ed1c24; font-size:1.0em;}
 
 @media (min-width: 361px) and (max-width: 599px) {
     .ztl_content {
-        padding-top: 44px;
+        padding-top: 48px;
         padding-bottom: 55px;
     }
     
@@ -332,7 +328,7 @@ a:active {text-decoration:none; color:#ed1c24; font-size:1.0em;}
 
 @media (min-width: 600px){
     .ztl_content {
-        padding-top: 44px;
+        padding-top: 48px;
         padding-bottom: 55px;
     }
     
