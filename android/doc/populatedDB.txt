@@ -1,0 +1,110 @@
+Priprava baze z podatki za poi, info, tour in inspired
+- v assets skopiraš prazno bazo s pravo strukturo
+- bazo skopiraš na napravo z ztl.java
+- v global_variables nastavi populateDB=1
+- naredi sinhronizacijo za vse jezike
+- zapri in odpri aplikacijo da skopira bazo na sd kartico
+- skopiraj bazo na lokalni disk
+adb pull /mnt/sdcard/Android/data/com.innovatif.ztl/Database.db c:/temp
+- skopiraj image na lokalni disk v update folder
+- v bazi popravi poti do imagev (Skript 1)
+- v bazi popravi poti do soundov (Skript 2)
+- datum v ztl_updates nastavi na en dan prej, zato da lahko dogoke syncas
+- skopiraj bazo v assets in preimenuj v Database.db
+- v global_variables nastavi populateDB=0
+- deinštaliraj app in ga zaženi na novo
+
+
+- SKRIPT1
+update ztl_poi
+set image = replace(image, 'file:///storage/emulated/0/Android/data/com.innovatif.ztl/','./uploads/images/');
+
+update ztl_info
+set image = replace(image, 'file:///storage/emulated/0/Android/data/com.innovatif.ztl/','./uploads/images/');
+
+update ztl_poigroup
+set image = replace(image, 'file:///storage/emulated/0/Android/data/com.innovatif.ztl/','./uploads/images/');
+
+update ztl_inspired
+set image = replace(image, 'file:///storage/emulated/0/Android/data/com.innovatif.ztl/','./uploads/images/');
+
+update ztl_tour_images
+set image = replace(image, 'file:///storage/emulated/0/Android/data/com.innovatif.ztl/','./uploads/images/');
+
+- SKRIPT2
+update ztl_poi_translation set sound = '1349124_tocka_7.mp3' where id_poi=1300 and id_language=1;
+update ztl_poi_translation set sound = '1349134_tocka_9.mp3' where id_poi=1336 and id_language=1;
+update ztl_poi_translation set sound = '1349236_tocka_13.mp3' where id_poi=1365 and id_language=1;
+update ztl_poi_translation set sound = '1349226_tocka_11.mp3' where id_poi=1417 and id_language=1;
+update ztl_poi_translation set sound = '1349015_tocka_4.mp3' where id_poi=1435 and id_language=1;
+update ztl_poi_translation set sound = '1349129_tocka_8.mp3' where id_poi=1455 and id_language=1;
+update ztl_poi_translation set sound = '1349260_tocka_15.mp3' where id_poi=1522 and id_language=1;
+update ztl_poi_translation set sound = '1348633_tocka_2.mp3' where id_poi=1630 and id_language=1;
+update ztl_poi_translation set sound = '1349204_tocka_10.mp3' where id_poi=1705 and id_language=1;
+update ztl_poi_translation set sound = '1349241_tocka_14.mp3' where id_poi=1732 and id_language=1;
+update ztl_poi_translation set sound = '1349061_tocka_6.mp3' where id_poi=1734 and id_language=1;
+update ztl_poi_translation set sound = '1349054_tocka_5.mp3' where id_poi=1818 and id_language=1;
+update ztl_poi_translation set sound = '1349231_tocka_12.mp3' where id_poi=1821 and id_language=1;
+update ztl_poi_translation set sound = '1348644_tocka_3.mp3' where id_poi=19872 and id_language=1;
+
+update ztl_poi_translation set sound = '1349125_point-7.mp3' where id_poi=1300 and id_language=2;
+update ztl_poi_translation set sound = '1349135_point-9.mp3' where id_poi=1336 and id_language=2;
+update ztl_poi_translation set sound = '1349237_point-13.mp3' where id_poi=1365 and id_language=2;
+update ztl_poi_translation set sound = '1349227_point-11.mp3' where id_poi=1417 and id_language=2;
+update ztl_poi_translation set sound = '1349016_point-4.mp3' where id_poi=1435 and id_language=2;
+update ztl_poi_translation set sound = '1349130_point-8.mp3' where id_poi=1455 and id_language=2;
+update ztl_poi_translation set sound = '1349261_point-15.mp3' where id_poi=1522 and id_language=2;
+update ztl_poi_translation set sound = '1348641_point-2.mp3' where id_poi=1630 and id_language=2;
+update ztl_poi_translation set sound = '1349205_point-10.mp3' where id_poi=1705 and id_language=2;
+update ztl_poi_translation set sound = '1349242_point-14.mp3' where id_poi=1732 and id_language=2;
+update ztl_poi_translation set sound = '1349062_point-6.mp3' where id_poi=1734 and id_language=2;
+update ztl_poi_translation set sound = '1349055_point-5.mp3' where id_poi=1818 and id_language=2;
+update ztl_poi_translation set sound = '1349232_point-12.mp3' where id_poi=1821 and id_language=2;
+update ztl_poi_translation set sound = '1348645_point-3.mp3' where id_poi=19872 and id_language=2;
+
+
+update ztl_poi_translation set sound = '1349126_punkt_7.mp3' where id_poi=1300 and id_language=3;
+update ztl_poi_translation set sound = '1349136_punkt_9.mp3' where id_poi=1336 and id_language=3;
+update ztl_poi_translation set sound = '1349238_punkt_13.mp3' where id_poi=1365 and id_language=3;
+update ztl_poi_translation set sound = '1349228_punkt_11.mp3' where id_poi=1417 and id_language=3;
+update ztl_poi_translation set sound = '1349017_punkt_4.mp3' where id_poi=1435 and id_language=3;
+update ztl_poi_translation set sound = '1349131_punkt_8.mp3' where id_poi=1455 and id_language=3;
+update ztl_poi_translation set sound = '1349262_punkt_15.mp3' where id_poi=1522 and id_language=3;
+update ztl_poi_translation set sound = '1348642_punkt_2.mp3' where id_poi=1630 and id_language=3;
+update ztl_poi_translation set sound = '1349206_punkt_10.mp3' where id_poi=1705 and id_language=3;
+update ztl_poi_translation set sound = '1349243_punkt_14.mp3' where id_poi=1732 and id_language=3;
+update ztl_poi_translation set sound = '1349063_punkt_6.mp3' where id_poi=1734 and id_language=3;
+update ztl_poi_translation set sound = '1349056_punkt_5.mp3' where id_poi=1818 and id_language=3;
+update ztl_poi_translation set sound = '1349233_punkt_12.mp3' where id_poi=1821 and id_language=3;
+update ztl_poi_translation set sound = '1348646_punkt_3.mp3' where id_poi=19872 and id_language=3;
+
+update ztl_poi_translation set sound = '1349127_punto_7.mp3' where id_poi=1300 and id_language=4;
+update ztl_poi_translation set sound = '1349137_punto_9.mp3' where id_poi=1336 and id_language=4;
+update ztl_poi_translation set sound = '1349239_punto_13.mp3' where id_poi=1365 and id_language=4;
+update ztl_poi_translation set sound = '1349229_punto_11.mp3' where id_poi=1417 and id_language=4;
+update ztl_poi_translation set sound = '1349018_punto_4.mp3' where id_poi=1435 and id_language=4;
+update ztl_poi_translation set sound = '1349132_punto_8.mp3' where id_poi=1455 and id_language=4;
+update ztl_poi_translation set sound = '1349263_punto_15.mp3' where id_poi=1522 and id_language=4;
+update ztl_poi_translation set sound = '1348643_punto_2.mp3' where id_poi=1630 and id_language=4;
+update ztl_poi_translation set sound = '1349207_punto_10.mp3' where id_poi=1705 and id_language=4;
+update ztl_poi_translation set sound = '1349244_punto_14.mp3' where id_poi=1732 and id_language=4;
+update ztl_poi_translation set sound = '1349064_punto_6.mp3' where id_poi=1734 and id_language=4;
+update ztl_poi_translation set sound = '1349057_punto_5.mp3' where id_poi=1818 and id_language=4;
+update ztl_poi_translation set sound = '1349234_punto_12.mp3' where id_poi=1821 and id_language=4;
+update ztl_poi_translation set sound = '1348647_punto_3.mp3' where id_poi=19872 and id_language=4;
+
+
+update ztl_poi_translation set sound = '1349124_tocka_7.mp3' where id_poi=1300 and id_language=5;
+update ztl_poi_translation set sound = '1349124_tocka_7.mp3' where id_poi=1336 and id_language=5;
+update ztl_poi_translation set sound = '1349124_tocka_7.mp3' where id_poi=1365 and id_language=5;
+update ztl_poi_translation set sound = '1349124_tocka_7.mp3' where id_poi=1417 and id_language=5;
+update ztl_poi_translation set sound = '1349124_tocka_7.mp3' where id_poi=1435 and id_language=5;
+update ztl_poi_translation set sound = '1349124_tocka_7.mp3' where id_poi=1455 and id_language=5;
+update ztl_poi_translation set sound = '1349124_tocka_7.mp3' where id_poi=1522 and id_language=5;
+update ztl_poi_translation set sound = '1349124_tocka_7.mp3' where id_poi=1630 and id_language=5;
+update ztl_poi_translation set sound = '1349124_tocka_7.mp3' where id_poi=1705 and id_language=5;
+update ztl_poi_translation set sound = '1349124_tocka_7.mp3' where id_poi=1732 and id_language=5;
+update ztl_poi_translation set sound = '1349124_tocka_7.mp3' where id_poi=1734 and id_language=5;
+update ztl_poi_translation set sound = '1349124_tocka_7.mp3' where id_poi=1818 and id_language=5;
+update ztl_poi_translation set sound = '1349124_tocka_7.mp3' where id_poi=1821 and id_language=5;
+update ztl_poi_translation set sound = '1349124_tocka_7.mp3' where id_poi=19872 and id_language=5;
