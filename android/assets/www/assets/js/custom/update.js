@@ -5,7 +5,7 @@ function update_db() {
 	generate_query(tmp_query, tmp_callback);
 	//update_audio();
 }
-
+ 
 var updt_finished = 0;
 var updt_running  = 0;
 function is_updt_finished() {
@@ -213,8 +213,8 @@ function handle_poi_new(data) {
 				data[i].image = '';			
 			}
 			
-			if (data[i].star == null) {
-				data[i].star = 0;
+			if (data[i].stars == null) {
+				data[i].stars = 0;
 			}
 
 			if (data[i].poigroups == null) {
@@ -224,16 +224,30 @@ function handle_poi_new(data) {
 			sql = "INSERT OR REPLACE INTO ztl_poi (id, address, post_number, post, phone, email, www, coord_x, coord_y, turisticna_kartica, ljubljana_quality, recommended_map, image, star, poigroups, record_status, from_db) ";
 			sql+= "VALUES ("+data[i].id+", '"+addslashes(data[i].address)+"', '"+data[i].postNumber+"','"+addslashes(data[i].post)+"','"+addslashes(data[i].phone)+"', ";
 			sql+= "'"+addslashes(data[i].email)+"', '"+addslashes(data[i].www)+"', '"+data[i].coord.x+"', '"+data[i].coord.y+"', '"+addslashes(data[i].turisticna_kartica)+"', '"+addslashes(data[i].ljubljanaQuality)+"', ";
-			sql+= "'"+data[i].recommended_map+"', '"+data[i].image+"', '"+data[i].star+"', '"+data[i].poigroups+"', 1, 0);";
+			sql+= "'"+data[i].recommended_map+"', '"+data[i].image+"', '"+data[i].stars+"', '"+data[i].poigroups+"', 1, 0);";
 			//console.log(sql);
 			tx.executeSql(sql, [], function(tx, res) {});
 				
+			var mds = "";
+			var mdv = "";
+			if (data[i].audioGuideLength != null) {
+				mdv = data[i].audioGuideLength;
+				var minutes = Math.floor(parseInt(mdv) / 60);
+				var seconds = parseInt(mdv) - minutes * 60;
+				if (seconds < 10) {
+					seconds = "0"+seconds;
+				}
+				mds = minutes+":"+seconds;
+			}
+
+			
 			//kveri ne updejta fildov za sound !
 			sql = "INSERT OR REPLACE INTO ztl_poi_translation (id_poi, id_language, title, description, sound, media_duration_string, media_duration_value) ";
 			sql+= "VALUES ("+data[i].id+",  "+settings.id_lang+", '"+addslashes(data[i].title)+"', '"+addslashes(data[i].desc)+"', ";
 			sql+= "(SELECT sound FROM ztl_poi_translation WHERE id_poi = "+data[i].id+" AND id_language = "+settings.id_lang+"),";
-			sql+= "(SELECT media_duration_string FROM ztl_poi_translation WHERE id_poi = "+data[i].id+" AND id_language = "+settings.id_lang+"),";
-			sql+= "(SELECT media_duration_value FROM ztl_poi_translation WHERE id_poi = "+data[i].id+" AND id_language = "+settings.id_lang+"))";
+			sql+= "'"+mds+"', '"+mdv+"')";
+			//sql+= "(SELECT media_duration_string FROM ztl_poi_translation WHERE id_poi = "+data[i].id+" AND id_language = "+settings.id_lang+"),";
+			//sql+= "(SELECT media_duration_value FROM ztl_poi_translation WHERE id_poi = "+data[i].id+" AND id_language = "+settings.id_lang+"))";
 			//console.log(sql);
 			tx.executeSql(sql, [], function(tx, res) {});
 			
@@ -766,8 +780,8 @@ function readFiles() {
 	        	//filename ni prazen && ni na lokalnem FS && se zacne s http
 	        	if (filename != "" && url.indexOf(DATADIR.fullPath) != 0 && url.indexOf("http") == 0) {
 	    			var dlPath = DATADIR.fullPath+"/"+filename;
-	    			var updt_sql1 = 'update ztl_event set image = "'+dlPath+'" where id='+res.rows.item(i).id+';';
-					tx.executeSql(updt_sql1, [], function(tx, res) {});	
+	    			var updt_sql2 = 'update ztl_event set image = "'+dlPath+'" where id='+res.rows.item(i).id+';';
+					tx.executeSql(updt_sql2, [], function(tx, res) {});	
 					
 		        	if (knownfiles.indexOf(filename) == -1) {
 	        			var ft = new FileTransfer();
@@ -788,8 +802,8 @@ function readFiles() {
 	        	//filename ni prazen && ni na lokalnem FS && se zacne s http
 	        	if (filename != "" && url.indexOf(DATADIR.fullPath) != 0 && url.indexOf("http") == 0) {
 	    			var dlPath = DATADIR.fullPath+"/"+filename;
-	    			var updt_sql2 = 'update ztl_inspired set image = "'+dlPath+'" where id='+res.rows.item(i).id+';';
-					tx.executeSql(updt_sql2, [], function(tx, res) {});	
+	    			var updt_sql3 = "update ztl_inspired set image = '"+dlPath+"' where id="+res.rows.item(i).id+";";
+	    			tx.executeSql(updt_sql3, [], function(tx, res) {});	
 					
 		        	if (knownfiles.indexOf(filename) == -1) {
 	        			var ft = new FileTransfer();
@@ -810,8 +824,9 @@ function readFiles() {
 	        	//filename ni prazen && ni na lokalnem FS && se zacne s http
 	        	if (filename != "" && url.indexOf(DATADIR.fullPath) != 0 && url.indexOf("http") == 0) {
 	    			var dlPath = DATADIR.fullPath+"/"+filename;
-	    			var updt_sql3 = 'update ztl_info set image = "'+dlPath+'" where id='+res.rows.item(i).id+';';
-					tx.executeSql(updt_sql3, [], function(tx, res) {});	
+	    			var updt_sql4 = 'update ztl_info set image = "'+dlPath+'" where id_language = '+settings.id_lang+' and id='+res.rows.item(i).id+';';
+	    			console.log("updt_sql4="+updt_sql4);
+					tx.executeSql(updt_sql4, [], function(tx, res) {});	
 					
 		        	if (knownfiles.indexOf(filename) == -1) {
 	        			var ft = new FileTransfer();
@@ -823,7 +838,7 @@ function readFiles() {
 	        }
 		});
 		
-		tx.executeSql('select * from ztl_poigroups where image != ""', [], function(tx, res) {
+		tx.executeSql('select * from ztl_poigroup where image != ""', [], function(tx, res) {
 	        for (var i=0; i<res.rows.length; i++) {
 	        	var url      = res.rows.item(i).image;
 	        	var filename = url.split("/").slice(-1)[0];
@@ -832,8 +847,8 @@ function readFiles() {
 	        	//filename ni prazen && ni na lokalnem FS && se zacne s http
 	        	if (filename != "" && url.indexOf(DATADIR.fullPath) != 0 && url.indexOf("http") == 0) {
 	    			var dlPath = DATADIR.fullPath+"/"+filename;
-	    			var updt_sql3 = 'update ztl_poigroups set image = "'+dlPath+'" where id='+res.rows.item(i).id+';';
-					tx.executeSql(updt_sql3, [], function(tx, res) {});	
+	    			var updt_sql5 = 'update ztl_poigroup set image = "'+dlPath+'" where id_language = '+settings.id_lang+' and id='+res.rows.item(i).id+';';
+					tx.executeSql(updt_sql5, [], function(tx, res) {});	
 					
 		        	if (knownfiles.indexOf(filename) == -1) {
 	        			var ft = new FileTransfer();

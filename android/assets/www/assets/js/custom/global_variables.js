@@ -85,6 +85,7 @@ var max_dolzina_title_info = 100;
 var max_dolzina_my_visit_tour_title = 25;
 var max_dolzina_short_desc = 60;
 
+
 //regija
 //14.106,45.793 x 15.054,46.269
 var lon0 = 14.106;
