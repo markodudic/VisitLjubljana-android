@@ -473,3 +473,10 @@ my_visit_explain_translation[2] = "By logging in you will import the trip you ha
 my_visit_explain_translation[3] = "Mit der Anmeldung übertragen Sie Ihren Ausflugsplan, den Sie zuvor auf der Website www.visitljubljana.com zusammengestellt haben, In Ihre mobile App.\n\nHinweis: Falls Sie den Ausflugsplan auch innerhalb Ihrer mobilen App zusammengestellt haben, wird dieser gelöscht bzw. mit dem Ausflugsplan, den Sie zuvor auf der Website zusammengestellt haben, überschrieben.";
 my_visit_explain_translation[4] = "V redu prevod";
 my_visit_explain_translation[5] = "En vous connectant, vous importerez dans l'application mobile l'excursion préalablement projetée par vous sur le site web www.visitljubljana.com.\n\nAvertissement : Si vous avez également projeté l'excursion dans l'application mobile, elle sera remplacée par celle préalablement projetée par vous sur le site web.";
+
+var from_bigger_than_to_translation = [];
+from_bigger_than_to_translation[1] = "Napaka: Datum začetka je večji kot datum konca!";
+from_bigger_than_to_translation[2] = "Napaka: Datum od je večji kot datum do!";
+from_bigger_than_to_translation[3] = "Napaka: Datum od je večji kot datum do!";
+from_bigger_than_to_translation[4] = "Napaka: Datum od je večji kot datum do!";
+from_bigger_than_to_translation[5] = "Napaka: Datum od je večji kot datum do!";
