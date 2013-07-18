@@ -89,7 +89,7 @@ function load_trip_content(id, transition, reverse, save_history) {
 							'FROM ztl_poi zp '+
 							'LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id  '+
 							'LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category  '+
-							'LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id  '+
+							'LEFT JOIN ztl_poi_translation zpt ON (zpt.id_poi = zp.id AND zpt.id_language = '+settings.id_lang+') '+
 							'WHERE zp.id = '+id+' AND zpt.id_language = '+settings.id_lang+' '+
 							'GROUP BY zp.id '+
 							'ORDER BY zpt.title';
