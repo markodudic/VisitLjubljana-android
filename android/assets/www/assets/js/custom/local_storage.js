@@ -19,6 +19,8 @@ function local_storage_load() {
 function go_back() {
 	var history = JSON.parse(localStorage.getItem('history'));
 
+	console.log("localhistory --- "+JSON.stringify(history));
+
 	if (my_visit_filter == 1) {
 		my_visit_settings_menu_toggle();
 		my_visit_filter = 0;
