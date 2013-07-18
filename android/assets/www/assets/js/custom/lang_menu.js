@@ -487,4 +487,3 @@ from_bigger_than_to_translation[2] = "Error: The start date must not be later th
 from_bigger_than_to_translation[3] = "Fehler: Das Startdatum darf nicht später als das Endedatum sein!";
 from_bigger_than_to_translation[4] = "Errore: Data di inizio non può essere posteriore alla data di fine!";
 from_bigger_than_to_translation[5] = "Erreur: date de commencement ne peut pas être postérieure à la date de fin!";
-

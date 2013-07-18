@@ -5,6 +5,10 @@ var filter_cat;
 var sql_filter_group  = -1;
 var sql_filer_poi_cat = -1;
 
+var event_time_array = [];
+var eta_count		 = 0;
+var evt_id			 = 0;
+
 function add_to_my_visit(id, ztl_group, type, start, end, autmatic) {
 	var tmp_query = "INSERT OR REPLACE INTO ztl_my_visit (id, ztl_group, type, start, end) VALUES ("+id+", "+ztl_group+", "+type+", "+start+", "+end+");";
 
@@ -40,7 +44,6 @@ function load_my_visit(save_history, filter_group) {
 	
 	
     var tmp_callback   = "my_visit_success";
-
     generate_query(tmp_query, tmp_callback);
 }
 
@@ -256,74 +259,77 @@ function my_visit_item_date(id, group) {
 }
 
 function my_visit_get_event_date(id) {
-	console.log("myvisit my_visit_event_item_date");
-	console.log("myvisit id: "+id);
+	evt_id = id;
+	event_time_array = [];
 
-	var tmp_query 	 = "SELECT et.date_first, et.date_last FROM ztl_event_timetable et WHERE et.id_event = "+id+" AND et.id_language = "+settings.id_lang+" GROUP BY et.venue, et.date";
+	var d = new Date();
+	d.setHours(0,0,0,0);
+	var current_time = parseInt(d.getTime()/1000);
 
-	console.log("myVisit --- query: "+tmp_query);
+	var tmp_query 	 = "SELECT et.date_first, et.date_last, strftime('%H', date_first) AS hour FROM ztl_event_timetable et WHERE et.id_event = "+id+" AND et.id_language = "+settings.id_lang+" AND et.date_last >= "+current_time+" ORDER BY date_first ";
 
 	var date_first 		= 0;
 	var date_last  		= 0;
-	var current_time	= new Date();
-	var current_time	= parseInt(current_time.getTime()/1000);
+	
+	var counter			= 0;
+	var tmp 			= {};
 	db.transaction(function(tx) {
 		 tx.executeSql(tmp_query, [], function(tx, results) {
-		 	console.log("myvisit res: "+ JSON.stringify(results));
-
 		 	var len = results.rows.length;
+		 	var selector;
 			for (var i=0; i<len; i++){
-				console.log("myvisit --- res " + JSON.stringify(results.rows.item(i)));
+				tmp = {};
 
-				date_first = results.rows.item(i).date_first;
-				date_last  = results.rows.item(i).date_last;
-
-				console.log("myvisit ************************************");
-
-				console.log("myvisit --- date curr : "+current_time);
-				console.log("myvisit --- date first: "+date_first);
-				console.log("myvisit --- date last : "+date_last);
-
-				console.log("myvisit ************************************");
-
-
-				//pogoji, s katerimi se nastavi casovni interval
-				//datuma konca ni treba preverjat, ker ce ni verjaven se ne da kliknt na gumb ki pripelje sem.
+				date_first = parseInt(results.rows.item(i).date_first);
+				date_last  = parseInt(results.rows.item(i).date_last);
 				
-				//preverim ali gre za enkratni dogodek -- first in end date sta enaka
-				if (date_first == date_last) {
-					//enkratni dogodek
-
-					console.log("myvisit --- enkratni dogodek ---");
-
+				if (results.rows.item(i).hour == "12") {
+					selector = "date";
 				} else {
-					//vecdnevni dogodek
-					console.log("myvisit --- ponavljajoc dogodek ---");
-
-					if (date_first < current_time) {
-						//ce je dogodek ze aktiven
-						date_first = current_time;
-					}
-
+					selector = "date and time";
 				}
 
-				console.log("myvisit 1************************************");
+				if (date_first < current_time) {
+					date_first = current_time;
+				}
 
-				console.log("myvisit --- 1date curr : "+current_time);
-				console.log("myvisit --- 1date first: "+date_first);
-				console.log("myvisit --- 1date last : "+date_last);
+				if (date_first == date_last) {	
+					if (date_first >= current_time) {
+						tmp.date_int = date_first;
+						tmp.date_str = "";
+						tmp.selector = selector;
 
-				console.log("myvisit 1************************************");
+						event_time_array[counter] = tmp;
+						counter++;
+					}
+				} else {
+					while (date_first<date_last) {
+						tmp = {};
 
-				console.log("myvisit prekonventiram datume in izpisem formo");
+						tmp.date_int = date_first;
+						tmp.date_str = "";
+						tmp.selector = selector;
+
+						event_time_array[counter] = tmp;
+						counter++;
+
+						date_first = date_first + 86400;
+					}
+				}
 		    }
+
+		    eta_count = event_time_array.length;
+		    for (var eta=0; eta<eta_count; eta++) {
+		    	parse_time(event_time_array[eta].date_int, event_time_array[eta].selector, eta);
+		    }
+
 		 });
 	});
 }
 
 function render_time() {
-	var tmp_id 	  = "";
-	var hide_time = 0;
+	var tmp_id 	  	= "";
+	var hide_time 	= 0;
 	
 	$("[id^=non_formated_]" ).each(function() {
 
@@ -333,6 +339,10 @@ function render_time() {
 			var n = $(this).attr('id').indexOf("event");
 			if (n > 0){
 				hide_time = 0;
+
+				if ($("#hour_"+tmp_id).val() == "12") {
+					hide_time = 1;
+				}
 			} else {
 				hide_time = 1;
 			}
@@ -353,9 +363,6 @@ function filter_visits (history_filter) {
 		var history_string = "fun--filter_visits--"+id_filter+"__false";
 		add_to_history(history_string);
 	}
-
-
-	console.log("localStorage history --- id filter " +id_filter );
 
 	skip_filter_cat = 1;
 
@@ -382,4 +389,44 @@ function  my_visit_explain(){
         my_visit_download_translation[settings.id_lang],
         ok_translation[settings.id_lang]
 	);
+}
+
+function parse_time(date_string, selector, index) {
+    var date_obj = new Date(date_string*1000);
+
+    navigator.globalization.dateToString(
+        date_obj,
+    function (date) {
+       event_time_array[index].date_str = date.value;
+       verify_parse_finish(index);
+    },
+    function () {alert('Error getting dateString\n');},
+    {formatLength:'short', selector:selector}
+    );
+}
+
+function verify_parse_finish(index) {
+	if ((eta_count - 1) == index) {
+		$("#event_date_selector").empty();
+
+		var tmp_opt = "";
+		for (var i=0; i<event_time_array.length; i++) {
+			tmp_opt = "<option value='"+event_time_array[i].date_int+"'>"+event_time_array[i].date_str+"</option>";
+
+			$("#event_date_selector").append(tmp_opt);
+		}
+		
+		$("#event_date_selector").trigger('focus');
+	}
+}
+
+function save_evt_time() {
+	var time = $("#event_date_selector").val();
+
+	var tmp_query = "UPDATE ztl_my_visit SET start = "+time+" WHERE id = "+evt_id+" AND ztl_group = "+EVENT_GROUP;
+	db.transaction(function(tx) {
+		 tx.executeSql(tmp_query, [], function(tx, results) {
+		    load_my_visit();
+		 });
+	});
 }
