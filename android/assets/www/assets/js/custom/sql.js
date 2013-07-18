@@ -70,6 +70,7 @@ function load_pois_success(results) {
     		for (var j=0; j<poigroups.length; j++){
     			if (poigroup != undefined) {
 	    			if (poigroup.indexOf(poigroups[j]) != -1) {
+	    				//console.log("REC="+results.rows.item(i).id+":"+results.rows.item(i).title);
 	    		    	res.items[rec] = results.rows.item(i);
 	    		    	rec++;
 	    		    	break;
@@ -77,7 +78,8 @@ function load_pois_success(results) {
     			}
     		}
     	} else {
-	    	res.items[i] = results.rows.item(i);
+	    	res.items[rec] = results.rows.item(i);
+	    	rec++;
     	}
     }
 	

@@ -493,6 +493,8 @@ function load_page(template, div, data, transition, reverse, id_group) {
 			} else if (div == 'ztl_about') {
 				data = {};
 				data.about_title	= about_translation[settings.id_lang];
+				data.copy_right 	= copy_right_translation[settings.id_lang];
+				data.version 		= version_translation[settings.id_lang];
 				data.about_version 	= about_version_translation[settings.id_lang];
 				data.about_contact 	= about_contact_translation[settings.id_lang];
 				data.about_desc		= about_desc_translation[settings.id_lang];
@@ -818,7 +820,7 @@ function sort_by_distance(unsorted) {
 		var id = unsorted.items[i].id;
 		var x = unsorted.items[i].coord_x;
 		var y = unsorted.items[i].coord_y;
-		var dist = lineDistanceAll(x, y, cx, cy);
+		var dist = lineDistanceAll(x, y, cx, cy)+Math.pow(i,-6); //tole je da preprecim enake razdelja istih koordinat
 		if ((x==0) || (x='')) dist = 99999-i;
 		
 		keys.push(dist);
