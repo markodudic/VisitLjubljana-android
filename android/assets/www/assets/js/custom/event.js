@@ -21,6 +21,15 @@ function event_filter_toggle() {
 	} else {
 		swipe = 1;
 	}
+
+	/*
+	var history = JSON.parse(localStorage.getItem('history'));
+	if (history[history.length-1] == 'main_menu--0') {
+		history.pop();
+
+		localStorage.setItem('history', JSON.stringify(history));
+	}
+	*/
 }
 
 function filter_events()  {
