@@ -7,9 +7,10 @@ Priprava baze z podatki za poi, info, tour in inspired
 - skopiraj bazo na lokalni disk
 adb pull /mnt/sdcard/Android/data/com.innovatif.ztl/Database.db c:/temp
 - skopiraj image na lokalni disk v update folder
+adb pull /mnt/sdcard/android/data/com.innovatif.ztl c:/temp/images
 - v bazi popravi poti do imagev (Skript 1)
 - v bazi popravi poti do soundov (Skript 2)
-- datum v ztl_updates nastavi na en dan prej, zato da lahko dogoke syncas
+- datum v ztl_updates nastavi na en dan prej, zato da lahko dogotke syncas
 - skopiraj bazo v assets in preimenuj v Database.db
 - v global_variables nastavi populateDB=0
 - deinštaliraj app in ga zaženi na novo
