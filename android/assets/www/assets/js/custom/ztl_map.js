@@ -449,8 +449,12 @@ function show_system_maps() {
 	
 	//var geo = 'geo:'+p.lat+','+p.lon+'?z=17';
 	//var geo = "http://maps.google.com/maps?daddr="+daddr.lat+","+daddr.lon+"&z=17";
-	var geo = "https://maps.google.com/maps?saddr="+saddr.lat+","+saddr.lon+"&daddr="+daddr.lat+","+daddr.lon+"&sll="+daddr.lat+","+daddr.lon+"&mra=mift&z=17";
-	console.log(geo);
+    if (device.platform == "iOS") {
+       var geo = "maps:saddr="+saddr.lat+","+saddr.lon+"&daddr="+daddr.lat+","+daddr.lon;
+    } else {
+	   var geo = "https://maps.google.com/maps?saddr="+saddr.lat+","+saddr.lon+"&daddr="+daddr.lat+","+daddr.lon+"&sll="+daddr.lat+","+daddr.lon+"&mra=mift&z=17";
+    }
+    console.log(geo);
     window.open(geo,'_system');
 }
 

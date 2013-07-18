@@ -88,7 +88,11 @@ function on_device_ready() {
 	
 	//analytics
     gaPlugin = window.plugins.gaPlugin;
-    gaPlugin.init(nativePluginResultHandler, nativePluginErrorHandler, "UA-4832430-3", 10);
+    if (device.platform == "iOS") {
+    	gaPlugin.init(nativePluginResultHandler, nativePluginErrorHandler, UA_ios, 10);
+	} else {
+		gaPlugin.init(nativePluginResultHandler, nativePluginErrorHandler, UA_android, 10);
+	}
 
     window.setInterval(set_my_visit_notification, 60000);
 }

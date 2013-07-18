@@ -116,6 +116,10 @@ var myLocationCorrectionY = -50;
 //notification refresh time in seconds
 var notification_refresh_time = 60;
 
+//analytics
+var UA_android = "UA-4832430-3";
+var UA_ios     = "UA-4832430-4";
+
 //za deploy - ne izpisujejo se komentarji
 /*
 var console = {};
