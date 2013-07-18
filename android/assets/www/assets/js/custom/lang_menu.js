@@ -1,4 +1,4 @@
-var lang ='{"language_menu":[{"title":"Vsebine","img1":"Poiščite navdih","img2":"Prireditve","img3":"Znamenitosti","img4":"Kulinarika","img5":"Informacije","img6":"Ogledi in izleti","img7":"Nastanitve","img8":"Zabava","img9":"Nakupovanje","img10":"Kraji","img99":"Ostalo"},{"title":"Content","img1":"Get inspired","img2":"Events","img3":"Sights and attractions","img4":"Eating out","img5":"Visitor information","img6":"Tours and excursions","img7":"Accommodation","img8":"Entertainment","img9":"Shopping","img10":"Places","img99":"Ostalo"},{"title":"Inhalt","img1":"Lass dich inspirieren","img2":"Veranstaltungen","img3":"Sehenswürdigkeiten","img4":"Kulinarik","img5":"Informationen","img6":"Führungen und Ausflüge","img7":"Unterkünfte","img8":"Unterhaltung","img9":"Shopping","img10":"Orte","img99":"Ostalo"},{"title":"Contenuto","img1":"Trova ispirazioni","img2":"Manifestazioni","img3":"Attrazioni","img4":"Gastronomia","img5":"Informazioni","img6":"Visite e gite","img7":"Allogio","img8":"Divertimento","img9":"Shopping","img10":"Posti","img99":"Ostalo"},{"title":"Content","img1":"Laissez-vous insprirer","img2":"Evénements","img3":"Curiosités","img4":"Gastronomie","img5":"Info pour les visiteurs","img6":"Visites et excursions","img7":"Hébergement","img8":"Divertissement","img9":"Shopping","img10":"Lieux","img99":"Ostalo"}]}';
+var lang ='{"language_menu":[{"title":"Vsebine","img1":"MyVisit - poiščite navdih","img2":"Prireditve","img3":"Znamenitosti","img4":"Kulinarika","img5":"Informacije","img6":"Ogledi in izleti","img7":"Nastanitve","img8":"Zabava","img9":"Nakupovanje","img10":"Kraji","img99":"Ostalo"},{"title":"Content","img1":"MyVisit - get inspired","img2":"Events","img3":"Sights and attractions","img4":"Eating out","img5":"Visitor information","img6":"Tours and excursions","img7":"Accommodation","img8":"Entertainment","img9":"Shopping","img10":"Places","img99":"Ostalo"},{"title":"Inhalt","img1":"MyVisit - lass dich inspirieren","img2":"Veranstaltungen","img3":"Sehenswürdigkeiten","img4":"Kulinarik","img5":"Informationen","img6":"Führungen und Ausflüge","img7":"Unterkünfte","img8":"Unterhaltung","img9":"Shopping","img10":"Orte","img99":"Ostalo"},{"title":"Contenuto","img1":"MyVisit - trova ispirazioni","img2":"Manifestazioni","img3":"Attrazioni","img4":"Gastronomia","img5":"Informazioni","img6":"Visite e gite","img7":"Allogio","img8":"Divertimento","img9":"Shopping","img10":"Posti","img99":"Ostalo"},{"title":"Content","img1":"MyVisit - laissez-vous insprirer","img2":"Evénements","img3":"Curiosités","img4":"Gastronomie","img5":"Info pour les visiteurs","img6":"Visites et excursions","img7":"Hébergement","img8":"Divertissement","img9":"Shopping","img10":"Lieux","img99":"Ostalo"}]}';
 lang = JSON.parse(lang);
 
 //veza med sliko in grupo
@@ -175,12 +175,27 @@ synhronization_button_translation[3]	= "ÜBERTRAGEN VON DATEN";
 synhronization_button_translation[4]	= "TRASFERIRE I DATI";
 synhronization_button_translation[5]	= "TRANSFÉRER DES DONNÉES";
 
+var copy_right_translation = [];
+copy_right_translation[1]	= "©Turizem Ljubljana";
+copy_right_translation[2]	= "©Ljubljana Tourism";
+copy_right_translation[3]	= "©Ljubljana Tourism";
+copy_right_translation[4]	= "©Ljubljana Tourism";
+copy_right_translation[5]	= "©Ljubljana Tourism";
+
 var about_version_translation = [];
 about_version_translation[1]	= "VERZIJA";
 about_version_translation[2]	= "VERSION";
 about_version_translation[3]	= "VERSION";
 about_version_translation[4]	= "VERSIONE";
 about_version_translation[5]	= "VERSION";
+
+var version_translation = [];
+version_translation[1]	= "1.0";
+version_translation[2]	= "1.0";
+version_translation[3]	= "1.0";
+version_translation[4]	= "1.0";
+version_translation[5]	= "1.0";
+
 
 var about_contact_translation = [];
 about_contact_translation[1]	= "KONTAKT";

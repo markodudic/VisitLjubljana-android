@@ -248,14 +248,18 @@ var init = function (onSelectFeatureFunction) {
         //zracunam razdaljo
         $("#ztl_distance_value").html(lineDistance( poi_data.coord_x, poi_data.coord_y, current_position_xy[0]-correctionX+myLocationCorrectionX, current_position_xy[1]-correctionY+myLocationCorrectionY ) + " km");
         
-        if (poi_data.title.length>max_dolzina_title) {
-			poi_data.title=poi_data.title.substring(0,max_dolzina_title)+"...";
+        var title = poi_data.title.toUpperCase();
+        var r = /%u([\d\w]{4})/gi;
+        title = title.replace(r, function (match, grp) {
+            return String.fromCharCode(parseInt(grp, 16)); } );
+        title = unescape(title);
+        
+        if (title.length>max_dolzina_poi_title) {
+			title=title.substring(0,max_dolzina_poi_title)+"...";
 		}
-        $("#poi_title").html(unescape(poi_data.title.toUpperCase()));
-		if (poi_data.address.length>max_dolzina_naslov) {
-			poi_data.address=poi_data.address.substring(0,max_dolzina_naslov)+"...";
-		}
-		$("#poi_address").html(unescape(poi_data.address));
+        $("#poi_title").html(title);
+
+        $("#poi_address").html(unescape(poi_data.poi_title));
         $(".map_info").click(function() {
        		load_page_content(feature.attributes.id, feature.attributes.type);        		
         }); 
@@ -319,7 +323,7 @@ function get_poi_data() {
 
 function load_content(id) {
 	if (curr_type == EVENT_GROUP) {
-        var tmp_query = 'SELECT  '+curr_type+' as type, e.id, et.title, p.address, p.post_number, p.post, p.coord_x, p.coord_y  '+
+        var tmp_query = 'SELECT  '+curr_type+' as type, e.id, et.title, p.address, p.post_number, p.post, p.coord_x, p.coord_y, ett.venue as poi_title  '+
 				        'FROM ztl_event e  '+
 				        'LEFT JOIN ztl_event_translation et ON et.id_event = e.id '+ 
 				        'LEFT JOIN  ztl_event_timetable ett ON ett.id_event = e.id  '+
@@ -327,7 +331,7 @@ function load_content(id) {
 				        'WHERE e.id = '+id+' AND et.id_language = '+settings.id_lang+' '+
 				        'GROUP BY e.id';    
     } else if ((curr_type == POI_GROUP) || (curr_type == VOICE_GROUP)) {
-        var tmp_query = 'SELECT  '+curr_type+' as type, zp.*, zpt.title, zcg.id_group, zp.coord_x, zp.coord_y '+
+        var tmp_query = 'SELECT  '+curr_type+' as type, zp.*, zpt.title, zcg.id_group, zp.coord_x, zp.coord_y, zp.address || " " || zp.post_number || " " || zp.post as poi_title '+
         				'FROM ztl_poi zp  '+
 				        'LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id  '+
 				        'LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category  '+
