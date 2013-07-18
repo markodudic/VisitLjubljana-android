@@ -64,7 +64,7 @@ function on_device_ready() {
 	
 	load_settings();
 	init_gps();
-
+	
 	//navigator.splashscreen.show();
 	skip_update = 0;
 
@@ -219,7 +219,8 @@ function swipe_right_handler() {
 				current = res.items[j]['id'];
 				
 				if (swipe_group == 1) {
-					load_page(template_lang+'trip.html', 'trip', res.items[j], 'slide', true, selected_group);
+					//load_page(template_lang+'trip.html', 'trip', res.items[j], 'slide', true, selected_group);
+					load_trip_content(res.items[j]['id'], 'fade', true, 1)
 				} else if (swipe_group == 2) {
 					swipe_dir = "right";
 					load_event(res.items[j].id);
@@ -261,7 +262,8 @@ function swipe_left_handler() {
 			current = res.items[j]['id'];
 
 			if (swipe_group == 1) {
-				load_page(template_lang+'trip.html', 'trip', res.items[j], 'slide', false, selected_group);
+				//load_page(template_lang+'trip.html', 'trip', res.items[j], 'slide', false, selected_group);
+				load_trip_content(res.items[j]['id'], 'fade', true, 1)
 			} else if (swipe_group == 2) {
 				swipe_dir = "left";
 				load_event(res.items[j].id);
@@ -357,7 +359,9 @@ function load_page(template, div, data, transition, reverse, id_group) {
 
  
 	if ((div == "trips") && (voice_guide == 0)) {
-		data = sort_by_distance(data);
+		if ((data != undefined) && (current_position_xy != undefined)) {
+			data = sort_by_distance(data);
+		}
    }
 	
 	$.ajax({
@@ -808,8 +812,6 @@ function do_synhronization() {
 }
 
 function sort_by_distance(unsorted) {
-	if (unsorted == undefined) return;
-	
 	var len = unsorted.items.length;
 	var cx = current_position_xy[0]-correctionX;
 	var cy = current_position_xy[1]-correctionY;
@@ -832,10 +834,10 @@ function sort_by_distance(unsorted) {
 	
 	var cur = 0;
 	$.each(aa, function(index, value){
-		sorted[cur] = datas[value];
+		sorted[cur] = datas[value]; 
 	    cur++;
 	})
-	 
+	
 	var data_sorted = {};
 	data_sorted.items = [];
 	for (var i=0; i<len; i++){

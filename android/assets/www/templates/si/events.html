@@ -63,6 +63,32 @@
 			<div class="ztl_top_event_text_half_text">{{& top_events_2.title}}</div>
 		</div>
 	</div>
+	<div class="ui-grid-a ztl_height_170" >
+		<div class="ui-block-a ztl_height_170" style="background-image:url('{{top_events_3.image}}');" onClick="load_event({{top_events_3.id}}, 1)">
+			<div class="event_date_holder" >
+				<div class="event_date_holder_top">
+					{{top_events_3.day}}
+				</div>
+				<div class="event_date_holder_bottom">
+					{{top_events_3.month}}
+				</div>
+			</div>
+			<div class="ztl_top_event_text_half"></div>
+			<div class="ztl_top_event_text_half_text">{{& top_events_3.title}}</div>
+		</div>
+		<div class="ui-block-b ztl_height_170" style="background-image:url('{{top_events_4.image}}');" onClick="load_event({{top_events_4.id}}, 1)">
+			<div class="event_date_holder">
+				<div class="event_date_holder_top">
+					{{top_events_4.day}}
+				</div>
+				<div class="event_date_holder_bottom">
+					{{top_events_4.month}}
+				</div>
+			</div>
+			<div class="ztl_top_event_text_big"></div>
+			<div class="ztl_top_event_text_half_text">{{& top_events_4.title}}</div>
+		</div>
+	</div>
 
 	{{#items}}
 		<li class="ztl_list_li">

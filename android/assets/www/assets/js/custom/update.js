@@ -489,7 +489,12 @@ function handle_tour(data) {
 
 		//h inddex !
 		for (var h = 0; h < data.length; h++) {
-			sql = "INSERT OR REPLACE INTO ztl_tour_category (id,id_language,title,record_status) VALUES ("+h+", "+settings.id_lang+", '"+addslashes(data[h].title)+"', 1);";
+
+			if (data[h].image == null) {
+				data[h].image = '';			
+			}
+
+			sql = "INSERT OR REPLACE INTO ztl_tour_category (id,id_language,title,image,record_status) VALUES ("+h+", "+settings.id_lang+", '"+addslashes(data[h].title)+"', '"+data[h].image+"', 1);";
 			tx.executeSql(sql, [], function(tx, res) {});
 			
 			for (var i = 0; i<data[h].objects.length; i++) {
@@ -766,6 +771,50 @@ function gotFiles(entries) {
 
 function readFiles() {
 	db.transaction(function(tx) {
+		tx.executeSql('select * from ztl_event where image != "" order by featured desc', [], function(tx, res) {
+	        for (var i=0; i<res.rows.length; i++) {
+	        	var url      = res.rows.item(i).image;
+	        	var filename = url.split("/").slice(-1)[0];
+	        	filename = $.trim(filename);
+
+	        	//filename ni prazen && ni na lokalnem FS && se zacne s http
+	        	if (filename != "" && url.indexOf(DATADIR.fullPath) != 0 && url.indexOf("http") == 0) {
+	    			var dlPath = DATADIR.fullPath+"/"+filename;
+	    			var updt_sql2 = 'update ztl_event set image = "'+dlPath+'" where id='+res.rows.item(i).id+';';
+					tx.executeSql(updt_sql2, [], function(tx, res) {});	
+					
+		        	if (knownfiles.indexOf(filename) == -1) {
+	        			var ft = new FileTransfer();
+        				ft.download(url, dlPath, function() {
+	        				console.log("==== new local file ztl_event "+dlPath);
+	        			}, onFSError);
+	    			}
+    			}
+	        }
+		});
+		
+		tx.executeSql('select * from ztl_tour_category where image != "";', [], function(tx, res) {
+	        for (var i=0; i<res.rows.length; i++) {
+	        	var url      = res.rows.item(i).image;
+	        	var filename = url.split("/").slice(-1)[0];
+	        	filename = $.trim(filename);
+    			
+	        	//filename ni prazen && ni na lokalnem FS && se zacne s http
+	        	if (filename != "" && url.indexOf(DATADIR.fullPath) != 0 && url.indexOf("http") == 0) {
+	    			var dlPath = DATADIR.fullPath+"/"+filename;
+    				var updt_sql0 = 'update ztl_tour_category set image = "'+dlPath+'" where id_language = '+settings.id_lang+' and id='+res.rows.item(i).id+';';
+					tx.executeSql(updt_sql0, [], function(tx, res) {});	
+				}
+
+	        	if (knownfiles.indexOf(filename) == -1) {
+        			var ft = new FileTransfer();
+        			ft.download(url, dlPath, function() {
+        				console.log("==== new local file ztl_tour_category "+dlPath);
+        			}, onFSError);
+    			}
+	        }
+		});
+		
 		tx.executeSql('select * from ztl_tour_images where image != "";', [], function(tx, res) {
 	        for (var i=0; i<res.rows.length; i++) {
 	        	var url      = res.rows.item(i).image;
@@ -810,28 +859,7 @@ function readFiles() {
     			}
 	        }
 		});
-		
-		tx.executeSql('select * from ztl_event where image != ""', [], function(tx, res) {
-	        for (var i=0; i<res.rows.length; i++) {
-	        	var url      = res.rows.item(i).image;
-	        	var filename = url.split("/").slice(-1)[0];
-	        	filename = $.trim(filename);
-
-	        	//filename ni prazen && ni na lokalnem FS && se zacne s http
-	        	if (filename != "" && url.indexOf(DATADIR.fullPath) != 0 && url.indexOf("http") == 0) {
-	    			var dlPath = DATADIR.fullPath+"/"+filename;
-	    			var updt_sql2 = 'update ztl_event set image = "'+dlPath+'" where id='+res.rows.item(i).id+';';
-					tx.executeSql(updt_sql2, [], function(tx, res) {});	
-					
-		        	if (knownfiles.indexOf(filename) == -1) {
-	        			var ft = new FileTransfer();
-	        			ft.download(url, dlPath, function() {
-	        				console.log("==== new local file ztl_event "+dlPath);
-	        			}, onFSError);
-	    			}
-    			}
-	        }
-		});
+	
 
 		tx.executeSql('select * from ztl_inspired where image != ""', [], function(tx, res) {
 	        for (var i=0; i<res.rows.length; i++) {
