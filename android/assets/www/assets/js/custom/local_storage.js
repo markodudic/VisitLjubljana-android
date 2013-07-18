@@ -1,6 +1,8 @@
 function add_to_history(history_string) {
 	var history = local_storage_load();
 	
+	console.log("localhistory --- add: "+history_string);
+
 	history.push(history_string);
 	localStorage.setItem('history', JSON.stringify(history));
 }
