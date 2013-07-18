@@ -107,8 +107,14 @@ function load_poi_success(results) {
 	} else {
 		sound_file	 = file_alt+res.items[0].sound;
 	}
+	
+	//preverim grupo
+	var gr = results.rows.item(0).id_group;
+	if (UNUSED_GROUPS.indexOf(gr) != -1) {
+		gr = POI_ZAMENITOSTI_GROUP;
+	}
 	media_length = parseInt(results.rows.item(0).media_duration_value);
-	load_page(template_lang+'trip.html', 'trip', res.items[0], 'fade', true, results.rows.item(0).id_group);
+	load_page(template_lang+'trip.html', 'trip', res.items[0], 'fade', true, gr);
 }
 
 
@@ -442,6 +448,7 @@ function load_tour_success(results) {
 	results.rows.item(0).title = unescape(results.rows.item(0).title);
 	results.rows.item(0).short_description = unescape(results.rows.item(0).short_description);
 	results.rows.item(0).long_description = unescape(results.rows.item(0).long_description);
+	results.rows.item(0).contact = unescape(results.rows.item(0).contact);
 	tmp_tours_data.item = results.rows.item(0);
 
 	var tmp_query = "SELECT ti.image FROM ztl_tour_images ti WHERE ti.id_tour = "+tmp_tours_data.item.id+" ORDER BY ti.tour_idx";

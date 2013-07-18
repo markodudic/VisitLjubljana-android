@@ -189,10 +189,12 @@ var init = function (onSelectFeatureFunction) {
     if (curr_type != undefined) {
     	//var point = transform (parseFloat(points[0][0])+correctionX, parseFloat(points[0][1])+correctionY);
     	//var lonLat = new OpenLayers.LonLat(point.lon, point.lat);
-        //map.setCenter (lonLat);
-    	//bounds.extendXY(current_position_center.lon, current_position_center.lat);
+    	var lonlat = new OpenLayers.LonLat(current_position_center.lon, current_position_center.lat); 
+    	bounds.extendXY(lonlat.lon, lonlat.lat);
+    	
     	var pixel = bounds.getCenterPixel();
     	map.zoomToExtent(bounds, true);
+    	map.zoomOut();
 	} else {
 	    if( ! map.getCenter() ){
 	    	var lonLat = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());

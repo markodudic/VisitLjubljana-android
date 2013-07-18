@@ -334,7 +334,7 @@ function load_tour(id, save_history) {
 	}
 
 
-	var tmp_query = "SELECT t.id, tt.title, tt.short_description, tt.long_description " +
+	var tmp_query = "SELECT t.id, tt.title, tt.short_description, tt.long_description, tt.contact " +
 					"FROM ztl_tour t " +
 					"LEFT JOIN ztl_tour_translation tt ON tt.id_tour = t.id " +
 					"WHERE t.id = "+id;
