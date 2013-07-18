@@ -60,20 +60,27 @@
 		</div>
 	</div>
 
+	<div class="my_visit_event_date_select">
+		<div class="ztl_item_details event_filter_content">
+			<div style="text-align:right; padding-top:20px;" onClick="my_visit_event_date_select_toggle()">
+				<img src="assets/css/ztl_images/media_player_close.png">
+			</div>
+			<div style="padding-top:25px;">
+				<div class="ztl_item_details_title uppercase">{{event_date}}</div>
+				<div class="grey_line set_filter_line"></div>
+				<div class="my_visit_padding_top"></div>
+				<div style="clear:both"></div>
+				<div class="my_visit_event_date_container">
 
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<div class="ztl_content">
 	
 	<div id="verticalWrapper">
 	<div id="verticalScroller">
-
-	<div id="event_date_select">
-		<select id="event_date_selector" onChange="save_evt_time();">
-			
-		</select>		
-	</div>
-
-
 
 	{{#evt_group_name_translation}}
 		<li class="ztl_list_li">
@@ -99,7 +106,7 @@
 							</div>
 						</div>
 						<div class="my_visit_icons">
-							<img onClick="my_visit_get_event_date({{id}}, EVENT_GROUP);" src="assets/css/ztl_images/my_visit_calendar.png" class="my_visit_list_image">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<img onClick="my_visit_get_event_date({{id}}, {{start}});" src="assets/css/ztl_images/my_visit_calendar.png" class="my_visit_list_image">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<span onClick="delete_from_my_visit({{id}}, EVENT_GROUP);"><img src="assets/css/ztl_images/my_visit_delete.png" class="my_visit_list_image"></span>
 						</div>
 					</div>
