@@ -8,6 +8,7 @@ var sql_filer_poi_cat = -1;
 var event_time_array = [];
 var eta_count		 = 0;
 var evt_id			 = 0;
+var evt_start		 = 0;
 
 function add_to_my_visit(id, ztl_group, type, start, end, autmatic) {
 	var tmp_query = "INSERT OR REPLACE INTO ztl_my_visit (id, ztl_group, type, start, end) VALUES ("+id+", "+ztl_group+", "+type+", "+start+", "+end+");";
@@ -258,8 +259,9 @@ function my_visit_item_date(id, group) {
 	);	
 }
 
-function my_visit_get_event_date(id) {
-	evt_id = id;
+function my_visit_get_event_date(id, start) {
+	evt_id 			 = id;
+	evt_start		 = start;
 	event_time_array = [];
 
 	var d = new Date();
@@ -375,7 +377,6 @@ function filter_visits (history_filter) {
 		sql_filer_poi_cat = id_filter;
 	}
 
-	
 	my_visit_filter = 0;
 	load_my_visit(0, id_filter);
 
@@ -407,26 +408,40 @@ function parse_time(date_string, selector, index) {
 
 function verify_parse_finish(index) {
 	if ((eta_count - 1) == index) {
-		$("#event_date_selector").empty();
-
 		var tmp_opt = "";
+		var checked = "";
 		for (var i=0; i<event_time_array.length; i++) {
-			tmp_opt = "<option value='"+event_time_array[i].date_int+"'>"+event_time_array[i].date_str+"</option>";
+			checked = "";
+			if (evt_start == event_time_array[i].date_int) {
+				checked = "checked";
+			}
 
-			$("#event_date_selector").append(tmp_opt);
+			tmp_opt += '<div class="my_visit_list my_visit_settings_list">';
+			tmp_opt += '<input type="radio" id="event_radio_value_'+i+'" name="event_radio_value" value="'+event_time_array[i].date_int+'" onClick="save_evt_time('+event_time_array[i].date_int+');" '+checked+'/><label for="event_radio_value_'+i+'"> &nbsp;&nbsp'+event_time_array[i].date_str+'</label>';
+			tmp_opt += '</div>';
+			tmp_opt += '<div class="my_visit_list_settings_border"></div>';
+			
 		}
-		
-		$("#event_date_selector").trigger('focus');
+
+		$('.my_visit_event_date_container').html(tmp_opt);
+		my_visit_event_date_select_toggle();
 	}
 }
 
-function save_evt_time() {
-	var time = $("#event_date_selector").val();
-
+function save_evt_time(time) {
 	var tmp_query = "UPDATE ztl_my_visit SET start = "+time+" WHERE id = "+evt_id+" AND ztl_group = "+EVENT_GROUP;
 	db.transaction(function(tx) {
 		 tx.executeSql(tmp_query, [], function(tx, results) {
+		 	my_visit_event_date_select_toggle();
 		    load_my_visit();
 		 });
 	});
+}
+
+function my_visit_event_date_select_toggle() {
+	$(".my_visit_event_date_select").toggle();
+	
+	$(".ztl_content").toggle();
+	$(".header").toggle();
+	$(".footer").toggle();
 }
