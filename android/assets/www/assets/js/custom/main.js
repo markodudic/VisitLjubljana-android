@@ -877,10 +877,6 @@ function hide_spinner() {
 }
 
 function format_date(date_string, id, hide_time) {
-    console.log("render ---- date string "+date_string);
-    console.log("render ---- id "+ id);
-    console.log("render ---- hide_time "+ hide_time);
-
     var date_obj = new Date(date_string*1000);
     
     var selector = "date and time";
@@ -888,11 +884,9 @@ function format_date(date_string, id, hide_time) {
     	selector = "date";
     }
 
-
     navigator.globalization.dateToString(
         date_obj,
     function (date) {
-        console.log("render --- " + date.value);
         $("#"+id).html(date.value);
     },
     function () {alert('Error getting dateString\n');},

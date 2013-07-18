@@ -552,9 +552,9 @@ function my_visit_success(results) {
     	poi_wi = poi_wi+"0";
     	
         if (sql_filer_poi_cat > -1) {
-            var tmp_query = 'SELECT zp.id, zp.address, zp.post_number, zp.post, zp.record_status, zpt.title, zcg.id_group, zmi.start, zmi.end FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id LEFT JOIN ztl_my_visit zmi ON (zmi.id = zp.id AND zmi.ztl_group = '+POI_GROUP+') WHERE zp.id IN ('+poi_wi+') AND zcg.id_group = '+sql_filer_poi_cat+' AND zpt.id_language = '+settings.id_lang+' GROUP BY zp.id ORDER BY id_group';
+            var tmp_query = 'SELECT zp.id, zp.address, zp.post_number, zp.post, zp.record_status, zpt.title, zcg.id_group, zmi.start, strftime("%H", start) AS hour, zmi.end FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id LEFT JOIN ztl_my_visit zmi ON (zmi.id = zp.id AND zmi.ztl_group = '+POI_GROUP+') WHERE zp.id IN ('+poi_wi+') AND zcg.id_group = '+sql_filer_poi_cat+' AND zpt.id_language = '+settings.id_lang+' GROUP BY zp.id ORDER BY id_group';
         } else {
-            var tmp_query = 'SELECT zp.id, zp.address, zp.post_number, zp.post, zp.record_status, zpt.title, zcg.id_group, zmi.start, zmi.end FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id LEFT JOIN ztl_my_visit zmi ON (zmi.id = zp.id AND zmi.ztl_group = '+POI_GROUP+') WHERE zp.id IN ('+poi_wi+') AND zpt.id_language = '+settings.id_lang+' GROUP BY zp.id ORDER BY id_group';            
+            var tmp_query = 'SELECT zp.id, zp.address, zp.post_number, zp.post, zp.record_status, zpt.title, zcg.id_group, zmi.start, strftime("%H", start) AS hour, zmi.end FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id LEFT JOIN ztl_my_visit zmi ON (zmi.id = zp.id AND zmi.ztl_group = '+POI_GROUP+') WHERE zp.id IN ('+poi_wi+') AND zpt.id_language = '+settings.id_lang+' GROUP BY zp.id ORDER BY id_group';            
         }
 
     	db.transaction(function(tx) {
@@ -618,7 +618,7 @@ function my_visit_success(results) {
     if (res.has_evt == 1) {
     	evt_wi = evt_wi+"0";
 
-        var tmp_query  = "SELECT e.id, et.title, zmi.start, zmi.end, ett.date_last, e.record_status FROM ztl_event e LEFT JOIN ztl_event_translation et ON et.id_event = e.id LEFT JOIN ztl_event_timetable ett ON ett.id_event = e.id LEFT JOIN ztl_my_visit zmi ON (zmi.id = e.id AND zmi.ztl_group = "+EVENT_GROUP+") WHERE e.id IN ("+evt_wi+") AND et.id_language = "+settings.id_lang+" GROUP BY e.id ORDER BY  ett.date_last DESC";
+        var tmp_query  = "SELECT e.id, et.title, zmi.start, strftime('%H', start) AS hour, zmi.end, ett.date_last, e.record_status FROM ztl_event e LEFT JOIN ztl_event_translation et ON et.id_event = e.id LEFT JOIN ztl_event_timetable ett ON ett.id_event = e.id LEFT JOIN ztl_my_visit zmi ON (zmi.id = e.id AND zmi.ztl_group = "+EVENT_GROUP+") WHERE e.id IN ("+evt_wi+") AND et.id_language = "+settings.id_lang+" GROUP BY e.id ORDER BY  ett.date_last DESC";
 
     	db.transaction(function(tx) {
 			tx.executeSql(tmp_query, [], function(tx, res_evt) {
@@ -664,7 +664,7 @@ function my_visit_success(results) {
     var tmp_info_text = "";
     if (res.has_tour == 1) {
         tour_wi = tour_wi+"0";
-        var tmp_query = "SELECT t.id, t.record_status, tt.title, tt.short_description, zmi.start, zmi.end FROM ztl_tour t LEFT JOIN ztl_tour_translation tt ON tt.id_tour = t.id  LEFT JOIN ztl_my_visit zmi ON (zmi.id = t.id AND zmi.ztl_group = "+TOUR_GROUP+") WHERE t.id IN ("+tour_wi+")";
+        var tmp_query = "SELECT t.id, t.record_status, tt.title, tt.short_description, zmi.start, strftime('%H', start) AS hour, zmi.end FROM ztl_tour t LEFT JOIN ztl_tour_translation tt ON tt.id_tour = t.id  LEFT JOIN ztl_my_visit zmi ON (zmi.id = t.id AND zmi.ztl_group = "+TOUR_GROUP+") WHERE t.id IN ("+tour_wi+")";
 
         db.transaction(function(tx) {
             tx.executeSql(tmp_query, [], function(tx, res_tour) {
