@@ -12,7 +12,8 @@ function is_updt_finished() {
 	updt_finished++;
 	//vsi updejti
 	if (updt_finished == UPDATE_GROUPS) {
-
+		//vse poije, ki niso na glavnem menuji nastavi na id 230
+		map_unused_groups();
 	    //all images
 		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFSSuccess, null);
 		
@@ -994,4 +995,13 @@ function has_events() {
 		});
 	});
 	return false;	
+}
+
+function map_unused_groups() {
+	db.transaction(function(tx) {
+		tx.executeSql('UPDATE ztl_category_group SET id_group = 230 WHERE id_group NOT IN ('+USED_POI_GROUPS+');', [], function(tx, res) {
+			console.log(">>> grupe pofejkane");
+			return true;
+		});
+	});
 }

@@ -33,6 +33,8 @@ function check_db_success(results) {
     	populate_db_firstime();
 	} else {
 		load_mobile();
+        //pofejkamo neuporabljene poi grupe
+        map_unused_groups();
 	}
 }
 
