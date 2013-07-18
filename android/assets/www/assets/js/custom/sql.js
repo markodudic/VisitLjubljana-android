@@ -674,7 +674,6 @@ function my_visit_success(results) {
     if (res.has_tour == 1) {
         tour_wi = tour_wi+"0";
         var tmp_query = "SELECT t.id, t.record_status, tt.title, tt.short_description, zmi.start, strftime('%H', start) AS hour, zmi.end FROM ztl_tour t LEFT JOIN ztl_tour_translation tt ON tt.id_tour = t.id LEFT JOIN ztl_my_visit zmi ON (zmi.id = t.id AND zmi.ztl_group = "+TOUR_GROUP+") WHERE t.id IN ("+tour_wi+") AND tt.id_language = " +settings.id_lang;
-        console.log("aaaaaa   "+tmp_query);
         db.transaction(function(tx) {
             tx.executeSql(tmp_query, [], function(tx, res_tour) {
                 var tour_len = res_tour.rows.length;
