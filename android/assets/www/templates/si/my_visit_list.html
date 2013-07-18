@@ -60,10 +60,21 @@
 		</div>
 	</div>
 
+
+
 	<div class="ztl_content">
 	
 	<div id="verticalWrapper">
 	<div id="verticalScroller">
+
+	<div id="event_date_select">
+		<select id="event_date_selector" onChange="save_evt_time();">
+			
+		</select>		
+	</div>
+
+
+
 	{{#evt_group_name_translation}}
 		<li class="ztl_list_li">
 			<div class="my_visit_title">
@@ -81,7 +92,8 @@
 							<div class="ztl_list_header">{{title}}</div>
 							<div class="ztl_list_content_text">
 								<span id="formated_event_start_{{id}}"></span>
-								<input type="hidden" id="non_formated_event_start_{{id}}" value="{{start}}">						
+								<input type="hidden" id="non_formated_event_start_{{id}}" value="{{start}}">
+								<input type="hidden" id="hour_formated_event_start_{{id}}" value="{{hour}}">					
 								<br>
 								{{venue}}
 							</div>
@@ -102,7 +114,8 @@
 							<div class="ztl_list_header">{{title}}</div>
 							<div class="ztl_list_content_text">
 								<span id="formated_event_start_{{id}}"></span>
-								<input type="hidden" id="non_formated_event_start_{{id}}" value="{{start}}">						
+								<input type="hidden" id="non_formated_event_start_{{id}}" value="{{start}}">
+								<input type="hidden" id="hour_formated_event_start_{{id}}" value="{{hour}}">							
 								<br>
 								{{venue}}
 							</div>
