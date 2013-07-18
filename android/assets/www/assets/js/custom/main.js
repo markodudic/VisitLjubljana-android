@@ -505,6 +505,7 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				data.logout 			= logout_translation[settings.id_lang];
 				data.clear_my_visit 	= clear_my_visit_translation[settings.id_lang];
 				data.default_category 	= default_category_translation[settings.id_lang];
+				data.event_date 		= event_date_translation[settings.id_lang]
 				data.dots 		 		= 1;
 				voice_guide				= 0;
 				menu_icon				= 1;
