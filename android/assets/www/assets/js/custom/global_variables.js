@@ -130,7 +130,7 @@ console.log = function(){};
 function reinit() {
 	if (device.platform == "iOS") {
 		SETTINGS_FOLDER     	= "com.innovatif.ztl/";
-		ASSETS_FOLDER     		= "www/";
+		ASSETS_FOLDER     		= "/";
 		
 		file 		 			= ASSETS_FOLDER+"uploads/mp3/";
 		file_alt 	 			= SETTINGS_FOLDER+"audio/"; //lokacija na SD kartici
