@@ -174,9 +174,9 @@ function load_events(save_history) {
 						"LEFT JOIN ztl_poi p ON p.id = ett.venue_id " +
 						"WHERE et.id_language = "+settings.id_lang+" AND e.record_status = 1 " +
 						"GROUP BY e.id ";
-						//"ORDER BY ett.date_first";
+						"ORDER BY e.featured desc, ett.date_first";
 	var tmp_callback = "events_success";
-    generate_query(tmp_query, tmp_callback); 
+    generate_query(tmp_query, tmp_callback);
 }
 
 function load_tour_list(save_history)  {

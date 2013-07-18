@@ -170,6 +170,8 @@ function events_success(results) {
 	trips[EVENT_GROUP].top_events_0 	= res.top_items[0];
 	trips[EVENT_GROUP].top_events_1 	= res.top_items[1];
 	trips[EVENT_GROUP].top_events_2 	= res.top_items[2];
+	trips[EVENT_GROUP].top_events_3 	= res.top_items[3];
+	trips[EVENT_GROUP].top_events_4 	= res.top_items[4];
 }
 
 function event_category_success(results) {

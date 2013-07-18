@@ -369,6 +369,10 @@ function load_map_coord(results, id, type) {
     		add_point_on_map(trips[EVENT_GROUP].top_events_1, type);
     	} else if (trips[EVENT_GROUP].top_events_2.id == id) {
     		add_point_on_map(trips[EVENT_GROUP].top_events_2, type);
+    	} else if (trips[EVENT_GROUP].top_events_3.id == id) {
+    		add_point_on_map(trips[EVENT_GROUP].top_events_3, type);
+    	} else if (trips[EVENT_GROUP].top_events_4.id == id) {
+    		add_point_on_map(trips[EVENT_GROUP].top_events_4, type);
     	}
     }
 
