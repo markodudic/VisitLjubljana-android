@@ -98,11 +98,11 @@ function on_device_ready() {
 }
 
 function nativePluginResultHandler (result) {
-	//console.log('nativePluginResultHandler: '+result);
+	console.log('nativePluginResultHandler: '+result);
 }
 
 function nativePluginErrorHandler (error) {
-	//console.log('nativePluginErrorHandler: '+error);
+	console.log('nativePluginErrorHandler: '+error);
 }
 
 function copy_success(entry) {
