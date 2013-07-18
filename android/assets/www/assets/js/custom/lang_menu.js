@@ -1,4 +1,4 @@
-var lang ='{"language_menu":[{"title":"Vsebine","img1":"Poiščite navdih","img2":"Prireditve","img3":"Znamenitosti","img4":"Kulinarika","img5":"Informacije","img6":"Ogledi in izleti","img7":"Nastanitve","img8":"Zabava","img9":"Nakupovanje","img10":"Kraji"},{"title":"Content","img1":"Get inspired","img2":"Events","img3":"Sights and attractions","img4":"Eating out","img5":"Visitor information","img6":"Tours and excursions","img7":"Accommodation","img8":"Entertainment","img9":"Shopping","img10":"Places"},{"title":"Inhalt","img1":"Lass dich inspirieren","img2":"Veranstaltungen","img3":"Sehenswürdigkeiten","img4":"Kulinarik","img5":"Informationen","img6":"Führungen und Ausflüge","img7":"Unterkünfte","img8":"Unterhaltung","img9":"Shopping","img10":"Orte"},{"title":"Contenuto","img1":"Trova ispirazioni","img2":"Manifestazioni","img3":"Attrazioni","img4":"Gastronomia","img5":"Informazioni","img6":"Visite e gite","img7":"Allogio","img8":"Divertimento","img9":"Shopping","img10":"Posti"},{"title":"Content","img1":"Laissez-vous insprirer","img2":"Evénements","img3":"Curiosités","img4":"Gastronomie","img5":"Info pour les visiteurs","img6":"Visites et excursions","img7":"Hébergement","img8":"Divertissement","img9":"Shopping","img10":"Lieux"}]}';
+var lang ='{"language_menu":[{"title":"Vsebine","img1":"Poiščite navdih","img2":"Prireditve","img3":"Znamenitosti","img4":"Kulinarika","img5":"Informacije","img6":"Ogledi in izleti","img7":"Nastanitve","img8":"Zabava","img9":"Nakupovanje","img10":"Kraji","img99":"Ostalo"},{"title":"Content","img1":"Get inspired","img2":"Events","img3":"Sights and attractions","img4":"Eating out","img5":"Visitor information","img6":"Tours and excursions","img7":"Accommodation","img8":"Entertainment","img9":"Shopping","img10":"Places","img99":"Ostalo"},{"title":"Inhalt","img1":"Lass dich inspirieren","img2":"Veranstaltungen","img3":"Sehenswürdigkeiten","img4":"Kulinarik","img5":"Informationen","img6":"Führungen und Ausflüge","img7":"Unterkünfte","img8":"Unterhaltung","img9":"Shopping","img10":"Orte","img99":"Ostalo"},{"title":"Contenuto","img1":"Trova ispirazioni","img2":"Manifestazioni","img3":"Attrazioni","img4":"Gastronomia","img5":"Informazioni","img6":"Visite e gite","img7":"Allogio","img8":"Divertimento","img9":"Shopping","img10":"Posti","img99":"Ostalo"},{"title":"Content","img1":"Laissez-vous insprirer","img2":"Evénements","img3":"Curiosités","img4":"Gastronomie","img5":"Info pour les visiteurs","img6":"Visites et excursions","img7":"Hébergement","img8":"Divertissement","img9":"Shopping","img10":"Lieux","img99":"Ostalo"}]}';
 lang = JSON.parse(lang);
 
 //veza med sliko in grupo
@@ -12,14 +12,7 @@ mm_pic_group[217] 	= "img3";
 mm_pic_group[219] 	= "img4";
 mm_pic_group[220] 	= "img9";
 mm_pic_group[222] 	= "img8";
-
-//to do
-//manjka se --- za glavni menu smo jih na roko prevedli //zato je v myvisit tut prazno vmes -- ali se se ti dodajo v lang tabelo?
-mm_pic_group[218] 	= "manjka prevod grupa 218";
-mm_pic_group[221] 	= "manjka prevod grupa 221";
-mm_pic_group[224] 	= "manjka prevod grupa 224";
-mm_pic_group[225] 	= "manjka prevod grupa 225";
-mm_pic_group[227] 	= "manjka prevod grupa 227";
+mm_pic_group[230] 	= "img99";
 
 var voice_guide_translation = [];
 voice_guide_translation[1]	= "Vodič";
