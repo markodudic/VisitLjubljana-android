@@ -34,7 +34,7 @@ function check_db_success(results) {
 	} else {
 		load_mobile();
         //pofejkamo neuporabljene poi grupe
-        map_unused_groups();
+        //map_unused_groups();
 	}
 }
 
