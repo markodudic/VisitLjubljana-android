@@ -13,7 +13,7 @@ function is_updt_finished() {
 	//vsi updejti
 	if (updt_finished == UPDATE_GROUPS) {
 		//vse poije, ki niso na glavnem menuji nastavi na id 230
-		map_unused_groups();
+		//map_unused_groups();
 	    //all images
 		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFSSuccess, null);
 		
