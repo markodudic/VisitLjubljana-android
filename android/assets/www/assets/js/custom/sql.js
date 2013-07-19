@@ -569,17 +569,26 @@ function my_visit_success(results) {
     	poi_wi = poi_wi+"0";
     	
         if (sql_filer_poi_cat > -1) {
-            var tmp_query = 'SELECT zp.id, zp.address, zp.post_number, zp.post, zp.record_status, zpt.title, zcg.id_group, zmi.start, strftime("%H", start) AS hour, zmi.end FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id LEFT JOIN ztl_my_visit zmi ON (zmi.id = zp.id AND zmi.ztl_group = '+POI_GROUP+') WHERE zp.id IN ('+poi_wi+') AND zcg.id_group = '+sql_filer_poi_cat+' AND zpt.id_language = '+settings.id_lang+' GROUP BY zp.id ORDER BY id_group';
+            if (sql_filer_poi_cat == 230) {
+                var tmp_query = 'SELECT CASE id_group WHEN 215 THEN id_group WHEN 217 THEN id_group WHEN 219 THEN id_group WHEN 220 THEN id_group WHEN 222 THEN id_group ELSE 230 END AS id_group, zp.id, zp.address, zp.post_number, zp.post, zp.record_status, zpt.title, zmi.start, strftime("%H", start) AS hour, zmi.end FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id LEFT JOIN ztl_my_visit zmi ON (zmi.id = zp.id AND zmi.ztl_group = '+POI_GROUP+') WHERE zp.id IN ('+poi_wi+') AND zcg.id_group NOT IN ('+USED_POI_GROUPS+') AND zpt.id_language = '+settings.id_lang+' GROUP BY zp.id ORDER BY id_group';
+            } else {
+                var tmp_query = 'SELECT CASE id_group WHEN 215 THEN id_group WHEN 217 THEN id_group WHEN 219 THEN id_group WHEN 220 THEN id_group WHEN 222 THEN id_group ELSE 230 END AS id_group, zp.id, zp.address, zp.post_number, zp.post, zp.record_status, zpt.title, zmi.start, strftime("%H", start) AS hour, zmi.end FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id LEFT JOIN ztl_my_visit zmi ON (zmi.id = zp.id AND zmi.ztl_group = '+POI_GROUP+') WHERE zp.id IN ('+poi_wi+') AND zcg.id_group = '+sql_filer_poi_cat+' AND zpt.id_language = '+settings.id_lang+' GROUP BY zp.id ORDER BY id_group';
+            }
         } else {
-            var tmp_query = 'SELECT zp.id, zp.address, zp.post_number, zp.post, zp.record_status, zpt.title, zcg.id_group, zmi.start, strftime("%H", start) AS hour, zmi.end FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id LEFT JOIN ztl_my_visit zmi ON (zmi.id = zp.id AND zmi.ztl_group = '+POI_GROUP+') WHERE zp.id IN ('+poi_wi+') AND zpt.id_language = '+settings.id_lang+' GROUP BY zp.id ORDER BY id_group';            
+            var tmp_query = 'SELECT CASE id_group WHEN 215 THEN id_group WHEN 217 THEN id_group WHEN 219 THEN id_group WHEN 220 THEN id_group WHEN 222 THEN id_group ELSE 230 END AS id_group, zp.id, zp.id, zp.address, zp.post_number, zp.post, zp.record_status, zpt.title, zmi.start, strftime("%H", start) AS hour, zmi.end FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id LEFT JOIN ztl_my_visit zmi ON (zmi.id = zp.id AND zmi.ztl_group = '+POI_GROUP+') WHERE zp.id IN ('+poi_wi+') AND zpt.id_language = '+settings.id_lang+' GROUP BY zp.id ORDER BY id_group';            
         }
+    	
+        console.log("premapiranje --- q: "+tmp_query);
 
-    	db.transaction(function(tx) {
+        db.transaction(function(tx) {
 			 tx.executeSql(tmp_query, [], function(tx, res_poi) {
 			 	
                 var poi_len = res_poi.rows.length;
 
                 for (var pi = 0; pi<poi_len; pi++) {
+
+                    console.log("premapiranje --- " + JSON.stringify(res_poi.rows.item(pi)));
+
                     if (current_group < res_poi.rows.item(pi).id_group) {
                         var tmp_title = {};
                         tmp_title.group_name = main_menu[mm_pic_group[res_poi.rows.item(pi).id_group]];
