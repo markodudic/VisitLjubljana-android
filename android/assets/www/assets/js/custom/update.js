@@ -1025,11 +1025,11 @@ function has_events() {
 	return false;	
 }
 
-/*function map_unused_groups() {
+function map_unused_groups() {
 	db.transaction(function(tx) {
 		tx.executeSql('UPDATE ztl_category_group SET id_group = 230 WHERE id_group NOT IN ('+USED_POI_GROUPS+');', [], function(tx, res) {
 			console.log(">>> grupe pofejkane");
 			return true;
 		});
 	});
-}*/
+}
