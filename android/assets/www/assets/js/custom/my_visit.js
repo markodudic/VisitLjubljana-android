@@ -43,6 +43,7 @@ function load_my_visit(save_history, filter_group) {
 		var tmp_query = "SELECT id, ztl_group, type, start, end FROM ztl_my_visit GROUP BY id, ztl_group, type, start, end ORDER BY type, ztl_group";
 	}
 	
+	console.log("premapiranje --- sql 1: "+tmp_query);
 	
     var tmp_callback   = "my_visit_success";
     generate_query(tmp_query, tmp_callback);
