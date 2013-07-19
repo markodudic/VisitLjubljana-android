@@ -189,8 +189,10 @@ var init = function (onSelectFeatureFunction) {
     if (curr_type != undefined) {
     	//var point = transform (parseFloat(points[0][0])+correctionX, parseFloat(points[0][1])+correctionY);
     	//var lonLat = new OpenLayers.LonLat(point.lon, point.lat);
-    	var lonlat = new OpenLayers.LonLat(current_position_center.lon, current_position_center.lat); 
-    	bounds.extendXY(lonlat.lon, lonlat.lat);
+    	if (current_position_center != undefined) {
+    		var lonlat = new OpenLayers.LonLat(current_position_center.lon, current_position_center.lat); 
+        	bounds.extendXY(lonlat.lon, lonlat.lat);
+    	}
     	
     	var pixel = bounds.getCenterPixel();
     	map.zoomToExtent(bounds, true);
@@ -246,8 +248,10 @@ var init = function (onSelectFeatureFunction) {
         
     	$("#ztl_cord").val(feature.attributes.id+"#"+poi_data.coord_x+"#"+poi_data.coord_y);
         //zracunam razdaljo
-        $("#ztl_distance_value").html(lineDistance( poi_data.coord_x, poi_data.coord_y, current_position_xy[0]-correctionX+myLocationCorrectionX, current_position_xy[1]-correctionY+myLocationCorrectionY ) + " km");
-        
+    	if (current_position_xy != undefined) {
+    		$("#ztl_distance_value").html(lineDistance( poi_data.coord_x, poi_data.coord_y, current_position_xy[0]-correctionX+myLocationCorrectionX, current_position_xy[1]-correctionY+myLocationCorrectionY ) + " km");
+    	}
+    	
         var title = poi_data.title.toUpperCase();
         var r = /%u([\d\w]{4})/gi;
         title = title.replace(r, function (match, grp) {
@@ -261,7 +265,7 @@ var init = function (onSelectFeatureFunction) {
 
         $("#poi_address").html(unescape(poi_data.poi_title));
         $(".map_info").click(function() {
-       		load_page_content(feature.attributes.id, feature.attributes.type);        		
+        	load_page_content(feature.attributes.id, feature.attributes.type);        		
         }); 
 
         $(".txt_popup").show();
@@ -283,13 +287,15 @@ var init = function (onSelectFeatureFunction) {
     	//samo za test ce nisi v ljubljani
     	//current_position_xy[0] = 5462704;
     	//current_position_xy[1] = 5104170;
-    		
-    	current_position_center = transform(parseFloat(current_position_xy[0])+myLocationCorrectionX, parseFloat(current_position_xy[1])+myLocationCorrectionY);
-    	var lonlat = new OpenLayers.LonLat(current_position_center.lon, current_position_center.lat); 
-    	sprintersLayer_my_pos.removeAllFeatures();
-    	sprintersLayer_my_pos.addFeatures(getFeaturesMyLocation(current_position_center.lon, current_position_center.lat));
     	
-    	if (pan == 1) map.panTo(lonlat);
+    	if (current_position_xy != undefined) {
+	    	current_position_center = transform(parseFloat(current_position_xy[0])+myLocationCorrectionX, parseFloat(current_position_xy[1])+myLocationCorrectionY);
+	    	var lonlat = new OpenLayers.LonLat(current_position_center.lon, current_position_center.lat); 
+	    	sprintersLayer_my_pos.removeAllFeatures();
+	    	sprintersLayer_my_pos.addFeatures(getFeaturesMyLocation(current_position_center.lon, current_position_center.lat));
+	    	
+	    	if (pan == 1) map.panTo(lonlat);
+    	}
     }
 };
 
@@ -395,7 +401,7 @@ function add_point_on_map (row, type) {
 function load_page_content(id, type) {
 	if (type==EVENT_GROUP) {
 		load_event(id, 0);
-	} else if (type==POI_GROUP) {
+	} else if ((type==POI_GROUP) || (type==VOICE_GROUP)) {
 		load_trip_content(id, 'fade', true, 0);
 	}
     
@@ -448,7 +454,9 @@ function map_settings_toggle() {
 }
 
 function show_system_maps() {
-    source = new Proj4js.Proj('EPSG:31469');
+	if (current_position_xy == undefined) return;
+	
+	source = new Proj4js.Proj('EPSG:31469');
     dest = new Proj4js.Proj('EPSG:4326');	//WGS84
 
 	var saddr = transform(parseFloat(current_position_xy[0])+myLocationCorrectionX, parseFloat(current_position_xy[1])+myLocationCorrectionY);
