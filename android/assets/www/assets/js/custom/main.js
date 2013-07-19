@@ -853,6 +853,8 @@ function sort_by_distance(unsorted) {
 var spinner; 
 	
 function show_spinner() {
+	console.log("spinner");
+
 	var opts = {
 			  lines: 25, // The number of lines to draw
 			  length: window.innerWidth/24, // The length of each line
@@ -871,8 +873,12 @@ function show_spinner() {
 			  top: (window.innerHeight-window.innerWidth/3)/2, // Top position relative to parent in px
 			  left: (window.innerWidth-window.innerWidth/3)/2 // Left position relative to parent in px
 			};
-	//$('body').wrap('<div class="overlay" />');
 	
+	var tmp_div = '<div class="spinner_opacity_class"></div>';
+	console.log("spinner --- tmp_div " + tmp_div);
+	$('body').append(tmp_div);
+	$('.spinner_opacity_class').show();
+
 	var target = document.getElementById("body");
 	spinner = new Spinner(opts).spin(target);
 
