@@ -872,6 +872,7 @@ function show_spinner() {
 			  left: (window.innerWidth-window.innerWidth/3)/2 // Left position relative to parent in px
 			};
 	//$('body').wrap('<div class="overlay" />');
+	
 	var target = document.getElementById("body");
 	spinner = new Spinner(opts).spin(target);
 
