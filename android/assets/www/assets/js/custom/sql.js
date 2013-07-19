@@ -499,22 +499,26 @@ function tour_charters_success(results) {
 }
 
 function last_update_success(results) {
-	var parts = results.rows.item(0).lu.split(" ");
-	var last_update = new Date(parts[0]);
-	last_update.setHours(23);
-	last_update.setMinutes(59);
-	last_update.setSeconds(59);
-	var today = new Date();
-	if (last_update < today)  {
-		update_db();
-	} else {
-		navigator.notification.confirm(
-			synronization_finished_translation[settings.id_lang],
-			load_current_div,
-	        synchronization_translation[settings.id_lang],
-	        ok_translation[settings.id_lang]
-		);
-	} 
+    //workaround
+    if (device.platform == "iOS") {
+        update_db();
+    } else {
+	   var parts = results.rows.item(0).lu.split(" ");
+	   var last_update = new Date(parts[0]);
+	   last_update.setHours(23);
+	   last_update.setMinutes(59);
+	   last_update.setSeconds(59);
+	   var today = new Date();
+	   if (last_update < today)  {
+		  update_db();
+	   } else {
+	       navigator.notification.confirm(
+		      synronization_finished_translation[settings.id_lang],
+			  load_current_div,
+	          synchronization_translation[settings.id_lang],
+	          ok_translation[settings.id_lang]);
+	   } 
+    }
 }
 
 //my_visit
