@@ -183,8 +183,7 @@ function load_tour_list(save_history)  {
 	swipe 			= 0;
 	var tmp_query    = "SELECT * " +
 						"FROM ztl_tour_category " +
-						"WHERE id_language = "+settings.id_lang+" AND record_status = 1 " +
-						"ORDER BY title";
+						"WHERE id_language = "+settings.id_lang+" AND record_status = 1";
 	var tmp_callback = "tour_list_success";
 
 	generate_query(tmp_query, tmp_callback); 
