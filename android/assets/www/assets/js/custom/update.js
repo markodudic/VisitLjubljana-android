@@ -228,37 +228,40 @@ function handle_poi_new(data) {
 
 			//pri pripravi baze ne nalozim tiste, ki niso v poigroups ali groupi nastanitve zaradi velikosti apk-ja
 			if (populateDB == 1) {
-	    		//preverim ce je v grupi
-				var poigroup = JSON.stringify(data[i].poigroups);
-	    	    var poigroups = POI_GROUPS;
-	    	    var je_grupa = 0;
-	    		for (var j=0; j<poigroups.length; j++){
-	    			if (poigroup != undefined) {
-	    				if (poigroup.indexOf(poigroups[j]) != -1) {
-		    		    	je_grupa = 1;
-		    				break;
-		    			}
-	    			}
-	    		}
-	    	    console.log("je_grupa="+je_grupa);
-	    		
-	    		//preverim ce je nastanitev kategorija
-	    		var je_cat = 0;
-	    		if (je_grupa == 0) {
-	    			var poi_cats = JSON.stringify(data[i].cats);
-		    	    var cats = NASTANITEV_CATS;
-		    	    for (var j=0; j<cats.length; j++){
-		    			if (poi_cats != undefined) {
-			    			if (poi_cats.indexOf(cats[j]) != -1) {
-			    				je_cat = 1;
+				//ce je audio guide ga vedno importam
+				if ((audio_guide == undefined) || (audio_guide == null) || (audio_guide == '')) {
+		    		//preverim ce je v grupi
+					var poigroup = JSON.stringify(data[i].poigroups);
+		    	    var poigroups = POI_GROUPS;
+		    	    var je_grupa = 0;
+		    		for (var j=0; j<poigroups.length; j++){
+		    			if (poigroup != undefined) {
+		    				if (poigroup.indexOf(poigroups[j]) != -1) {
+			    		    	je_grupa = 1;
 			    				break;
 			    			}
 		    			}
 		    		}
-	    		}
-	    		
-	    		//ce ni prava grupa ali nastanitev je zavrnem
-	    		if ((je_grupa == 0) && (je_cat == 0)) continue;
+		    	    console.log("je_grupa="+je_grupa);
+		    		
+		    		//preverim ce je nastanitev kategorija
+		    		var je_cat = 0;
+		    		if (je_grupa == 0) {
+		    			var poi_cats = JSON.stringify(data[i].cats);
+			    	    var cats = NASTANITEV_CATS;
+			    	    for (var j=0; j<cats.length; j++){
+			    			if (poi_cats != undefined) {
+				    			if (poi_cats.indexOf(cats[j]) != -1) {
+				    				je_cat = 1;
+				    				break;
+				    			}
+			    			}
+			    		}
+		    		}
+		    		
+		    		//ce ni prava grupa ali nastanitev je zavrnem
+		    		if ((je_grupa == 0) && (je_cat == 0)) continue;
+				}
 			}
 			
 			sql = "INSERT OR REPLACE INTO ztl_poi (id, address, post_number, post, phone, email, www, coord_x, coord_y, turisticna_kartica, ljubljana_quality, recommended_map, image, star, poigroups, record_status, from_db) ";
