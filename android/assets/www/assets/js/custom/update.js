@@ -945,9 +945,12 @@ var knownfiles_audio = [];
 var DATADIR_audio;
 
 function onFSSuccessAudio(fileSystem) {
-	fileSystem.root.getDirectory(file_alt,{create:true}, gotDirAudio, onFSError);
+    if (device.platform == "iOS") {
+        fileSystem.root.getDirectory(SETTINGS_FOLDER+"audio",{create:true}, gotDirAudio, onFSError);
+    } else {
+        fileSystem.root.getDirectory(file_alt,{create:true}, gotDirAudio, onFSError);
+    }
 }
-
 function gotDirAudio(d) {
 	DATADIR_audio = d;
 	var reader = DATADIR_audio.createReader();
@@ -970,17 +973,16 @@ function readFilesAudio() {
 	        for (var i=0; i<res.rows.length; i++) {
 	    		var filename  = res.rows.item(i).sound;
 	    		var filearray = filename.split("_");
-	        	var url       = server_url+"file/"+filearray[0]+"/"+filearray[1]+"_"+filearray[2];
-	
-	        	//lokalno ime
-	    		var dlPath = DATADIR_audio.fullPath+"/"+filename;
-	    		
+
+                //filenames
+                var url       = server_url+"file/"+filearray[0]+"/"+filearray[1]+"_"+filearray[2];
+	    		var dlPath    = DATADIR_audio.fullPath+"/"+filename;
+                
 	        	//samo nove datoteke
 	        	if (knownfiles_audio.indexOf(filename) == -1) {
-	    			var ft = new FileTransfer();
-	    			ft.download(url, dlPath, function() {
-	    				console.log("new local file audio "+dlPath);
-	    			}, onFSError);
+                    console.log("new local file audio "+dlPath);
+                    var ft      = new FileTransfer();
+                    ft.download(url, dlPath, function() {}, onFSError);
 	    		}
 	        }
 		});
