@@ -140,6 +140,15 @@ function reinit() {
 		ASSETS_FOLDER     		= "/";
 		
 		file 		 			= ASSETS_FOLDER+"uploads/mp3/";
-		file_alt 	 			= SETTINGS_FOLDER+"audio/"; //lokacija na SD kartici
+        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemInit, null);
 	}
+}
+
+function onFileSystemInit(fileSystem) {
+    fileSystem.root.getDirectory(SETTINGS_FOLDER+"audio", {create:false}, gotDirInit, null);
+}
+
+function gotDirInit(d) {
+    file_alt = d.fullPath+"/"; //audio guid dl dir
+    console.log("***audio dl dir "+file_alt);
 }

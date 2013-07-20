@@ -30,6 +30,9 @@ function is_purchased_and_stored(){
 }
 
 function load_guide_buy() {
+    //za vsak slucaj, ker vcasih na ios v prvem initu ne prebere folderja
+    reinit();
+	
 	if (is_purchased_and_stored() == 1) {
 		voice_guide = 1;
 		load_page(template_lang+'trips.html', 'trips', trips[VOICE_GROUP], 'fade', false, VOICE_GROUP);
