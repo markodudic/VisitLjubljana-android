@@ -221,16 +221,55 @@ function filter_events_success(results) {
     load_page(template_lang+'events_filtered.html', 'filtered_events', trips[EVENTS_FILTERED_GROUP], 'fade', false, 0);
 }
 
+function sub_events_success(results) {
+	var res = {};
+    res.items = [];
+    var len = results.rows.length;
+    var tmp;
+    for (var i=0; i<len; i++){
+    	results.rows.item(i).title = unescape(results.rows.item(i).title);
+    	results.rows.item(i).date = unescape(results.rows.item(i).date);
+    	results.rows.item(i).poi_title = unescape(results.rows.item(i).poi_title);
+    	tmp = results.rows.item(i).title;
+    	if (tmp.length > max_dolzina_title) {
+    		results.rows.item(i).title = tmp.substring(0,max_dolzina_title)+"...";
+    	}
+    	tmp = results.rows.item(i).poi_title;
+    	if (tmp.length > max_dolzina_poi_title) {
+    		results.rows.item(i).poi_title = tmp.substring(0,max_dolzina_poi_title)+"...";
+    	}
+
+    	res.items[i] = results.rows.item(i);
+    }
+    res.sub_events = 1;
+    trips[SUB_EVENTS_GROUP] 			= res;
+    
+    load_page(template_lang+'events_filtered.html', 'filtered_events', trips[SUB_EVENTS_GROUP], 'fade', false, SUB_EVENTS_GROUP);
+}
+
+
 //event
 function load_event_success(results) {
-	results.rows.item(0).title = unescape(results.rows.item(0).title);
-	results.rows.item(0).intro = unescape(results.rows.item(0).intro);
-	results.rows.item(0).description = unescape(results.rows.item(0).description);
-	tmp_event_data.item = results.rows.item(0);
+	if (results.rows.item(0).sub_events != "") {
+		//festival
+		sub_events_id 	 = results.rows.item(0).id;
+		sub_events_title = unescape(results.rows.item(0).title);
+		if (sub_events_title.length > max_dolzina_title) {
+    		sub_events_title = sub_events_title.substring(0,max_dolzina_title)+"...";
+    	}
 
-	var tmp_query 	 = "SELECT ep.ticket_type, ep.price FROM ztl_event_pricing ep WHERE ep.id_event = "+results.rows.item(0).id+" AND ep.id_language = "+settings.id_lang+" GROUP BY ep.ticket_type, ep.price";
-	var tmp_callback = "load_event_pricing_success";
-	generate_query(tmp_query, tmp_callback);
+		load_sub_events(results.rows.item(0).sub_events);
+	} else {
+		//event
+		results.rows.item(0).title = unescape(results.rows.item(0).title);
+		results.rows.item(0).intro = unescape(results.rows.item(0).intro);
+		results.rows.item(0).description = unescape(results.rows.item(0).description);
+		tmp_event_data.item = results.rows.item(0);
+	
+		var tmp_query 	 = "SELECT ep.ticket_type, ep.price FROM ztl_event_pricing ep WHERE ep.id_event = "+results.rows.item(0).id+" AND ep.id_language = "+settings.id_lang+" GROUP BY ep.ticket_type, ep.price";
+		var tmp_callback = "load_event_pricing_success";
+		generate_query(tmp_query, tmp_callback);
+	}
 }
 
 function load_event_pricing_success(results) {
@@ -430,6 +469,7 @@ function tour_success(results) {
     	results.rows.item(i).title = unescape(results.rows.item(i).title);
     	results.rows.item(i).tour_category = unescape(results.rows.item(i).tour_category);
     	results.rows.item(i).short_description = unescape(results.rows.item(i).short_description);
+    	results.rows.item(i).contact = unescape(results.rows.item(i).contact);
     	tmp = results.rows.item(i).title;
     	if (tmp.length > max_dolzina_title) {
     		results.rows.item(i).title = tmp.substring(0,max_dolzina_title)+"...";
@@ -439,8 +479,8 @@ function tour_success(results) {
     		results.rows.item(i).tour_category = tmp.substring(0,max_dolzina_title)+"...";
     	}
     	tmp = results.rows.item(i).short_description;
-    	if (tmp.length > max_dolzina_title_info) {
-    		results.rows.item(i).short_description = tmp.substring(0,max_dolzina_short_desc)+"...";
+    	if (tmp.length > max_dolzina_long_desc) {
+    		results.rows.item(i).short_description = tmp.substring(0,max_dolzina_long_desc)+"...";
     	}
     	res.items[i] = results.rows.item(i);
     }
@@ -485,8 +525,9 @@ function tour_charters_success(results) {
 
 	var len = results.rows.length;
 	for (var i=0; i<len; i++){
+		results.rows.item(i).title = unescape(results.rows.item(i).title);
 		results.rows.item(i).content = unescape(results.rows.item(i).content);
-    	tmp_tours_data.charters[i] = results.rows.item(i);
+   	tmp_tours_data.charters[i] = results.rows.item(i);
     }
 
     if (swipe_dir == "left") {

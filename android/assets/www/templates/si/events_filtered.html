@@ -9,17 +9,26 @@
 			<div class="header_dots" onClick="event_filter_toggle();"></div>
 			<div style="clear:both;"></div>
 			<div class="header_space"></div>
-			<div class="events_filter_title">
-				{{page_sub_title}}
-				<div class="events_filter_title_date">{{page_sub_title_date}}</div>
-			</div>
+			{{#sub_events}}
+			{{/sub_events}}
+			{{^sub_events}}
+				<div class="events_filter_title">
+					{{page_sub_title}}
+					<div class="events_filter_title_date">{{page_sub_title_date}}</div>
+				</div>
+			{{/sub_events}}
 		</div>
 		<div class="header_shadow"></div>
 	</div>
 	
 	[[[event_filter]]]
 
-	<div class="ztl_content ztl_event_filter_items">
+	{{#sub_events}}
+		<div class="ztl_content">
+	{{/sub_events}}
+	{{^sub_events}}
+		<div class="ztl_content ztl_event_filter_items">
+	{{/sub_events}}
 	<div id="verticalWrapper">
 	<div id="verticalScroller">
 		{{#items}}
@@ -43,7 +52,7 @@
 								{{& poi_title}}
 							</div>
 							<div class="ztl_content_info_left"></div>
-							<div class="ztl_event_filter" style="backgroudn-color:#ffffff;">
+							<div class="ztl_event_filter" style="background-color:#ffffff;">
 								
 							</div>
 							<div class="ztl_distance"><div id="ztl_distance_value_{{id}}"></div></div>

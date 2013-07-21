@@ -383,8 +383,16 @@ function handle_event(data) {
 				 data[i].image = "";
 			}
 
+			if (data[i].important == null) {
+				 data[i].important = "";
+			}
+
+			if (data[i].sub_events == null) {
+				 data[i].sub_events = "";
+			}
+
 			//console.log(JSON.stringify(data[i]));
-			sql = "INSERT OR REPLACE INTO ztl_event (id, image, featured, record_status) VALUES ("+data[i].id+", '"+data[i].image+"', '"+data[i].featured+"', 1)";		
+			sql = "INSERT OR REPLACE INTO ztl_event (id, image, featured, important, sub_events, record_status) VALUES ("+data[i].id+", '"+data[i].image+"', '"+data[i].featured+"', '"+data[i].important+"', '"+data[i].sub_events+"', 1)";		
 			tx.executeSql(sql, [], function(tx, res) {});
 			sql = "INSERT OR REPLACE INTO ztl_event_translation (id_event, id_language, title, intro, description) VALUES ("+data[i].id+", "+settings.id_lang+", '"+addslashes(data[i].title)+"', '"+addslashes(data[i].intro)+"', '"+addslashes(data[i].description)+"')";
 			//console.log(sql);

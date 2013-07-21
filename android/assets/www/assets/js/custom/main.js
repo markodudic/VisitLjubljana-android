@@ -8,6 +8,9 @@ var footer		  = "";
 
 //event_filter
 var event_filter  = "";
+var sub_events	  = 0;
+var sub_events_id = 0;
+var sub_events_title = "";
 
 //map_settings
 var map_settings  = "";
@@ -332,10 +335,9 @@ function load_page(template, div, data, transition, reverse, id_group) {
 	
 	if ((div == "inspired") || (div == "events") || (div == "infos") || (div == "tour_category") || (div == "poigroups")) {
 		if ((data == undefined) || (data.items == undefined) || (data.items == null) || (data.items.length == 0)) {
-			synhronization_prompt(div)
+			synhronization_prompt(div);
 		};
 	}
-	
 	
 	if ((div == "trips") || (div == "events")) { 
 		show_spinner();
@@ -384,6 +386,7 @@ function load_page(template, div, data, transition, reverse, id_group) {
 					data.poigroup = 1;
 				}
 			} else if (div == 'events') {
+				sub_events	   		= 0;
 				data.categories 	= event_type;
 				data.page_title 	= trips_title[id_group];
 				data.map_button 	= map_translation[settings.id_lang];
@@ -415,12 +418,18 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				data.event_date_to		= event_date_to;
 				data.page_title 		= trips_title[id_group];
 				data.categories 		= event_type;
-				data.page_title 		= trips_title[id_group];
+				if (sub_events == 0) {
+					data.page_title 	= trips_title[id_group];
+				} else {
+					data.page_title 	= sub_events_title
+				}
 				data.events_title 		= events_translation[settings.id_lang];
 				data.default_category 	= default_category_translation[settings.id_lang];
 				data.potrdi_button 		= confirm_translation[settings.id_lang];
 				$('body').html("");
 			} else if (div == 'event') {
+				data.sub_events					= sub_events;
+				data.sub_events_id				= sub_events_id;
 				data.categories 				= event_type;
 				data.ztl_item_details_title 	= title_translation[settings.id_lang];
 				data.events_title 				= events_translation[settings.id_lang];
@@ -874,10 +883,11 @@ function show_spinner() {
 			  left: (window.innerWidth-window.innerWidth/3)/2 // Left position relative to parent in px
 			};
 	
-	var tmp_div = '<div class="spinner_opacity_class"></div>';
+	/*var tmp_div = '<div class="spinner_opacity_class"></div>';
 	console.log("spinner --- tmp_div " + tmp_div);
 	$('body').append(tmp_div);
 	$('.spinner_opacity_class').show();
+	*/
 
 	var target = document.getElementById("body");
 	spinner = new Spinner(opts).spin(target);
