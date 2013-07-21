@@ -156,6 +156,7 @@ function load_events(save_history) {
 	date_from      = "";
 	date_to 	   = "";
 	event_category = 0;
+	sub_events	   = 0;
 	
 	swipe = 0;
 	if (save_history == 1)  {
@@ -167,15 +168,34 @@ function load_events(save_history) {
 
 	trips_title[0] = main_menu['img2'];
 
-	var tmp_query    = "SELECT e.id, e.featured, et.title, ett.venue_id, ett.date, ett.date_first, p.coord_x, p.coord_y, ett.venue as poi_title, e.image " +
+	var tmp_query    = "SELECT e.id, e.featured, e.important, e.sub_events, et.title, ett.venue_id, ett.date, ett.date_first, p.coord_x, p.coord_y, ett.venue as poi_title, e.image " +
 						"FROM ztl_event e " +
 						"LEFT JOIN ztl_event_translation et ON et.id_event = e.id " +
 						"LEFT JOIN  ztl_event_timetable ett ON ett.id_event = e.id " +
 						"LEFT JOIN ztl_poi p ON p.id = ett.venue_id " +
-						"WHERE et.id_language = "+settings.id_lang+" AND e.record_status = 1 " +
+						"WHERE et.id_language = "+settings.id_lang+" AND e.record_status = 1 and (e.important = 'true' or e.featured = 'true') " +
 						"GROUP BY e.id ";
 						"ORDER BY e.featured desc, ett.date_first";
 	var tmp_callback = "events_success";
+    generate_query(tmp_query, tmp_callback);
+}
+
+function load_sub_events(sub_events_array) {
+	swipe_dir 	   = "";
+	swipe = 0;
+	sub_events=1;
+
+	load_event_type();
+
+	var tmp_query    = "SELECT e.id, e.featured, e.important, e.sub_events, et.title, ett.venue_id, ett.date, ett.date_first, p.coord_x, p.coord_y, ett.venue as poi_title, e.image " +
+						"FROM ztl_event e " +
+						"LEFT JOIN ztl_event_translation et ON et.id_event = e.id " +
+						"LEFT JOIN  ztl_event_timetable ett ON ett.id_event = e.id " +
+						"LEFT JOIN ztl_poi p ON p.id = ett.venue_id " +
+						"WHERE et.id_language = "+settings.id_lang+" AND e.record_status = 1 and e.id in (" + sub_events_array + ") " +
+						"GROUP BY e.id ";
+						"ORDER BY e.featured desc, ett.date_first";
+	var tmp_callback = "sub_events_success";
     generate_query(tmp_query, tmp_callback);
 }
 
@@ -313,7 +333,7 @@ function load_event(id, save_history) {
 		add_to_history(history_string);
 	}
 
-	var tmp_query 	 = "SELECT  e.id, et.title, et.intro, et.description, p.coord_x, p.coord_y, e.image " +
+	var tmp_query 	 = "SELECT  e.id, e.sub_events, et.title, et.intro, et.description, p.coord_x, p.coord_y, e.image " +
 						"FROM ztl_event e " +
 						"LEFT JOIN ztl_event_translation et ON et.id_event = e.id " +
 						"LEFT JOIN  ztl_event_timetable ett ON ett.id_event = e.id " +
@@ -336,7 +356,7 @@ function load_tour(id, save_history) {
 	var tmp_query = "SELECT t.id, tt.title, tt.short_description, tt.long_description, tt.contact " +
 					"FROM ztl_tour t " +
 					"LEFT JOIN ztl_tour_translation tt ON tt.id_tour = t.id " +
-					"WHERE t.id = "+id;
+					"WHERE tt.id_language = "+settings.id_lang+" AND t.id = "+id;
 
 	var tmp_callback = "load_tour_success";
     generate_query(tmp_query, tmp_callback);

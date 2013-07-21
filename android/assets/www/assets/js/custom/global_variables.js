@@ -1,5 +1,5 @@
 var server_url = 'http://www.visitljubljana.com/';
-var develop = 0;
+var develop = 1;
 var populateDB = 0;
 
 //settings
@@ -18,6 +18,7 @@ var EVENTS_FILTERED_GROUP	= 5;
 var TOUR_LIST_GROUP			= 6;
 var INSPIRED_GROUP			= 7;
 var POIGROUP_GROUP			= 8;
+var SUB_EVENTS_GROUP		= 9;
 var POI_ZAMENITOSTI_GROUP	= 217;
 var POI_KULINARIKA_GROUP	= 219;
 var POI_NASTANITVE_GROUP	= 215;
@@ -87,10 +88,11 @@ var tmp_history = ["fun--load_main_screen--empty"];
 //text dolzina max
 var max_dolzina_naslov = 25;
 var max_dolzina_poi_title = 30;
-var max_dolzina_title = 25;
+var max_dolzina_title = 28;
 var max_dolzina_title_info = 100;
 var max_dolzina_my_visit_tour_title = 25;
-var max_dolzina_short_desc = 60;
+var max_dolzina_short_desc = 75;
+var max_dolzina_long_desc = 100;
 
 
 //regija

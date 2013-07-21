@@ -396,6 +396,7 @@ div.poi_address {
     width:55px; 
     height:90px; 
     right:0; 
+    top:0; 
     position:absolute;
     font-family:'robotobold_condensed';
 }
