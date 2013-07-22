@@ -373,6 +373,7 @@ function load_page(template, div, data, transition, reverse, id_group) {
 		};
 	}
 	
+	$('body').css('position','');
 	if ((div == "trips") || (div == "events")) { 
 		show_spinner();
 		//return;
