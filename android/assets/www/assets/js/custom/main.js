@@ -6,8 +6,11 @@ var local_db	  = 0;
 //footer
 var footer		  = "";
 
-//event_filter
+//filtri
 var event_filter  = "";
+var poi_filter_template  = "";
+
+//festivali
 var sub_events	  = 0;
 var sub_events_id = 0;
 var sub_events_title = "";
@@ -83,6 +86,7 @@ function on_device_ready() {
 	poigroups_map[POI_KULINARIKA_GROUP] 	= POI_KULINARIKA_POI_GROUPS;
 	poigroups_map[POI_ZABAVA_GROUP] 		= POI_ZABAVA_POI_GROUPS;
 	poigroups_map[POI_NAKUPOVANJE_GROUP] 	= POI_NAKUPOVANJE_POI_GROUPS;
+	poigroups_map[POI_NASTANITVE_GROUP] 	= POI_NASTANITVE_CATEGORY;
     
 	document.addEventListener("backbutton", go_back, true);
 
@@ -149,6 +153,7 @@ function reset_cache_cont() {
 	load_pois(POI_NASTANITVE_GROUP, 7, 0);
 
     //ostali podatki
+	load_poi_filter();
     load_events(0);
     load_info(0);
     load_tour_list(0);
@@ -165,10 +170,12 @@ function set_cache() {
 	window.localStorage.removeItem('trips');
     window.localStorage.removeItem('trips_title');
     window.localStorage.removeItem('event_type');
+    window.localStorage.removeItem('poi_filter');
 
     window.localStorage.setItem('trips', JSON.stringify(trips));
     window.localStorage.setItem('trips_title', JSON.stringify(trips_title));
     window.localStorage.setItem('event_type', JSON.stringify(event_type));
+    window.localStorage.setItem('poi_filter', JSON.stringify(poi_filter));
     
 }
 
@@ -184,6 +191,9 @@ function get_cache() {
 		}
 		if (window.localStorage.getItem('event_type') != null) {
 			event_type = JSON.parse(window.localStorage.getItem('event_type'));
+		}
+		if (window.localStorage.getItem('poi_filter') != null) {
+			poi_filter = JSON.parse(window.localStorage.getItem('poi_filter'));
 		}
 	}
 }
@@ -286,13 +296,25 @@ function swipe_left_handler() {
 	}
 }
 
-function synhronization_prompt(div) {
-	navigator.notification.confirm(
-			synhronization_desc_translation[settings.id_lang],
-	        onConfirm,
-	        synchronization_translation[settings.id_lang],
-	        confirm_popup_translation[settings.id_lang]
-	    );
+function synhronization_prompt() {
+	//preverim ce imam data connection
+	var networkState = navigator.network.connection.type;
+	if (networkState == Connection.NONE) {
+		navigator.notification.confirm(
+				no_data_connection_desc_translation[settings.id_lang],
+				load_main_screen,
+		        synchronization_translation[settings.id_lang],
+		        ok_translation[settings.id_lang]
+		    );
+	} else {
+		//ce imam vprašam o syncu	
+		navigator.notification.confirm(
+				synhronization_desc_translation[settings.id_lang],
+		        onConfirm,
+		        synchronization_translation[settings.id_lang],
+		        confirm_popup_translation[settings.id_lang]
+		    );
+	}
 }
 
 function onConfirm(buttonIndex) {
@@ -318,12 +340,22 @@ function load_current_div(){
 }
 
 function synhronization_force() {
-	navigator.notification.confirm(
-			synhronization_desc_translation[settings.id_lang],
-	        onConfirmForce,
-	        synchronization_translation[settings.id_lang],
-	        confirm_popup_translation[settings.id_lang]
-	    );
+	var networkState = navigator.network.connection.type;
+	if (networkState == Connection.NONE) {
+		navigator.notification.confirm(
+				no_data_connection_desc_translation[settings.id_lang],
+				null,
+		        synchronization_translation[settings.id_lang],
+		        ok_translation[settings.id_lang]
+		    );
+	} else {
+		navigator.notification.confirm(
+				synhronization_desc_translation[settings.id_lang],
+		        onConfirmForce,
+		        synchronization_translation[settings.id_lang],
+		        confirm_popup_translation[settings.id_lang]
+		    );
+	}
 }
 
 function onConfirmForce(buttonIndex) {
@@ -337,7 +369,7 @@ function load_page(template, div, data, transition, reverse, id_group) {
 	
 	if ((div == "inspired") || (div == "events") || (div == "infos") || (div == "tour_category") || (div == "poigroups")) {
 		if ((data == undefined) || (data.items == undefined) || (data.items == null) || (data.items.length == 0)) {
-			synhronization_prompt(div);
+			synhronization_prompt();
 		};
 	}
 	
@@ -355,6 +387,10 @@ function load_page(template, div, data, transition, reverse, id_group) {
 	
 	if (event_filter == "") {
 		event_filter = load_template("event_filter.html", "#tpl_event_filter");
+	}
+
+	if (poi_filter_template == "") {
+		poi_filter_template = load_template("poi_filter.html", "#tpl_poi_filter");
 	}
 
 	if (map_settings == "") {
@@ -382,10 +418,27 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				extra_div_id 		= "_"+id_group;
 				data.extra_div_id 	= id_group;
 				data.page_title 	= trips_title[id_group];
+				if (selected_group == POI_NASTANITVE_GROUP) {
+					data.stars="true";
+				}
 				if (id_group == POIGROUP_GROUP) {
 					curr_poigroup_id = data.items[0].poigroup_id;
 					data.page_title = data.items[0].poigroup_title;
 					data.poigroup = 1;
+				}
+				if (id_group != POIGROUP_GROUP) {
+					var filter_poigroup 	= poi_filter_poigroup(id_group);
+					data.poi_filter 		= filter_poigroup;
+					data.poi_filter_title	= trips_title[id_group].toUpperCase();
+					data.default_category 	= default_category_translation[settings.id_lang];
+					data.potrdi_button 		= confirm_translation[settings.id_lang];
+					data.filter				= "true";
+					for (var ei=0; ei<filter_poigroup.length; ei++) {
+						filter_poigroup[ei].filter_selected = "";
+						if (poi_filter_curr == filter_poigroup[ei].id){
+							filter_poigroup[ei].filter_selected = "SELECTED";
+						}	
+					}
 				}
 			} else if (div == 'events') {
 				sub_events	   		= 0;
@@ -429,6 +482,21 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				data.default_category 	= default_category_translation[settings.id_lang];
 				data.potrdi_button 		= confirm_translation[settings.id_lang];
 				$('body').html("");
+			/*} else if (div == 'poi_filter') {
+				var filter_poigroup = poi_filter_poigroup();
+				
+				for (var ei=0; ei<filter_poigroup.length; ei++) {
+					filter_poigroup[ei].filter_selected = "";
+					if (poi_filter_curr == filter_poigroup[ei].id){
+						filter_poigroup[ei].filter_selected = "SELECTED";
+					}	
+				}
+
+				data.poi_filter 		= filter_poigroup;
+				data.poi_filter_title	= trips_title[id_group].toUpperCase();
+				data.default_category 	= default_category_translation[settings.id_lang];
+				data.potrdi_button 		= confirm_translation[settings.id_lang];
+				$('body').html("");*/
 			} else if (div == 'event') {
 				data.sub_events					= sub_events;
 				data.sub_events_id				= sub_events_id;
@@ -478,8 +546,8 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				if (data.title.length>max_dolzina_naslov) {
 					data.title=data.title.substring(0,max_dolzina_naslov)+"...";
 				}
-				if (data.star != 0) {
-					data.shadow="true";
+				if (selected_group == POI_NASTANITVE_GROUP) {
+					data.stars="true";
 				}
 				if (selected_group == POIGROUP_GROUP) {
 					data.poigroup 	= 1;
@@ -591,6 +659,9 @@ function load_page(template, div, data, transition, reverse, id_group) {
 			
 			if ((div == 'events') || (div == 'event') || (div == 'filtered_events')) {
 				html = html.replace('[[[event_filter]]]', Mustache.to_html(event_filter, data));
+			}
+			if ((div == 'trips') || (div == 'trip')) {
+				html = html.replace('[[[poi_filter]]]', Mustache.to_html(poi_filter_template, data));
 			}
 			if (div == 'ztl_map') {
 				html = html.replace('[[[map_settings]]]', Mustache.to_html(map_settings, data));
@@ -921,3 +992,4 @@ function format_date(date_string, id, hide_time) {
 function opacity(el) {
 	el.css({ opacity: 0.3 });
 }
+

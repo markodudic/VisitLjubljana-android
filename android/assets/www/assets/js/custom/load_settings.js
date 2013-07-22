@@ -49,30 +49,50 @@ function load_pois(id, trips_menu_id, save_history) {
 		group = id;
 		//samo za test
 		var limit = "";
-		//if (group == POI_KULINARIKA_GROUP) limit = " LIMIT 30 ";
-		
-		/*var tmp_query 		= 	'SELECT zp.*, zpt.title, zcg.id_group, zpt.description ' + 
-								'FROM ztl_poi zp  ' + 
-								'LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id  ' + 
-								'LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category  ' + 
-								'LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id  ' + 
-								'WHERE zcg.id_group = '+group+' AND zpt.id_language = '+settings.id_lang+' AND zp.record_status = 1  ' + 
-								'GROUP BY zp.id '+
-								'ORDER BY zpt.title' +
-								limit;*/
-		
-		var tmp_query 		= 	"SELECT zp.*, zpt.title title, "+group+" id_group, zpt.description description " +
-								"FROM (select * from ztl_poi WHERE record_status = 1) zp " +
-								"LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id  " +
-								"INNER JOIN (select * from ztl_category_group WHERE id_group = "+group+") zcg ON zcg.id_category = zpc.id_category " +  
-								"LEFT JOIN (select * from ztl_poi_translation where id_language = "+settings.id_lang+") zpt ON zpt.id_poi = zp.id " +  
-								"GROUP BY zp.id " +
-								"ORDER BY zpt.title " +
-								limit;
-		
+		if (group == POI_NASTANITVE_GROUP) {
+			var tmp_query 		= 	"SELECT zp.*, zpt.title, "+group+" id_group, zpt.description " + 
+									"FROM ztl_poi zp " +
+									"LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id  " + 
+									"LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category " +
+									"LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id  " + 
+									"WHERE zcg.id_group = "+group+" AND zpt.id_language = "+settings.id_lang+" AND zp.record_status = 1 " + 
+									"GROUP BY zp.id " +
+									"ORDER BY zpt.title";
+		} else {
+			var tmp_query 		= 	"SELECT zp.*, zpt.title, "+group+" id_group, zpt.description " + 
+									"FROM ztl_poi zp " + 
+									"LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id " +
+									"WHERE zpt.id_language = "+settings.id_lang+" AND zp.record_status = 1 " + 
+									"GROUP BY zp.id " +
+									"ORDER BY zpt.title";
+		}
+		/*
+			var tmp_query 		= 	"SELECT zp.*, zpt.title title, "+group+" id_group, zpt.description description " +
+									"FROM (select * from ztl_poi WHERE record_status = 1) zp " +
+									"LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id  " +
+									"INNER JOIN (select * from ztl_category_group WHERE id_group = "+group+") zcg ON zcg.id_category = zpc.id_category " +  
+									"LEFT JOIN (select * from ztl_poi_translation where id_language = "+settings.id_lang+") zpt ON zpt.id_poi = zp.id " +  
+									"GROUP BY zp.id " +
+									"ORDER BY zpt.title ";
+		*/
 		var tmp_callback	= "load_pois_success";
 		generate_query(tmp_query, tmp_callback);
     }
+}
+
+
+function load_poi_filter() {
+	var tmp_query 	 = 	"SELECT id, title " +
+						"FROM ztl_poi_filter " +
+						"WHERE id_language = "+settings.id_lang+" " +
+						"union  " +
+						"select id, title   " +
+						"from ztl_category_group " +
+						"left join ztl_category on (id = id_category) " +
+						"where id_group = " + POI_NASTANITVE_GROUP + " and id_language = "+settings.id_lang+" " +
+						"ORDER BY title";
+	var tmp_callback = "poi_filter_success";
+	generate_query(tmp_query, tmp_callback);
 }
 
 function load_trip_content(id, transition, reverse, save_history) {
@@ -97,6 +117,7 @@ function load_trip_content(id, transition, reverse, save_history) {
 
 	generate_query(tmp_query, tmp_callback);
 }
+
 
 function play_voice_guide(id) {
 	if (is_purchased_and_stored() == 0) {

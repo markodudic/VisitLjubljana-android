@@ -162,6 +162,7 @@ function handle_poi(data) {
 	handle_poi_deleted(data['deleted']);
 	handle_poi_groups(data['groups']);
 	handle_poi_categories(data['categories']);
+	handle_poi_filter(data['poigroups']);
 	handle_poi_new(data['pois']);
 }
 
@@ -209,6 +210,17 @@ function handle_poi_categories(data) {
 	});
 }
 
+function handle_poi_filter(data) {
+	db.transaction(function(tx) {
+		var sql = "";
+		for (var i = 0; i < data.length; i++) {
+			sql = "INSERT OR REPLACE INTO ztl_poi_filter (id, id_language, title, record_status) VALUES ("+data[i].id+", "+settings.id_lang+", '"+addslashes(data[i].title)+"', 1)";
+			//console.log(sql);
+			tx.executeSql(sql, [], function(tx, res) {});
+		}
+	});
+}
+
 function handle_poi_new(data) {
 	db.transaction(function(tx) {
 		var sql = "";
@@ -227,6 +239,7 @@ function handle_poi_new(data) {
 			}
 
 			//pri pripravi baze ne nalozim tiste, ki niso v poigroups ali groupi nastanitve zaradi velikosti apk-ja
+			/*
 			if (populateDB == 1) {
 				//ce je audio guide ga vedno importam
 				if ((audio_guide == undefined) || (audio_guide == null) || (audio_guide == '')) {
@@ -263,11 +276,11 @@ function handle_poi_new(data) {
 		    		if ((je_grupa == 0) && (je_cat == 0)) continue;
 				}
 			}
-			
-			sql = "INSERT OR REPLACE INTO ztl_poi (id, address, post_number, post, phone, email, www, coord_x, coord_y, turisticna_kartica, ljubljana_quality, recommended_map, image, star, poigroups, record_status, from_db) ";
+			*/
+			sql = "INSERT OR REPLACE INTO ztl_poi (id, address, post_number, post, phone, email, www, coord_x, coord_y, turisticna_kartica, ljubljana_quality, recommended_map, image, star, poigroups, cats, record_status, from_db) ";
 			sql+= "VALUES ("+data[i].id+", '"+addslashes(data[i].address)+"', '"+data[i].postNumber+"','"+addslashes(data[i].post)+"','"+addslashes(data[i].phone)+"', ";
 			sql+= "'"+addslashes(data[i].email)+"', '"+addslashes(data[i].www)+"', '"+data[i].coord.x+"', '"+data[i].coord.y+"', '"+addslashes(data[i].turisticna_kartica)+"', '"+addslashes(data[i].ljubljanaQuality)+"', ";
-			sql+= "'"+data[i].recommended_map+"', '"+data[i].image+"', '"+data[i].stars+"', '"+data[i].poigroups+"', 1, 0);";
+			sql+= "'"+data[i].recommended_map+"', '"+data[i].image+"', '"+data[i].stars+"', '"+data[i].poigroups+"', '"+data[i].cats+"', 1, 0);";
 			//console.log(sql);
 			tx.executeSql(sql, [], function(tx, res) {});
 				

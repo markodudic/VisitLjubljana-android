@@ -160,6 +160,14 @@ synhronization_desc_translation[3]	= "Um diese Inhalte anzuzeigen, benötigen Si
 synhronization_desc_translation[4]	= "Per visualizzare questo contenuto, è necessaria una connessione dati. Connessione a una rete di dati, può comportare i costi supplementari.";
 synhronization_desc_translation[5]	= "Pour voir ce contenu, vous avez besoin d'une connexion de données. Connexion à un réseau de données, peut entraîner des frais supplémentaires.";
 
+var no_data_connection_desc_translation = [];
+no_data_connection_desc_translation[1]	= "Za ogled te vsebine potrebujete podatkovno povezavo.";
+no_data_connection_desc_translation[2]	= "To view this content, you need a data connection.";
+no_data_connection_desc_translation[3]	= "Um diese Inhalte anzuzeigen, benötigen Sie eine Datenverbindung.";
+no_data_connection_desc_translation[4]	= "Per visualizzare questo contenuto, è necessaria una connessione dati.";
+no_data_connection_desc_translation[5]	= "Pour voir ce contenu, vous avez besoin d'une connexion de données.";
+
+
 var synronization_finished_translation = [];
 synronization_finished_translation[1]	= "Sinhronizacija končana";
 synronization_finished_translation[2]	= "Synchronisation completed";
