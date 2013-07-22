@@ -43,16 +43,26 @@ function load_guide_buy() {
 
 //klik na gumb
 function buy_guide() {
-	//sinhronizacija v update.js:644
-	update_audio();
-	
-	//shranimo
-	lang_has_purchased = 1;
-	lang_has_stored    = 1;
-	audio_guides[settings.id_lang]["purchased"] = lang_has_purchased;
-	audio_guides[settings.id_lang]["stored"]    = lang_has_stored;
-	localStorage.setItem('audio_guides', JSON.stringify(audio_guides));
-	
-	//zrendramo na novo
-	load_guide_buy();
+	var networkState = navigator.network.connection.type;
+	if (networkState == Connection.NONE) {
+		navigator.notification.confirm(
+				no_data_connection_desc_translation[settings.id_lang],
+				null,
+		        synchronization_translation[settings.id_lang],
+		        ok_translation[settings.id_lang]
+		    );
+	} else {
+		//sinhronizacija v update.js:644
+		update_audio();
+		
+		//shranimo
+		lang_has_purchased = 1;
+		lang_has_stored    = 1;
+		audio_guides[settings.id_lang]["purchased"] = lang_has_purchased;
+		audio_guides[settings.id_lang]["stored"]    = lang_has_stored;
+		localStorage.setItem('audio_guides', JSON.stringify(audio_guides));
+		
+		//zrendramo na novo
+		load_guide_buy();
+	}
 }

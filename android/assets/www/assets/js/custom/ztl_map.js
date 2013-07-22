@@ -213,7 +213,7 @@ var init = function (onSelectFeatureFunction) {
                 //ne vem zakaj ampak koordinate po transformaciji strizejo za -350 in 550. GK koordinate so ok.
         	    var point = transform (parseFloat(points[i][0])+correctionX, parseFloat(points[i][1])+correctionY);
                 var attributes = {id: points[i][3], type: points[i][4]};
-    			
+
                 bounds.extendXY(point.lon, point.lat);
 
                 feature = new OpenLayers.Feature.Vector(new OpenLayers.Geometry.Point(point.lon, point.lat), attributes);
@@ -369,6 +369,7 @@ function load_map_coords(results, type) {
 
 function load_map_coord(results, id, type) {
     var len = results.items.length;
+	
     for (var i = 0; i<len; i++) {
     	if (results.items[i].id == id) {
     		add_point_on_map(results.items[i], type);

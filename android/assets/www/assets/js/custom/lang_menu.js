@@ -21,6 +21,13 @@ voice_guide_translation[3]	= "Führer";
 voice_guide_translation[4]	= "Guida";
 voice_guide_translation[5]	= "Guide";
 
+var sub_events_translation = [];
+sub_events_translation[1]	= "Prireditve";
+sub_events_translation[2]	= "Events";
+sub_events_translation[3]	= "Veranstaltungen";
+sub_events_translation[4]	= "Manifestazioni";
+sub_events_translation[5]	= "Evénements";
+
 var voice_guide_translation_full = [];
 voice_guide_translation_full[1]         = "GLASOVNI VODIČ";
 voice_guide_translation_full[2]         = "AUDIO GUIDE";
