@@ -62,7 +62,6 @@ function on_device_ready() {
 	reinit();
 	
 	db 		= window.sqlitePlugin.openDatabase("Database", "1.0", "ztl", -1);
-	
 	pOld 	= new Proj4js.Point(0,0);
 	
 	load_settings();
@@ -71,11 +70,15 @@ function on_device_ready() {
 	//navigator.splashscreen.show();
 	skip_update = 0;
 
-	//za test
 	//prvic napolnimo po izbiri jezika
 	if (localStorage.getItem(localStorage.key('first_run')) != null) {
-		get_cache();
+		if (device.platform == "iOS") {
+			reset_cache();
+		} else {
+			get_cache();
+		}
 	}
+
 	poigroups_map[POI_ZAMENITOSTI_GROUP] 	= POI_ZAMENITOSTI_POI_GROUPS;
 	poigroups_map[POI_KULINARIKA_GROUP] 	= POI_KULINARIKA_POI_GROUPS;
 	poigroups_map[POI_ZABAVA_GROUP] 		= POI_ZABAVA_POI_GROUPS;
@@ -96,7 +99,6 @@ function on_device_ready() {
 	} else {
 		gaPlugin.init(nativePluginResultHandler, nativePluginErrorHandler, UA_android, 10);
 	}
-
     window.setInterval(set_my_visit_notification, 60000);
 }
 
