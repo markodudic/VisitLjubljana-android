@@ -47,9 +47,12 @@ function populateDB_ztl_tour_images(tx) {
 	tx.executeSql('CREATE INDEX ztl_inspired_category__id_language ON ztl_inspired_category (id_language)');
 	tx.executeSql('CREATE INDEX ztl_inspired_category__ref_object ON ztl_inspired_category (ref_object)');
 	
+	tx.executeSql('CREATE INDEX ztl_poi_filter__id ON ztl_poi_filter (id)');
+	tx.executeSql('CREATE INDEX ztl_poi_filter__id_language ON ztl_poi_filter (id_language)');
+
 	tx.executeSql('CREATE INDEX ztl_poigroup__id ON ztl_poigroup (id)');
 	tx.executeSql('CREATE INDEX ztl_poigroup__id_language ON ztl_poigroup (id_language)');
-	
+
 	//unique indexes for insert or replace
 	
 	tx.executeSql('CREATE UNIQUE INDEX unique_ztl_poi ON ztl_poi (id)');

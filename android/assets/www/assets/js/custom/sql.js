@@ -61,10 +61,10 @@ function load_pois_success(results) {
     	}
     	
     	//filtriram po poigrupah
-    	if ((trips_group == POI_ZAMENITOSTI_GROUP) ||
-    		(trips_group == POI_KULINARIKA_GROUP) ||
-    		(trips_group == POI_NAKUPOVANJE_GROUP) ||
-    		(trips_group == POI_ZABAVA_GROUP)) {
+    	if (trips_group == POI_NASTANITVE_GROUP) {
+	    	res.items[rec] = results.rows.item(i);
+	    	rec++;
+    	} else {
     		var poigroup = results.rows.item(i).poigroups;
     	    var poigroups = poigroups_map[trips_group];
     		for (var j=0; j<poigroups.length; j++){
@@ -77,14 +77,26 @@ function load_pois_success(results) {
 	    			}
     			}
     		}
-    	} else {
-	    	res.items[rec] = results.rows.item(i);
-	    	rec++;
     	}
     }
 	
     trips[trips_group] = res;
     //load_page(template_lang+'trips.html', 'trips', res, 'fade', false);
+}
+
+
+function poi_filter_success(results) {
+	var len = results.rows.length;
+
+    for (var i=0; i<len; i++){
+    	var title = results.rows.item(i).title.toUpperCase();
+        var r = /%u([\d\w]{4})/gi;
+        title = title.replace(r, function (match, grp) {
+            return String.fromCharCode(parseInt(grp, 16)); } );
+        results.rows.item(i).title = unescape(title);
+
+    	poi_filter[i] = results.rows.item(i);
+    }
 }
 
 //nalozi poi
@@ -1082,6 +1094,17 @@ function populate_db_firstime() {
 			db.transaction(function(tx) {
 				tx.executeSql('select count(*) as cnt from ztl_poigroup;', [], function(tx, res) {
 					console.log('41 >>>>>>>>>> ztl_poigroup res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+					add_indexes();
+				});
+			});
+		});
+	});
+	
+	$.getScript('./assets/install_db/ztl_poi_filter.js', function () {
+		db.transaction(populateDB_ztl_poi_filter, errorCB, function(tx) {
+			db.transaction(function(tx) {
+				tx.executeSql('select count(*) as cnt from ztl_poi_filter;', [], function(tx, res) {
+					console.log('41 >>>>>>>>>> ztl_poi_filter res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
 					add_indexes();
 				});
 			});

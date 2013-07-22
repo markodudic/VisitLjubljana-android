@@ -97,26 +97,36 @@ function clear_field(field) {
 function web_login(sync) {
 	only_login = sync;
 
-	var username = $("#my_visit_username").val();
-	var password = $("#my_visit_password").val();
-
-	var url = 'http://www.visitljubljana.com/si/mobile_app/service.json?action=login&u='+username+'&p='+password;
-
-	$.ajax( {
-		url : url,
-		dataType : 'json',
-		beforeSend : function(xhr) {
-	          xhr.setRequestHeader("Authorization", "Basic RWlqdTN6YW86dXRoMWplaUY=");
-		},
-		error : function(xhr, ajaxOptions, thrownError) {
-			//napaka
-			console.log(" >>>>>>>>>> failed "+url);
-			console.log(JSON.stringify(thrownError));
-		},
-		success : function(data) {
-			handle_web_login(data);
-		}
-	});
+	var networkState = navigator.network.connection.type;
+	if (networkState == Connection.NONE) {
+		navigator.notification.confirm(
+				no_data_connection_desc_translation[settings.id_lang],
+				null,
+		        synchronization_translation[settings.id_lang],
+		        ok_translation[settings.id_lang]
+		    );
+	} else {
+		var username = $("#my_visit_username").val();
+		var password = $("#my_visit_password").val();
+	
+		var url = server_url + 'si/mobile_app/service.json?action=login&u='+username+'&p='+password;
+	
+		$.ajax( {
+			url : url,
+			dataType : 'json',
+			beforeSend : function(xhr) {
+		          xhr.setRequestHeader("Authorization", "Basic RWlqdTN6YW86dXRoMWplaUY=");
+			},
+			error : function(xhr, ajaxOptions, thrownError) {
+				//napaka
+				console.log(" >>>>>>>>>> failed "+url);
+				console.log(JSON.stringify(thrownError));
+			},
+			success : function(data) {
+				handle_web_login(data);
+			}
+		});
+	}
 }
 
 function handle_web_login(res) {

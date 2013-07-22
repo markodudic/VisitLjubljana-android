@@ -1,0 +1,65 @@
+var poi_filter 	   			= new Array();
+
+var tmp_event_data 			= {};
+var tmp_tours_data 			= {};
+var event_title    			= "";
+
+var poi_filter_curr 	= 0;
+var event_call_from_history = 0;
+
+function poi_filter_toggle() {
+	$(".poi_filter").toggle();
+	
+	$(".ztl_content").toggle();
+	$(".header").toggle();
+	$(".footer").toggle();
+
+	if ($('.poi_filter').is(':visible')) {
+		swipe = 0;
+	} else {
+		swipe = 1;
+	}
+}
+
+function poi_filter_poigroup(id_group) {
+	var filter_poigroup		= new Array();
+	var filter = poigroups_map[id_group];
+	for (var ei=0; ei<poi_filter.length; ei++) {
+		if (filter.indexOf(poi_filter[ei].id) != -1){
+			filter_poigroup.push(poi_filter[ei]);
+		}	
+	}
+	
+	return filter_poigroup;
+}
+
+function filter_poi()  {
+	swipe = 0;
+
+	poi_filter_curr = $('#poi_filter_sel').val();
+	
+	var res = {};
+    res.items = [];
+	if (poi_filter_curr > 0) {
+		var data = trips[selected_group];
+		var j=0;
+		for (var i=0; i<data.items.length; i++){
+			if (selected_group != POI_NASTANITVE_GROUP) {
+				if (data.items[i].poigroups.indexOf(poi_filter_curr) != -1) {
+					res.items[j] = data.items[i];
+					j++;
+				}
+			} else {
+				if (data.items[i].cats.indexOf(poi_filter_curr) != -1) {
+					res.items[j] = data.items[i];
+					j++;
+				}
+			}
+		}
+	} else {
+		res = trips[selected_group];
+	}
+
+	load_page(template_lang+'trips.html', 'trips', res, 'fade', false, selected_group);
+}
+
