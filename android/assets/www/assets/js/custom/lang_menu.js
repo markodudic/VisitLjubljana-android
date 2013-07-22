@@ -1,4 +1,4 @@
-var lang ='{"language_menu":[{"title":"Vsebine","img1":"MyVisit - poiščite navdih","img2":"Prireditve","img3":"Znamenitosti","img4":"Kulinarika","img5":"Informacije","img6":"Ogledi in izleti","img7":"Nastanitve","img8":"Zabava","img9":"Nakupovanje","img10":"Kraji","img99":"Ostalo"},{"title":"Content","img1":"MyVisit - get inspired","img2":"Events","img3":"Sights and attractions","img4":"Eating out","img5":"Visitor information","img6":"Tours and excursions","img7":"Accommodation","img8":"Entertainment","img9":"Shopping","img10":"Places","img99":"Ostalo"},{"title":"Inhalt","img1":"MyVisit - lass dich inspirieren","img2":"Veranstaltungen","img3":"Sehenswürdigkeiten","img4":"Kulinarik","img5":"Informationen","img6":"Führungen und Ausflüge","img7":"Unterkünfte","img8":"Unterhaltung","img9":"Shopping","img10":"Orte","img99":"Ostalo"},{"title":"Contenuto","img1":"MyVisit - trova ispirazioni","img2":"Manifestazioni","img3":"Attrazioni","img4":"Gastronomia","img5":"Informazioni","img6":"Visite e gite","img7":"Allogio","img8":"Divertimento","img9":"Shopping","img10":"Posti","img99":"Ostalo"},{"title":"Content","img1":"MyVisit - laissez-vous insprirer","img2":"Evénements","img3":"Curiosités","img4":"Gastronomie","img5":"Info pour les visiteurs","img6":"Visites et excursions","img7":"Hébergement","img8":"Divertissement","img9":"Shopping","img10":"Lieux","img99":"Ostalo"}]}';
+var lang ='{"language_menu":[{"title":"Vsebine","img1":"MyVisit - poiščite navdih","img2":"Prireditve","img3":"Znamenitosti","img4":"Kulinarika","img5":"Informacije","img6":"Ogledi in izleti","img7":"Nastanitve","img8":"Zabava","img9":"Nakupovanje","img10":"Kraji v regiji","img99":"Ostalo"},{"title":"Content","img1":"MyVisit - get inspired","img2":"Events","img3":"Sights and attractions","img4":"Eating out","img5":"Visitor information","img6":"Tours and excursions","img7":"Accommodation","img8":"Entertainment","img9":"Shopping","img10":"Towns in the region","img99":"Ostalo"},{"title":"Inhalt","img1":"MyVisit - lass dich inspirieren","img2":"Veranstaltungen","img3":"Sehenswürdigkeiten","img4":"Kulinarik","img5":"Informationen","img6":"Führungen und Ausflüge","img7":"Unterkünfte","img8":"Unterhaltung","img9":"Shopping","img10":"Ortschaften in die Region","img99":"Ostalo"},{"title":"Contenuto","img1":"MyVisit - trova ispirazioni","img2":"Manifestazioni","img3":"Attrazioni","img4":"Gastronomia","img5":"Informazioni","img6":"Visite e gite","img7":"Allogio","img8":"Divertimento","img9":"Shopping","img10":"Luoghi nella regione","img99":"Ostalo"},{"title":"Content","img1":"MyVisit - laissez-vous insprirer","img2":"Evénements","img3":"Curiosités","img4":"Gastronomie","img5":"Info pour les visiteurs","img6":"Visites et excursions","img7":"Hébergement","img8":"Divertissement","img9":"Shopping","img10":"Les villes en région","img99":"Ostalo"}]}';
 lang = JSON.parse(lang);
 
 //veza med sliko in grupo
@@ -21,13 +21,6 @@ voice_guide_translation[3]	= "Führer";
 voice_guide_translation[4]	= "Guida";
 voice_guide_translation[5]	= "Guide";
 
-var sub_events_translation = [];
-sub_events_translation[1]	= "Prireditve";
-sub_events_translation[2]	= "Events";
-sub_events_translation[3]	= "Veranstaltungen";
-sub_events_translation[4]	= "Manifestazioni";
-sub_events_translation[5]	= "Evénements";
-
 var voice_guide_translation_full = [];
 voice_guide_translation_full[1]         = "GLASOVNI VODIČ";
 voice_guide_translation_full[2]         = "AUDIO GUIDE";
@@ -41,6 +34,7 @@ map_translation[2]     = "MAP";
 map_translation[3]     = "KARTE";
 map_translation[4]     = "MAPPA";
 map_translation[5]     = "CARTE";
+
 
 var title_translation = [];
 title_translation[1]      = "NASLOV";
@@ -85,6 +79,13 @@ events_translation[2]	= "FILTER EVENTS";
 events_translation[3]	= "VERANSTALTUNGEN FILTERN";
 events_translation[4]	= "FILTRARE LE MANIFESTAZIONI";
 events_translation[5]	= "FILTRER LES ÉVÉNEMENTS";
+
+var sub_events_translation = [];
+sub_events_translation[1]	= "Prireditve";
+sub_events_translation[2]	= "Events";
+sub_events_translation[3]	= "Veranstaltungen";
+sub_events_translation[4]	= "Manifestazioni";
+sub_events_translation[5]	= "Evénements";
 
 var default_category_translation = [];
 default_category_translation[1]	= "Izberi kategorijo";
@@ -173,7 +174,6 @@ no_data_connection_desc_translation[2]	= "To view this content, you need a data 
 no_data_connection_desc_translation[3]	= "Um diese Inhalte anzuzeigen, benötigen Sie eine Datenverbindung.";
 no_data_connection_desc_translation[4]	= "Per visualizzare questo contenuto, è necessaria una connessione dati.";
 no_data_connection_desc_translation[5]	= "Pour voir ce contenu, vous avez besoin d'une connexion de données.";
-
 
 var synronization_finished_translation = [];
 synronization_finished_translation[1]	= "Sinhronizacija končana";

@@ -63,7 +63,7 @@ function filter_events()  {
 
 	event_call_from_history = 0;
 
-	if (event_date_from_sql > event_date_to_sql) {
+	if ((event_date_from_sql != 0) && (event_date_to_sql != 0) && (event_date_from_sql > event_date_to_sql)) {
 		navigator.notification.confirm(
 				from_bigger_than_to_translation[settings.id_lang],
 				null,

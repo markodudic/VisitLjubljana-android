@@ -238,11 +238,10 @@ function handle_poi_new(data) {
 				data[i].poigroups = '';
 			}
 
-			//pri pripravi baze ne nalozim tiste, ki niso v poigroups ali groupi nastanitve zaradi velikosti apk-ja
-			/*
+			//pri pripravi baze ne nalozim image tistih, ki niso v poigroups ali groupi nastanitve zaradi velikosti apk-ja
 			if (populateDB == 1) {
 				//ce je audio guide ga vedno importam
-				if ((audio_guide == undefined) || (audio_guide == null) || (audio_guide == '')) {
+				if ((data[i].audio_guide == undefined) || (data[i].audio_guide == null) || (data[i].audio_guide == '')) {
 		    		//preverim ce je v grupi
 					var poigroup = JSON.stringify(data[i].poigroups);
 		    	    var poigroups = POI_GROUPS;
@@ -273,10 +272,11 @@ function handle_poi_new(data) {
 		    		}
 		    		
 		    		//ce ni prava grupa ali nastanitev je zavrnem
-		    		if ((je_grupa == 0) && (je_cat == 0)) continue;
+		    		if ((je_grupa == 0) && (je_cat == 0)) 
+		    			data[i].image = '';
 				}
 			}
-			*/
+			
 			sql = "INSERT OR REPLACE INTO ztl_poi (id, address, post_number, post, phone, email, www, coord_x, coord_y, turisticna_kartica, ljubljana_quality, recommended_map, image, star, poigroups, cats, record_status, from_db) ";
 			sql+= "VALUES ("+data[i].id+", '"+addslashes(data[i].address)+"', '"+data[i].postNumber+"','"+addslashes(data[i].post)+"','"+addslashes(data[i].phone)+"', ";
 			sql+= "'"+addslashes(data[i].email)+"', '"+addslashes(data[i].www)+"', '"+data[i].coord.x+"', '"+data[i].coord.y+"', '"+addslashes(data[i].turisticna_kartica)+"', '"+addslashes(data[i].ljubljanaQuality)+"', ";

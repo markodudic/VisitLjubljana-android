@@ -45,7 +45,9 @@ function onSuccess_gps(position) {
 	    		   $("div#ztl_distance_value_"+geo_stuff[0]).html(dist*1000+" m");	    		   
 	    	   }
 	       } else {
-	    	   $("div.ztl_img_distance_container").hide();
+   	   			$("div#map_button").attr('class','ztl_grey_button ztl_grey_button_map ztl_item_left_button');
+   	   			$("div#map_button").removeAttr('onclick');
+   	   			$("div.ztl_img_distance_container").hide();
 	       }
 	       
 	       /*var bbox = (geo_stuff[1] > x0) && (geo_stuff[1] < x1) && (geo_stuff[2] > y0) && (geo_stuff[2] < y1);

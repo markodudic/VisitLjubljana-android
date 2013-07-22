@@ -35,8 +35,11 @@ function poi_filter_poigroup(id_group) {
 
 function filter_poi()  {
 	swipe = 0;
+	var history_string = "fun--poi_filter--empty";
+	add_to_history(history_string);
 
-	poi_filter_curr = $('#poi_filter_sel').val();
+	if ($('#poi_filter_sel').val() != undefined)
+		poi_filter_curr = $('#poi_filter_sel').val();
 	
 	var res = {};
     res.items = [];

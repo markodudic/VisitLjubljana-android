@@ -307,7 +307,7 @@ function synhronization_prompt() {
 		        ok_translation[settings.id_lang]
 		    );
 	} else {
-		//ce imam vprašam o syncu	
+		//ce imam vpraï¿½am o syncu	
 		navigator.notification.confirm(
 				synhronization_desc_translation[settings.id_lang],
 		        onConfirm,
@@ -375,6 +375,7 @@ function load_page(template, div, data, transition, reverse, id_group) {
 	
 	if ((div == "trips") || (div == "events")) { 
 		show_spinner();
+		//return;
 	}
 	
 	if (footer == "") {
@@ -467,13 +468,12 @@ function load_page(template, div, data, transition, reverse, id_group) {
 					data.event_date_to_sql = "";
 				} else {
 					data.event_date_to_sql = event_date_to_sql;
-				}
+				} 
 
 				data.event_date_from	= event_date_from;
 				data.event_date_to		= event_date_to;
 				data.page_title 		= trips_title[id_group];
 				data.categories 		= event_type;
-				data.page_title 	= sub_events_title
 				data.events_title 		= events_translation[settings.id_lang];
 				data.default_category 	= default_category_translation[settings.id_lang];
 				data.potrdi_button 		= confirm_translation[settings.id_lang];
@@ -546,6 +546,7 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				if (selected_group == POI_NASTANITVE_GROUP) {
 					data.stars="true";
 				}
+				console.log("selected_group="+selected_group);
 				if (selected_group == POIGROUP_GROUP) {
 					data.poigroup 	= 1;
 					data.id_poigroup = curr_poigroup_id;
@@ -949,22 +950,32 @@ function show_spinner() {
 			  hwaccel: false, // Whether to use hardware acceleration
 			  className: 'spinner', // The CSS class to assign to the spinner
 			  zIndex: 2e9, // The z-index (defaults to 2000000000)
-			  top: (window.innerHeight-window.innerWidth/3)/2, // Top position relative to parent in px
+			  top: window.pageYOffset + (window.innerHeight-window.innerWidth/3)/2, // Top position relative to parent in px
 			  left: (window.innerWidth-window.innerWidth/3)/2 // Left position relative to parent in px
 			};
 	
-	/*var tmp_div = '<div class="spinner_opacity_class"></div>';
-	console.log("spinner --- tmp_div " + tmp_div);
-	$('body').append(tmp_div);
-	$('.spinner_opacity_class').show();
-	*/
+	$(document.createElement('div')).width('100%').height('100%')
+	.css({backgroundColor:'black', opacity:0.8, position:'absolute', zIndex:2e8, left:0, top:0})
+    .attr("id","overlay").prependTo($('body'));
 
-	var target = document.getElementById("body");
+	if (current_div == 'select_language') {
+		$('body').css('position','');
+		var target = document.getElementById("body");
+	} else {
+		$('body').css('position','relative');
+		var target = document.getElementById("overlay");
+	}
+
 	spinner = new Spinner(opts).spin(target);
+	
+	$('body').on('touchmove', function(evt) {
+	    evt.preventDefault(); 
+	})
 
 }
 
 function hide_spinner() {
+	$('body').unbind('touchmove');
 	if (spinner != undefined) spinner.stop();
 }
 

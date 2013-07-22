@@ -1,6 +1,6 @@
 var server_url = 'http://www.visitljubljana.com/';
 var develop = 1;
-var populateDB = 0;
+var populateDB = 0; 
 
 //settings
 var SETTINGS_FILE           = "settings.js"
@@ -33,8 +33,8 @@ var POI_ZABAVA_POI_GROUPS 		= ["15927","39095","15931","16756","15782","44001","
 var POI_NAKUPOVANJE_POI_GROUPS 	= ["159212","15969","15848","43997","15922"];
 var POI_NASTANITVE_CATEGORY 	= ["366","369","398","401","431","438","456"];
                             	   
-//var POI_GROUPS 		= [34268, 15780, 15860, 15863, 15874, 15774, 15781, 15861, 15782, 15906, 15907, 15818, 15919, 43996, 43995, 15927, 39095, 15931, 16756, 15782, 44001, 15815, 15921, 15969, 15848, 43997, 15922];
-//var NASTANITEV_CATS	= [366, 369, 398, 401, 431, 438, 456];
+var POI_GROUPS 		= [34268, 15780, 15860, 15863, 15874, 15774, 15781, 15861, 15782, 15906, 15907, 15818, 15919, 43996, 43995, 15927, 39095, 15931, 16756, 15782, 44001, 15815, 15921, 15969, 15848, 43997, 15922];
+var NASTANITEV_CATS	= [366, 369, 398, 401, 431, 438, 456];
 
 
 //ztl grupe -- my_visit sinhronizacija
