@@ -269,6 +269,14 @@ var init = function (onSelectFeatureFunction) {
         }); 
 
         $(".txt_popup").show();
+
+        //popup workaround
+        var map_lr = ($(window).width()-$(".txt_popup").width())/2;
+        var map_tb = ($(window).height()/2)-$(".txt_popup").height();
+        $(".txt_popup").css("margin-top", 0);
+        $(".txt_popup").css("margin-left", 0);
+        $(".txt_popup").css("top", map_tb+10); //se malo offseta
+        $(".txt_popup").css("left", map_lr);
         toltip_visible = 1;
     }
 
