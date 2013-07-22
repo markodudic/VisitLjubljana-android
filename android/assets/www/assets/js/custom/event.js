@@ -34,7 +34,7 @@ function event_filter_toggle() {
 
 function filter_events()  {
 	swipe = 0;
-	sub_events	   = 0;
+	is_sub_event = 0;
 
 	if (event_call_from_history == 0) {
 		var history_string = "fun--filter_events--empty";

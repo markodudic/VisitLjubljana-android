@@ -28,7 +28,7 @@ function is_updt_finished() {
 		
 		if (populateDB == 1) {
 			copyDB();
-		}
+		} 
 		
 		load_current_div();
 		/*

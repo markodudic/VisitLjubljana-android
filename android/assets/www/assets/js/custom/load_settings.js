@@ -177,7 +177,7 @@ function load_events(save_history) {
 	date_from      = "";
 	date_to 	   = "";
 	event_category = 0;
-	sub_events	   = 0;
+	is_sub_event	   = 0;
 	
 	swipe = 0;
 	if (save_history == 1)  {
@@ -192,15 +192,15 @@ function load_events(save_history) {
 	var tmp_query    = "SELECT e.id, e.featured, e.important, e.sub_events, et.title, ett.venue_id, ett.date, ett.date_first, p.coord_x, p.coord_y, ett.venue as poi_title, e.image " +
 						"FROM ztl_event e " +
 						"LEFT JOIN ztl_event_translation et ON et.id_event = e.id " +
-						"LEFT JOIN  ztl_event_timetable ett ON ett.id_event = e.id " +
+						"LEFT JOIN ztl_event_timetable ett ON ett.id_event = e.id " +
 						"LEFT JOIN ztl_poi p ON p.id = ett.venue_id " +
-						"WHERE et.id_language = "+settings.id_lang+" AND e.record_status = 1 and (e.important = 'true' or e.featured = 'true') " +
+						"WHERE et.id_language = "+settings.id_lang+" AND e.record_status = 1 " +
 						"GROUP BY e.id ";
 						"ORDER BY e.featured desc, ett.date_first";
 	var tmp_callback = "events_success";
     generate_query(tmp_query, tmp_callback);
 }
-
+/*
 function load_sub_events(sub_events_array) {
 	swipe_dir 	   = "";
 	swipe = 0;
@@ -219,7 +219,7 @@ function load_sub_events(sub_events_array) {
 	var tmp_callback = "sub_events_success";
     generate_query(tmp_query, tmp_callback);
 }
-
+*/
 function load_tour_list(save_history)  {
 	swipe 			= 0;
 	var tmp_query    = "SELECT * " +

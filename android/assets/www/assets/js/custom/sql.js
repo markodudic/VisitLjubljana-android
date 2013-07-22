@@ -61,10 +61,10 @@ function load_pois_success(results) {
     	}
     	
     	//filtriram po poigrupah
-    	if (trips_group == POI_NASTANITVE_GROUP) {
-	    	res.items[rec] = results.rows.item(i);
-	    	rec++;
-    	} else {
+    	if ((trips_group == POI_ZAMENITOSTI_GROUP) ||
+    		(trips_group == POI_KULINARIKA_GROUP) ||
+    		(trips_group == POI_NAKUPOVANJE_GROUP) ||
+    		(trips_group == POI_ZABAVA_GROUP)) {
     		var poigroup = results.rows.item(i).poigroups;
     	    var poigroups = poigroups_map[trips_group];
     		for (var j=0; j<poigroups.length; j++){
@@ -77,7 +77,10 @@ function load_pois_success(results) {
 	    			}
     			}
     		}
+    	} else {
+	    	res.items[i] = results.rows.item(i);
     	}
+
     }
 	
     trips[trips_group] = res;
@@ -177,8 +180,8 @@ function events_success(results) {
     		k++;
     	}
     }
-
-	trips[EVENT_GROUP]			= res;
+    
+    trips[EVENT_GROUP]					= res;
 	trips[EVENT_GROUP].top_events_0 	= res.top_items[0];
 	trips[EVENT_GROUP].top_events_1 	= res.top_items[1];
 	trips[EVENT_GROUP].top_events_2 	= res.top_items[2];
@@ -233,7 +236,41 @@ function filter_events_success(results) {
     load_page(template_lang+'events_filtered.html', 'filtered_events', trips[EVENTS_FILTERED_GROUP], 'fade', false, 0);
 }
 
+
+
+
+//event
+function load_event_success(results) {
+	//event
+	results.rows.item(0).title = unescape(results.rows.item(0).title);
+	results.rows.item(0).intro = unescape(results.rows.item(0).intro);
+	results.rows.item(0).description = unescape(results.rows.item(0).description);
+	tmp_event_data.item = results.rows.item(0);
+	tmp_event_data.has_sub_events = 0;
+
+	if (results.rows.item(0).sub_events != "") {
+		//festival
+	    is_sub_event = 1;
+		tmp_event_data.has_sub_events = 1;
+		sub_events_id 	 = results.rows.item(0).id;
+		sub_events_title = unescape(results.rows.item(0).title);
+		var tmp_query    = "SELECT e.id, e.featured, e.important, e.sub_events, et.title, ett.venue_id, ett.date, ett.date_first, p.coord_x, p.coord_y, ett.venue as poi_title, e.image " +
+						"FROM ztl_event e " +
+						"LEFT JOIN ztl_event_translation et ON et.id_event = e.id " +
+						"LEFT JOIN  ztl_event_timetable ett ON ett.id_event = e.id " +
+						"LEFT JOIN ztl_poi p ON p.id = ett.venue_id " +
+						"WHERE et.id_language = "+settings.id_lang+" AND e.record_status = 1 and e.id in (" + results.rows.item(0).sub_events + ") " +
+						"GROUP BY e.id ";
+						"ORDER BY e.featured desc, ett.date_first";
+		var tmp_callback = "sub_events_success";
+		generate_query(tmp_query, tmp_callback);		
+	} else {
+		load_event_pricing(results.rows.item(0));
+	}
+}
+
 function sub_events_success(results) {
+	tmp_event_data.sub_events = {};
 	var res = {};
     res.items = [];
     var len = results.rows.length;
@@ -253,35 +290,16 @@ function sub_events_success(results) {
 
     	res.items[i] = results.rows.item(i);
     }
-    res.sub_events = 1;
-    trips[SUB_EVENTS_GROUP] 			= res;
+    //res.sub_events = 1;
+    tmp_event_data.sub_events = res.items;
     
-    load_page(template_lang+'events_filtered.html', 'filtered_events', trips[SUB_EVENTS_GROUP], 'fade', false, SUB_EVENTS_GROUP);
-}
+    load_event_pricing(tmp_event_data.item);
+}	
 
-
-//event
-function load_event_success(results) {
-	if (results.rows.item(0).sub_events != "") {
-		//festival
-		sub_events_id 	 = results.rows.item(0).id;
-		sub_events_title = unescape(results.rows.item(0).title);
-		if (sub_events_title.length > max_dolzina_title) {
-    		sub_events_title = sub_events_title.substring(0,max_dolzina_title)+"...";
-    	}
-
-		load_sub_events(results.rows.item(0).sub_events);
-	} else {
-		//event
-		results.rows.item(0).title = unescape(results.rows.item(0).title);
-		results.rows.item(0).intro = unescape(results.rows.item(0).intro);
-		results.rows.item(0).description = unescape(results.rows.item(0).description);
-		tmp_event_data.item = results.rows.item(0);
-	
-		var tmp_query 	 = "SELECT ep.ticket_type, ep.price FROM ztl_event_pricing ep WHERE ep.id_event = "+results.rows.item(0).id+" AND ep.id_language = "+settings.id_lang+" GROUP BY ep.ticket_type, ep.price";
-		var tmp_callback = "load_event_pricing_success";
-		generate_query(tmp_query, tmp_callback);
-	}
+function load_event_pricing(item) {
+	var tmp_query 	 = "SELECT ep.ticket_type, ep.price FROM ztl_event_pricing ep WHERE ep.id_event = "+item.id+" AND ep.id_language = "+settings.id_lang+" GROUP BY ep.ticket_type, ep.price";
+	var tmp_callback = "load_event_pricing_success";
+	generate_query(tmp_query, tmp_callback);
 }
 
 function load_event_pricing_success(results) {
