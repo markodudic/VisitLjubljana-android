@@ -126,6 +126,11 @@ function go_back() {
 					event_call_from_history = 1;
 					filter_events();
 				}
+				
+				if (go_to[1] == "poi_filter") {
+					poi_filter();
+				}
+				
 			} else if (go_to[0] == 'main_menu') {
 				voice_guide = 0;
 				if (go_to[1] == INSPIRED_GROUP) {

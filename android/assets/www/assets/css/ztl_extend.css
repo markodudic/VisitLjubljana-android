@@ -35,15 +35,6 @@ body {
 }
 
 
-.overlay { 
-    position: relative;
-    height: 100%;
-    width: 100%;
-    z-index: 999999;
-    background-color: red;
-}
-
-
 a {color:#ed1c24; font-size:1.0em;}
 a:link {text-decoration:none; color:#ed1c24; font-size:1.0em;}
 a:visited {text-decoration:none; color:#ed1c24; font-size:1.0em;}
@@ -270,6 +261,7 @@ a:active {text-decoration:none; color:#ed1c24; font-size:1.0em;}
     
     .ztl_select_language {
 		width: 100%;
+		height: 100%;
 		margin-top: 20px;
 		margin-left:15px;
 		margin-right:15px;
@@ -291,6 +283,7 @@ a:active {text-decoration:none; color:#ed1c24; font-size:1.0em;}
     
     .ztl_select_language {
 		width: 100%;
+		height: 100%;
 		margin-top: 45px;
 		margin-left:15px;
 		margin-right:15px;
@@ -313,6 +306,7 @@ a:active {text-decoration:none; color:#ed1c24; font-size:1.0em;}
     
     .ztl_select_language {
 		width: 100%;
+		height: 100%;
 		margin-top: 45px;
 		margin-left:15px;
 		margin-right:15px;
@@ -334,6 +328,7 @@ a:active {text-decoration:none; color:#ed1c24; font-size:1.0em;}
     
     .ztl_select_language {
 		width: 100%;
+		height: 100%;
 		margin-top: 70px;
 		margin-left:15px;
 		margin-right:15px;
