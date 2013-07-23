@@ -365,6 +365,7 @@ function update_event(url) {
 		success : function(data) {
 			console.log(" >>>>>>>>>> ok");
 			handle_event_deleted(data['deleted']);
+			handle_event_types(data['types']);
 			handle_event(data['events']);
 		    load_events(0);
 		    set_cache();
@@ -387,6 +388,17 @@ function handle_event_deleted(data) {
 	});
 }
 
+function handle_event_types(data) {
+	db.transaction(function(tx) {
+		var sql = "";
+		for (var i = 0; i < data.length; i++) {
+			sql = "INSERT OR REPLACE INTO ztl_event_type (id, id_language, title) VALUES ("+data[i].id+", "+settings.id_lang+", '"+addslashes(data[i].title)+"')";
+			//console.log(sql);
+			tx.executeSql(sql, [], function(tx, res) {});
+		}
+	});
+}
+
 function handle_event(data) {
 	db.transaction(function(tx) {
 		var sql 		= "";
@@ -404,21 +416,12 @@ function handle_event(data) {
 			}
 
 			//console.log(JSON.stringify(data[i]));
-			sql = "INSERT OR REPLACE INTO ztl_event (id, image, featured, important, sub_events, record_status) VALUES ("+data[i].id+", '"+data[i].image+"', '"+data[i].featured+"', '"+data[i].important+"', '"+data[i].sub_events+"', 1)";		
+			sql = "INSERT OR REPLACE INTO ztl_event (id, image, featured, important, sub_events, types, record_status) VALUES ("+data[i].id+", '"+data[i].image+"', '"+data[i].featured+"', '"+data[i].important+"', '"+data[i].sub_events+"', '"+data[i].types+"', 1)";		
 			tx.executeSql(sql, [], function(tx, res) {});
 			sql = "INSERT OR REPLACE INTO ztl_event_translation (id_event, id_language, title, intro, description) VALUES ("+data[i].id+", "+settings.id_lang+", '"+addslashes(data[i].title)+"', '"+addslashes(data[i].intro)+"', '"+addslashes(data[i].description)+"')";
 			//console.log(sql);
 			tx.executeSql(sql, [], function(tx, res) {});
-			
-			for (var j = 0; j < data[i].types.length; j++) {
-        		var sql = "INSERT OR REPLACE INTO ztl_event_category (id, id_language, name) VALUES ("+data[i].types[j].id+", "+settings.id_lang+", '"+addslashes(data[i].types[j].name)+"')";
-        		//console.log(sql);
-        		tx.executeSql(sql, [], function(tx, res) {});
 
-        		var sql = "INSERT OR REPLACE INTO ztl_event_event_category (id_event, id_event_category) VALUES ("+data[i].id+", "+data[i].types[j].id+")";
-        		//console.log(sql);
-        		tx.executeSql(sql, [], function(tx, res) {});
-			}
 			
 			for (var j = 0; j < data[i].timetable.length; j++) {
 				if (!$.isNumeric(data[i].timetable[j].venue_id)) {
@@ -451,9 +454,9 @@ function handle_event(data) {
 		tx.executeSql('select count(*) as cnt from ztl_event_timetable;', [], function(tx, res) {
 			console.log('+14 >>>>>>>>>> ztl_event_timetable res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
 		});
-		tx.executeSql('select count(*) as cnt from ztl_event_category;', [], function(tx, res) {
+		/*tx.executeSql('select count(*) as cnt from ztl_event_category;', [], function(tx, res) {
 			console.log('+15 >>>>>>>>>> ztl_event_category res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
-		});
+		});*/
 		tx.executeSql('select count(*) as cnt from ztl_event_event_category;', [], function(tx, res) {
 			console.log('+16 >>>>>>>>>> ztl_event_event_category res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
 		});

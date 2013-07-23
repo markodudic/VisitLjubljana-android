@@ -6,7 +6,7 @@ var event_date_from 	 	= "";
 var event_date_to 		 	= "";
 var event_date_from_sql  	= 0;
 var event_date_to_sql 	 	= 0;
-var event_category_filter 	= 0;
+var event_type_filter 	= 0;
 var event_call_from_history = 0;
 
 function event_filter_toggle() {
@@ -56,7 +56,7 @@ function filter_events()  {
 			event_date_to_sql	= $('#ztl_trip_filter_date_to_hidden').val();
 		}
 
-		event_category_filter = $('#event_type').val();
+		event_type_filter = $('#event_type').val();
 
 		event_filter_toggle();
 	}
@@ -74,11 +74,11 @@ function filter_events()  {
 		//event_filter_toggle();
 
 		if ($('#event_type').val() > 0) {
-			var tmp_query 	 = "SELECT name " +
-								"FROM ztl_event_category e " +
+			var tmp_query 	 = "SELECT title " +
+								"FROM ztl_event_type e " +
 								"WHERE e.id_language = "+settings.id_lang+" AND id = "+$('#event_type').val()+" " +
-								"GROUP BY name "+
-								"ORDER BY name";
+								"GROUP BY title "+
+								"ORDER BY title";
 			var tmp_callback = "event_category_title_success";
 			generate_query(tmp_query, tmp_callback);
 		}
@@ -94,9 +94,8 @@ function filter_events()  {
 			var tmp_query    = "SELECT e.id, et.title, ett.venue_id, ett.date, ett.date_first, p.coord_x, p.coord_y, ett.venue as poi_title, e.image " +
 							"FROM ztl_event e LEFT JOIN ztl_event_translation et ON et.id_event = e.id " +
 							"LEFT JOIN  ztl_event_timetable ett ON ett.id_event = e.id " +
-							"LEFT JOIN ztl_event_event_category eec ON eec.id_event = e.id " +
 							"LEFT JOIN ztl_poi p ON p.id = ett.venue_id " +
-							"WHERE et.id_language = "+settings.id_lang+" AND eec.id_event_category = "+event_category_filter+" AND e.record_status = 1 AND date_first >= "+event_date_from_sql+" AND date_last <= "+event_date_to_sql+" " +
+							"WHERE et.id_language = "+settings.id_lang+" AND ','||"+event_type_filter+"||',' like ','||e.types||',' AND e.record_status = 1 AND date_first >= "+event_date_from_sql+" AND date_last <= "+event_date_to_sql+" " +
 							"GROUP BY e.id  " +
 							"ORDER BY ett.date_first";
 	    } else {
@@ -104,7 +103,6 @@ function filter_events()  {
 				    			"FROM ztl_event e " +
 				    			"LEFT JOIN ztl_event_translation et ON et.id_event = e.id " +
 				    			"LEFT JOIN  ztl_event_timetable ett ON ett.id_event = e.id " +
-				    			"LEFT JOIN ztl_event_event_category eec ON eec.id_event = e.id " +
 				    			"LEFT JOIN ztl_poi p ON p.id = ett.venue_id " +
 				    			"WHERE et.id_language = "+settings.id_lang+" AND e.record_status = 1 AND date_first >= "+event_date_from_sql+" AND date_last <= "+event_date_to_sql+" " +
 				    			"GROUP BY e.id " +

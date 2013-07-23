@@ -193,13 +193,13 @@ function event_category_success(results) {
 	var len = results.rows.length;
 
     for (var i=0; i<len; i++){
-    	results.rows.item(i).name = unescape(results.rows.item(i).name);
+    	results.rows.item(i).title = unescape(results.rows.item(i).title);
     	event_type[i] = results.rows.item(i);
     }
 }
 
 function event_category_title_success(results) {
-	event_title = unescape(results.rows.item(0).name);
+	event_title = unescape(results.rows.item(0).title);
 }
 
 function filter_events_success(results) {
@@ -975,11 +975,11 @@ function populate_db_firstime() {
 		});
 	});
 
-	$.getScript('./assets/install_db/ztl_event_category.js', function () {
-		db.transaction(populateDB_ztl_event_category, errorCB, function(tx) {
+	$.getScript('./assets/install_db/ztl_event_type.js', function () {
+		db.transaction(populateDB_ztl_event_type, errorCB, function(tx) {
 			db.transaction(function(tx) {
-				tx.executeSql('select count(*) as cnt from ztl_event_category;', [], function(tx, res) {
-					console.log('15 >>>>>>>>>> ztl_event_category res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+				tx.executeSql('select count(*) as cnt from ztl_event_type;', [], function(tx, res) {
+					console.log('15 >>>>>>>>>> ztl_event_type res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
 					add_indexes();
 				});
 			});
