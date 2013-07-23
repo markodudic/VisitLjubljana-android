@@ -457,7 +457,7 @@ function load_map_success(results) {
 function map_settings_toggle() {
 	$(".map_settings").toggle();
 	
-	$(".ztl_content").toggle();
+	$(".map_content").toggle();
 	$(".header").toggle();
 	$(".footer").toggle();
 }

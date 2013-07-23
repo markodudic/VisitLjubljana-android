@@ -58,6 +58,7 @@ var update_running 	 = 0;
 var gaPlugin;
 
 var selected_group = -1;
+var offsets = {};
 
 document.addEventListener("deviceready", on_device_ready, false);
 
@@ -92,7 +93,7 @@ function on_device_ready() {
 
 	//skopiram bazo za backup
 	if (develop==1) copyDB();
-
+	
 	//ponastavim history
 	localStorage.setItem('history', JSON.stringify(tmp_history));
 	
@@ -365,7 +366,8 @@ function onConfirmForce(buttonIndex) {
 }
 
 function load_page(template, div, data, transition, reverse, id_group) {
-	console.log("load page="+id_group+":"+div+":"+data+":"+voice_guide);
+	console.log("load page="+id_group+":"+div+":"+data+":"+voice_guide+":"+selected_div+":"+window.pageYOffset);
+	offsets[selected_div] = window.pageYOffset;
 	
 	if ((div == "inspired") || (div == "events") || (div == "infos") || (div == "tour_category") || (div == "poigroups")) {
 		if ((data == undefined) || (data.items == undefined) || (data.items == null) || (data.items.length == 0)) {
@@ -667,7 +669,11 @@ function load_page(template, div, data, transition, reverse, id_group) {
 			}
 
 			$('body').html(html);
-			window.scrollTo(0,0);
+			if (offsets[div] != undefined) {
+				window.scrollTo(0,offsets[div]);
+			} else {
+				window.scrollTo(0,0);				
+			}
 			
 			if (swipe == 1) {
 //				if (div != "main_menu") {
@@ -934,8 +940,6 @@ function sort_by_distance(unsorted) {
 var spinner; 
 	
 function show_spinner() {
-	console.log("spinner");
-
 	var opts = {
 			  lines: 25, // The number of lines to draw
 			  length: window.innerWidth/24, // The length of each line

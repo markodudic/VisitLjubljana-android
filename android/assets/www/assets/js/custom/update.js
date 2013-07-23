@@ -224,6 +224,7 @@ function handle_poi_filter(data) {
 function handle_poi_new(data) {
 	db.transaction(function(tx) {
 		var sql = "";
+		
 		for (var i = 0; i < data.length; i++) {
 
 			if (data[i].image == null) {
@@ -254,8 +255,7 @@ function handle_poi_new(data) {
 			    			}
 		    			}
 		    		}
-		    	    console.log("je_grupa="+je_grupa);
-		    		
+		    	     
 		    		//preverim ce je nastanitev kategorija
 		    		var je_cat = 0;
 		    		if (je_grupa == 0) {
@@ -281,7 +281,6 @@ function handle_poi_new(data) {
 			sql+= "VALUES ("+data[i].id+", '"+addslashes(data[i].address)+"', '"+data[i].postNumber+"','"+addslashes(data[i].post)+"','"+addslashes(data[i].phone)+"', ";
 			sql+= "'"+addslashes(data[i].email)+"', '"+addslashes(data[i].www)+"', '"+data[i].coord.x+"', '"+data[i].coord.y+"', '"+addslashes(data[i].turisticna_kartica)+"', '"+addslashes(data[i].ljubljanaQuality)+"', ";
 			sql+= "'"+data[i].recommended_map+"', '"+data[i].image+"', '"+data[i].stars+"', '"+data[i].poigroups+"', '"+data[i].cats+"', 1, 0);";
-			//console.log(sql);
 			tx.executeSql(sql, [], function(tx, res) {});
 				
 			var mds = "";

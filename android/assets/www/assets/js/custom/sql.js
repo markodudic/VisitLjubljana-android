@@ -92,7 +92,7 @@ function poi_filter_success(results) {
 	var len = results.rows.length;
 
     for (var i=0; i<len; i++){
-    	var title = results.rows.item(i).title.toUpperCase();
+    	var title = results.rows.item(i).title;
         var r = /%u([\d\w]{4})/gi;
         title = title.replace(r, function (match, grp) {
             return String.fromCharCode(parseInt(grp, 16)); } );
@@ -434,10 +434,10 @@ function load_poigroup_success(results) {
      	results.rows.item(i).address = unescape(results.rows.item(i).address);
      	results.rows.item(i).post = unescape(results.rows.item(i).post);
      	results.rows.item(i).poigroup_title = unescape(results.rows.item(i).poigroup_title);
-    	tmp = results.rows.item(i).title;
+    	/*tmp = results.rows.item(i).title;
     	if (tmp.length > max_dolzina_title) {
     		results.rows.item(i).title = tmp.substring(0,max_dolzina_title)+"...";
-    	}
+    	}*/
     	
     	res.items[i] = results.rows.item(i);
     }
@@ -456,14 +456,14 @@ function inspired_success(results) {
     	//skrajsam dolzino
     	results.rows.item(i).title = unescape(results.rows.item(i).title);
     	results.rows.item(i).desc = unescape(results.rows.item(i).desc);
-    	tmp = results.rows.item(i).title;
+    	/*tmp = results.rows.item(i).title;
     	if (tmp.length > max_dolzina_title) {
     		results.rows.item(i).title = tmp.substring(0,max_dolzina_title)+"...";
     	}
     	tmp = results.rows.item(i).desc;
     	if (tmp.length > max_dolzina_short_desc) {
     		results.rows.item(i).desc = tmp.substring(0,max_dolzina_short_desc)+"...";
-    	}
+    	}*/
     	
     	res.items[i] = results.rows.item(i);
     }
