@@ -63,6 +63,7 @@ var offsets = {};
 document.addEventListener("deviceready", on_device_ready, false);
 
 function on_device_ready() {
+	//navigator.splashscreen.show();
 	reinit();
 	
 	db 		= window.sqlitePlugin.openDatabase("Database", "1.0", "ztl", -1);
@@ -71,7 +72,6 @@ function on_device_ready() {
 	load_settings();
 	init_gps();
 	
-	//navigator.splashscreen.show();
 	skip_update = 0;
 
 	//prvic napolnimo po izbiri jezika
@@ -456,7 +456,7 @@ function load_page(template, div, data, transition, reverse, id_group) {
 			} else if (div == 'filtered_events') {
 				for (var ei=0; ei<event_type.length; ei++) {
 					event_type[ei].filter_selected = "";
-					if (event_category_filter == event_type[ei].id){
+					if (event_type_filter == event_type[ei].id){
 						event_type[ei].filter_selected = "SELECTED";
 					}	
 				}

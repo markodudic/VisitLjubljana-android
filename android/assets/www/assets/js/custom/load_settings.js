@@ -337,11 +337,11 @@ function load_voice_guide(save_history) {
 
 
 function load_event_type() {
-	var tmp_query 	 = 	"SELECT id, name " +
-						"FROM ztl_event_category e " +
+	var tmp_query 	 = 	"SELECT id, title " +
+						"FROM ztl_event_type e " +
 						"WHERE e.id_language = "+settings.id_lang+" " +
-						"GROUP BY id, name "+
-						"ORDER BY name";
+						"GROUP BY id, title "+
+						"ORDER BY title";
 	var tmp_callback = "event_category_success";
 	generate_query(tmp_query, tmp_callback);
 }
