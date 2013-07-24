@@ -87,6 +87,15 @@ sub_events_translation[3]	= "Veranstaltungen";
 sub_events_translation[4]	= "Manifestazioni";
 sub_events_translation[5]	= "Evénements";
 
+
+var ztl_item_poigroup_list_translation = [];
+ztl_item_poigroup_list_translation[1]	= "Seznam";
+ztl_item_poigroup_list_translation[2]	= "List";
+ztl_item_poigroup_list_translation[3]	= "Liste";
+ztl_item_poigroup_list_translation[4]	= "Lista";
+ztl_item_poigroup_list_translation[5]	= "Liste";
+
+
 var default_category_translation = [];
 default_category_translation[1]	= "Izberi kategorijo";
 default_category_translation[2]	= "Choose category";
@@ -387,6 +396,14 @@ my_visit_poi_translation[2] = "Browse the city tours, excursions, accommodation,
 my_visit_poi_translation[3] = "Browsen Sie durch die Inhalte und fügen Sie Besichtigungen, Ausflüge, Übernachtungen, Veranstaltungen, Sehenswürdigkeiten usw. hinzu!";
 my_visit_poi_translation[4] = "Sfogliate i contenuti e aggiungete visite, gite, sistemazioni, eventi, attrazioni ecc.";
 my_visit_poi_translation[5] = "Parcourez les tours de la ville, les excursions, les hébergements, les événements, les curiosités, etc., et les ajouter à MyVisit.";
+
+var my_visit_inspired_translation = [];
+my_visit_inspired_translation[1] = "Dodajte v MyVisit nekaj že pripravljenih seznamov in uživajte v svojem izletu.";
+my_visit_inspired_translation[2] = "Add one or more prepared lists to MyVisit and enjoy your stay.";
+my_visit_inspired_translation[3] = "Füge Deinem MyVisit-Plan eine oder mehrere vorbereitete Listen hinzu. Geniessen Sie Ihren Aufenthalt.";
+my_visit_inspired_translation[4] = "Aggiungiate una o più liste pronte alla MyVisit e godetevi il vostro soggiorno.";
+my_visit_inspired_translation[5] = "Ajoutez une ou plusieurs listes préparées à MyVisit. Bonne visite!";
+
 
 var download_translation = [];
 download_translation[1] = "Prenesi";

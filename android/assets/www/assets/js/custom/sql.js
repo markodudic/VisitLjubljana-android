@@ -133,9 +133,18 @@ function load_poi_success(results) {
 		gr = POI_ZAMENITOSTI_GROUP;
 	}
 	media_length = parseInt(results.rows.item(0).media_duration_value);
-	load_page(template_lang+'trip.html', 'trip', res.items[0], 'fade', true, gr);
-}
 
+	var transition = 'fade';
+    if ((swipe_dir == "left") || (swipe_dir == "right")) {
+    	transition = 'slide';
+    }
+	var reverse = false;
+    if (swipe_dir == "right") 
+    	reverse = true;
+    
+    load_page(template_lang+'trip.html', 'trip', res.items[0], transition, reverse, gr);
+}
+ 
 
 //eventi
 function events_success(results) {
@@ -233,7 +242,15 @@ function filter_events_success(results) {
     //res.categories 	= event_type;
     trips[EVENTS_FILTERED_GROUP] 			= res;
     
-    load_page(template_lang+'events_filtered.html', 'filtered_events', trips[EVENTS_FILTERED_GROUP], 'fade', false, 0);
+	var transition = 'fade';
+    if ((swipe_dir == "left") || (swipe_dir == "right")) {
+    	transition = 'slide';
+    }
+	var reverse = false;
+    if (swipe_dir == "right") 
+    	reverse = true;
+    
+    load_page(template_lang+'events_filtered.html', 'filtered_events', trips[EVENTS_FILTERED_GROUP], transition, reverse, 0);
 }
 
 
@@ -342,13 +359,15 @@ function load_event_venue_success(results) {
     	tmp_event_data.has_venue = "";
     }
 
-    if (swipe_dir == "left") {
-    	load_page(template_lang+'event.html', 'event', tmp_event_data, 'slide', false);
-    } else if (swipe_dir == "right") {
-    	load_page(template_lang+'event.html', 'event', tmp_event_data, 'slide', true);
-	} else {
-    	load_page(template_lang+'event.html', 'event', tmp_event_data, 'fade', false);
+	var transition = 'fade';
+    if ((swipe_dir == "left") || (swipe_dir == "right")) {
+    	transition = 'slide';
     }
+	var reverse = false;
+    if (swipe_dir == "right") 
+    	reverse = true;
+    
+    load_page(template_lang+'event.html', 'event', tmp_event_data, transition, reverse);
 }
 
 //info
@@ -381,13 +400,15 @@ function load_info_success(results) {
 	results.rows.item(0).content = unescape(results.rows.item(0).content);
 	res.item = results.rows.item(0);
 
-	if (swipe_dir == "left") {
-    	load_page(template_lang+'info.html', 'info', res, 'slide', false);
-    } else if (swipe_dir == "right") {
-    	load_page(template_lang+'info.html', 'info', res, 'slide', true);
-	} else {
-    	load_page(template_lang+'info.html', 'info', res, 'fade', true);
+	var transition = 'fade';
+    if ((swipe_dir == "left") || (swipe_dir == "right")) {
+    	transition = 'slide';
     }
+	var reverse = false;
+    if (swipe_dir == "right") 
+    	reverse = true;
+    
+   	load_page(template_lang+'info.html', 'info', res, transition, reverse);
 }
 
 
@@ -434,6 +455,7 @@ function load_poigroup_success(results) {
      	results.rows.item(i).address = unescape(results.rows.item(i).address);
      	results.rows.item(i).post = unescape(results.rows.item(i).post);
      	results.rows.item(i).poigroup_title = unescape(results.rows.item(i).poigroup_title);
+     	results.rows.item(i).poigroup_desc = unescape(results.rows.item(i).poigroup_desc);
     	/*tmp = results.rows.item(i).title;
     	if (tmp.length > max_dolzina_title) {
     		results.rows.item(i).title = tmp.substring(0,max_dolzina_title)+"...";
@@ -441,8 +463,17 @@ function load_poigroup_success(results) {
     	
     	res.items[i] = results.rows.item(i);
     }
-	
-    load_page(template_lang+'trips.html', 'trips', res, 'fade', false, POIGROUP_GROUP);
+    current 	 = results.rows.item(0).poigroup_id;
+
+	var transition = 'fade';
+    if ((swipe_dir == "left") || (swipe_dir == "right")) {
+    	transition = 'slide';
+    }
+	var reverse = false;
+    if (swipe_dir == "right") 
+    	reverse = true;
+
+    load_page(template_lang+'poigroup.html', 'poigroup', res, transition, reverse, POIGROUP_GROUP);
 }
 
 
@@ -559,14 +590,16 @@ function tour_charters_success(results) {
 		results.rows.item(i).content = unescape(results.rows.item(i).content);
    	tmp_tours_data.charters[i] = results.rows.item(i);
     }
-
-    if (swipe_dir == "left") {
-    	load_page(template_lang+'tour.html', 'tour', tmp_tours_data, 'slide', false);
-    } else if (swipe_dir == "right") {
-    	load_page(template_lang+'tour.html', 'tour', tmp_tours_data, 'slide', true);
-	} else {
-    	load_page(template_lang+'tour.html', 'tour', tmp_tours_data, 'fade', false);
+	
+	var transition = 'fade';
+    if ((swipe_dir == "left") || (swipe_dir == "right")) {
+    	transition = 'slide';
     }
+	var reverse = false;
+    if (swipe_dir == "right") 
+    	reverse = true;
+    
+    load_page(template_lang+'tour.html', 'tour', tmp_tours_data, transition, reverse);
 }
 
 function last_update_success(results) {

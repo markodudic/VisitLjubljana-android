@@ -221,7 +221,7 @@ function swipe_right_handler() {
 				} else {
 					var res = trips[selected_group];
 				}
-				
+
 				for (i=0; i<res.items.length; i++) {
 					if (res.items[i]['id'] == current) {
 						j = i-1;
@@ -235,8 +235,8 @@ function swipe_right_handler() {
 				current = res.items[j]['id'];
 				
 				if (swipe_group == 1) {
-					//load_page(template_lang+'trip.html', 'trip', res.items[j], 'slide', true, selected_group);
 					load_trip_content(res.items[j]['id'], 'fade', true, 1)
+					swipe_dir = "right";
 				} else if (swipe_group == 2) {
 					swipe_dir = "right";
 					load_event(res.items[j].id);
@@ -278,7 +278,7 @@ function swipe_left_handler() {
 			current = res.items[j]['id'];
 
 			if (swipe_group == 1) {
-				//load_page(template_lang+'trip.html', 'trip', res.items[j], 'slide', false, selected_group);
+				swipe_dir = "left";
 				load_trip_content(res.items[j]['id'], 'fade', true, 1)
 			} else if (swipe_group == 2) {
 				swipe_dir = "left";
@@ -367,9 +367,20 @@ function onConfirmForce(buttonIndex) {
 
 function load_page(template, div, data, transition, reverse, id_group) {
 	console.log("load page="+id_group+":"+div+":"+data+":"+voice_guide+":"+selected_div+":"+window.pageYOffset);
-	offsets[selected_div] = window.pageYOffset;
+	if ((selected_div == "inspired") || 
+		(selected_div == "trips") || 
+		(selected_div == "main_menu") || 
+		(selected_div == "events") || 
+		(selected_div == "infos") || 
+		(selected_div == "tour_category") || 
+		(selected_div == "tours") || 
+		(selected_div == "poigroups") || 
+		(selected_div == "poigroup") ||
+		(selected_div == "events_filtered")) {
+		offsets[selected_div] = window.pageYOffset;
+	}
 	
-	if ((div == "inspired") || (div == "events") || (div == "infos") || (div == "tour_category") || (div == "poigroups")) {
+	if (div == "events") {
 		if ((data == undefined) || (data.items == undefined) || (data.items == null) || (data.items.length == 0)) {
 			synhronization_prompt();
 		};
@@ -425,11 +436,6 @@ function load_page(template, div, data, transition, reverse, id_group) {
 			    if (selected_group == POI_NASTANITVE_GROUP) {
 					data.stars="true";
 				}
-				if (id_group == POIGROUP_GROUP) {
-					curr_poigroup_id = data.items[0].poigroup_id;
-					data.page_title = data.items[0].poigroup_title;
-					data.poigroup = 1;
-				}
 				if ((id_group != POIGROUP_GROUP) &&	(id_group != VOICE_GROUP)) {
 					var filter_poigroup 	= poi_filter_poigroup(id_group);
 					data.poi_filter 		= filter_poigroup;
@@ -452,6 +458,7 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				data.events_title 	= events_translation[settings.id_lang];
 				data.default_category = default_category_translation[settings.id_lang];
 				data.potrdi_button 	= confirm_translation[settings.id_lang];
+				voice_guide			= 0;
 				$('body').html("");
 			} else if (div == 'filtered_events') {
 				for (var ei=0; ei<event_type.length; ei++) {
@@ -536,6 +543,18 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				}
 			} else if (div == 'poigroups') {
 				data.page_title 	= trips_title[id_group];
+				voice_guide			= 0;
+			} else if (div == 'poigroup') {
+				curr_poigroup_id = data.items[0].poigroup_id;
+				data.poigroup = 1;
+				data.ztl_item_details_description = description_translation[settings.id_lang];
+				data.ztl_item_poigroup_list 	= ztl_item_poigroup_list_translation[settings.id_lang];
+				data.poigroup_id 				= data.items[0].poigroup_id;
+				data.poigroup_title 			= data.items[0].poigroup_title;
+				data.poigroup_desc 				= data.items[0].poigroup_desc;
+				data.poigroup_image 			= data.items[0].poigroup_image;
+				extra_div_id 					= "_"+data.items[0].poigroup_id;
+				voice_guide						= 0;
 			} else if (div == 'trip') {
 				data.ztl_item_details_description = description_translation[settings.id_lang];
 				data.map_button 				= map_translation[settings.id_lang];
@@ -549,7 +568,9 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				if (selected_group == POI_NASTANITVE_GROUP) {
 					data.stars="true";
 				}
-				console.log("selected_group="+selected_group);
+				if (voice_guide == 1) {
+					data.voice_guide = 1;
+				} 
 				if (selected_group == POIGROUP_GROUP) {
 					data.poigroup 	= 1;
 					data.id_poigroup = curr_poigroup_id;
@@ -625,7 +646,8 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				data.voice_group		= VOICE_GROUP;
 				data.inspired_group		= INSPIRED_GROUP;
 			} else if (div == "inspired") {
-				data.page_title 	= main_menu['img1'];
+				data.page_title 		= main_menu['img1'];
+				data.my_visit_inspired  = my_visit_inspired_translation[settings.id_lang];
 			} else if (div == "ztl_guide_settings") {
 				data = {};
 				data.show_on_map 		= show_on_map_translation[settings.id_lang];
@@ -648,8 +670,9 @@ function load_page(template, div, data, transition, reverse, id_group) {
 			}
 			selected_div = div;
 			
+
 			var res = $(temp).filter('#tpl_'+div).html();
-			
+
 			if (data != null) {
 				var html = Mustache.to_html(res, data);
 			} else {
@@ -675,12 +698,22 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				window.scrollTo(0,0);				
 			}
 			
+			/*$("img").each(function(i, img) {
+			    $(img).css({
+			        position: "relative",
+			        left: ($(img).parent().width()/2) - ($(img).width()/2),
+			        top: ($(img).parent().height()/2) - ($(img).height()/2)});
+			});*/
+
+
+
 			if (swipe == 1) {
 //				if (div != "main_menu") {
 				if ((div == "trip") || 
 						(div == "event") || 
 						(div == "info") || 
-						(div == "tour")) {
+						(div == "tour") || 
+						(div == "poigroup")) {
 					var ts_div = "";
 					if (div == 'trip') {
 						ts_div 		= div+"_"+data['id'];
@@ -695,6 +728,9 @@ function load_page(template, div, data, transition, reverse, id_group) {
 					} else if (div == 'info') {
 						ts_div  = div+extra_div_id;
 						swipe_group = 4;
+					} else if (div == 'poigroup') {
+						ts_div  = div+extra_div_id;
+						swipe_group = 5;
 					}
 
 					$("#"+ts_div).on('touchstart', function(e) {
@@ -731,10 +767,7 @@ function load_page(template, div, data, transition, reverse, id_group) {
 			}
 
 			
-			console.log("menu icon " + menu_icon);
-
 			$('.icon_'+menu_icon).attr("src","assets/css/ztl_images/icon_"+menu_icon+"_red.png");
-
 			
 			if ((div == "trip") || 
 				(div == "event") || 
@@ -757,6 +790,15 @@ function load_page(template, div, data, transition, reverse, id_group) {
 			hide_spinner();
 		}
 	});
+}
+
+function loadImage (img) {
+    $(img).css({
+        position: "relative",
+        left: ($(img).parent().width()/2) - ($(img).width()/2),
+        top: ($(img).parent().height()/2) - ($(img).height()/2)
+    });
+	
 }
 
 var touchStartTime;
