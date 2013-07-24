@@ -1,36 +1,50 @@
-<script id="tpl_trips" type="text/html">
-<div id="trips_{{extra_div_id}}" class="ztl_remove_from_page" style="overflow:hidden;">
+<script id="tpl_poigroup" type="text/html">
+<div id="poigroup_{{poigroup_id}}" class="ztl_remove_from_page" style="overflow:hidden;">
 	<div class="header">
 		<div class="header_placeholder">
 			<div class="red_line"></div>
 			<div class="header_space"></div>
-			{{#poigroup}}
-				<div onClick="opacity($(this)); load_page(template_lang+'poigroups.html', 'poigroups', trips[POIGROUP_GROUP], 'fade', false, POIGROUP_GROUP);"><img class="header_back"></div>
-				<div class="header_title" onClick="opacity($(this)); load_page(template_lang+'poigroups.html', 'poigroups', trips[POIGROUP_GROUP], 'fade', false, POIGROUP_GROUP);">{{page_title}}</div>
-			{{/poigroup}}
-			{{^poigroup}}
-				<div onClick="opacity($(this)); load_main_screen(1);"><img class="header_back"></div>
-				<div class="header_title" onClick="opacity($(this)); load_main_screen(1);">{{page_title}}</div>
-			{{/poigroup}}
-			{{#dots}}
-				<div class="header_dots" onClick="load_page(template_lang+'ztl_guide_settings.html', 'ztl_guide_settings', null, 'fade', false);"></div>
-			{{/dots}}
-			{{#filter}}
-				<div class="header_dots" onClick="poi_filter_toggle();"></div>
-			{{/filter}}
+			<div onClick="opacity($(this)); load_page(template_lang+'poigroups.html', 'poigroups', trips[POIGROUP_GROUP], 'fade', false, POIGROUP_GROUP);"><img class="header_back"></div>
+			<div class="header_title" onClick="opacity($(this)); load_page(template_lang+'poigroups.html', 'poigroups', trips[POIGROUP_GROUP], 'fade', false, POIGROUP_GROUP);">{{& poigroup_title}}</div>
 			<div style="clear:both;"></div>
 			<div class="header_space"></div>
 		</div>
 		<div class="header_shadow"></div>
 	</div>
 	
-	[[[poi_filter]]]
-	
-
-	<div class="ztl_content">
+	<div class="ztl_content ztl_content_extra">
 	
 	<div id="verticalWrapper">
 	<div id="verticalScroller">
+
+		<div class="ztl_navigate_events">
+			{{#poigroup_image}}
+				<div class="ztl_item_details_image">
+					<div class="ztl_details_img_crop">
+						<img class="ztl_details_image" src="{{poigroup_image}}" onload="loadImage(this)">
+					</div>
+				</div>
+			{{/poigroup_image}}
+			{{^poigroup_image}}
+				<img class="ztl_details_image" src="./uploads/noimage_detail.png">
+			{{/poigroup_image}}
+			<div style="clear:both;"></div>
+			<div class="ztl_item_content_padding">
+
+				<div class="ztl_item_details">
+					<div class="ztl_item_details_title" style="text-transform:uppercase;">{{ztl_item_details_description}}</div>
+					<div class="grey_line" style="margin-top:10px;"></div>
+					<div class="ztl_item_details_desc">
+						{{& poigroup_desc}}
+					</div>
+				</div>
+			</div>
+
+			<div class="ztl_item_details">
+				<div id="ztl_item_details_price" class="ztl_item_details_title" style="text-transform:uppercase;">{{ztl_item_poigroup_list}}</div>
+				<div class="grey_line" style="margin-top:10px;"></div>
+			</div>
+
 	{{#items}}
 		<li class="ztl_list_li">
 			<div class="ztl_list_item" id="ztl_trips_item_{{id}}" onClick="load_trip_content({{id}}, 'fade', true, 1)">
@@ -63,11 +77,13 @@
 			<div class="black_line"></div>
 		</li>
 	{{/items}}
+
+			<div class="ztl_distance_to_footer">&nbsp;</div>
+		</div>
 	</div>
 	</div>
-	
+
 	</div>
-	
 	<div class="footer">
 		<div class="footer_shadow"></div>
 		<div class="header_placeholder">

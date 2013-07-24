@@ -40,7 +40,7 @@
 	</div>	
 	<div class="ui-grid-a ztl_height_170" >
 		<div class="ui-block-a ztl_height_170" onClick="load_event({{top_events_1.id}}, 1)">
-			<img class="ztl_items_image_170" src="{{top_events_1.image}}">
+			<img class="ztl_items_image_170" src="{{top_events_1.image}}" onload="loadImage(this)">
 			<div class="event_date_holder" >
 				<div class="event_date_holder_top">
 					{{top_events_1.day}}
@@ -53,7 +53,7 @@
 			<div class="ztl_top_event_text_half_text">{{& top_events_1.title}}</div>
 		</div>
 		<div class="ui-block-b ztl_height_170" onClick="load_event({{top_events_2.id}}, 1)">
-			<img class="ztl_items_image_170" src="{{top_events_2.image}}">
+			<img class="ztl_items_image_170" src="{{top_events_2.image}}" onload="loadImage(this)">
 			<div class="event_date_holder">
 				<div class="event_date_holder_top">
 					{{top_events_2.day}}
@@ -68,7 +68,7 @@
 	</div>
 	<div class="ui-grid-a ztl_height_170" >
 		<div class="ui-block-a ztl_height_170" onClick="load_event({{top_events_3.id}}, 1)">
-			<img class="ztl_items_image_170" src="{{top_events_3.image}}">
+			<img class="ztl_items_image_170" src="{{top_events_3.image}}" onload="loadImage(this)">
 			<div class="event_date_holder" >
 				<div class="event_date_holder_top">
 					{{top_events_3.day}}
@@ -81,7 +81,7 @@
 			<div class="ztl_top_event_text_half_text">{{& top_events_3.title}}</div>
 		</div>
 		<div class="ui-block-b ztl_height_170" onClick="load_event({{top_events_4.id}}, 1)">
-			<img class="ztl_items_image_170" src="{{top_events_4.image}}">
+			<img class="ztl_items_image_170" src="{{top_events_4.image}}" onload="loadImage(this)">
 			<div class="event_date_holder">
 				<div class="event_date_holder_top">
 					{{top_events_4.day}}
@@ -102,7 +102,7 @@
 				<div class="ztl_list_image">
 					<div class="ztl_list_img_crop">
 						{{#image}}
-							<img class="ztl_items_image" src="{{image}}">
+							<img class="ztl_items_image" src="{{image}}" onload="loadImage(this)">
 						{{/image}}
 						{{^image}}
 							<img class="ztl_items_no_image" src="./uploads/noimage.png">

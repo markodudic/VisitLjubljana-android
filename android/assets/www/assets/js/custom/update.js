@@ -365,7 +365,7 @@ function update_event(url) {
 		success : function(data) {
 			console.log(" >>>>>>>>>> ok");
 			handle_event_deleted(data['deleted']);
-			handle_event_types(data['types']);
+			handle_event_types(data['sets']);
 			handle_event(data['events']);
 		    load_events(0);
 		    set_cache();
@@ -416,7 +416,7 @@ function handle_event(data) {
 			}
 
 			//console.log(JSON.stringify(data[i]));
-			sql = "INSERT OR REPLACE INTO ztl_event (id, image, featured, important, sub_events, types, record_status) VALUES ("+data[i].id+", '"+data[i].image+"', '"+data[i].featured+"', '"+data[i].important+"', '"+data[i].sub_events+"', '"+data[i].types+"', 1)";		
+			sql = "INSERT OR REPLACE INTO ztl_event (id, image, featured, important, sub_events, types, record_status) VALUES ("+data[i].id+", '"+data[i].image+"', '"+data[i].featured+"', '"+data[i].important+"', '"+data[i].sub_events+"', '"+data[i].sets+"', 1)";		
 			tx.executeSql(sql, [], function(tx, res) {});
 			sql = "INSERT OR REPLACE INTO ztl_event_translation (id_event, id_language, title, intro, description) VALUES ("+data[i].id+", "+settings.id_lang+", '"+addslashes(data[i].title)+"', '"+addslashes(data[i].intro)+"', '"+addslashes(data[i].description)+"')";
 			//console.log(sql);
