@@ -1,10 +1,10 @@
 var server_url = 'http://www.visitljubljana.com/';
 var develop = 1;
-var populateDB = 0; 
+var populateDB = 1; 
 
 //settings
 var SETTINGS_FILE           = "settings.js"
-var SETTINGS_FOLDER     	= "Android/data/com.innovatif.ztl/";
+var SETTINGS_FOLDER     	= "Android/data/com.innovatif.visitljubljana/";
 var ASSETS_FOLDER     		= "/android_asset/www/";
 
 //grupe za cache
@@ -137,7 +137,7 @@ console.log = function(){};
 //iOS overrides
 function reinit() {
 	if (device.platform == "iOS") {
-		SETTINGS_FOLDER     	= "com.innovatif.ztl/";
+		SETTINGS_FOLDER     	= "com.innovatif.visitljubljana/";
 		ASSETS_FOLDER     		= "/";
 		
 		file 		 			= ASSETS_FOLDER+"uploads/mp3/";

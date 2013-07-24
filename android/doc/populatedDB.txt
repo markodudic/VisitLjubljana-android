@@ -5,9 +5,9 @@ Priprava baze z podatki za poi, info, tour in inspired
 - naredi sinhronizacijo za vse jezike
 - zapri in odpri aplikacijo da skopira bazo na sd kartico
 - skopiraj bazo na lokalni disk
-adb pull /mnt/sdcard/Android/data/com.innovatif.ztl/Database.db c:/temp
+adb pull /mnt/sdcard/Android/data/com.innovatif.visitljubljana/Database.db c:/temp
 - skopiraj image na lokalni disk v update folder
-adb pull /mnt/sdcard/android/data/com.innovatif.ztl c:/temp/images
+adb pull /mnt/sdcard/android/data/com.innovatif.visitljubljana c:/temp/images
 - v bazi popravi poti do imagev (Skript 1)
 - v bazi popravi poti do soundov (Skript 2)
 - datum v ztl_updates nastavi na en dan prej, zato da lahko dogotke syncas
@@ -18,22 +18,22 @@ adb pull /mnt/sdcard/android/data/com.innovatif.ztl c:/temp/images
 
 - SKRIPT1
 update ztl_poi
-set image = replace(image, 'file:///storage/emulated/0/Android/data/com.innovatif.ztl/','./uploads/images/');
+set image = replace(image, 'file:///storage/emulated/0/Android/data/com.innovatif.visitljubljana/','./uploads/images/');
 
 update ztl_info
-set image = replace(image, 'file:///storage/emulated/0/Android/data/com.innovatif.ztl/','./uploads/images/');
+set image = replace(image, 'file:///storage/emulated/0/Android/data/com.innovatif.visitljubljana/','./uploads/images/');
 
 update ztl_poigroup
-set image = replace(image, 'file:///storage/emulated/0/Android/data/com.innovatif.ztl/','./uploads/images/');
+set image = replace(image, 'file:///storage/emulated/0/Android/data/com.innovatif.visitljubljana/','./uploads/images/');
 
 update ztl_inspired
-set image = replace(image, 'file:///storage/emulated/0/Android/data/com.innovatif.ztl/','./uploads/images/');
+set image = replace(image, 'file:///storage/emulated/0/Android/data/com.innovatif.visitljubljana/','./uploads/images/');
 
 update ztl_tour_images
-set image = replace(image, 'file:///storage/emulated/0/Android/data/com.innovatif.ztl/','./uploads/images/');
+set image = replace(image, 'file:///storage/emulated/0/Android/data/com.innovatif.visitljubljana/','./uploads/images/');
 
 update ztl_tour_category
-set image = replace(image, 'file:///storage/emulated/0/Android/data/com.innovatif.ztl/','./uploads/images/');
+set image = replace(image, 'file:///storage/emulated/0/Android/data/com.innovatif.visitljubljana/','./uploads/images/');
 
 
 - SKRIPT2
