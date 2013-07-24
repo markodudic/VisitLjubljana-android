@@ -18,7 +18,7 @@
        under the License.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:windowSoftInputMode="adjustPan"
-      package="com.innovatif.ztl" android:versionName="1.0" android:versionCode="1" android:hardwareAccelerated="true">
+      package="com.innovatif.visitljubljana" android:versionName="1.0" android:versionCode="1" android:hardwareAccelerated="true">
     <supports-screens
         android:largeScreens="true"
         android:normalScreens="true"
@@ -46,6 +46,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        
+		<receiver android:name="com.mobpartner.android.advertiser.MobPartnerAdvertiserReceiver" android:exported="true"> 
+		    <intent-filter> 
+		        <action android:name="com.android.vending.INSTALL_REFERRER" /> 
+		    </intent-filter> 
+		    <meta-data android:name="mobpartner_cid" android:value="@string/mobpartner_cid" /> 
+		    <meta-data android:name="mobpartner_caid" android:value="@string/mobpartner_caid" /> 
+		    <meta-data android:name="mobpartner_debug" android:value="@string/mobpartner_debug" /> 
+    	</receiver>        
     </application>
 
     <uses-sdk android:minSdkVersion="10" android:targetSdkVersion="17"/>
