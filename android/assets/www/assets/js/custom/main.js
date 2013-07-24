@@ -125,9 +125,9 @@ function copy_fail(error) {
 
 function copyDB() {
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
-		fileSystem.root.getFile("/data/data/com.innovatif.ztl/databases/Database.db", null, function(fileEntry) {
+		fileSystem.root.getFile("/data/data/com.innovatif.visitljubljana/databases/Database.db", null, function(fileEntry) {
 		    
-		    var parent = "/mnt/sdcard/Android/data/com.innovatif.ztl";
+		    var parent = "/mnt/sdcard/Android/data/com.innovatif.visitljubljana";
 		    var parentName = parent.substring(parent.lastIndexOf('/')+1);
 		    var parentEntry = new DirectoryEntry(parentName, parent);
 		    
@@ -337,6 +337,8 @@ function load_current_div(){
 		load_page(template_lang+'poigroup.html', 'poigroup', trips[POIGROUP_GROUP], 'fade', false, POIGROUP_GROUP);
 	} else if (selected_div == "tour_category") {
 		load_page(template_lang+'tour_category.html', 'tour_category', trips[TOUR_LIST_GROUP], 'fade', false, TOUR_LIST_GROUP);
+	} else if (selected_div == "ztl_synhronization") {
+		load_current_settings();
 	}	
 }
 
@@ -798,7 +800,6 @@ function loadImage (img) {
         left: ($(img).parent().width()/2) - ($(img).width()/2),
         top: ($(img).parent().height()/2) - ($(img).height()/2)
     });
-	
 }
 
 var touchStartTime;
@@ -1005,7 +1006,8 @@ function show_spinner() {
 	.css({backgroundColor:'black', opacity:0.8, position:'absolute', zIndex:2e8, left:0, top:0})
     .attr("id","overlay").prependTo($('body'));
 
-	if (current_div == 'select_language') {
+	
+	if ((current_div == 'select_language') || (current_div == 'ztl_synhronization')) {
 		$('body').css('position','');
 		var target = document.getElementById("body");
 	} else {

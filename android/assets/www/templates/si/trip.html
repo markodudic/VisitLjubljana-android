@@ -9,7 +9,7 @@
 				<div class="header_title" onClick="load_page(template_lang+'trips.html', 'trips', trips[{{id_group}}], 'fade', false, {{id_group}});">{{& title}}</div>
 			{{/voice_guide}}
 			{{^voice_guide}}
-				{{#poigroup}}
+				{{#poigroup}} 
 					<div onClick="opacity($(this)); load_single_poigroup({{id_poigroup}}, 1);"><img class="header_back"></div>
 					<div class="header_title" onClick="opacity($(this)); load_single_poigroup({{id_poigroup}}, 1);">{{& title}}</div>
 				{{/poigroup}}

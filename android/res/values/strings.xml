@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Visit Ljubljana and more</string>
+
+	<!-- metadata MobPartner --> 
+	<string name="mobpartner_cid">933</string> 
+	<string name="mobpartner_caid">2799</string> 
+	<string name="mobpartner_debug">true</string> 
 </resources>

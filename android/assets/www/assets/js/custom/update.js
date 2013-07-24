@@ -49,7 +49,6 @@ function check_update_success(results) {
 	}
 	updt_running  = 1;
 	
-	console.log("**********update**************"+localStorage.getItem('first_synhronization'));
 	show_spinner();
 	var lang_code = "en";
 	if (settings.id_lang == 1) {
