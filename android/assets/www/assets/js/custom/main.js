@@ -299,8 +299,7 @@ function swipe_left_handler() {
 
 function synhronization_prompt() {
 	//preverim ce imam data connection
-	var networkState = navigator.network.connection.type;
-	if (networkState == Connection.NONE) {
+	if (navigator.network.connection.type == Connection.NONE) {
 		navigator.notification.confirm(
 				no_data_connection_desc_translation[settings.id_lang],
 				load_main_screen,
@@ -308,7 +307,7 @@ function synhronization_prompt() {
 		        ok_translation[settings.id_lang]
 		    );
 	} else {
-		//ce imam vpra�am o syncu	
+		//ce imam vprasam o syncu	
 		navigator.notification.confirm(
 				synhronization_desc_translation[settings.id_lang],
 		        onConfirm,
@@ -343,8 +342,7 @@ function load_current_div(){
 }
 
 function synhronization_force() {
-	var networkState = navigator.network.connection.type;
-	if (networkState == Connection.NONE) {
+	if (navigator.network.connection.type == Connection.NONE) {
 		navigator.notification.confirm(
 				no_data_connection_desc_translation[settings.id_lang],
 				null,
@@ -654,6 +652,9 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				data = {};
 				data.show_on_map 		= show_on_map_translation[settings.id_lang];
 				data.add_to_myvisit		= add_to_myvisit_translation[settings.id_lang];
+			} else if (div == "select_language") {
+				data = {};
+				data.set_language 		= set_language_translation[settings.id_lang].toUpperCase();
 			}
 			
 			if (voice_guide == 1)  {
@@ -932,13 +933,22 @@ function dpend(t) {
 	}
 }
 
-function do_synhronization() {
-	//if (navigator.network.connection.type == Connection.WIFI) {
-		check_updates();
-	/*} else {
-	    alert(wifi_connection_translation[settings.id_lang]);
-	}*/
+function start_synhronization() {
+	if (navigator.network.connection.type == Connection.NONE) {
+		navigator.notification.confirm(
+				no_data_connection_desc_translation[settings.id_lang],
+				null,
+		        synchronization_translation[settings.id_lang],
+		        ok_translation[settings.id_lang]
+		    );
+	} else {
+		do_synhronization();
+	}
+}
 
+
+function do_synhronization() {
+	check_updates();
 }
 
 function sort_by_distance(unsorted) {

@@ -173,12 +173,20 @@ body {
     float:right;
     background-image:url('ztl_images/dots.png');
     background-repeat:no-repeat;
-	 margin-top:-28px;
+	margin-top:-28px;
     height:23px;
     width:6px;
     padding:0px 25px 0px 0px;
 }
 
+.header_dots_simple {
+    float:right;
+    background-image:url('ztl_images/dots.png');
+    background-repeat:no-repeat;
+    height:23px;
+    width:6px;
+    padding:0px 25px 0px 0px;
+}
 
 .header_title_menu {
 	height:25px;
@@ -258,11 +266,21 @@ body {
     left: 0;
 }
 
+.ztl_item_details_desc{
+	color:#ffffff; 
+	font-size:@window_width*0.05;
+}
+
 .ztl_item_details_text {
 	color:#ffffff; 
 	font-size:@window_width*0.05;
 }
 
+.my_visit_inspired_text {
+	color:#ffffff; 
+	font-size:@window_width*0.045;
+	text-align:center;
+}
 .img_connection {
 	width:@window_width*0.06;
 }
@@ -286,7 +304,7 @@ body {
 	background: linear-gradient(to bottom,  rgba(237,28,36,1) 0%,rgba(237,28,36,1) 50%,rgba(210,20,27,1) 50%,rgba(210,20,27,1) 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ed1c24', endColorstr='#d2141b',GradientType=0 ); /* IE6-9 */
 	width:@window_width*0.43;
-   height:@window_width*0.10; /*@window_width*0.43*48/206*/
+    height:@window_width*0.10; /*@window_width*0.43*48/206*/
 	text-align:center;
 	line-height:@window_width*0.10;
 	font-size:@window_width*0.045;
@@ -343,9 +361,7 @@ body {
 }
 
 .ztl_synhronization_button{
-	height:@window_width*0.1;
-	line-height:@window_width*0.08;
-   color:#ffffff;
+    color:#ffffff;
 }
 
 .event_search_filds_left{
@@ -367,7 +383,14 @@ body {
 
 .close_button{
   	text-align:right;
+	padding-top:20px;  	
 }
+
+.close_img {
+	content:url('ztl_images/media_player_close.png');
+   	width:@window_width*0.08;
+}
+
 
 .settings_content {
 	padding-top:@window_height * 0.1;
@@ -403,7 +426,8 @@ body {
 }
 
 .set_filter_line{
-	width:(@window_width - 35);
+	margin-top:5px; 
+	margin-bottom:40px;
 }
 
 .ztl_item_content_padding{
@@ -629,7 +653,6 @@ ul.footer_list li{
 }
 
 .map_settings{
-   padding-top: 40px;
    display:none;
    width:@window_width;	
 }
@@ -645,6 +668,10 @@ ul.footer_list li{
     background-color:#222222;
     height:1px;
     width:@window_width;
+}
+
+.line_gray {
+    background-color:#555555;
 }
 
 .ztl_settings_text {

@@ -185,23 +185,6 @@ a:active {text-decoration:none; color:#ed1c24; font-size:1.0em;}
 }
 
 
-
-.ztl_item_details_text {
-	color:#ffffff; 
-	font-size:1.15em;
-}
-
-.ztl_item_details_desc{
-	color:#ffffff; 
-	font-size:0.8em;
-}
-
-.my_visit_inspired_text {
-	color:#ffffff; 
-	font-size:1.05em;
-	text-align:center;
-}
-
 #media_player {
      text-align:center;
 }
