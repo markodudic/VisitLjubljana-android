@@ -235,7 +235,7 @@ function swipe_right_handler() {
 				current = res.items[j]['id'];
 				
 				if (swipe_group == 1) {
-					load_trip_content(res.items[j]['id'], 'fade', true, 1)
+					load_poi(res.items[j]['id'], 'fade', true, 1)
 					swipe_dir = "right";
 				} else if (swipe_group == 2) {
 					swipe_dir = "right";
@@ -279,7 +279,7 @@ function swipe_left_handler() {
 
 			if (swipe_group == 1) {
 				swipe_dir = "left";
-				load_trip_content(res.items[j]['id'], 'fade', true, 1)
+				load_poi(res.items[j]['id'], 'fade', true, 1)
 			} else if (swipe_group == 2) {
 				swipe_dir = "left";
 				load_event(res.items[j].id);
@@ -654,7 +654,11 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				data.add_to_myvisit		= add_to_myvisit_translation[settings.id_lang];
 			} else if (div == "select_language") {
 				data = {};
-				data.set_language 		= set_language_translation[settings.id_lang].toUpperCase();
+				if (settings.id_lang != undefined) {
+					data.set_language 		= set_language_translation[settings.id_lang].toUpperCase();
+				} else {
+					data.set_language 		= set_language_translation[2].toUpperCase();					
+				}
 			}
 			
 			if (voice_guide == 1)  {

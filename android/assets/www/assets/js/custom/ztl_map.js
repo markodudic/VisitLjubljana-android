@@ -411,7 +411,7 @@ function load_page_content(id, type) {
 	if (type==EVENT_GROUP) {
 		load_event(id, 0);
 	} else if ((type==POI_GROUP) || (type==VOICE_GROUP)) {
-		load_trip_content(id, 'fade', true, 0);
+		load_poi(id, 'fade', true, 0);
 	}
     
 }

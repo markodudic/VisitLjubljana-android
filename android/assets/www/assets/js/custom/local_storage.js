@@ -86,7 +86,7 @@ function go_back() {
 					load_my_visit(0);
 				}
 
-				if (go_to[1] == "load_trip_content") {
+				if (go_to[1] == "load_poi") {
 					slide = 1;
 					
 					var tmp_transition = false;
@@ -94,7 +94,7 @@ function go_back() {
 						tmp_transition = true;
 					}
 
-					load_trip_content(params[0],params[1],tmp_transition,0);
+					load_poi(params[0],params[1],tmp_transition,0);
 				}
 
 				if (go_to[1] == "load_info") {
