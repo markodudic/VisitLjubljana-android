@@ -435,7 +435,7 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				extra_div_id 		= "_"+id_group;
 				data.extra_div_id 	= id_group;
 				data.page_title 	= trips_title[id_group];
-			    if (selected_group == POI_NASTANITVE_GROUP) {
+			    if (id_group == POI_NASTANITVE_GROUP) {
 					data.stars="true";
 				}
 				if ((id_group != POIGROUP_GROUP) &&	(id_group != VOICE_GROUP)) {

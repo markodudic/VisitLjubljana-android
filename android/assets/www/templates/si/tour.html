@@ -5,6 +5,7 @@
 			<div class="red_line"></div>
 			<div class="header_space"></div>
 			<div onClick="opacity($(this)); load_page(template_lang+'tours.html', 'tours', trips[6].tours[{{tour_category_id}}], 'fade', false, {{tour_category_id}});"><img class="header_back"></div>
+			<div><img class="header_divider"></div>
 			<div class="header_title" onClick="opacity($(this)); load_page(template_lang+'tours.html', 'tours', trips[6].tours[{{tour_category_id}}], 'fade', false, {{tour_category_id}});">{{& item.title}}</div>
 			<div style="clear:both;"></div>
 			<div class="header_space"></div>
@@ -55,7 +56,7 @@
 				{{/sound}}
 				<div class="ztl_item_details">
 					<div class="ztl_item_details_title" style="text-transform:uppercase;">{{ztl_item_details_description}}</div>
-					<div class="grey_line" style="margin-top:10px;"></div>
+					<div class="grey_line"></div>
 					<div class="ztl_item_details_desc">
 						{{& item.short_description}}
 						{{& item.long_description}}
@@ -63,7 +64,7 @@
 					
 					{{#charters}}
 						<div class="ztl_item_details_title" style="text-transform:uppercase;">{{& title}}</div>
-						<div class="grey_line" style="margin-top:10px;"></div>
+						<div class="grey_line"></div>
 						<div class="ztl_item_details_desc">
 							{{& content}}
 						</div>

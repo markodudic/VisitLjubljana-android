@@ -20,6 +20,16 @@
 
 }
 
+@font-face {
+    font-family: roboto_regular;
+    src: url('/fonts/Roboto-Regular.ttf') format('truetype');
+}
+   
+@font-face {
+    font-family: roboto_bold;
+    src: url('/fonts/Roboto-Bold.ttf') format('truetype');
+}
+
 *{
     /* Prevent any object from being highlighted upon touch event*/
     -webkit-tap-highlight-color: rgba(0,0,0,0); 
@@ -87,17 +97,7 @@ a:active {text-decoration:none; color:#ed1c24; font-size:1.0em;}
     width:100%;
 }
 
-.black_line {
-    background-color:#222222;
-    height:1px;
-    width:100%;
-}
 
-.grey_line {
-    background-color:#555555;
-    height:4px;
-    width:100%;
-}
 
 .header_placeholder {
 	background-color:#222222;
@@ -112,26 +112,22 @@ a:active {text-decoration:none; color:#ed1c24; font-size:1.0em;}
     margin:0px 0px 0px 10px;
 }
 
-
-
-
 .header_space {
     height:10px;
 }
 
-
-.header_dots {
-    float:right;
-    background-image:url('ztl_images/dots.png');
-    background-repeat:no-repeat;
-    height:23px;
-    width:6px;
-    padding:0px 25px 0px 0px;
+.header_divider {
+    content:url('ztl_images/divider.png');
+    height:24px;
+    width:1px;
+    margin:0px 10px 0px 10px;
 }
+
 
 .header_synhronization {
     float:right;
-    padding:0px 25px 0px 0px;
+    margin-top:-28px;
+    padding:0px 55px 0px 0px;
 }
 
 .header_synhronization_image {
@@ -140,27 +136,7 @@ a:active {text-decoration:none; color:#ed1c24; font-size:1.0em;}
     width:24px;
 }
 
-.header_shadow {
-	background: -moz-linear-gradient(top,  rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,1)), color-stop(100%,rgba(0,0,0,0))); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top,  rgba(0,0,0,1) 0%,rgba(0,0,0,0) 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top,  rgba(0,0,0,1) 0%,rgba(0,0,0,0) 100%); /* Opera 11.10+ */
-	background: -ms-linear-gradient(top,  rgba(0,0,0,1) 0%,rgba(0,0,0,0) 100%); /* IE10+ */
-	background: linear-gradient(to bottom,  rgba(0,0,0,1) 0%,rgba(0,0,0,0) 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#00000000',GradientType=0 ); /* IE6-9 */
-	height:11px;
-}
 
-.footer_shadow {
-	background: -moz-linear-gradient(top,  rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,1))); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%); /* Opera 11.10+ */
-	background: -ms-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%); /* IE10+ */
-	background: linear-gradient(to bottom,  rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#000000',GradientType=0 ); /* IE6-9 */
-	height:11px;
-}
 
 .ztl_list_item {
     width:100%;
@@ -186,15 +162,7 @@ a:active {text-decoration:none; color:#ed1c24; font-size:1.0em;}
 }
 
 
-.ztl_star{
-    font-size:1em;
-    color:#ffffff;
-    font-family: 'robotocondensed';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    padding:0px 0px 5px 0px;
-}
+
 
 .ztl_event_filter{
     font-size:1em;
@@ -204,13 +172,6 @@ a:active {text-decoration:none; color:#ed1c24; font-size:1.0em;}
     bottom: 0;
     left: 0;
     padding:0px 0px 0px 0px;
-}
-
-.ztl_item_details {
-    color:#555555;
-    position:relative;
-    margin: 20px 0px 0px 0px;
-    font-size:1.5em;
 }
 
 .ztl_item_distance{
@@ -223,9 +184,7 @@ a:active {text-decoration:none; color:#ed1c24; font-size:1.0em;}
     padding:0px 15px 15px 0px;
 }
 
-.ztl_item_details_title{
-    font-size:0.9em;
-}
+
 
 .ztl_item_details_text {
 	color:#ffffff; 
@@ -364,12 +323,6 @@ a:active {text-decoration:none; color:#ed1c24; font-size:1.0em;}
 }
 
 
-.sound_img {
-    text-align: right;
-    float:left;
-    padding-top:6px;
-    width:30%;
-}
 
 .sound_txt {
     padding:0;

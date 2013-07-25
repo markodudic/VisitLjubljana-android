@@ -5,6 +5,7 @@
 			<div class="red_line"></div>
 			<div class="header_space"></div>
 			<div onClick="opacity($(this)); load_page(template_lang+'poigroups.html', 'poigroups', trips[POIGROUP_GROUP], 'fade', false, POIGROUP_GROUP);"><img class="header_back"></div>
+			<div><img class="header_divider"></div>
 			<div class="header_title" onClick="opacity($(this)); load_page(template_lang+'poigroups.html', 'poigroups', trips[POIGROUP_GROUP], 'fade', false, POIGROUP_GROUP);">{{& poigroup_title}}</div>
 			<div style="clear:both;"></div>
 			<div class="header_space"></div>
@@ -33,7 +34,7 @@
 
 				<div class="ztl_item_details">
 					<div class="ztl_item_details_title" style="text-transform:uppercase;">{{ztl_item_details_description}}</div>
-					<div class="grey_line" style="margin-top:10px;"></div>
+					<div class="grey_line"></div>
 					<div class="ztl_item_details_desc">
 						{{& poigroup_desc}}
 					</div>
@@ -42,7 +43,7 @@
 
 			<div class="ztl_item_details">
 				<div id="ztl_item_details_price" class="ztl_item_details_title" style="text-transform:uppercase;">{{ztl_item_poigroup_list}}</div>
-				<div class="grey_line" style="margin-top:10px;"></div>
+				<div class="grey_line"></div>
 			</div>
 
 	{{#items}}
