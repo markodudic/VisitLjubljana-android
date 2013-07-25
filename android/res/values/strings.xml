@@ -5,5 +5,5 @@
 	<!-- metadata MobPartner --> 
 	<string name="mobpartner_cid">933</string> 
 	<string name="mobpartner_caid">2799</string> 
-	<string name="mobpartner_debug">true</string> 
+	<string name="mobpartner_debug">false</string> 
 </resources>
