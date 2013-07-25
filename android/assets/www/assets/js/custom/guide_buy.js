@@ -51,6 +51,8 @@ function buy_guide() {
 		        synchronization_translation[settings.id_lang],
 		        ok_translation[settings.id_lang]
 		    );
+		
+		load_page(template_lang+'guide_buy.html', 'guide_buy', trips[VOICE_GROUP], 'fade', false);		
 	} else {
 		//sinhronizacija v update.js:644
 		update_audio();
