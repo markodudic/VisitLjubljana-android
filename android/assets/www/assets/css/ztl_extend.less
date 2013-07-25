@@ -59,12 +59,12 @@ body {
 }
 
 .ztl_items_image_260 {
-	width:@window_width;
+	width:@window_width*1.1;
 	position: absolute;
 }
 
 .ztl_items_image_170 {
-	width:100%;
+	width:110%;
 	position: absolute;
 }
 
@@ -74,6 +74,7 @@ body {
 	background-repeat:no-repeat;
 	position:relative; 
 	background-size: 100% 100%;
+  	overflow: hidden;
 }
 
 .ztl_height_170 {
@@ -82,6 +83,7 @@ body {
 	background-repeat:no-repeat;
 	position:relative; 
 	background-size: 100% 100%;
+  	overflow: hidden;
 }
 
 .ztl_items_no_image {
@@ -452,6 +454,14 @@ body {
 
 .ztl_remove_from_page{
 	width:@window_width;
+}
+
+.ztl_img_star {
+	position:absolute;
+	width:@window_width;
+	text-align:center;
+	padding-top:@window_width*0.026;
+	z-index: 998;
 }
 
 .img_star{

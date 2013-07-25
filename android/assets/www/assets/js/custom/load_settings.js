@@ -95,9 +95,9 @@ function load_poi_filter() {
 	generate_query(tmp_query, tmp_callback);
 }
 
-function load_trip_content(id, transition, reverse, save_history) {
+function load_poi(id, transition, reverse, save_history) {
 	if (save_history == 1)  {
-		var history_string = "fun--load_trip_content--"+id+"__"+transition+"__"+reverse;
+		var history_string = "fun--load_poi--"+id+"__"+transition+"__"+reverse;
 		add_to_history(history_string);
 	}
 
@@ -105,7 +105,7 @@ function load_trip_content(id, transition, reverse, save_history) {
 	sound_file 	= "";
 
 	var tmp_query 		= 	'SELECT zp.id, zp.address, zp.post_number, zp.post, zp.phone, zp.email, zp.www, zp.coord_x, zp.coord_y, zp.image, zp.star, ' +
-							' 	zpt.title, zpt.description, zcg.id_group, zpt.sound, zpt.media_duration_value, zpt.media_duration_string '+
+							' 	zpt.title, zpt.description, '+selected_group+' id_group, zpt.sound, zpt.media_duration_value, zpt.media_duration_string '+
 							'FROM ztl_poi zp '+
 							'LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id  '+
 							'LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category  '+

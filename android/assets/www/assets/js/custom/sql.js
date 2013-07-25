@@ -400,6 +400,8 @@ function load_info_success(results) {
 	results.rows.item(0).content = unescape(results.rows.item(0).content);
 	res.item = results.rows.item(0);
 
+	current = results.rows.item(0).id;
+	
 	var transition = 'fade';
     if ((swipe_dir == "left") || (swipe_dir == "right")) {
     	transition = 'slide';
@@ -558,6 +560,8 @@ function load_tour_success(results) {
 	results.rows.item(0).contact = unescape(results.rows.item(0).contact);
 	tmp_tours_data.item = results.rows.item(0);
 
+	current = results.rows.item(0).id;
+	
 	var tmp_query = "SELECT ti.image FROM ztl_tour_images ti WHERE ti.id_tour = "+tmp_tours_data.item.id+" ORDER BY ti.tour_idx";
 	var tmp_callback = "tour_images_success";
     generate_query(tmp_query, tmp_callback);
