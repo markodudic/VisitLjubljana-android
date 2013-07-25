@@ -55,11 +55,11 @@ public class ztl extends DroidGap
         ad.sendMobPartnerAdInfos(getString(R.string.mobpartner_caid), true);
         System.out.println("mobpartner_caid="+getString(R.string.mobpartner_caid));
         
-        Intent i = new Intent("com.android.vending.INSTALL_REFERRER"); 
+        /*Intent i = new Intent("com.android.vending.INSTALL_REFERRER"); 
         i.setPackage(this.getPackageName()); 
         i.putExtra("referrer", "utm_source%3Dmobpartner%26utm_medium%3DPartner%26utm_campaign%3D118"); 
         sendBroadcast(i);
-        
+        */
         //skopiram predpripravljeno bazo
         
         try
