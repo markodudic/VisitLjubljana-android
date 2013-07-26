@@ -106,7 +106,7 @@
 							<div class="ztl_list_image">
 								<div class="ztl_list_img_crop">
 									{{#image}}
-										<img class="ztl_items_image" src="{{image}}" loadImage(this)>
+										<img class="ztl_items_image" src="{{image}}" onload="loadImage(this)">
 									{{/image}}
 									{{^image}}
 										<img class="ztl_details_image" src="./uploads/noimage_detail.png">
@@ -115,7 +115,7 @@
 							</div>
 							<div class="ztl_list_content">
 									<div class="ztl_list_header">{{& title}}</div>
-									<div class="ztl_list_content_text" style="font-size:18px;">
+									<div class="ztl_list_content_text">
 										{{date}}
 										<br>
 										{{& poi_title}}
