@@ -1055,7 +1055,7 @@ function format_date(date_string, id, hide_time) {
     function (date) {
         $("#"+id).html(date.value);
     },
-    function () {alert('Error getting dateString\n');},
+    function () {},
     {formatLength:'short', selector:selector}
     );
 }

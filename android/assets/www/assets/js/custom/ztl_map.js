@@ -20,6 +20,9 @@ function load_show_map(id, type, group) {
 	curr_id = id;
 	curr_type = type;
 	curr_group = group;
+	if ((group == INSPIRED_GROUP) || (group == POIGROUP_GROUP)) {
+		curr_group = POI_GROUP;
+	}
 	load_page(template_lang+'ztl_map.html', 'ztl_map', null, 'fade', false);
 }
 
@@ -189,10 +192,10 @@ var init = function (onSelectFeatureFunction) {
     if (curr_type != undefined) {
     	//var point = transform (parseFloat(points[0][0])+correctionX, parseFloat(points[0][1])+correctionY);
     	//var lonLat = new OpenLayers.LonLat(point.lon, point.lat);
-    	if (current_position_center != undefined) {
+    	/*if (current_position_center != undefined) {
     		var lonlat = new OpenLayers.LonLat(current_position_center.lon, current_position_center.lat); 
         	bounds.extendXY(lonlat.lon, lonlat.lat);
-    	}
+    	}*/
     	
     	var pixel = bounds.getCenterPixel();
     	map.zoomToExtent(bounds, true);
@@ -206,7 +209,6 @@ var init = function (onSelectFeatureFunction) {
         
     function getFeatures(type) {
         var features = new Array();
-        console.log("points="+points.length);
         for (var i=0;i<points.length;i++) {
            if (points[i][2] == type) {
                 //na koordinatePOI-ja iz baze se doda 5.000.000 zato da bo v projekciji GK zona 5 oz. EPSG:31469    
@@ -320,13 +322,19 @@ function transform (lon, lat) {
 
 function get_poi_data() {
 	points =  new Array();
+
 	if (curr_id != undefined) {
 		if (curr_type == VOICE_GROUP) {
 			load_map_coords(trips[VOICE_GROUP], VOICE_GROUP);
 		} else if (curr_type == EVENT_GROUP) {
 		    load_map_coord(trips[EVENT_GROUP], curr_id, EVENT_GROUP);
 		} else if (curr_type == POI_GROUP) {
-		   	load_map_coord(trips[curr_group], curr_id, POI_GROUP);
+		   	//load_map_coord(trips[curr_group], curr_id, POI_GROUP);
+        	load_map_coord(trips[POI_ZAMENITOSTI_GROUP], curr_id, POI_GROUP);
+    		load_map_coord(trips[POI_KULINARIKA_GROUP], curr_id, POI_GROUP);
+    		load_map_coord(trips[POI_NASTANITVE_GROUP], curr_id, POI_GROUP);
+    		load_map_coord(trips[POI_NAKUPOVANJE_GROUP], curr_id, POI_GROUP);
+    		load_map_coord(trips[POI_ZABAVA_GROUP], curr_id, POI_GROUP);
 		} else if (curr_type == TOUR_LIST_GROUP) {
 			load_my_visit_map();
 		} else if (curr_type == INSPIRED_GROUP) {
@@ -481,7 +489,6 @@ function show_system_maps() {
     } else {
 	   var geo = "https://maps.google.com/maps?saddr="+saddr.lat+","+saddr.lon+"&daddr="+daddr.lat+","+daddr.lon+"&sll="+daddr.lat+","+daddr.lon+"&mra=mift&z=17";
     }
-    console.log(geo);
     window.open(geo,'_system');
 }
 

@@ -529,22 +529,25 @@ function tour_success(results) {
     var tmp;
     for (var i=0; i<len; i++){
     	//skrajsam dolzino
-    	results.rows.item(i).title = unescape(results.rows.item(i).title);
     	results.rows.item(i).tour_category = unescape(results.rows.item(i).tour_category);
+    	/*
+    	results.rows.item(i).title = unescape(results.rows.item(i).title);
     	results.rows.item(i).short_description = unescape(results.rows.item(i).short_description);
     	results.rows.item(i).contact = unescape(results.rows.item(i).contact);
-    	tmp = results.rows.item(i).title;
-    	if (tmp.length > max_dolzina_title) {
-    		results.rows.item(i).title = tmp.substring(0,max_dolzina_title)+"...";
-    	}
+    	
     	tmp = results.rows.item(i).tour_category;
     	if (tmp.length > max_dolzina_title) {
     		results.rows.item(i).tour_category = tmp.substring(0,max_dolzina_title)+"...";
+    	}
+    	tmp = results.rows.item(i).title;
+    	if (tmp.length > max_dolzina_title) {
+    		results.rows.item(i).title = tmp.substring(0,max_dolzina_title)+"...";
     	}
     	tmp = results.rows.item(i).short_description;
     	if (tmp.length > max_dolzina_long_desc) {
     		results.rows.item(i).short_description = tmp.substring(0,max_dolzina_long_desc)+"...";
     	}
+    	*/
     	res.items[i] = results.rows.item(i);
     }
 
