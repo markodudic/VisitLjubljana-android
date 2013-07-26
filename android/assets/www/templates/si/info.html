@@ -5,6 +5,7 @@
 			<div class="red_line"></div>
 			<div class="header_space"></div>
 			<div onClick="opacity($(this)); load_page(template_lang+'infos.html', 'infos', trips[INFO_GROUP], 'fade', false, INFO_GROUP);"><img class="header_back"></div>
+			<div><img class="header_divider"></div>
 			<div class="header_title" onClick="opacity($(this)); load_page(template_lang+'infos.html', 'infos', trips[INFO_GROUP], 'fade', false, INFO_GROUP);">{{& item.title}}</div>
 			<div style="clear:both;"></div>
 			<div class="header_space"></div>
@@ -18,21 +19,25 @@
 	<div id="verticalScroller">
 
 		<div class="ztl_navigate_events">
-			{{#item.image}}
-				<div class="ztl_item_details_image">
-					<div class="ztl_details_img_crop">
-						<img class="ztl_details_image" src="{{item.image}}">
-					</div>
+			<div class="ztl_item_details_image">
+				<div class="ztl_details_img_crop">
+					{{#item.image}}
+						<img class="ztl_details_image" src="{{item.image}}" onload="loadImage(this)">
+					{{/item.image}}
+					{{^item.image}}
+						<img class="ztl_details_image" src="./uploads/noimage_detail.png">
+					{{/item.image}}
 				</div>
-			{{/item.image}}
-			{{^item.image}}
-				<img class="ztl_details_image" src="./uploads/noimage_detail.png">
-			{{/item.image}}
+			</div>
+
 			<div style="clear:both;"></div>
 			<div class="ztl_item_content_padding">
 				<div class="ztl_item_details">
 					<div id="ztl_item_details_description" class="ztl_item_details_title">{{ztl_item_details_description}}</div>
 					<div class="grey_line"></div>
+				</div>
+
+				<div class="ztl_item_details">
 					<div class="ztl_item_details_desc">
 						{{& item.content}}
 					</div>

@@ -412,7 +412,7 @@ function parse_time(date_string, selector, index) {
        event_time_array[index].date_str = date.value;
        verify_parse_finish(index);
     },
-    function () {alert('Error getting dateString\n');},
+    function () {},
     {formatLength:'short', selector:selector}
     );
 }

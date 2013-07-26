@@ -36,7 +36,6 @@ update ztl_tour_category
 set image = replace(image, 'file:///storage/emulated/0/Android/data/com.innovatif.visitljubljana/','./uploads/images/');
 
 
-- SKRIPT2
 update ztl_poi_translation set sound = '1349124_tocka_7.mp3' where id_poi=1300 and id_language=1;
 update ztl_poi_translation set sound = '1349134_tocka_9.mp3' where id_poi=1336 and id_language=1;
 update ztl_poi_translation set sound = '1349236_tocka_13.mp3' where id_poi=1365 and id_language=1;
