@@ -104,7 +104,6 @@ function poi_filter_success(results) {
 
 //nalozi poi
 function load_poi_success(results) {
-	console.log("load_poi_success");
 	var res = {};
     res.items = [];
     	 
@@ -237,6 +236,10 @@ function filter_events_success(results) {
     
     if (event_date_to != "") {
     	res.page_sub_title_date = res.page_sub_title_date +" - "+event_date_to;
+
+        if (event_title.length > max_dolzina_kategorija) {
+        	res.page_sub_title 		= event_title.substring(0,max_dolzina_kategorija)+"...";
+        }
     }
 
     //res.categories 	= event_type;
@@ -530,9 +533,8 @@ function tour_success(results) {
     for (var i=0; i<len; i++){
     	//skrajsam dolzino
     	results.rows.item(i).tour_category = unescape(results.rows.item(i).tour_category);
-    	/*
     	results.rows.item(i).title = unescape(results.rows.item(i).title);
-    	results.rows.item(i).short_description = unescape(results.rows.item(i).short_description);
+    	/*results.rows.item(i).short_description = unescape(results.rows.item(i).short_description);
     	results.rows.item(i).contact = unescape(results.rows.item(i).contact);
     	
     	tmp = results.rows.item(i).tour_category;

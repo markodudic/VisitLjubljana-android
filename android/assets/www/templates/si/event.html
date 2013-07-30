@@ -7,12 +7,20 @@
 			{{#is_sub_event}}
 				<div onClick="opacity($(this)); load_event({{sub_events_id}}, 1); is_sub_event = 0;"><img class="header_back"></div>
 				<div><img class="header_divider"></div>
-				<div class="header_title" onClick="opacity($(this)); load_event({{sub_events_id}}, 1); is_sub_event = 0;">{{& item.title}}</div>
+				<div class="header_title" onClick="opacity($(this)); load_event({{sub_events_id}}, 1); is_sub_event = 0;">
+					<div class="marquee">
+						{{& item.title}}
+					</div>
+				</div>
 			{{/is_sub_event}}
 			{{^is_sub_event}}
 				<div onClick="opacity($(this)); load_page(template_lang+'events.html', 'events', trips[EVENT_GROUP], 'fade', false, EVENT_GROUP);"><img class="header_back"></div>
 				<div><img class="header_divider"></div>
-				<div class="header_title" onClick="opacity($(this)); load_page(template_lang+'events.html', 'events', trips[EVENT_GROUP], 'fade', false, EVENT_GROUP);">{{& item.title}}</div>
+				<div class="header_title" onClick="opacity($(this)); load_page(template_lang+'events.html', 'events', trips[EVENT_GROUP], 'fade', false, EVENT_GROUP);">
+					<div class="marquee">
+						{{& item.title}}
+					</div>
+				</div>
 			{{/is_sub_event}}
 			<div class="header_dots" onClick="event_filter_toggle();"></div>
 			<div style="clear:both;"></div>
@@ -65,12 +73,14 @@
 				{{/sound}}
 
 				<div class="ztl_item_details">
-					<div class="ztl_item_details_title" style="text-transform:uppercase;">{{ztl_item_details_description}}</div>
-					<div class="grey_line"></div>
-					<div class="ztl_item_details_desc">
-						{{& item.intro}}
-						{{& item.description}}
-					</div>
+					{{#item.intro}}
+						<div class="ztl_item_details_title" style="text-transform:uppercase;">{{ztl_item_details_description}}</div>
+						<div class="grey_line"></div>
+						<div class="ztl_item_details_desc">
+							{{& item.intro}}
+							{{& item.description}}
+						</div>
+					{{/item.intro}}
 
 					{{#has_venue}}
 						<div id="ztl_item_details_venue" class="ztl_item_details_title" style="text-transform:uppercase;">{{ztl_item_details_venue}}</div>

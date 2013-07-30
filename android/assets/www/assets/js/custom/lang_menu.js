@@ -143,7 +143,7 @@ set_language_translation[5]	= "Définir la langue";
 
 var rate_translation = [];
 rate_translation[1]	= "Oceni aplikacijo";
-rate_translation[2]	= "Rate the appliaction";
+rate_translation[2]	= "Rate the application";
 rate_translation[3]	= "Mobile-App einschätzen";
 rate_translation[4]	= "Valutare l'applicazione";
 rate_translation[5]	= "Évaluer l'application";
@@ -154,6 +154,13 @@ about_translation[2]	= "About the application";
 about_translation[3]	= "Über die Mobile-App";
 about_translation[4]	= "Informazioni sull'applicazione";
 about_translation[5]	= "Plus d'infos sur l'application";
+
+var exit_translation = [];
+exit_translation[1]	= "Izhod";
+exit_translation[2]	= "Exit";
+exit_translation[3]	= "Exit";
+exit_translation[4]	= "Exit";
+exit_translation[5]	= "Exit";
 
 var synchronization_translation = [];
 synchronization_translation[1]	= "Sinhronizacija";

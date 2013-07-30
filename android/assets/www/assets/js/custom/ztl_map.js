@@ -72,15 +72,22 @@ OpenLayers.Control.Click = OpenLayers.Class(OpenLayers.Control, {
     }
 });
 
+var zoom_direction = 0; //0: zoomOut; 1: zoomIn; 2: zoomToExtent
 var init = function (onSelectFeatureFunction) {
 	$(".txt_popup").hide();
 
     $("#plus").on('click', function(){
+    	zoom_direction = 1;
+    	opacity($(this));
         map.zoomIn();
+    	check_current_zoom();
     });
 
     $("#minus").on('click', function(){
+    	zoom_direction = 0;
+    	opacity($(this));
         map.zoomOut();
+    	check_current_zoom();
     });
     
     $("#my_location").on('click', function(){
@@ -199,7 +206,9 @@ var init = function (onSelectFeatureFunction) {
     	
     	var pixel = bounds.getCenterPixel();
     	map.zoomToExtent(bounds, true);
-    	map.zoomOut();
+    	//map.zoomOut();
+    	zoom_direction = 2;
+    	check_current_zoom();
 	} else {
 	    if( ! map.getCenter() ){
 	    	var lonLat = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
@@ -498,3 +507,23 @@ function back_to_content() {
     //window.location.href = "index.html#go_back";
 }
 
+function check_current_zoom() {
+	//alert(map.getZoom()+":"+map.getMinZoom()+":"+map.getNumZoomLevels());
+	if ((map.getZoom() <= 1) && (zoom_direction == 0)) {
+		opacity($("#minus"));
+		un_opacity($("#plus"));
+	} else if ((map.getZoom() >= (map.getNumZoomLevels()-2)) && (zoom_direction == 1)){
+		un_opacity($("#minus"));
+		opacity($("#plus"));
+	} else if ((map.getZoom() == 0) && (zoom_direction == 2)) {
+		opacity($("#minus"));
+		un_opacity($("#plus"));
+	} else if ((map.getZoom() == (map.getNumZoomLevels()-1)) && (zoom_direction == 2)) {
+		un_opacity($("#minus"));
+		opacity($("#plus"));
+	} else {
+		un_opacity($("#minus"));
+		un_opacity($("#plus"));
+	}
+	
+}

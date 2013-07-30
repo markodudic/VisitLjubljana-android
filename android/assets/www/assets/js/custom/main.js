@@ -105,6 +105,23 @@ function on_device_ready() {
 		gaPlugin.init(nativePluginResultHandler, nativePluginErrorHandler, UA_android, 10);
 	}
     window.setInterval(set_my_visit_notification, 60000);
+    
+    document.addEventListener("pause", onPause, false);
+    document.addEventListener("resume", onResume, false);
+}
+
+function onPause () {
+	stop_gps();
+}
+
+function onResume () {
+	init_gps();
+}
+
+
+function exit(){
+	stop_gps();
+	navigator.app.exitApp();
 }
 
 function nativePluginResultHandler (result) {
@@ -152,7 +169,8 @@ function reset_cache_cont() {
     load_pois(POI_ZABAVA_GROUP, 8, 0);
     load_pois(POI_NAKUPOVANJE_GROUP, 9, 0);
 	load_pois(POI_NASTANITVE_GROUP, 7, 0);
-
+	
+	
     //ostali podatki
 	load_poi_filter();
     load_events(0);
@@ -181,20 +199,27 @@ function set_cache() {
 }
 
 function get_cache() { 
-	if (window.localStorage.getItem('trips') == null) {
+	console.log("VERSIONS="+window.localStorage.getItem('version')+":"+version_code);
+	if ((window.localStorage.getItem('version') == null) || (parseInt(window.localStorage.getItem('version')) != version_code)) {
+		console.log("NEW VERSION");
+		window.localStorage.setItem('version', version_code);
 		reset_cache();
 	} else {
-		if (window.localStorage.getItem('trips') != null) {
-			trips = JSON.parse(window.localStorage.getItem('trips'));
-		}
-		if (window.localStorage.getItem('trips_title') != null) {
-			trips_title = JSON.parse(window.localStorage.getItem('trips_title'));
-		}
-		if (window.localStorage.getItem('event_type') != null) {
-			event_type = JSON.parse(window.localStorage.getItem('event_type'));
-		}
-		if (window.localStorage.getItem('poi_filter') != null) {
-			poi_filter = JSON.parse(window.localStorage.getItem('poi_filter'));
+		if (window.localStorage.getItem('trips') == null) {
+			reset_cache();
+		} else {
+			if (window.localStorage.getItem('trips') != null) {
+				trips = JSON.parse(window.localStorage.getItem('trips'));
+			}
+			if (window.localStorage.getItem('trips_title') != null) {
+				trips_title = JSON.parse(window.localStorage.getItem('trips_title'));
+			}
+			if (window.localStorage.getItem('event_type') != null) {
+				event_type = JSON.parse(window.localStorage.getItem('event_type'));
+			}
+			if (window.localStorage.getItem('poi_filter') != null) {
+				poi_filter = JSON.parse(window.localStorage.getItem('poi_filter'));
+			}
 		}
 	}
 }
@@ -426,6 +451,8 @@ function load_page(template, div, data, transition, reverse, id_group) {
 		async:true,
 		dataType: 'html',
 		success:function(temp){
+			$('body').html("");
+			
 			var menu_icon 	 = 3;
 			var extra_div_id = "";
 			
@@ -451,6 +478,9 @@ function load_page(template, div, data, transition, reverse, id_group) {
 					}
 				}
 			} else if (div == 'events') {
+				//evente vedno osvezim zaradi spremembe datuma
+			    load_events(0);
+				
 				is_sub_event	   	= 0;
 				data.categories 	= event_type;
 				data.page_title 	= trips_title[id_group];
@@ -518,17 +548,17 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				data.map_button 				= map_translation[settings.id_lang];
 				data.ztl_item_sub_events		= sub_events_translation[settings.id_lang];
 				extra_div_id 					= "_"+data.item.id;
-				if (data.item.title.length>max_dolzina_naslov) {
-					data.item.title=data.item.title.substring(0,max_dolzina_naslov)+"...";
-				}
+				//if (data.item.title.length>max_dolzina_naslov) {
+				//	data.item.title=data.item.title.substring(0,max_dolzina_naslov)+"...";
+				//}
 			} else 	if (div == 'tour') {
 				data.ztl_item_details_description = description_translation[settings.id_lang];
 				data.guide_button				= voice_guide_translation_full[settings.id_lang];
 				data.tour_category_id 			= selected_group;
 				extra_div_id 					= "_"+data.item.id;
-				if (data.item.title.length>max_dolzina_naslov) {
-					data.item.title=data.item.title.substring(0,max_dolzina_naslov)+"...";
-				}
+				//if (data.item.title.length>max_dolzina_naslov) {
+				//	data.item.title=data.item.title.substring(0,max_dolzina_naslov)+"...";
+				//}
 			} else if (div == 'tours') {
 				data.page_title 	= data.items[id_group].tour_category;
 			} else if (div == 'tour_category') {
@@ -538,9 +568,9 @@ function load_page(template, div, data, transition, reverse, id_group) {
 			} else if (div == 'info') {
 				data.ztl_item_details_description = description_translation[settings.id_lang];
 				extra_div_id 		= "_"+data.item.id;
-				if (data.item.title.length>max_dolzina_naslov) {
-					data.item.title=data.item.title.substring(0,max_dolzina_naslov)+"...";
-				}
+				//if (data.item.title.length>max_dolzina_naslov) {
+				//	data.item.title=data.item.title.substring(0,max_dolzina_naslov)+"...";
+				//}
 			} else if (div == 'poigroups') {
 				data.page_title 	= trips_title[id_group];
 				voice_guide			= 0;
@@ -562,9 +592,9 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				data.guide_button				= voice_guide_translation_full[settings.id_lang];
 				data.id_group 					= id_group;
 				data.tmi = tmi;
-				if (data.title.length>max_dolzina_naslov) {
-					data.title=data.title.substring(0,max_dolzina_naslov)+"...";
-				}
+				//if (data.title.length>max_dolzina_naslov) {
+				//	data.title=data.title.substring(0,max_dolzina_naslov)+"...";
+				//}
 				if (selected_group == POI_NASTANITVE_GROUP) {
 					data.stars="true";
 				}
@@ -589,6 +619,7 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				data.synchronization	= synchronization_translation[settings.id_lang];
 				data.rate 				= rate_translation[settings.id_lang];
 				data.about				= about_translation[settings.id_lang];
+				data.exit				= exit_translation[settings.id_lang];
 				voice_guide				= 0;
 			} else if (div == 'ztl_synhronization') {
 				data = {};
@@ -623,6 +654,7 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				data.guide_buy_desc_text= guide_buy_desc_text_translation[settings.id_lang].toUpperCase();
 				data.guide_buy_locations= guide_buy_locations_translation[settings.id_lang].toUpperCase();
 				data.guide_buy_button	= guide_buy_button_translation[settings.id_lang].toUpperCase();
+				menu_icon 				= 2;
 			} else if (div == "my_visit_settings") {
 				data.page_title 					= my_visit_page_title_translation[settings.id_lang];
 				data.my_visit_download_translation 	= my_visit_download_translation[settings.id_lang];
@@ -1062,5 +1094,9 @@ function format_date(date_string, id, hide_time) {
 
 function opacity(el) {
 	el.css({ opacity: 0.3 });
+}
+
+function un_opacity(el) {
+	el.css({ opacity: 1 });
 }
 
