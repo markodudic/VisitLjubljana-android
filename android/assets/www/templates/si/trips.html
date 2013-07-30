@@ -10,9 +10,16 @@
 				<div class="header_title" onClick="opacity($(this)); load_page(template_lang+'poigroups.html', 'poigroups', trips[POIGROUP_GROUP], 'fade', false, POIGROUP_GROUP);">{{page_title}}</div>
 			{{/poigroup}}
 			{{^poigroup}}
-				<div onClick="opacity($(this)); load_main_screen(1);"><img class="header_back"></div>
-				<div><img class="header_divider"></div>
-				<div class="header_title" onClick="opacity($(this)); load_main_screen(1);">{{page_title}}</div>
+				{{#info_poi}}
+					<div onClick="opacity($(this)); load_page(template_lang+'infos.html', 'infos', trips[INFO_GROUP], 'fade', false, INFO_GROUP);"><img class="header_back"></div>
+					<div><img class="header_divider"></div>
+					<div class="header_title" onClick="opacity($(this)); load_page(template_lang+'infos.html', 'infos', trips[INFO_GROUP], 'fade', false, INFO_GROUP);">{{page_title}}</div>
+				{{/info_poi}}
+				{{^info_poi}}
+					<div onClick="opacity($(this)); load_main_screen(1);"><img class="header_back"></div>
+					<div><img class="header_divider"></div>
+					<div class="header_title" onClick="opacity($(this)); load_main_screen(1);">{{page_title}}</div>
+				{{/info_poi}}
 			{{/poigroup}}
 			{{#dots}}
 				<div class="header_dots" onClick="load_page(template_lang+'ztl_guide_settings.html', 'ztl_guide_settings', null, 'fade', false);"></div>
@@ -39,7 +46,7 @@
 				<div class="ztl_list_image">
 					<div class="ztl_list_img_crop">
 						{{#image}}
-							<img class="ztl_items_image" src="{{image}}" onload="loadImage(this)">
+							<img class="ztl_items_image" src="{{image}}" style="position:relative;top:{{top}};left:{{left}};">
 						{{/image}}
 						{{^image}}
 							<img class="ztl_items_no_image" src="./uploads/noimage.png">

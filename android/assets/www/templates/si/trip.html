@@ -24,13 +24,24 @@
 					</div>
 				{{/poigroup}}
 				{{^poigroup}}
-					<div onClick="opacity($(this)); filter_poi();"><img class="header_back"></div>
-					<div><img class="header_divider"></div>
-					<div class="header_title" onClick="opacity($(this)); filter_poi();">
-						<div class="marquee">
-							{{& title}}
+					{{#info_poi}} 
+						<div onClick="opacity($(this)); load_single_info({{id_info}}, 1);"><img class="header_back"></div>
+						<div><img class="header_divider"></div>
+						<div class="header_title" onClick="opacity($(this)); load_info_pois({{id_info}}, 1);">
+							<div class="marquee">
+								{{& title}}
+							</div>
 						</div>
-					</div>
+					{{/info_poi}}
+					{{^info_poi}} 
+						<div onClick="opacity($(this)); filter_poi();"><img class="header_back"></div>
+						<div><img class="header_divider"></div>
+						<div class="header_title" onClick="opacity($(this)); filter_poi();">
+							<div class="marquee">
+								{{& title}}
+							</div>
+						</div>
+					{{/info_poi}}
 				{{/poigroup}}
 			{{/voice_guide}}
 			<div style="clear:both;"></div>
@@ -77,7 +88,7 @@
 
 				<div class="ztl_details_img_crop">
 					{{#image}}
-						<img class="ztl_details_image" src="{{image}}" onload="loadImage(this)">
+						<img class="ztl_details_image" src="{{image}}" style="position:relative;top:{{top}};left:{{left}};">
 					{{/image}}
 					{{^image}}
 						<img class="ztl_details_image" src="./uploads/noimage_detail.png">

@@ -400,6 +400,31 @@ function load_single_info(id, save_history) {
     generate_query(tmp_query, tmp_callback);
 }
 
+function load_info_pois(cat, save_history) {
+	swipe = 0;
+
+	if (save_history == 1)  {
+		var history_string = "fun--load_info_pois--"+cat;
+		add_to_history(history_string);
+	}
+
+	
+	var tmp_query 		= 	"SELECT zp.*, zpt.title, zpt.description, zc.id cat_id, zc.title cat_title " + 
+							"FROM ztl_poi zp " +
+							"LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id  " + 
+							"LEFT JOIN ztl_category zc ON zc.id = zpc.id_category " +
+							"LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id  " + 
+							"WHERE zc.id = "+cat+" AND zc.id_language = "+settings.id_lang+"  AND zpt.id_language = "+settings.id_lang+" AND zp.record_status = 1 " + 
+							"GROUP BY zp.id " +
+							"ORDER BY zpt.title";
+
+	var tmp_callback	= "load_info_pois_success";
+	generate_query(tmp_query, tmp_callback);
+}
+
+
+
+
 function load_single_poigroup(id, save_history) {
 	swipe = 1;
 
