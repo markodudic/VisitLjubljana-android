@@ -45,6 +45,7 @@ var my_visit_filter = 0;
 var view_main_menu 	= 1;
 var current_div		= "";
 var curr_poigroup_id = 0;
+var curr_info_id = 0;
 
 //iscroll
 var myScroll;
@@ -59,6 +60,13 @@ var gaPlugin;
 
 var selected_group = -1;
 var offsets = {};
+
+//image sizes
+var image_list_w	= 0;
+var image_list_h	= 0;
+var image_detail_w	= 0;
+var image_detail_h	= 0;
+
 
 document.addEventListener("deviceready", on_device_ready, false);
 
@@ -108,6 +116,13 @@ function on_device_ready() {
     
     document.addEventListener("pause", onPause, false);
     document.addEventListener("resume", onResume, false);
+    
+    image_list_w	= $(window).width() * 0.35;
+    image_list_h	= $(window).width() * 0.35 * 14 / 17;
+    image_detail_w	= $(window).width();
+    image_detail_h	= $(window).width() * 0.55;
+
+    //alert($(window).width());
 }
 
 function onPause () {
@@ -459,11 +474,18 @@ function load_page(template, div, data, transition, reverse, id_group) {
 			if (div == 'trips') {
 				extra_div_id 		= "_"+id_group;
 				data.extra_div_id 	= id_group;
-				data.page_title 	= trips_title[id_group];
+				console.log("data.page_title="+data.items[0].page_title);
+		    	if (id_group != INFO_POI_GROUP) {
+					data.page_title 	= trips_title[id_group];
+				} else {
+					data.page_title 	= data.items[0].cat_title;
+					curr_info_id 		= data.items[0].cat_id;
+					data.info_poi 		= 1;
+				}
 			    if (id_group == POI_NASTANITVE_GROUP) {
 					data.stars="true";
 				}
-				if ((id_group != POIGROUP_GROUP) &&	(id_group != VOICE_GROUP)) {
+				if ((id_group != POIGROUP_GROUP) &&	(id_group != VOICE_GROUP) && (id_group != INFO_POI_GROUP)) {
 					var filter_poigroup 	= poi_filter_poigroup(id_group);
 					data.poi_filter 		= filter_poigroup;
 					data.poi_filter_title	= trips_title[id_group].toUpperCase();
@@ -477,6 +499,31 @@ function load_page(template, div, data, transition, reverse, id_group) {
 						}	
 					}
 				}
+			} else if (div == 'trip') {
+				data.ztl_item_details_description = description_translation[settings.id_lang];
+				data.map_button 				= map_translation[settings.id_lang];
+				data.ztl_item_details_title 	= title_translation[settings.id_lang];
+				data.guide_button				= voice_guide_translation_full[settings.id_lang];
+				data.id_group 					= id_group;
+				data.tmi 						= tmi;
+				//if (data.title.length>max_dolzina_naslov) {
+				//	data.title=data.title.substring(0,max_dolzina_naslov)+"...";
+				//}
+				if (selected_group == POI_NASTANITVE_GROUP) {
+					data.stars="true";
+				}
+				if (voice_guide == 1) {
+					data.voice_guide = 1;
+				} 
+				if (selected_group == POIGROUP_GROUP) {
+					data.poigroup 	= 1;
+					data.id_poigroup = curr_poigroup_id;
+				}
+				if (selected_group == INFO_POI_GROUP) {
+					data.info_poi 	= 1;
+					data.id_info 	= curr_info_id;
+				}
+				menu_icon 	= 3;
 			} else if (div == 'events') {
 				//evente vedno osvezim zaradi spremembe datuma
 			    load_events(0);
@@ -585,27 +632,6 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				data.poigroup_image 			= data.items[0].poigroup_image;
 				extra_div_id 					= "_"+data.items[0].poigroup_id;
 				voice_guide						= 0;
-			} else if (div == 'trip') {
-				data.ztl_item_details_description = description_translation[settings.id_lang];
-				data.map_button 				= map_translation[settings.id_lang];
-				data.ztl_item_details_title 	= title_translation[settings.id_lang];
-				data.guide_button				= voice_guide_translation_full[settings.id_lang];
-				data.id_group 					= id_group;
-				data.tmi = tmi;
-				//if (data.title.length>max_dolzina_naslov) {
-				//	data.title=data.title.substring(0,max_dolzina_naslov)+"...";
-				//}
-				if (selected_group == POI_NASTANITVE_GROUP) {
-					data.stars="true";
-				}
-				if (voice_guide == 1) {
-					data.voice_guide = 1;
-				} 
-				if (selected_group == POIGROUP_GROUP) {
-					data.poigroup 	= 1;
-					data.id_poigroup = curr_poigroup_id;
-				}
-				menu_icon 	= 3;
 			} else if (div == 'main_menu') {
 				view_main_menu 	= 1;
 				voice_guide		= 0;

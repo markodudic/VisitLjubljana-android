@@ -47,15 +47,21 @@ function load_pois_success(results) {
     var trips_group;
     
     var rec = 0;
+    
     for (var i=0; i<len; i++){
     	if (results.rows.item(i).title == undefined) continue;
     	trips_group = results.rows.item(i).id_group;
 
     	//skrajsam dolzino
-    	results.rows.item(i).title = unescape(results.rows.item(i).title);
+    	results.rows.item(i).title 	= unescape(results.rows.item(i).title);
      	results.rows.item(i).address = unescape(results.rows.item(i).address);
-     	results.rows.item(i).post = unescape(results.rows.item(i).post);
-    	tmp = results.rows.item(i).title;
+     	results.rows.item(i).post 	= unescape(results.rows.item(i).post);
+//    	results.rows.item(i).top 	= image_list_w/2 - results.rows.item(i).image_w/2;
+//    	results.rows.item(i).left	= image_list_h/2 - results.rows.item(i).image_h/2;
+    	results.rows.item(i).top 	= image_list_w/2 - 800/2;
+    	results.rows.item(i).left	= image_list_h/2 - 531/2;
+
+        tmp = results.rows.item(i).title;
     	if (tmp.length > max_dolzina_title) {
     		results.rows.item(i).title = tmp.substring(0,max_dolzina_title)+"...";
     	}
@@ -80,12 +86,41 @@ function load_pois_success(results) {
     	} else {
 	    	res.items[i] = results.rows.item(i);
     	}
-
     }
 	
     trips[trips_group] = res;
-    //load_page(template_lang+'trips.html', 'trips', res, 'fade', false);
 }
+
+//nalozi poije
+function load_info_pois_success(results) {
+	var res = {};
+    res.items = [];
+    var len = results.rows.length;
+    
+    var rec = 0;
+    
+    for (var i=0; i<len; i++){
+    	//skrajsam dolzino
+    	results.rows.item(i).cat_title = unescape(results.rows.item(i).cat_title);
+     	results.rows.item(i).title = unescape(results.rows.item(i).title);
+     	results.rows.item(i).address = unescape(results.rows.item(i).address);
+     	results.rows.item(i).post 	= unescape(results.rows.item(i).post);
+//    	results.rows.item(i).top 	= image_list_w/2 - results.rows.item(i).image_w/2;
+//    	results.rows.item(i).left	= image_list_h/2 - results.rows.item(i).image_h/2;
+    	results.rows.item(i).top 	= image_list_w/2 - 800/2;
+    	results.rows.item(i).left	= image_list_h/2 - 531/2;
+
+        tmp = results.rows.item(i).title;
+    	if (tmp.length > max_dolzina_title) {
+    		results.rows.item(i).title = tmp.substring(0,max_dolzina_title)+"...";
+    	}
+    	
+    	res.items[i] = results.rows.item(i);
+    }
+    
+    load_page(template_lang+'trips.html', 'trips', res, 'fade', false, INFO_POI_GROUP);
+}
+
 
 
 function poi_filter_success(results) {
@@ -107,14 +142,19 @@ function load_poi_success(results) {
 	var res = {};
     res.items = [];
     	 
-	results.rows.item(0).title = unescape(results.rows.item(0).title);
-	results.rows.item(0).address = unescape(results.rows.item(0).address);
-	results.rows.item(0).post = unescape(results.rows.item(0).post);
-	results.rows.item(0).phone = unescape(results.rows.item(0).phone);
-	results.rows.item(0).email = unescape(results.rows.item(0).email);
-	results.rows.item(0).www = unescape(results.rows.item(0).www);
+	results.rows.item(0).title 		= unescape(results.rows.item(0).title);
+	results.rows.item(0).address 	= unescape(results.rows.item(0).address);
+	results.rows.item(0).post 		= unescape(results.rows.item(0).post);
+	results.rows.item(0).phone 		= unescape(results.rows.item(0).phone);
+	results.rows.item(0).email 		= unescape(results.rows.item(0).email);
+	results.rows.item(0).www 		= unescape(results.rows.item(0).www);
 	results.rows.item(0).description = unescape(results.rows.item(0).description);
-	res.items[0] = results.rows.item(0);
+//	results.rows.item(0).top 		= image_detail_w/2 - results.rows.item(i).image_w/2;
+//	results.rows.item(0).left		= image_detail_h/2 - results.rows.item(i).image_h/2;
+	results.rows.item(0).top 		= image_detail_w/2 - 800/2;
+	results.rows.item(0).left		= image_detail_h/2 - 531/2;
+	
+	res.items[0] 					= results.rows.item(0);
 
     swipe 		 = 1;
 	current 	 = trip_id;
@@ -399,21 +439,26 @@ function load_info_success(results) {
 	var res = {};
     res.item = [];
 
-	results.rows.item(0).title = unescape(results.rows.item(0).title);
-	results.rows.item(0).content = unescape(results.rows.item(0).content);
-	res.item = results.rows.item(0);
-
-	current = results.rows.item(0).id;
+    if ((results.rows.item(0).category != undefined) && (results.rows.item(0).category != "")) {
+		//prikazemo vse poi-je te kategorije
+		load_info_pois(results.rows.item(0).category, 1);
+	} else {
+		results.rows.item(0).title = unescape(results.rows.item(0).title);
+		results.rows.item(0).content = unescape(results.rows.item(0).content);
+		res.item = results.rows.item(0);
 	
-	var transition = 'fade';
-    if ((swipe_dir == "left") || (swipe_dir == "right")) {
-    	transition = 'slide';
-    }
-	var reverse = false;
-    if (swipe_dir == "right") 
-    	reverse = true;
-    
-   	load_page(template_lang+'info.html', 'info', res, transition, reverse);
+		current = results.rows.item(0).id;
+		
+		var transition = 'fade';
+	    if ((swipe_dir == "left") || (swipe_dir == "right")) {
+	    	transition = 'slide';
+	    }
+		var reverse = false;
+	    if (swipe_dir == "right") 
+	    	reverse = true;
+	    
+	   	load_page(template_lang+'info.html', 'info', res, transition, reverse);
+	}
 }
 
 

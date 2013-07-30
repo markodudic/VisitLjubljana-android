@@ -228,6 +228,8 @@ function handle_poi_new(data) {
 
 			if (data[i].image == null) {
 				data[i].image = '';			
+				data[i].image_w = 0;			
+				data[i].image_h = 0;			
 			}
 			
 			if (data[i].stars == null) {
@@ -259,7 +261,7 @@ function handle_poi_new(data) {
 		    		var je_cat = 0;
 		    		if (je_grupa == 0) {
 		    			var poi_cats = JSON.stringify(data[i].cats);
-			    	    var cats = NASTANITEV_CATS;
+			    	    var cats = NASTANITEV_TIC_CATS;
 			    	    for (var j=0; j<cats.length; j++){
 			    			if (poi_cats != undefined) {
 				    			if (poi_cats.indexOf(cats[j]) != -1) {
@@ -276,10 +278,10 @@ function handle_poi_new(data) {
 				}
 			}
 			
-			sql = "INSERT OR REPLACE INTO ztl_poi (id, address, post_number, post, phone, email, www, coord_x, coord_y, turisticna_kartica, ljubljana_quality, recommended_map, image, star, poigroups, cats, record_status, from_db) ";
+			sql = "INSERT OR REPLACE INTO ztl_poi (id, address, post_number, post, phone, email, www, coord_x, coord_y, turisticna_kartica, ljubljana_quality, recommended_map, image, image_w, image_h, star, poigroups, cats, record_status, from_db) ";
 			sql+= "VALUES ("+data[i].id+", '"+addslashes(data[i].address)+"', '"+data[i].postNumber+"','"+addslashes(data[i].post)+"','"+addslashes(data[i].phone)+"', ";
 			sql+= "'"+addslashes(data[i].email)+"', '"+addslashes(data[i].www)+"', '"+data[i].coord.x+"', '"+data[i].coord.y+"', '"+addslashes(data[i].turisticna_kartica)+"', '"+addslashes(data[i].ljubljanaQuality)+"', ";
-			sql+= "'"+data[i].recommended_map+"', '"+data[i].image+"', '"+data[i].stars+"', '"+data[i].poigroups+"', '"+data[i].cats+"', 1, 0);";
+			sql+= "'"+data[i].recommended_map+"', '"+data[i].image+"', "+data[i].image_w+", "+data[i].image_h+", '"+data[i].stars+"', '"+data[i].poigroups+"', '"+data[i].cats+"', 1, 0);";
 			tx.executeSql(sql, [], function(tx, res) {});
 				
 			var mds = "";
@@ -403,7 +405,9 @@ function handle_event(data) {
 		var sql 		= "";
 		for (var i = 0; i < data.length; i++) {
 			if (data[i].image == null) {
-				 data[i].image = "";
+				data[i].image = "";
+				data[i].image_w = 0;			
+				data[i].image_h = 0;			
 			}
 
 			if (data[i].important == null) {
@@ -415,7 +419,7 @@ function handle_event(data) {
 			}
 
 			//console.log(JSON.stringify(data[i]));
-			sql = "INSERT OR REPLACE INTO ztl_event (id, image, featured, important, sub_events, types, record_status) VALUES ("+data[i].id+", '"+data[i].image+"', '"+data[i].featured+"', '"+data[i].important+"', '"+data[i].sub_events+"', '"+data[i].sets+"', 1)";		
+			sql = "INSERT OR REPLACE INTO ztl_event (id, image, image_w, image_h, featured, important, sub_events, types, record_status) VALUES ("+data[i].id+", '"+data[i].image+"', "+data[i].image_w+", "+data[i].image_h+", '"+data[i].featured+"', '"+data[i].important+"', '"+data[i].sub_events+"', '"+data[i].sets+"', 1)";		
 			tx.executeSql(sql, [], function(tx, res) {});
 			sql = "INSERT OR REPLACE INTO ztl_event_translation (id_event, id_language, title, intro, description) VALUES ("+data[i].id+", "+settings.id_lang+", '"+addslashes(data[i].title)+"', '"+addslashes(data[i].intro)+"', '"+addslashes(data[i].description)+"')";
 			//console.log(sql);
@@ -517,9 +521,11 @@ function handle_tour(data) {
 
 			if (data[h].image == null) {
 				data[h].image = '';			
+				data[h].image_w = 0;			
+				data[h].image_h = 0;			
 			}
 
-			sql = "INSERT OR REPLACE INTO ztl_tour_category (id,id_language,title,image,record_status) VALUES ("+h+", "+settings.id_lang+", '"+addslashes(data[h].title)+"', '"+data[h].image+"', 1);";
+			sql = "INSERT OR REPLACE INTO ztl_tour_category (id,id_language,title,image,image_w,image_h,record_status) VALUES ("+h+", "+settings.id_lang+", '"+addslashes(data[h].title)+"', '"+data[h].image+"', "+data[i].image_w+", "+data[i].image_h+", 1);";
 			tx.executeSql(sql, [], function(tx, res) {});
 			
 			for (var i = 0; i<data[h].objects.length; i++) {
@@ -542,7 +548,7 @@ function handle_tour(data) {
 				}
 
 				//for (var j = 0; j < data[i].images.length; j++) {
-					sql = "INSERT OR REPLACE INTO ztl_tour_images (id_tour, tour_idx, image) VALUES ("+data[h].objects[i].id+", "+j+", '"+data[h].objects[i].image+"')";
+					sql = "INSERT OR REPLACE INTO ztl_tour_images (id_tour, tour_idx, image, image_w, image_h) VALUES ("+data[h].objects[i].id+", "+j+", '"+data[h].objects[i].image+"', "+data[i].image_w+", "+data[i].image_h+")";
 					tx.executeSql(sql, [], function(tx, res) {});
 				//}
 			}
@@ -617,10 +623,12 @@ function handle_inspired(data) {
 		var sql = "";
 		for (var i = 0; i < data.length; i++) {
 			if (data[i].image == null) {
-				 data[i].image = "";
+				data[i].image = "";
+				data[i].image_w = 0;			
+				data[i].image_h = 0;			
 			}
 			
-			sql = "INSERT INTO ztl_inspired (id, image, cnt, record_status) VALUES ("+data[i].id+", '"+data[i].image+"', "+data[i].refs.length+",1)";
+			sql = "INSERT INTO ztl_inspired (id, image, image_w, image_h, cnt, record_status) VALUES ("+data[i].id+", '"+data[i].image+"', "+data[i].image_w+", "+data[i].image_h+", "+data[i].refs.length+",1)";
 			tx.executeSql(sql, [], function(tx, res) {});
 			
 			sql = "INSERT INTO ztl_inspired_translation (id_inspired, id_language, title, desc) VALUES ("+data[i].id+", "+settings.id_lang+",'"+addslashes(data[i].title)+"','"+addslashes(data[i].desc)+"')";
@@ -695,9 +703,15 @@ function handle_info(data) {
 		for (var i = 0; i < data.length; i++) {
 			if (data[i].objects[0].image == null) {
 				data[i].objects[0].image = '';			
+				data[i].objects[0].image_w = 0;			
+				data[i].objects[0].image_h = 0;			
 			}
 
-			sql = "INSERT INTO ztl_info (id, id_language, title, image, content, record_status) VALUES ("+data[i].objects[0].id+", "+settings.id_lang+", '"+addslashes(data[i].objects[0].title)+"', '"+data[i].objects[0].image+"', '"+addslashes(data[i].objects[0].content)+"', 1)";
+			if (data[i].objects[0].category == null) {
+				data[i].objects[0].category = '';						
+			}
+			
+			sql = "INSERT INTO ztl_info (id, id_language, title, image, image_w, image_h, content, category, record_status) VALUES ("+data[i].objects[0].id+", "+settings.id_lang+", '"+addslashes(data[i].objects[0].title)+"', '"+data[i].objects[0].image+"', "+data[i].image_w+", "+data[i].image_h+", '"+addslashes(data[i].objects[0].content)+"', "+data[i].category+", 1)";
 			tx.executeSql(sql, [], function(tx, res) {});
 		}
 		
@@ -758,9 +772,11 @@ function handle_poigroup(data) {
 		for (var i = 0; i < data.length; i++) {
 			if (data[i].image == null) {
 				data[i].image = '';			
+				data[i].image_w = 0;			
+				data[i].image_h = 0;			
 			}
 
-			sql = "INSERT INTO ztl_poigroup (id, id_language, title, image, desc, record_status) VALUES ("+data[i].id+", "+settings.id_lang+", '"+addslashes(data[i].title)+"', '"+data[i].image+"', '"+addslashes(data[i].desc)+"', 1)";
+			sql = "INSERT INTO ztl_poigroup (id, id_language, title, image, image_w, image_h, desc, record_status) VALUES ("+data[i].id+", "+settings.id_lang+", '"+addslashes(data[i].title)+"', '"+data[i].image+"', "+data[i].image_w+", "+data[i].image_h+", '"+addslashes(data[i].desc)+"', 1)";
 			tx.executeSql(sql, [], function(tx, res) {});
 		}
 		

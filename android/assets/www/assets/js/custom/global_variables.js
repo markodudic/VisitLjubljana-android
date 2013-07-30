@@ -5,6 +5,7 @@ var server_url = 'http://www.visitljubljana.com/';
 var develop = 1;
 var populateDB = 0; 
 
+	
 //settings
 var SETTINGS_FILE           = "settings.js"
 var SETTINGS_FOLDER     	= "Android/data/com.innovatif.visitljubljana/";
@@ -21,6 +22,7 @@ var TOUR_LIST_GROUP			= 6;
 var INSPIRED_GROUP			= 7;
 var POIGROUP_GROUP			= 8;
 var SUB_EVENTS_GROUP		= 9;
+var INFO_POI_GROUP			= 10;
 var POI_ZAMENITOSTI_GROUP	= 217;
 var POI_KULINARIKA_GROUP	= 219;
 var POI_NASTANITVE_GROUP	= 215;
@@ -37,8 +39,7 @@ var POI_NAKUPOVANJE_POI_GROUPS 	= ["159212","15969","15848","43997","15922"];
 var POI_NASTANITVE_CATEGORY 	= ["366","369","398","401","431","438","456"];
                             	   
 var POI_GROUPS 		= [34268, 15780, 15860, 15863, 15874, 15774, 15781, 15861, 15782, 15906, 15907, 15818, 15919, 43996, 43995, 15927, 39095, 15931, 16756, 15782, 44001, 15815, 15921, 15969, 15848, 43997, 15922];
-var NASTANITEV_CATS	= [366, 369, 398, 401, 431, 438, 456];
-
+var NASTANITEV_TIC_CATS	= [366, 369, 398, 401, 431, 438, 456, 496, 497]; //tic je 496 in 497
 
 //ztl grupe -- my_visit sinhronizacija
 var ZTL_EVENT_GROUP = 1;
