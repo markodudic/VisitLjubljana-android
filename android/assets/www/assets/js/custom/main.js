@@ -74,7 +74,7 @@ function on_device_ready() {
 	//navigator.splashscreen.show();
 	reinit();
 	
-	db 		= window.sqlitePlugin.openDatabase("Database", "1.0", "ztl", -1);
+	db 		= window.sqlitePlugin.openDatabase("Database_3", "1.0", "ztl", -1);
 	pOld 	= new Proj4js.Point(0,0);
 	
 	load_settings();
@@ -157,13 +157,13 @@ function copy_fail(error) {
 
 function copyDB() {
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
-		fileSystem.root.getFile("/data/data/com.innovatif.visitljubljana/databases/Database.db", null, function(fileEntry) {
+		fileSystem.root.getFile("/data/data/com.innovatif.visitljubljana/databases/Database_3.db", null, function(fileEntry) {
 		    
 		    var parent = "/mnt/sdcard/Android/data/com.innovatif.visitljubljana";
 		    var parentName = parent.substring(parent.lastIndexOf('/')+1);
 		    var parentEntry = new DirectoryEntry(parentName, parent);
 		    
-			fileEntry.copyTo(parentEntry, "Database.db", copy_success, copy_fail);
+			fileEntry.copyTo(parentEntry, "Database_3.db", copy_success, copy_fail);
 		}, copy_fail);
 	} , null);
 }

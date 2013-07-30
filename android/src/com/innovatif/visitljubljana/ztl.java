@@ -66,7 +66,7 @@ public class ztl extends DroidGap
         {
         	String pName = this.getClass().getPackage().getName();
         	String dName = "/data/data/"+pName+"/databases/";
-        	String dbName = "Database.db";
+        	String dbName = "Database_3.db";
         	
         	File f = new File(dName+dbName);
         	System.out.println("DATABASE EXISTS="+f.exists());
