@@ -15,11 +15,11 @@ function reminder_change(sel) {
 
 function reminder_toggle() {
 	if ((localStorage.getItem('reminder') == null) || (localStorage.getItem('reminder') == 0)) {
-		$("#reminder_on").css('display','none');;
-		$("#reminder_off").css('display','inline');;
+		$("#reminder_on").css('display','none');
+		$("#reminder_off").css('display','inline');
 	} else {
-		$("#reminder_on").css('display','inline');;
-		$("#reminder_off").css('display','none');;		
+		$("#reminder_on").css('display','inline');
+		$("#reminder_off").css('display','none');		
 	}
 }
 

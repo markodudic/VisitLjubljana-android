@@ -189,12 +189,12 @@ function load_events(save_history) {
 
 	trips_title[0] = main_menu['img2'];
 
-	var tmp_query    = "SELECT e.id, e.featured, e.important, e.sub_events, et.title, ett.venue_id, ett.date, ett.date_first, p.coord_x, p.coord_y, ett.venue as poi_title, e.image " +
+	var tmp_query    = "SELECT e.id, e.featured, e.important, e.sub_events, et.title, ett.venue_id, ett.date, ett.date_first, ett.date_last, p.coord_x, p.coord_y, ett.venue as poi_title, e.image " +
 						"FROM ztl_event e " +
 						"LEFT JOIN ztl_event_translation et ON et.id_event = e.id " +
 						"LEFT JOIN ztl_event_timetable ett ON ett.id_event = e.id " +
 						"LEFT JOIN ztl_poi p ON p.id = ett.venue_id " +
-						"WHERE et.id_language = "+settings.id_lang+" AND e.record_status = 1 " +
+						"WHERE et.id_language = "+settings.id_lang+" AND e.record_status = 1 AND ett.date_last >=  CAST(strftime('%s','now') as integer) " +
 						"GROUP BY e.id " +
 						"ORDER BY e.featured desc, ett.date_first";
 	var tmp_callback = "events_success";

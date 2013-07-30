@@ -7,18 +7,30 @@
 			{{#voice_guide}}
 				<div onClick="load_page(template_lang+'trips.html', 'trips', trips[{{id_group}}], 'fade', false, {{id_group}});"><img class="header_back"></div>
 				<div><img class="header_divider"></div>
-				<div class="header_title" onClick="load_page(template_lang+'trips.html', 'trips', trips[{{id_group}}], 'fade', false, {{id_group}});">{{& title}}</div>
+				<div class="header_title" onClick="load_page(template_lang+'trips.html', 'trips', trips[{{id_group}}], 'fade', false, {{id_group}});">
+					<div class="marquee">
+						{{& title}}
+					</div>
+				</div>
 			{{/voice_guide}}
 			{{^voice_guide}}
 				{{#poigroup}} 
 					<div onClick="opacity($(this)); load_single_poigroup({{id_poigroup}}, 1);"><img class="header_back"></div>
 					<div><img class="header_divider"></div>
-					<div class="header_title" onClick="opacity($(this)); load_single_poigroup({{id_poigroup}}, 1);">{{& title}}</div>
+					<div class="header_title" onClick="opacity($(this)); load_single_poigroup({{id_poigroup}}, 1);">
+						<div class="marquee">
+							{{& title}}
+						</div>
+					</div>
 				{{/poigroup}}
 				{{^poigroup}}
 					<div onClick="opacity($(this)); filter_poi();"><img class="header_back"></div>
 					<div><img class="header_divider"></div>
-					<div class="header_title" onClick="opacity($(this)); filter_poi();">{{& title}}</div>
+					<div class="header_title" onClick="opacity($(this)); filter_poi();">
+						<div class="marquee">
+							{{& title}}
+						</div>
+					</div>
 				{{/poigroup}}
 			{{/voice_guide}}
 			<div style="clear:both;"></div>

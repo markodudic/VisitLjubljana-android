@@ -10,6 +10,10 @@ function init_gps() {
     watchID = navigator.geolocation.watchPosition(onSuccess_gps, onError_gps, options);
 }
 
+function stop_gps() {
+	navigator.geolocation.clearWatch(watchID);
+}
+
 function onError_gps(error) {
 	console.log("error");
 }
@@ -39,7 +43,7 @@ function onSuccess_gps(position) {
 	    	   geo_stuff[1] != undefined  && geo_stuff[2] != undefined) {
 	    	   $("div.ztl_img_distance_container").show();
 	    	   var dist = lineDistance(px, py, geo_stuff[1], geo_stuff[2]);
-	    	   if (dist > 1) {
+	    	   if (dist >= 1) {
 	    		   $("div#ztl_distance_value_"+geo_stuff[0]).html(dist+" km");
 	    	   } else {
 	    		   $("div#ztl_distance_value_"+geo_stuff[0]).html(dist*1000+" m");	    		   

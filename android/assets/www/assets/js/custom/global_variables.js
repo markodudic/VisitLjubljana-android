@@ -1,3 +1,6 @@
+//vedno spremeni to vrednost zato da se po instalaciji prepise cache in po potrebi baza
+var version_code=3;
+
 var server_url = 'http://www.visitljubljana.com/';
 var develop = 1;
 var populateDB = 0; 
@@ -85,13 +88,14 @@ var tmp_history = ["fun--load_main_screen--empty"];
 
 
 //text dolzina max
-var max_dolzina_naslov = 25;
-var max_dolzina_poi_title = 30;
-var max_dolzina_title = 28;
-var max_dolzina_title_info = 100;
+var max_dolzina_kategorija	= 15;
+var max_dolzina_naslov 		= 25;
+var max_dolzina_poi_title 	= 30;
+var max_dolzina_title 		= 28;
+var max_dolzina_title_info 	= 100;
 var max_dolzina_my_visit_tour_title = 25;
-var max_dolzina_short_desc = 75;
-var max_dolzina_long_desc = 100;
+var max_dolzina_short_desc 	= 75;
+var max_dolzina_long_desc 	= 100;
 
 
 //regija
