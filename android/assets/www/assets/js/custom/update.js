@@ -525,7 +525,7 @@ function handle_tour(data) {
 				data[h].image_h = 0;			
 			}
 
-			sql = "INSERT OR REPLACE INTO ztl_tour_category (id,id_language,title,image,image_w,image_h,record_status) VALUES ("+h+", "+settings.id_lang+", '"+addslashes(data[h].title)+"', '"+data[h].image+"', "+data[i].image_w+", "+data[i].image_h+", 1);";
+			sql = "INSERT OR REPLACE INTO ztl_tour_category (id,id_language,title,image,image_w,image_h,record_status) VALUES ("+h+", "+settings.id_lang+", '"+addslashes(data[h].title)+"', '"+data[h].image+"', "+data[h].image_w+", "+data[h].image_h+", 1);";
 			tx.executeSql(sql, [], function(tx, res) {});
 			
 			for (var i = 0; i<data[h].objects.length; i++) {
@@ -548,7 +548,7 @@ function handle_tour(data) {
 				}
 
 				//for (var j = 0; j < data[i].images.length; j++) {
-					sql = "INSERT OR REPLACE INTO ztl_tour_images (id_tour, tour_idx, image, image_w, image_h) VALUES ("+data[h].objects[i].id+", "+j+", '"+data[h].objects[i].image+"', "+data[i].image_w+", "+data[i].image_h+")";
+					sql = "INSERT OR REPLACE INTO ztl_tour_images (id_tour, tour_idx, image, image_w, image_h) VALUES ("+data[h].objects[i].id+", "+j+", '"+data[h].objects[i].image+"', "+data[h].objects[i].image_w+", "+data[h].objects[i].image_h+")";
 					tx.executeSql(sql, [], function(tx, res) {});
 				//}
 			}
@@ -711,7 +711,7 @@ function handle_info(data) {
 				data[i].objects[0].category = '';						
 			}
 			
-			sql = "INSERT INTO ztl_info (id, id_language, title, image, image_w, image_h, content, category, record_status) VALUES ("+data[i].objects[0].id+", "+settings.id_lang+", '"+addslashes(data[i].objects[0].title)+"', '"+data[i].objects[0].image+"', "+data[i].image_w+", "+data[i].image_h+", '"+addslashes(data[i].objects[0].content)+"', "+data[i].category+", 1)";
+			sql = "INSERT INTO ztl_info (id, id_language, title, image, image_w, image_h, content, category, record_status) VALUES ("+data[i].objects[0].id+", "+settings.id_lang+", '"+addslashes(data[i].objects[0].title)+"', '"+data[i].objects[0].image+"', "+data[i].objects[0].image_w+", "+data[i].objects[0].image_h+", '"+addslashes(data[i].objects[0].content)+"', '"+data[i].objects[0].category+"', 1)";
 			tx.executeSql(sql, [], function(tx, res) {});
 		}
 		

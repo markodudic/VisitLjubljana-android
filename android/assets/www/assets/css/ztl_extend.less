@@ -1,17 +1,19 @@
 @window_width:unit(`$(window).width()`, px);
 @window_height:unit(`$(window).height()`, px);
 
+@font_size_title:@window_width*0.048;
+@font_size_text:@window_width*0.044;
+@font_size_small_text:@window_width*0.036;
 
 body {
     width:@window_width;
 }
 
-
 /* TEXTI */
 .ztl_list_header{
     color:#ffffff;
     font-family: 'robotocondensed';
-    font-size:@window_width*0.05;
+    font-size:@font_size_title;
     padding:5px 0px 0px 0px;
     width:100%;
 }
@@ -19,13 +21,13 @@ body {
 .ztl_list_content_text{
     color:#999999;
     font-family: 'roboto_regular';
-    font-size:@window_width*0.04;
+    font-size:@font_size_small_text;
     padding:5px 0px 0px 0px;
     width:100%;
 }
 
 .ztl_distance{
-    font-size:@window_width*0.05;
+    font-size:@font_size_title;
     color:#ffffff;
     font-family: 'roboto_bold';
     position: absolute;
@@ -36,14 +38,14 @@ body {
 
 .ztl_distance_poi {
     font-family: 'roboto_bold';
-    font-size:@window_width*0.05;
+    font-size:@font_size_title;
     padding:0px 10px 0px 0px;
 }
 
 
 .red {
     color:#ed1c24;
-    font-size:@window_width*0.05;
+    font-size:@font_size_title;
 	padding-top:@window_width*0.005;
 	padding-bottom:@window_width*0.005;
 }
@@ -52,10 +54,12 @@ body {
 /*slika na seznamu*/
 .ztl_items_image {
 	width: @window_width * 0.35 * 1.3;
+	left: -@window_width * 0.35 * 0.15;
 }
 
 .ztl_items_image_2 {
 	width: @window_width * 0.35 * 1.5;
+	left: -@window_width * 0.35 * 0.25;
 }
 
 .ztl_items_image_260 {
@@ -167,8 +171,8 @@ body {
 	float:left;
 	//padding-left:@window_width*0.185;
     padding-left:64px;
-	top:(46-@window_width*0.05)/2;
-   	font-size:@window_width*0.05;
+	top:(46-@font_size_title)/2;
+   	font-size:@font_size_title;
    	text-transform:uppercase;
    	color:#ffffff;
    	white-space: nowrap;
@@ -212,8 +216,8 @@ body {
 .header_title_menu {
 	height:25px;
    color:#ffffff;
-	padding:0px 0px 0px @window_width*0.05;
-	font-size:@window_width*0.05;
+	padding:0px 0px 0px @font_size_title;
+	font-size:@font_size_title;
 	text-transform:uppercase;
 }
 
@@ -252,7 +256,7 @@ body {
 
 .events_filter_title {
 	padding:0px 0px 0px @window_width*0.03;
-	font-size:@window_width*0.045;
+	font-size:@font_size_text;
 	text-transform:uppercase;
 	background-color:#000000;
 	color:#ffffff;
@@ -281,7 +285,7 @@ body {
     margin: @window_width*0.03 0px 0px 0px;
     padding-bottom:0px;
     font-family: 'robotocondensed';
-	 font-size:@window_width*0.05;
+	 font-size:@font_size_title;
 	 font-weight:normal;
     text-transform:uppercase;
 }
@@ -302,23 +306,23 @@ h3 {
 }
 
 .ztl_item_details_title{
-	 font-size:@window_width*0.05;
+	 font-size:@font_size_title;
     left: 0;
 }
 
 .ztl_item_details_desc{
 	color:#ffffff; 
-	font-size:@window_width*0.05;
+	font-size:@font_size_title;
 }
 
 .ztl_item_details_text {
 	color:#ffffff; 
-	font-size:@window_width*0.05;
+	font-size:@font_size_title;
 }
 
 .my_visit_inspired_text {
 	color:#ffffff; 
-	font-size:@window_width*0.045;
+	font-size:@font_size_text;
 	text-align:center;
 }
 .img_connection {
@@ -347,7 +351,7 @@ h3 {
     height:@window_width*0.10; /*@window_width*0.43*48/206*/
 	text-align:center;
 	line-height:@window_width*0.10;
-	font-size:@window_width*0.045;
+	font-size:@font_size_text;
 }
 
 .ztl_red_button_big {
@@ -367,7 +371,7 @@ h3 {
     height:@window_width*0.10; /*@window_width*0.43*48/206*/
 	text-align:center;
 	line-height:@window_width*0.10;
-	font-size:@window_width*0.045;
+	font-size:@font_size_text;
 	color:#ffffff;
 	font-family: 'robotobold_condensed';
 }
@@ -445,7 +449,7 @@ h3 {
 }
 
 .ztl_event_type_select {
-	font-size:@window_width*0.05;
+	font-size:@font_size_title;
 	height:@window_width*0.1;
 	width:(@window_width - 35);
 }
@@ -530,7 +534,7 @@ h3 {
 	padding-left:15px; 
 	height:@window_width*45/480;
 	line-height:@window_width*45/480;
-	font-size:@window_width*0.05;
+	font-size:@font_size_title;
 	color:#ffffff;
 }
 
@@ -541,7 +545,7 @@ h3 {
 	width:@window_width;
 	height:@window_width*45/480;
 	line-height:@window_width*45/480;
-	font-size:@window_width*0.05;
+	font-size:@font_size_title;
 	color:#ffffff;
 	background-color:black;
 	opacity:0.7;
@@ -553,7 +557,7 @@ h3 {
 	width:@window_width/2;
 	height:@window_width*45/480;
 	line-height:@window_width*45/480;
-	font-size:@window_width*0.05;
+	font-size:@font_size_title;
 	color:#ffffff;
 	background-color:black;
 	opacity:0.7;
@@ -564,7 +568,7 @@ h3 {
 	bottom:0; 
 	height:@window_width*45/480;
 	line-height:@window_width*45/480;
-	font-size:@window_width*0.05;
+	font-size:@font_size_title;
 	color:#ffffff;
 	margin-left:15px;
 }
@@ -645,7 +649,7 @@ ul.footer_list li{
 }
 
 #poi_address{
-	font-size:@window_width*0.8*0.05;
+	font-size:@font_size_title;
 	//margin-top:@window_width*0.8*0.02; 
 	position: absolute;
    bottom: @window_width*0.8*0.08;
@@ -686,7 +690,7 @@ ul.footer_list li{
 
 .event_filter_content {
    color:#555555;
-   font-size:@window_width*0.05;
+   font-size:@font_size_title;
 	padding-left:@window_width * 0.0521;
 	padding-right:@window_width * 0.0521;
 }
@@ -725,6 +729,7 @@ ul.footer_list li{
 .ztl_settings_text {
 	line-height: @window_height * 0.125;
   	vertical-align:middle;	
+  	font-size:@font_size_text;
 }
 
 #reminder_on, #reminder_off {
@@ -753,7 +758,7 @@ ul.footer_list li{
     position:absolute;
 	float:left;
 	margin-left:25px;
-    font-size:@window_width*0.05;
+    font-size:@font_size_title;
     text-transform:uppercase;
     color:#ffffff;
 }
@@ -788,7 +793,7 @@ ul.footer_list li{
 	padding-left:25px;
 	padding-top:5px;
 	line-height: @window_width*20/480;
-	font-size:@window_width*0.045;
+	font-size:@font_size_text;
 	text-transform:uppercase;
 	display:block;
 }
@@ -798,11 +803,11 @@ ul.footer_list li{
 	padding-left:25px;
 	padding-top:0px;
 	color:#ffffff;
-	font-size:@window_width*0.05;
+	font-size:@font_size_title;
 }
 
 .my_visit_download {
-	font-size:@window_width*0.045;
+	font-size:@font_size_text;
 	text-align:right;
 }
 
@@ -816,12 +821,12 @@ ul.footer_list li{
 	border: 0px solid;
 	text-align:left;
 	line-height:@window_width*0.07;
-	font-size:@window_width*0.045;
+	font-size:@font_size_text;
 	padding-left:15px;
 }
 
 .my_visit_register {
-	font-size:@window_width*0.05;
+	font-size:@font_size_title;
 	text-align:right;
 }
 
@@ -859,13 +864,13 @@ ul.footer_list li{
 .my_visit_right_1 {
 	padding-top:25px;
 	padding-bottom:25px;
-	font-size:@window_width*0.045;
+	font-size:@font_size_text;
 }
 
 .my_visit_right_2 {
 	padding-top:15px;
 	padding-bottom:20px;
-	font-size:@window_width*0.045;
+	font-size:@font_size_text;
 }
 
 .my_visit_loged_in_user_info {
@@ -882,7 +887,7 @@ ul.footer_list li{
 	padding-top:20px;
 	padding-bottom:20px;
 	color:#ffffff;
-	font-size:@window_width*0.045;
+	font-size:@font_size_text;
 }
 
 .my_visit_list_image{
