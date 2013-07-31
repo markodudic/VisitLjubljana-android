@@ -201,7 +201,7 @@ a:active {text-decoration:none; color:#ed1c24; font-size:1.0em;}
 
 .map {
 	width: 100%; 
-	background-color:transparent; 
+	background-color:#f2efe9; 
 	z-index:0; 
 }
 

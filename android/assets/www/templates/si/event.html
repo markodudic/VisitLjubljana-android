@@ -49,7 +49,7 @@
 			{{#item.image}}
 				<div class="ztl_item_details_image">
 					<div class="ztl_details_img_crop">
-						<img class="ztl_details_image" src="{{item.image}}" onload="loadImage(this)">
+						<img class="ztl_details_image" src="{{item.image}}"  style="position:relative;top:{{item.top}}px;">
 					</div>
 				</div>
 			{{/item.image}}
@@ -116,7 +116,7 @@
 							<div class="ztl_list_image">
 								<div class="ztl_list_img_crop">
 									{{#image}}
-										<img class="ztl_items_image" src="{{image}}" onload="loadImage(this)">
+										<img class="ztl_items_image" src="{{image}}"  style="position:relative;top:{{top}}px;">
 									{{/image}}
 									{{^image}}
 										<img class="ztl_details_image" src="./uploads/noimage_detail.png">

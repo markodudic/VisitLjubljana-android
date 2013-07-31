@@ -104,7 +104,7 @@ function load_poi(id, transition, reverse, save_history) {
 	trip_id 	= id;
 	sound_file 	= "";
 
-	var tmp_query 		= 	'SELECT zp.id, zp.address, zp.post_number, zp.post, zp.phone, zp.email, zp.www, zp.coord_x, zp.coord_y, zp.image, zp.star, ' +
+	var tmp_query 		= 	'SELECT zp.id, zp.address, zp.post_number, zp.post, zp.phone, zp.email, zp.www, zp.coord_x, zp.coord_y, zp.image, zp.image_w, zp.image_h, zp.star, ' +
 							' 	zpt.title, zpt.description, '+selected_group+' id_group, zpt.sound, zpt.media_duration_value, zpt.media_duration_string '+
 							'FROM ztl_poi zp '+
 							'LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id  '+
@@ -189,7 +189,7 @@ function load_events(save_history) {
 
 	trips_title[0] = main_menu['img2'];
 
-	var tmp_query    = "SELECT e.id, e.featured, e.important, e.sub_events, et.title, ett.venue_id, ett.date, ett.date_first, ett.date_last, p.coord_x, p.coord_y, ett.venue as poi_title, e.image " +
+	var tmp_query    = "SELECT e.id, e.featured, e.important, e.sub_events, et.title, ett.venue_id, ett.date, ett.date_first, ett.date_last, p.coord_x, p.coord_y, ett.venue as poi_title, e.image, e.image_w, e.image_h " +
 						"FROM ztl_event e " +
 						"LEFT JOIN ztl_event_translation et ON et.id_event = e.id " +
 						"LEFT JOIN ztl_event_timetable ett ON ett.id_event = e.id " +
@@ -240,7 +240,7 @@ function load_tours(id_tour_category, save_history)  {
 
     trips_title[2] = main_menu['img6'];
 
-    var tmp_query = "SELECT t.id, tt.title, tt.short_description, ti.image, tc.id as tour_category_id, tc.title as tour_category " +
+    var tmp_query = "SELECT t.id, tt.title, tt.short_description, ti.image, ti.image_w, ti.image_h, tc.id as tour_category_id, tc.title as tour_category " +
     				"FROM ztl_tour t " +
     				"LEFT JOIN ztl_tour_translation tt ON tt.id_tour = t.id " +
     				"LEFT JOIN ztl_tour_tour_category ttc ON ttc.id_tour = t.id " +
@@ -354,7 +354,7 @@ function load_event(id, save_history) {
 		add_to_history(history_string);
 	}
 
-	var tmp_query 	 = "SELECT  e.id, e.sub_events, et.title, et.intro, et.description, p.coord_x, p.coord_y, e.image " +
+	var tmp_query 	 = "SELECT  e.id, e.sub_events, et.title, et.intro, et.description, p.coord_x, p.coord_y, e.image, e.image_w, e.image_h " +
 						"FROM ztl_event e " +
 						"LEFT JOIN ztl_event_translation et ON et.id_event = e.id " +
 						"LEFT JOIN  ztl_event_timetable ett ON ett.id_event = e.id " +
@@ -434,7 +434,7 @@ function load_single_poigroup(id, save_history) {
 	}
 
 	//ko bo osbstajala tabela se popravi query
-	var tmp_query 		= 	"SELECT zp.*, zpt.title title, "+group+" id_group, zpt.description description, pg.id poigroup_id, pg.image poigroup_image, pg.id poigroup_id, pg.title poigroup_title, pg.desc poigroup_desc " +
+	var tmp_query 		= 	"SELECT zp.*, zpt.title title, "+group+" id_group, zpt.description description, pg.id poigroup_id, pg.image poigroup_image, pg.image_w poigroup_image_w, pg.image_h poigroup_image_h, pg.id poigroup_id, pg.title poigroup_title, pg.desc poigroup_desc " +
 						"FROM (select * from ztl_poi WHERE record_status = 1) zp " +
 						"LEFT JOIN (select * from ztl_poi_translation where id_language = "+settings.id_lang+") zpt ON zpt.id_poi = zp.id " +  
 						", ztl_poigroup pg " +  

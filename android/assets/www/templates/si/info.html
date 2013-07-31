@@ -26,7 +26,7 @@
 			<div class="ztl_item_details_image">
 				<div class="ztl_details_img_crop">
 					{{#item.image}}
-						<img class="ztl_details_image" src="{{item.image}}" onload="loadImage(this)">
+						<img class="ztl_details_image" src="{{item.image}}" style="position:relative;top:{{top}}px;">
 					{{/item.image}}
 					{{^item.image}}
 						<img class="ztl_details_image" src="./uploads/noimage_detail.png">

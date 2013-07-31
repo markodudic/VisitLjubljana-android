@@ -4,7 +4,6 @@ var version_code=3;
 var server_url = 'http://www.visitljubljana.com/';
 var develop = 1;
 var populateDB = 0; 
-
 	
 //settings
 var SETTINGS_FILE           = "settings.js"

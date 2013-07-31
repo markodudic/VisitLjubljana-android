@@ -91,7 +91,7 @@ function filter_events()  {
 
 		if ($('#event_type').val() > 0) {
 			
-			var tmp_query    = "SELECT e.id, et.title, ett.venue_id, ett.date, ett.date_first, p.coord_x, p.coord_y, ett.venue as poi_title, e.image " +
+			var tmp_query    = "SELECT e.id, et.title, ett.venue_id, ett.date, ett.date_first, p.coord_x, p.coord_y, ett.venue as poi_title, e.image, e.image_w, e.image_h " +
 							"FROM ztl_event e LEFT JOIN ztl_event_translation et ON et.id_event = e.id " +
 							"LEFT JOIN  ztl_event_timetable ett ON ett.id_event = e.id " +
 							"LEFT JOIN ztl_poi p ON p.id = ett.venue_id " +
@@ -100,7 +100,7 @@ function filter_events()  {
 							"GROUP BY e.id  " +
 							"ORDER BY ett.date_first";
 	    } else {
-	    	var tmp_query    = "SELECT e.id, et.title, ett.venue_id, ett.date, ett.date_first, p.coord_x, p.coord_y, ett.venue as poi_title, e.image " +
+	    	var tmp_query    = "SELECT e.id, et.title, ett.venue_id, ett.date, ett.date_first, p.coord_x, p.coord_y, ett.venue as poi_title, e.image, e.image_w, e.image_h " +
 				    			"FROM ztl_event e " +
 				    			"LEFT JOIN ztl_event_translation et ON et.id_event = e.id " +
 				    			"LEFT JOIN  ztl_event_timetable ett ON ett.id_event = e.id " +
