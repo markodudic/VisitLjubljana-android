@@ -11,7 +11,7 @@ adb pull /mnt/sdcard/android/data/com.innovatif.visitljubljana c:/temp/images
 - v bazi popravi poti do imagev (Skript 1)
 - v bazi popravi poti do soundov (Skript 2)
 - datum v ztl_updates nastavi na en dan prej, zato da lahko dogotke syncas
-- skopiraj bazo v assets in preimenuj v Database.db
+- skopiraj bazo v assets in preimenuj v Database_3.db
 - v global_variables nastavi populateDB=0
 - deinštaliraj app in ga zaženi na novo
 
@@ -170,3 +170,26 @@ UPDATE `ztl_poi_translation` SET `id_poi` = 1734,`id_language` = 4,`sound` = '13
 UPDATE `ztl_poi_translation` SET `id_poi` = 1818,`id_language` = 4,`sound` = '1349057_punto_5.mp3',`media_duration_string` = '2:21',`media_duration_value` = '141' WHERE `ztl_poi_translation`.`id_poi` = 1818 AND `ztl_poi_translation`.`id_language` = 4     ;
 UPDATE `ztl_poi_translation` SET `id_poi` = 1821,`id_language` = 4,`sound` = '1349234_punto_12.mp3',`media_duration_string` = '6:50',`media_duration_value` = '410' WHERE `ztl_poi_translation`.`id_poi` = 1821 AND `ztl_poi_translation`.`id_language` = 4    ;
 UPDATE `ztl_poi_translation` SET `id_poi` = 19872,`id_language` = 4,`sound` = '1348647_punto_3.mp3',`media_duration_string` = '5:58',`media_duration_value` = '358' WHERE `ztl_poi_translation`.`id_poi` = 19872 AND `ztl_poi_translation`.`id_language` = 4   ;
+
+
+
+//�e popravek za image
+1417 mestni trg
+./uploads/images/fmpgtmp_efpudt.jpeg
+334/500
+
+1705 sentjakobki most
+./uploads/images/fmpgtmp_wuhxx6.jpeg
+800/532
+
+1734 solski muzej
+./uploads/images/fmpgtmp_chcgls.jpeg
+550/366
+
+1818 trg republike
+./uploads/images/fmpgtmp_j1swvp.jpeg
+800/533
+
+19872 neboticnik
+./uploads/images/fmpgtmp_ltukin.jpeg
+800/814
