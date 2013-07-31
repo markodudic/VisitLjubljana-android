@@ -854,8 +854,10 @@ function load_page(template, div, data, transition, reverse, id_group) {
 			hide_spinner();
 			
 			$('a').on("click", function(e){
-				e.preventDefault();
-			    window.open(this.href,'_system'); return false;
+				if (this.href.indexOf("mailto")==-1) {
+				    e.preventDefault();
+				    window.open(this.href,'_system'); return false;
+				}
 			});
 			
 		}
