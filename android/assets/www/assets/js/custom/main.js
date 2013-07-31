@@ -833,7 +833,8 @@ function load_page(template, div, data, transition, reverse, id_group) {
 			
 			$('.icon_'+menu_icon).attr("src","assets/css/ztl_images/icon_"+menu_icon+"_red.png");
 			
-			if ((div == "trip") || 
+			if ((div == "main_menu") || 
+				(div == "trip") || 
 				(div == "event") || 
 				(div == "info") || 
 				(div == "tour")) {
