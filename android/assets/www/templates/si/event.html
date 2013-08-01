@@ -97,7 +97,10 @@
 						<div class="grey_line"></div>
 						{{#pricing}}
 							<div class="ztl_item_details_desc">
-								{{& ticket_type}}: {{& price}}<br>
+								{{#ticket_type}}
+									{{& ticket_type}}:&nbsp;
+								{{/ticket_type}}
+								{{& price}}<br>
 							</div>
 						{{/pricing}}
 					{{/has_pricing}}
