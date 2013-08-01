@@ -103,7 +103,7 @@ var max_dolzina_long_desc 	= 100;
 //14.01,45.761 x 15.139,46.328
 var lon0 = 14.01;
 var lat0 = 45.761;
-var lon1 = 15.139;
+var lon1 = 15.054;
 var lat1 = 46.328;
 /* ljubljana
 var lon0 = 14.434;
