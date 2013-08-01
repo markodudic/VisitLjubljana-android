@@ -255,10 +255,14 @@ function my_visit_item_date(id, group) {
 		mode : 'date', // date or time or blank for both
 		allowOldDates : false
 		}, function(returnDate) {
-			var newDate = new Date(returnDate);
-
+			if (returnDate.indexOf("-0-") != -1) {
+				var newDate = new Date(returnDate.replace("-0-", "-1-"));
+			} else {
+				var newDate = new Date(returnDate);
+				newDate = new Date(new Date(newDate).setMonth(newDate.getMonth()+1));
+			}
+			
 			var time = newDate.getTime() / 1000;
-
 
 			var tmp_query = "UPDATE ztl_my_visit SET start = "+time+" WHERE id = "+id+" AND ztl_group = "+group;
 			db.transaction(function(tx) {
