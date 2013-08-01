@@ -73,7 +73,7 @@ function lineDistance( p1x, p1y, p2x, p2y ) {
        //return Math.round( (Math.floor(Math.sqrt( xs + ys )/1000)) * 10 ) / 10;
        var num = Math.sqrt( xs + ys )/1000;
        //num = Math.round(num*Math.pow(10,1))/Math.pow(10,1);
-       if (num > 1)
+       if (num >= 1)
                return num.toFixed(1);
        else
                return num.toFixed(3);

@@ -156,11 +156,11 @@ about_translation[4]	= "Informazioni sull'applicazione";
 about_translation[5]	= "Plus d'infos sur l'application";
 
 var exit_translation = [];
-exit_translation[1]	= "Izhod";
-exit_translation[2]	= "Exit";
-exit_translation[3]	= "Exit";
-exit_translation[4]	= "Exit";
-exit_translation[5]	= "Exit";
+exit_translation[1]	= "Zapri aplikacijo";
+exit_translation[2]	= "Close application";
+exit_translation[3]	= "App schliessen";
+exit_translation[4]	= "Chiudi applicazione";
+exit_translation[5]	= "Fermer l'application";
 
 var synchronization_translation = [];
 synchronization_translation[1]	= "Sinhronizacija";
@@ -275,11 +275,11 @@ guide_buy_button_translation[5]	= "TÉLÉCHARGER LE GUIDE";
 
 
 var guide_buy_desc_text_translation = [];
-guide_buy_desc_text_translation[1]	= "Glasovni vodič vam predstavlja 13 zanimivih točk in več mogočih poti, po katerih lahko pridete do njih.";
-guide_buy_desc_text_translation[2]	= "The audio guide features 13 points of interest in Ljubljana, their locations and different routes to get to them.";
-guide_buy_desc_text_translation[3]	= "Der Audioführer stellt Ihnen 13 interessante Punkte und mehrere mögliche Wege zu ihnen vor.";
-guide_buy_desc_text_translation[4]	= "La guida digitale illustra 13 punti d'interesse e i vari percorsi per raggiungerli.";
-guide_buy_desc_text_translation[5]	= "L'audioguide visuel présente 13 curiosités et plusieurs itinéraires possibles pour arriver jusqu'à elles.";
+guide_buy_desc_text_translation[1]	= "Glasovni vodič vam predstavlja 14 zanimivih točk in več mogočih poti, po katerih lahko pridete do njih.";
+guide_buy_desc_text_translation[2]	= "The audio guide features 14 points of interest in Ljubljana, their locations and different routes to get to them.";
+guide_buy_desc_text_translation[3]	= "Der Audioführer stellt Ihnen 14 interessante Punkte und mehrere mögliche Wege zu ihnen vor.";
+guide_buy_desc_text_translation[4]	= "La guida digitale illustra 14 punti d'interesse e i vari percorsi per raggiungerli.";
+guide_buy_desc_text_translation[5]	= "L'audioguide visuel présente 14 curiosités et plusieurs itinéraires possibles pour arriver jusqu'à elles.";
 
 
 //prevodi mesecov za top evente
