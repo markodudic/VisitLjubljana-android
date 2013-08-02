@@ -21,20 +21,30 @@
 }
 
 @font-face {
-    font-family: roboto_regular;
-    src: url('/fonts/Roboto-Regular.ttf') format('truetype');
+    font-family: 'roboto_bold';
+    src: url('fonts/roboto-bold-webfont.eot');
+    src: url('fonts/roboto-bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/roboto-bold-webfont.woff') format('woff'),
+         url('fonts/roboto-bold-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+
 }
-   
+
 @font-face {
-    font-family: roboto_bold;
-    src: url('/fonts/Roboto-Bold.ttf') format('truetype');
+    font-family: 'roboto_regular';
+    src: url('fonts/roboto-regular-webfont.eot');
+    src: url('fonts/roboto-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/roboto-regular-webfont.woff') format('woff'),
+         url('fonts/roboto-regular-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
 }
 
 *{
     /* Prevent any object from being highlighted upon touch event*/
     -webkit-tap-highlight-color: rgba(0,0,0,0); 
 }
-
 
 body {
     padding:0;
