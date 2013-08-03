@@ -250,7 +250,8 @@ function handle_poi_new(data) {
 		    	    var je_grupa = 0;
 		    		for (var j=0; j<poigroups.length; j++){
 		    			if (poigroup != undefined) {
-		    				if (poigroup.indexOf(poigroups[j]) != -1) {
+		    				//if (poigroup.indexOf(poigroups[j]) != -1) {
+		    				if ($.inArray(poigroups[j], poigroup)) {
 			    		    	je_grupa = 1;
 			    				break;
 			    			}
@@ -264,7 +265,8 @@ function handle_poi_new(data) {
 			    	    var cats = NASTANITEV_TIC_CATS;
 			    	    for (var j=0; j<cats.length; j++){
 			    			if (poi_cats != undefined) {
-				    			if (poi_cats.indexOf(cats[j]) != -1) {
+				    			//if (poi_cats.indexOf(cats[j]) != -1) {
+				    			if ($.inArray(cats[j], poi_cats)) {
 				    				je_cat = 1;
 				    				break;
 				    			}
