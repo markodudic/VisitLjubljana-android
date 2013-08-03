@@ -25,9 +25,10 @@ function poi_filter_poigroup(id_group) {
 	var filter_poigroup		= new Array();
 	var filter = poigroups_map[id_group];
 	for (var ei=0; ei<poi_filter.length; ei++) {
-		if (filter.indexOf(poi_filter[ei].id) != -1){
+		//if (filter.indexOf(poi_filter[ei].id) != -1) {
+        if ($.inArray(poi_filter[ei].id, filter)) {
 			filter_poigroup.push(poi_filter[ei]);
-		}	
+		}
 	}
 	
 	return filter_poigroup;
@@ -48,12 +49,14 @@ function filter_poi()  {
 		var j=0;
 		for (var i=0; i<data.items.length; i++){
 			if (selected_group != POI_NASTANITVE_GROUP) {
-				if (data.items[i].poigroups.indexOf(poi_filter_curr) != -1) {
+				//if (data.items[i].poigroups.indexOf(poi_filter_curr) != -1) {
+				if ($.inArray(poi_filter_curr, data.items[i].poigroups)) {
 					res.items[j] = data.items[i];
 					j++;
 				}
 			} else {
-				if (data.items[i].cats.indexOf(poi_filter_curr) != -1) {
+				//if (data.items[i].cats.indexOf(poi_filter_curr) != -1) {
+				if ($.inArray(poi_filter_curr, data.items[i].cats)) {
 					res.items[j] = data.items[i];
 					j++;
 				}

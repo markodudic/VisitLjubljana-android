@@ -135,6 +135,8 @@ a:active {text-decoration:none; color:#ed1c24; font-size:1.0em;}
 
 
 .header_synhronization {
+    position:absolute;
+    right: 0px;
     float:right;
     margin-top:-28px;
     padding:0px 55px 0px 0px;
