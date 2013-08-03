@@ -77,8 +77,8 @@ function load_pois_success(results) {
     	    var poigroups = poigroups_map[trips_group];
     		for (var j=0; j<poigroups.length; j++){
     			if (poigroup != undefined) {
-	    			//if (poigroup.indexOf(poigroups[j]) != -1) {
-	    			if ($.inArray(poigroups[j], poigroup)) {
+	    			if (poigroup.indexOf(poigroups[j]) != -1) {
+	    			//if ($.inArray(poigroups[j], poigroup)) {
 	    				//console.log("REC="+results.rows.item(i).id+":"+results.rows.item(i).title);
 	    		    	res.items[rec] = results.rows.item(i);
 	    		    	rec++;
@@ -173,8 +173,8 @@ function load_poi_success(results) {
 	
 	//preverim grupo
 	var gr = results.rows.item(0).id_group;
-	//if (UNUSED_GROUPS.indexOf(gr) != -1) {
-	if ($.inArray(gr, UNUSED_GROUPS)) {
+	if (UNUSED_GROUPS.indexOf(gr) != -1) {
+	//if ($.inArray(gr, UNUSED_GROUPS)) {
 		gr = POI_ZAMENITOSTI_GROUP;
 	}
 	media_length = parseInt(results.rows.item(0).media_duration_value);

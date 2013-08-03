@@ -14,6 +14,10 @@ var wgs;
 
 var current_position_xy;
 var current_position_center;
+
+//query cache
+var cache_my_visit_map;
+var cache_inspired_map;
 	
 function load_show_map(id, type, group) {
 	console.log(id+":"+type+":"+group);
@@ -40,6 +44,10 @@ function init_map() {
     init(function(feature) { 
         selectedFeature = feature; 
     });
+    
+    //query cache
+    __load_my_visit_map();
+    __load_inspired_map();
 }
 
 OpenLayers.Control.Click = OpenLayers.Class(OpenLayers.Control, {                
@@ -437,18 +445,34 @@ function load_map_poi_data_success(results) {
     poi_data = results.rows.item(0);
 }
 
-function load_my_visit_map() {
+function __load_my_visit_map() {
 	var tmp_query = "SELECT id, ztl_group " +
 					"FROM ztl_my_visit";
-    var tmp_callback   = "load_map_success";
+    var tmp_callback   = "load_map_success_cache_my_visit_map";
     generate_query(tmp_query, tmp_callback);
 }
 
-function load_inspired_map() {
+function load_map_success_cache_my_visit_map(results) {
+    cache_my_visit_map = results;
+}
+
+function load_my_visit_map() {
+	load_map_success(cache_my_visit_map);
+}
+
+function __load_inspired_map() {
 	var tmp_query = "SELECT zic.ref_object as id, " + POI_GROUP + " ztl_group " +
 					"FROM ztl_inspired_category zic";
-    var tmp_callback   = "load_map_success";
+    var tmp_callback   = "load_map_success_cache_inspired_map";
     generate_query(tmp_query, tmp_callback);
+}
+
+function load_map_success_cache_inspired_map(results) {
+    cache_inspired_map = results;
+}    
+
+function load_inspired_map() {
+	load_map_success(cache_inspired_map);
 }
 
 function load_map_success(results) {
