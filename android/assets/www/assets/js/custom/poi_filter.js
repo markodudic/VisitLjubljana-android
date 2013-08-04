@@ -24,10 +24,20 @@ function poi_filter_toggle() {
 function poi_filter_poigroup(id_group) {
 	var filter_poigroup		= new Array();
 	var filter = poigroups_map[id_group];
-	for (var ei=0; ei<poi_filter.length; ei++) {
-		//if (filter.indexOf(poi_filter[ei].id) != -1) {
-        if ($.inArray(poi_filter[ei].id, filter)) {
-			filter_poigroup.push(poi_filter[ei]);
+	//indexOf ne dela na IOS, $.inArray pa ne na Androidu
+	console.log("PLATFORM="+device.platform);
+	if (device.platform == "Android") {
+		for (var ei=0; ei<poi_filter.length; ei++) {
+			if (filter.indexOf(poi_filter[ei].id) != -1) {
+	        	filter_poigroup.push(poi_filter[ei]);
+			}
+		}
+	} else {
+		for (var ei=0; ei<poi_filter.length; ei++) {
+			//if (filter.indexOf(poi_filter[ei].id) != -1) {
+	        if ($.inArray(poi_filter[ei].id, filter)) {
+				filter_poigroup.push(poi_filter[ei]);
+			}
 		}
 	}
 	
@@ -47,20 +57,37 @@ function filter_poi()  {
 	if (poi_filter_curr > 0) {
 		var data = trips[selected_group];
 		var j=0;
-		for (var i=0; i<data.items.length; i++){
-			if (selected_group != POI_NASTANITVE_GROUP) {
-				//if (data.items[i].poigroups.indexOf(poi_filter_curr) != -1) {
-				if ($.inArray(poi_filter_curr, data.items[i].poigroups)) {
-					res.items[j] = data.items[i];
-					j++;
-				}
-			} else {
-				//if (data.items[i].cats.indexOf(poi_filter_curr) != -1) {
-				if ($.inArray(poi_filter_curr, data.items[i].cats)) {
-					res.items[j] = data.items[i];
-					j++;
+		//indexOf ne dela na IOS, $.inArray pa ne na Androidu
+		if (device.platform == "Android") {
+			for (var i=0; i<data.items.length; i++){
+				if (selected_group != POI_NASTANITVE_GROUP) {
+					if (data.items[i].poigroups.indexOf(poi_filter_curr) != -1) {
+						res.items[j] = data.items[i];
+						j++;
+					}
+				} else {
+					if (data.items[i].cats.indexOf(poi_filter_curr) != -1) {
+						res.items[j] = data.items[i];
+						j++;
+					}
 				}
 			}
+		} else {
+			for (var i=0; i<data.items.length; i++){
+				if (selected_group != POI_NASTANITVE_GROUP) {
+					//if (data.items[i].poigroups.indexOf(poi_filter_curr) != -1) {
+					if ($.inArray(poi_filter_curr, data.items[i].poigroups)) {
+						res.items[j] = data.items[i];
+						j++;
+					}
+				} else {
+					//if (data.items[i].cats.indexOf(poi_filter_curr) != -1) {
+					if ($.inArray(poi_filter_curr, data.items[i].cats)) {
+						res.items[j] = data.items[i];
+						j++;
+					}
+				}
+			}			
 		}
 	} else {
 		res = trips[selected_group];

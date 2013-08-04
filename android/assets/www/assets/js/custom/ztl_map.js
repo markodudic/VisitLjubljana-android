@@ -27,7 +27,11 @@ function load_show_map(id, type, group) {
 	if ((group == INSPIRED_GROUP) || (group == POIGROUP_GROUP)) {
 		curr_group = POI_GROUP;
 	}
-	load_page(template_lang+'ztl_map.html', 'ztl_map', null, 'fade', false);
+
+	//query cache
+    __load_my_visit_map();
+
+    load_page(template_lang+'ztl_map.html', 'ztl_map', null, 'fade', false);
 }
 
 function load_map_selection() {
@@ -46,7 +50,6 @@ function init_map() {
     });
     
     //query cache
-    __load_my_visit_map();
     __load_inspired_map();
 }
 
