@@ -10,8 +10,12 @@ var eta_count		 = 0;
 var evt_id			 = 0;
 var evt_start		 = 0;
 
+var my_visit_date 	 	= "";	
+var my_visit_date_sql  	= 0;
+
 function add_to_my_visit(id, ztl_group, type, start, end, autmatic) {
 	var tmp_query = "INSERT OR REPLACE INTO ztl_my_visit (id, ztl_group, type, start, end) VALUES ("+id+", "+ztl_group+", "+type+", "+start+", "+end+");";
+	console.log("SQL="+tmp_query);
 
     db.transaction(function(tx) {
 		 tx.executeSql(tmp_query, [], function(tx, res) {});
@@ -156,7 +160,7 @@ function handle_web_login(res) {
 function sync_my_visit(res) {
 	var tmp_group = 0;
 	res = res.myVisit.ref_object;
-	
+	console.log("JSON="+JSON.stringify(res.myVisit));
 
 	if (only_login == 0) {
 		clear_my_visit();
@@ -250,6 +254,7 @@ function add_inspire_to_my_visit(id) {
 
 function my_visit_item_date(id, group) {
 	var myNewDate = new Date();
+	//cordova.exec(null, null, "DatePicker", "show",[{"mode":"date","date":"2013-8-5T12:58:00Z","allowOldDates":false,"allowFutureDates":true}]);
 	window.plugins.datePicker.show({
 		date : myNewDate,
 		mode : 'date', // date or time or blank for both

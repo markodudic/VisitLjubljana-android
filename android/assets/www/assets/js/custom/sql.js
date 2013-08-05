@@ -799,24 +799,24 @@ function my_visit_success(results) {
     	
         if (sql_filer_poi_cat > -1) {
             if (sql_filer_poi_cat == 230) {
-                var tmp_query = 'SELECT CASE id_group WHEN 215 THEN id_group WHEN 217 THEN id_group WHEN 219 THEN id_group WHEN 220 THEN id_group WHEN 222 THEN id_group ELSE 230 END AS id_group, zp.id, zp.address, zp.post_number, zp.post, zp.record_status, zpt.title, zmi.start, strftime("%H", start) AS hour, zmi.end FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id LEFT JOIN ztl_my_visit zmi ON (zmi.id = zp.id AND zmi.ztl_group = '+POI_GROUP+') WHERE zp.id IN ('+poi_wi+') AND zcg.id_group NOT IN ('+USED_POI_GROUPS+') AND zpt.id_language = '+settings.id_lang+' GROUP BY zp.id ORDER BY id_group';
+                var tmp_query_poi = 'SELECT CASE id_group WHEN 215 THEN id_group WHEN 217 THEN id_group WHEN 219 THEN id_group WHEN 220 THEN id_group WHEN 222 THEN id_group ELSE 230 END AS id_group, zp.id, zp.address, zp.post_number, zp.post, zp.record_status, zpt.title, zmi.start, strftime("%H", start) AS hour, zmi.end FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id LEFT JOIN ztl_my_visit zmi ON (zmi.id = zp.id AND zmi.ztl_group = '+POI_GROUP+') WHERE zp.id IN ('+poi_wi+') AND zcg.id_group NOT IN ('+USED_POI_GROUPS+') AND zpt.id_language = '+settings.id_lang+' GROUP BY zp.id ORDER BY id_group';
             } else {
-                var tmp_query = 'SELECT CASE id_group WHEN 215 THEN id_group WHEN 217 THEN id_group WHEN 219 THEN id_group WHEN 220 THEN id_group WHEN 222 THEN id_group ELSE 230 END AS id_group, zp.id, zp.address, zp.post_number, zp.post, zp.record_status, zpt.title, zmi.start, strftime("%H", start) AS hour, zmi.end FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id LEFT JOIN ztl_my_visit zmi ON (zmi.id = zp.id AND zmi.ztl_group = '+POI_GROUP+') WHERE zp.id IN ('+poi_wi+') AND zcg.id_group = '+sql_filer_poi_cat+' AND zpt.id_language = '+settings.id_lang+' GROUP BY zp.id ORDER BY id_group';
+                var tmp_query_poi = 'SELECT CASE id_group WHEN 215 THEN id_group WHEN 217 THEN id_group WHEN 219 THEN id_group WHEN 220 THEN id_group WHEN 222 THEN id_group ELSE 230 END AS id_group, zp.id, zp.address, zp.post_number, zp.post, zp.record_status, zpt.title, zmi.start, strftime("%H", start) AS hour, zmi.end FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id LEFT JOIN ztl_my_visit zmi ON (zmi.id = zp.id AND zmi.ztl_group = '+POI_GROUP+') WHERE zp.id IN ('+poi_wi+') AND zcg.id_group = '+sql_filer_poi_cat+' AND zpt.id_language = '+settings.id_lang+' GROUP BY zp.id ORDER BY id_group';
             }
         } else {
-            var tmp_query = 'SELECT CASE id_group WHEN 215 THEN id_group WHEN 217 THEN id_group WHEN 219 THEN id_group WHEN 220 THEN id_group WHEN 222 THEN id_group ELSE 230 END AS id_group, zp.id, zp.id, zp.address, zp.post_number, zp.post, zp.record_status, zpt.title, zmi.start, strftime("%H", start) AS hour, zmi.end FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id LEFT JOIN ztl_my_visit zmi ON (zmi.id = zp.id AND zmi.ztl_group = '+POI_GROUP+') WHERE zp.id IN ('+poi_wi+') AND zpt.id_language = '+settings.id_lang+' GROUP BY zp.id ORDER BY id_group';            
+            var tmp_query_poi = 'SELECT CASE id_group WHEN 215 THEN id_group WHEN 217 THEN id_group WHEN 219 THEN id_group WHEN 220 THEN id_group WHEN 222 THEN id_group ELSE 230 END AS id_group, zp.id, zp.id, zp.address, zp.post_number, zp.post, zp.record_status, zpt.title, zmi.start, strftime("%H", start) AS hour, zmi.end FROM ztl_poi zp LEFT JOIN ztl_poi_category zpc ON zpc.id_poi = zp.id LEFT JOIN ztl_category_group zcg ON zcg.id_category = zpc.id_category LEFT JOIN ztl_poi_translation zpt ON zpt.id_poi = zp.id LEFT JOIN ztl_my_visit zmi ON (zmi.id = zp.id AND zmi.ztl_group = '+POI_GROUP+') WHERE zp.id IN ('+poi_wi+') AND zpt.id_language = '+settings.id_lang+' GROUP BY zp.id ORDER BY id_group';            
         }
     	
-        console.log("premapiranje --- q: "+tmp_query);
+        //console.log("premapiranje poi --- q: "+tmp_query_poi);
 
         db.transaction(function(tx) {
-			 tx.executeSql(tmp_query, [], function(tx, res_poi) {
+			 tx.executeSql(tmp_query_poi, [], function(tx, res_poi) {
 			 	
                 var poi_len = res_poi.rows.length;
 
                 for (var pi = 0; pi<poi_len; pi++) {
 
-                    console.log("premapiranje --- " + JSON.stringify(res_poi.rows.item(pi)));
+                    //console.log("premapiranje poi --- " + JSON.stringify(res_poi.rows.item(pi)));
 
                     if (current_group < res_poi.rows.item(pi).id_group) {
                         var tmp_title = {};
@@ -873,10 +873,10 @@ function my_visit_success(results) {
     if (res.has_evt == 1) {
     	evt_wi = evt_wi+"0";
 
-        var tmp_query  = "SELECT e.id, et.title, zmi.start, strftime('%H', start) AS hour, zmi.end, ett.date_last, e.record_status FROM ztl_event e LEFT JOIN ztl_event_translation et ON et.id_event = e.id LEFT JOIN ztl_event_timetable ett ON ett.id_event = e.id LEFT JOIN ztl_my_visit zmi ON (zmi.id = e.id AND zmi.ztl_group = "+EVENT_GROUP+") WHERE e.id IN ("+evt_wi+") AND et.id_language = "+settings.id_lang+" GROUP BY e.id ORDER BY  ett.date_last DESC";
+        var tmp_query_evt  = "SELECT e.id, et.title, zmi.start, strftime('%H', start) AS hour, zmi.end, ett.date_last, e.record_status FROM ztl_event e LEFT JOIN ztl_event_translation et ON et.id_event = e.id LEFT JOIN ztl_event_timetable ett ON ett.id_event = e.id LEFT JOIN ztl_my_visit zmi ON (zmi.id = e.id AND zmi.ztl_group = "+EVENT_GROUP+") WHERE e.id IN ("+evt_wi+") AND et.id_language = "+settings.id_lang+" GROUP BY e.id ORDER BY  ett.date_last DESC";
 
     	db.transaction(function(tx) {
-			tx.executeSql(tmp_query, [], function(tx, res_evt) {
+			tx.executeSql(tmp_query_evt, [], function(tx, res_evt) {
 				var evt_len = res_evt.rows.length;
 
                 res.evt_group_name_translation = main_menu[mm_pic_group[EVENT_GROUP]];
@@ -919,9 +919,12 @@ function my_visit_success(results) {
     var tmp_info_text = "";
     if (res.has_tour == 1) {
         tour_wi = tour_wi+"0";
-        var tmp_query = "SELECT t.id, t.record_status, tt.title, tt.short_description, zmi.start, strftime('%H', start) AS hour, zmi.end FROM ztl_tour t LEFT JOIN ztl_tour_translation tt ON tt.id_tour = t.id LEFT JOIN ztl_my_visit zmi ON (zmi.id = t.id AND zmi.ztl_group = "+TOUR_GROUP+") WHERE t.id IN ("+tour_wi+") AND tt.id_language = " +settings.id_lang;
+        var tmp_query_tour = "SELECT t.id, t.record_status, tt.title, tt.short_description, zmi.start, strftime('%H', start) AS hour, zmi.end FROM ztl_tour t LEFT JOIN ztl_tour_translation tt ON tt.id_tour = t.id LEFT JOIN ztl_my_visit zmi ON (zmi.id = t.id AND zmi.ztl_group = "+TOUR_GROUP+") WHERE t.id IN ("+tour_wi+") AND tt.id_language = " +settings.id_lang + " GROUP BY t.id";
+        
+        console.log("premapiranje tour --- q: "+tmp_query_tour);
+ 
         db.transaction(function(tx) {
-            tx.executeSql(tmp_query, [], function(tx, res_tour) {
+            tx.executeSql(tmp_query_tour, [], function(tx, res_tour) {
                 var tour_len = res_tour.rows.length;
 
                 res.tour_group_name_translation = main_menu[mm_pic_group[TOUR_GROUP]];
@@ -931,8 +934,9 @@ function my_visit_success(results) {
                 tmp.title   = main_menu[mm_pic_group[TOUR_GROUP]];
                 res.my_visit_filter.push(tmp);
 
-
+				
                 for (var ti = 0; ti<tour_len; ti++) {
+                    console.log("premapiranje tour --- " + JSON.stringify(res_tour.rows.item(ti)));
                  
                     tmp_info_text = unescape(res_tour.rows.item(ti).short_description);
                     if (tmp_info_text.length > max_dolzina_short_desc) {

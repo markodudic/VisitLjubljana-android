@@ -466,6 +466,7 @@ function load_page(template, div, data, transition, reverse, id_group) {
 		success:function(temp){
 			$('body').html("");
 			
+			var remove_marquee = 1;
 			var menu_icon 	 = 3;
 			var extra_div_id = "";
 			
@@ -507,6 +508,9 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				//if (data.title.length>max_dolzina_naslov) {
 				//	data.title=data.title.substring(0,max_dolzina_naslov)+"...";
 				//}
+				if (data.title.length>max_dolzina_naslov) {
+					remove_marquee = 0; 
+				}
 				if (selected_group == POI_NASTANITVE_GROUP) {
 					data.stars="true";
 				}
@@ -579,7 +583,6 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				data.potrdi_button 		= confirm_translation[settings.id_lang];
 				$('body').html("");*/
 			} else if (div == 'event') {
-				console.log("SIZE="+data.item.top+":"+data.item.left);
 				data.is_sub_event				= is_sub_event;
 				data.sub_events_id				= sub_events_id;
 				data.categories 				= event_type;
@@ -594,6 +597,8 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				data.map_button 				= map_translation[settings.id_lang];
 				data.ztl_item_sub_events		= sub_events_translation[settings.id_lang];
 				extra_div_id 					= "_"+data.item.id;
+				if (data.item.title.length>max_dolzina_naslov)
+					remove_marquee = 0; 
 				//if (data.item.title.length>max_dolzina_naslov) {
 				//	data.item.title=data.item.title.substring(0,max_dolzina_naslov)+"...";
 				//}
@@ -602,6 +607,9 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				data.guide_button				= voice_guide_translation_full[settings.id_lang];
 				data.tour_category_id 			= selected_group;
 				extra_div_id 					= "_"+data.item.id;
+				if (data.item.title.length>max_dolzina_naslov) {
+					remove_marquee = 0; 
+				}
 				//if (data.item.title.length>max_dolzina_naslov) {
 				//	data.item.title=data.item.title.substring(0,max_dolzina_naslov)+"...";
 				//}
@@ -614,6 +622,9 @@ function load_page(template, div, data, transition, reverse, id_group) {
 			} else if (div == 'info') {
 				data.ztl_item_details_description = description_translation[settings.id_lang];
 				extra_div_id 		= "_"+data.item.id;
+				if (data.item.title.length>max_dolzina_naslov) {
+					remove_marquee = 0; 
+				}
 				//if (data.item.title.length>max_dolzina_naslov) {
 				//	data.item.title=data.item.title.substring(0,max_dolzina_naslov)+"...";
 				//}
@@ -645,6 +656,9 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				data.rate 				= rate_translation[settings.id_lang];
 				data.about				= about_translation[settings.id_lang];
 				data.exit				= exit_translation[settings.id_lang];
+				if (device.platform == "Android") {
+					data.android		= "1";
+				}
 				voice_guide				= 0;
 			} else if (div == 'ztl_synhronization') {
 				data = {};
@@ -660,6 +674,13 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				data.about_contact 	= about_contact_translation[settings.id_lang];
 				data.about_desc		= about_desc_translation[settings.id_lang];
 			} else if (div == "my_visit_list") {
+				/*if (my_visit_date_sql == 0) {
+					data.my_visit_date_sql = "";
+				} else {
+					data.my_visit_date_sql = my_visit_date_sql;
+				}*/
+ 
+
 				data.page_title  		= my_visit_page_title_translation[settings.id_lang];
 				data.select_view 		= select_view_translation[settings.id_lang];
 				data.confirm 	 		= confirm_translation[settings.id_lang];
@@ -716,6 +737,7 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				} else {
 					data.set_language 		= set_language_translation[2].toUpperCase();					
 				}
+				
 			}
 			
 			if (voice_guide == 1)  {
@@ -761,6 +783,8 @@ function load_page(template, div, data, transition, reverse, id_group) {
 			} else {
 				window.scrollTo(0,0);				
 			}
+			
+			if (remove_marquee == 1) $('.marquee').removeClass('marquee');
 			
 			/*$("img").each(function(i, img) {
 			    $(img).css({
