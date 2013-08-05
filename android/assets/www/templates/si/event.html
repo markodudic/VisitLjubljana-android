@@ -5,13 +5,24 @@
 			<div class="red_line"></div>
 			<div class="header_space"></div>
 			{{#is_sub_event}}
-				<div onClick="opacity($(this)); load_event({{sub_events_id}}, 1); is_sub_event = 0;"><img class="header_back"></div>
-				<div><img class="header_divider"></div>
-				<div class="header_title" onClick="opacity($(this)); load_event({{sub_events_id}}, 1); is_sub_event = 0;">
-					<div class="marquee">
-						{{& item.title}}
+				{{#has_sub_events}}
+					<div onClick="opacity($(this)); load_page(template_lang+'events.html', 'events', trips[EVENT_GROUP], 'fade', false, EVENT_GROUP);"><img class="header_back"></div>
+					<div><img class="header_divider"></div>
+					<div class="header_title" onClick="opacity($(this)); load_page(template_lang+'events.html', 'events', trips[EVENT_GROUP], 'fade', false, EVENT_GROUP);">
+						<div class="marquee">
+							{{& item.title}}
+						</div>
 					</div>
-				</div>
+				{{/has_sub_events}}
+				{{^has_sub_events}}
+					<div onClick="opacity($(this)); load_event({{sub_events_id}}, 1); is_sub_event = 0;"><img class="header_back"></div>
+					<div><img class="header_divider"></div>
+					<div class="header_title" onClick="opacity($(this)); load_event({{sub_events_id}}, 1); is_sub_event = 0;">
+						<div class="marquee">
+							{{& item.title}}
+						</div>
+					</div>
+				{{/has_sub_events}}
 			{{/is_sub_event}}
 			{{^is_sub_event}}
 				<div onClick="opacity($(this)); load_page(template_lang+'events.html', 'events', trips[EVENT_GROUP], 'fade', false, EVENT_GROUP);"><img class="header_back"></div>

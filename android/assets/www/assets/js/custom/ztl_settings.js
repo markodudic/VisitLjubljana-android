@@ -28,9 +28,9 @@ function synhronization(){
 }
 
 function rate() {
-	if ((navigator.userAgent.match(/iPhone/i))  == "iPhone") {
+	if (device.platform == "iOS") {
 	   window.open('itms-apps://itunes.apple.com/us/app/domainsicle-domain-name-search/id511364723?ls=1&mt=8','_system'); 
-	} else if ((navigator.userAgent.match(/Android/i)) == "Android") {
+	} else {
 	   window.open('market://details?id=com.innovatif.visitljubljana','_system');
 	}
 }
