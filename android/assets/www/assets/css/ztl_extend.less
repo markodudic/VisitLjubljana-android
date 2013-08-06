@@ -207,6 +207,8 @@ body {
 }
 
 .header_dots_simple {
+    position:absolute;
+    right: 0px;
     float:right;
     background-image:url('ztl_images/dots.png');
     background-repeat:no-repeat;
@@ -296,6 +298,7 @@ body {
 	 font-size:@font_size_title;
 	 font-weight:normal;
     text-transform:uppercase;
+    border-bottom: 4px solid #555555;
 }
 
 h1 {
@@ -315,11 +318,11 @@ h3 {
     color:#555555;
     position:relative;
     margin: @window_width*0.01 0px 0px 0px;
-	 font-size:@window_width*0.06;
+	font-size:@window_width*0.06;
 }
 
 .ztl_item_details_title{
-	 font-size:@font_size_title;
+	font-size:@font_size_title;
     left: 0;
 }
 
@@ -657,9 +660,10 @@ ul.footer_list li{
 }
 
 #poi_title{
-	font-size:@window_width*0.8*0.06;
-	padding-bottom:@window_width*0.8*0.05;
-	margin-top:-@window_width*0.8*0.36; 
+	font-size:@font_size_title;
+	//padding-bottom:@window_width*0.8*0.05;
+	margin-top:-@window_width*0.8*0.36;
+	line-height:120% 
 }
 
 #poi_address{
@@ -668,6 +672,7 @@ ul.footer_list li{
 	position: absolute;
    bottom: @window_width*0.8*0.08;
    left: 0;
+	line-height:120% 
 }
 
 .media_payer {
@@ -867,6 +872,7 @@ ul.footer_list li{
 
 .my_visit_list {
 	position:relative;
+	left:0px;
 }
 
 .my_visit_left {

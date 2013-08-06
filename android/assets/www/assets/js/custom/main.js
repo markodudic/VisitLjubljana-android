@@ -414,6 +414,7 @@ function load_page(template, div, data, transition, reverse, id_group) {
 		(selected_div == "tours") || 
 		(selected_div == "poigroups") || 
 		(selected_div == "poigroup") ||
+		(selected_div == "my_visit_list") ||
 		(selected_div == "events_filtered")) {
 		offsets[selected_div] = window.pageYOffset;
 	}
@@ -524,6 +525,9 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				if (selected_group == INFO_POI_GROUP) {
 					data.info_poi 	= 1;
 					data.id_info 	= curr_info_id;
+				}
+				if ((data.address.length>1)||(data.post_number.length>1)||(data.post.length>1)) {
+					data.address_title = 1;
 				}
 				menu_icon 	= 3;
 			} else if (div == 'events') {
@@ -666,6 +670,7 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				data.synhronization_desc 	= synhronization_desc_translation[settings.id_lang];
 				data.synhronization_button 	= synhronization_button_translation[settings.id_lang];
 			} else if (div == 'ztl_about') {
+				menu_icon 	= 5;
 				data = {};
 				data.about_title	= about_translation[settings.id_lang];
 				data.copy_right 	= copy_right_translation[settings.id_lang];
