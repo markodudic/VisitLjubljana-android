@@ -18,6 +18,8 @@ var current_position_center;
 //query cache
 var cache_my_visit_map;
 var cache_inspired_map;
+
+var map_selection = 0;
 	
 function load_show_map(id, type, group) {
 	console.log(id+":"+type+":"+group);
@@ -35,7 +37,8 @@ function load_show_map(id, type, group) {
 }
 
 function load_map_selection() {
-	load_show_map(0, $('#group_type').val(), 0)
+	map_selection = $('#group_type').val();
+	load_show_map(0, map_selection, 0);
 }
 
 //klicem iz main.js 445
@@ -264,43 +267,11 @@ var init = function (onSelectFeatureFunction) {
 
     
     function onFeatureSelect(evt) {
+    	if (map.getZoom() < 2) map.zoomTo(2);
         var feature = evt.feature;
         curr_type = feature.attributes.type;
         load_content(feature.attributes.id);
-        
-    	$("#ztl_cord").val(feature.attributes.id+"#"+poi_data.coord_x+"#"+poi_data.coord_y);
-        //zracunam razdaljo
-    	if (current_position_xy != undefined) {
-    		$("#ztl_distance_value").html(lineDistance( poi_data.coord_x, poi_data.coord_y, current_position_xy[0]-correctionX+myLocationCorrectionX, current_position_xy[1]-correctionY+myLocationCorrectionY ) + " km");
-    	}
-    	
-        var title = poi_data.title.toUpperCase();
-        var r = /%u([\d\w]{4})/gi;
-        title = title.replace(r, function (match, grp) {
-            return String.fromCharCode(parseInt(grp, 16)); } );
-        title = unescape(title);
-        
-        if (title.length>max_dolzina_poi_title) {
-			title=title.substring(0,max_dolzina_poi_title)+"...";
-		}
-        $("#poi_title").html(title);
-
-        $("#poi_address").html(unescape(poi_data.poi_title));
-        $(".map_info").click(function() {
-        	load_page_content(feature.attributes.id, feature.attributes.type);        		
-        }); 
-
-        $(".txt_popup").show();
-
-        //popup workaround
-        var map_lr = ($(window).width()-$(".txt_popup").width())/2;
-        var map_tb = ($(window).height()/2)-$(".txt_popup").height();
-        $(".txt_popup").css("margin-top", 0);
-        $(".txt_popup").css("margin-left", 0);
-        $(".txt_popup").css("top", map_tb+10); //se malo offseta
-        $(".txt_popup").css("left", map_lr);
-        toltip_visible = 1;
-    }
+    }     
 
     function onFeatureUnselect(evt) {
        $(".txt_popup").hide();
@@ -446,6 +417,39 @@ function load_page_content(id, type) {
 
 function load_map_poi_data_success(results) {
     poi_data = results.rows.item(0);
+
+	$("#ztl_cord").val(poi_data.id+"#"+poi_data.coord_x+"#"+poi_data.coord_y);
+    //zracunam razdaljo
+	if (current_position_xy != undefined) {
+		$("#ztl_distance_value").html(lineDistance( poi_data.coord_x, poi_data.coord_y, current_position_xy[0]-correctionX+myLocationCorrectionX, current_position_xy[1]-correctionY+myLocationCorrectionY ) + " km");
+	}
+	
+    var title = poi_data.title.toUpperCase();
+    var r = /%u([\d\w]{4})/gi;
+    title = title.replace(r, function (match, grp) {
+        return String.fromCharCode(parseInt(grp, 16)); } );
+    title = unescape(title);
+    
+    if (title.length>max_dolzina_poi_title) {
+		title=title.substring(0,max_dolzina_poi_title)+"...";
+	}
+    $("#poi_title").html(title);
+
+    $("#poi_address").html(unescape(poi_data.poi_title));
+    $(".map_info").click(function() {
+    	load_page_content(poi_data.id, poi_data.type);        		
+    }); 
+
+    $(".txt_popup").show();
+
+    //popup workaround
+    var map_lr = ($(window).width()-$(".txt_popup").width())/2;
+    var map_tb = ($(window).height()/2)-$(".txt_popup").height();
+    $(".txt_popup").css("margin-top", 0);
+    $(".txt_popup").css("margin-left", 0);
+    $(".txt_popup").css("top", map_tb+10); //se malo offseta
+    $(".txt_popup").css("left", map_lr);
+    toltip_visible = 1;
 }
 
 function __load_my_visit_map() {
@@ -499,6 +503,8 @@ function load_map_success(results) {
 }
 
 function map_settings_toggle() {
+	$('#group_type').val(map_selection);
+	
 	$(".map_settings").toggle();
 	
 	$(".map_content").toggle();

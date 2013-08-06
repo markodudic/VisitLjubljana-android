@@ -112,7 +112,7 @@ function web_login(sync) {
 	} else {
 		var username = $("#my_visit_username").val();
 		var password = $("#my_visit_password").val();
-	
+		
 		var url = server_url + 'si/mobile_app/service.json?action=login&u='+username+'&p='+password;
 	
 		$.ajax( {
@@ -221,13 +221,18 @@ function clear_my_visit() {
 }
 
 function my_visit_settings_menu_toggle() {
+	if (check_user() != false) {
+		$('.my_visit_logout_menu').show();
+	} else {
+		$('.my_visit_logout_menu').hide();		
+	}
+
 	$(".event_filter").toggle();
 	
 	$(".ztl_content").toggle();
 	$(".header").toggle();
 	$(".footer").toggle();
-
-
+	
 	if ($('.event_filter').is(':visible')) {
 		my_visit_filter = 1;
 	}
