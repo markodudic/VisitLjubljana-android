@@ -4,6 +4,16 @@
 		<div class="header_placeholder">
 			<div class="red_line"></div>
 			<div class="header_space"></div>
+
+			<div onClick="opacity($(this)); go_back();"><img class="header_back"></div>
+			<div><img class="header_divider"></div>
+			<div class="header_title" onClick="opacity($(this)); go_back();">
+				<div class="marquee">
+					{{& item.title}}
+				</div>
+			</div>
+
+<!--
 			<div onClick="opacity($(this)); load_page(template_lang+'tours.html', 'tours', trips[6].tours[{{tour_category_id}}], 'fade', false, {{tour_category_id}});"><img class="header_back"></div>
 			<div><img class="header_divider"></div>
 			<div class="header_title" onClick="opacity($(this)); load_page(template_lang+'tours.html', 'tours', trips[6].tours[{{tour_category_id}}], 'fade', false, {{tour_category_id}});">
@@ -11,6 +21,7 @@
 					{{& item.title}}
 				</div>
 			</div>
+-->
 			<div style="clear:both;"></div>
 			<div class="header_space"></div>
 		</div>

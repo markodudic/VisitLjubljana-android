@@ -423,6 +423,17 @@ div.poi_address {
     left: 0;
 }
 
+.my_visit_dp{
+    color:#222222;
+    background-color:#222222;
+    position: relative;
+    z-index:-1000;
+	width:0;
+	height:0;
+	//top:0;
+	//left:200;
+	
+}
 
 .ui-slider { position: relative; text-align: left; }
 .ui-slider .ui-slider-handle { position: absolute; z-index: 2; width: 1.2em; height: 1.2em; cursor: default; background-color:red;}

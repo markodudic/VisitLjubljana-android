@@ -3,8 +3,15 @@ function add_to_history(history_string) {
 	
 	console.log("localhistory --- add: "+history_string);
 
-	history.push(history_string);
-	localStorage.setItem('history', JSON.stringify(history));
+	//dodam samo ce je razlicen od zadnjeg
+	if ((history.length > 0) && (history[history.length-1] == history_string)) {
+		//ne dodam
+	} else {
+		history.push(history_string);
+		localStorage.setItem('history', JSON.stringify(history));
+	}
+	
+	console.log("localhistory --- "+history.length+":"+JSON.stringify(history));	
 }
 
 function local_storage_load() {
@@ -23,11 +30,16 @@ function go_back() {
 
 	console.log("localhistory --- "+history.length+":"+JSON.stringify(history));
 
-	if (my_visit_filter == 1) {
+	if (is_poi_filter == 1) {
+		poi_filter_toggle();
+		is_poi_filter = 0;
+	} else if (is_event_filter == 1) {
+		event_filter_toggle();
+		is_event_filter = 0;
+	} else if (my_visit_filter == 1) {
 		my_visit_settings_menu_toggle();
 		my_visit_filter = 0;
-	}
-	else if (media_opened == 1) {
+	} else if (media_opened == 1) {
 		media_control_stop();
 		media_opened = 0;
 	} else {
@@ -38,6 +50,9 @@ function go_back() {
 			view_main_menu	= 0;
 			var history = local_storage_load();
 			var go_to 	= history[history.length-2];
+
+			console.log("go to --- "+go_to);
+
 			
 			if (go_to != null) {
 				var go_to 	= go_to.split("--"); 
@@ -63,6 +78,8 @@ function go_back() {
 					load_page(template_lang+'trips.html', 'trips', trips[VOICE_GROUP], 'fade', false, VOICE_GROUP);
 				} else  if (go_to[1] == "load_events") {
 					load_page(template_lang+'events.html', 'events', trips[EVENT_GROUP], 'fade', false, EVENT_GROUP);
+				} else  if (go_to[1] == "load_event") {
+					load_event(params[0], 0);
 				} else if (go_to[1] == "load_tours") {
 					load_tours(0);
 				} else if (go_to[1] == "load_tour") {
@@ -87,6 +104,8 @@ function go_back() {
 					load_show_map();
 				} else if (go_to[1] == "load_current_settings") {
 					load_current_settings();
+				} else if (go_to[1] == "load_tours_category") {
+					load_page(template_lang+'tour_category.html', 'tour_category', trips[TOUR_LIST_GROUP], 'fade', false, TOUR_LIST_GROUP);
 				} else if (go_to[1] == "load_tours_menu") {
 					load_page(template_lang+'tours.html', 'tours', trips[TOUR_LIST_GROUP].tours[params[0]], 'fade', false, params[0]);
 				} else if (go_to[1] == "filter_visits") {
@@ -96,6 +115,16 @@ function go_back() {
 					filter_events();
 				} else if (go_to[1] == "poi_filter") {
 					poi_filter();
+				} else if (go_to[1] == "load_single_info") {
+					load_single_info(params[0], 0);
+				} else if (go_to[1] == "load_info_pois") {
+					load_info_pois(params[0], 0);
+				} else if (go_to[1] == "load_single_poigroup") {
+					load_single_poigroup(params[0], 0);
+				} else if (go_to[1] == "guide_settings") {
+					load_guide_buy();
+				} else if (go_to[1] == "main_settings") {
+					load_current_settings();
 				}
 			} else if (go_to[0] == 'main_menu') {
 				voice_guide = 0;
@@ -117,6 +146,8 @@ function go_back() {
 					load_page(template_lang+'trips.html', 'trips', trips[POI_ZABAVA_GROUP], 'fade', false, POI_ZABAVA_GROUP);
 				} else if (go_to[1] == POI_NAKUPOVANJE_GROUP) {
 					load_page(template_lang+'trips.html', 'trips', trips[POI_NAKUPOVANJE_GROUP], 'fade', false, POI_NAKUPOVANJE_GROUP);
+				} else if (go_to[1] == POIGROUP_GROUP) {
+					load_page(template_lang+'poigroups.html', 'poigroups', trips[POIGROUP_GROUP], 'fade', false, POIGROUP_GROUP);
 				}
 			} else {
 				if (main_menu == 0) {

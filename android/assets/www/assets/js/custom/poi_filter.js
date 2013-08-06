@@ -16,27 +16,19 @@ function poi_filter_toggle() {
 
 	if ($('.poi_filter').is(':visible')) {
 		swipe = 0;
+		is_poi_filter = 1;
 	} else {
 		swipe = 1;
+		is_poi_filter = 0;
 	}
 }
 
 function poi_filter_poigroup(id_group) {
 	var filter_poigroup		= new Array();
 	var filter = poigroups_map[id_group];
-	//indexOf ne dela na IOS, $.inArray pa ne na Androidu
-	if (device.platform == "Android") {
-		for (var ei=0; ei<poi_filter.length; ei++) {
-			if (filter.indexOf(poi_filter[ei].id) != -1) {
-	        	filter_poigroup.push(poi_filter[ei]);
-			}
-		}
-	} else {
-		for (var ei=0; ei<poi_filter.length; ei++) {
-			//if (filter.indexOf(poi_filter[ei].id) != -1) {
-	        if ($.inArray(poi_filter[ei].id.toString(), filter) != -1) {
-				filter_poigroup.push(poi_filter[ei]);
-			}
+	for (var ei=0; ei<poi_filter.length; ei++) {
+        if ($.inArray(poi_filter[ei].id.toString(), filter) != -1) {
+			filter_poigroup.push(poi_filter[ei]);
 		}
 	}
 	

@@ -18,8 +18,10 @@ function event_filter_toggle() {
 
 	if ($('.event_filter').is(':visible')) {
 		swipe = 0;
+		is_event_filter = 1;
 	} else {
 		swipe = 1;
+		is_event_filter = 0;
 	}
 
 	/*

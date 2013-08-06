@@ -479,6 +479,9 @@ function load_info_success(results) {
 		//prikazemo vse poi-je te kategorije
 		load_info_pois(results.rows.item(0).category, 1);
 	} else {
+		var history_string = "fun--load_single_info--"+results.rows.item(0).id+"__fade__false";
+		add_to_history(history_string);
+
 		results.rows.item(0).title = unescape(results.rows.item(0).title);
 		results.rows.item(0).content = unescape(results.rows.item(0).content);
     	results.rows.item(0).top 		= -Math.abs(parseInt((image_detail_h-results.rows.item(0).image_h*(image_detail_w/results.rows.item(0).image_w))/2));
