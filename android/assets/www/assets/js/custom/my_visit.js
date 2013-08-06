@@ -235,6 +235,8 @@ function my_visit_settings_menu_toggle() {
 	
 	if ($('.event_filter').is(':visible')) {
 		my_visit_filter = 1;
+	} else {
+		my_visit_filter = 0;		
 	}
 }
 
@@ -265,23 +267,39 @@ function my_visit_item_date(id, group) {
 		mode : 'date', // date or time or blank for both
 		allowOldDates : false
 		}, function(returnDate) {
-			if (returnDate.indexOf("-0-") != -1) {
-				var newDate = new Date(returnDate.replace("-0-", "-1-"));
-			} else {
-				var newDate = new Date(returnDate);
-				newDate = new Date(new Date(newDate).setMonth(newDate.getMonth()+1));
-			}
-			
-			var time = newDate.getTime() / 1000;
-
-			var tmp_query = "UPDATE ztl_my_visit SET start = "+time+" WHERE id = "+id+" AND ztl_group = "+group;
-			db.transaction(function(tx) {
-				 tx.executeSql(tmp_query, [], function(tx, results) {
-				    load_my_visit();
-				 });
-			});
+			set_my_visit_item_date(returnDate, id, group)
 		}
 	);	
+}
+
+function dprun_myvisit(id, group) {
+	if (device.platform != "iOS") {
+		 my_visit_item_date(id, group)
+	}
+}
+
+function dpend_myvisit(t, id, group) {
+	if (device.platform == "iOS") {
+		set_my_visit_item_date($(t).val(), id, group)
+	}
+}
+
+function set_my_visit_item_date(returnDate, id, group){
+	if (returnDate.indexOf("-0-") != -1) {
+		var newDate = new Date(returnDate.replace("-0-", "-1-"));
+	} else {
+		var newDate = new Date(returnDate);
+		newDate = new Date(new Date(newDate).setMonth(newDate.getMonth()+1));
+	}
+	
+	var time = newDate.getTime() / 1000;
+
+	var tmp_query = "UPDATE ztl_my_visit SET start = "+time+" WHERE id = "+id+" AND ztl_group = "+group;
+	db.transaction(function(tx) {
+		 tx.executeSql(tmp_query, [], function(tx, results) {
+		    load_my_visit();
+		 });
+	});
 }
 
 function my_visit_get_event_date(id, start) {

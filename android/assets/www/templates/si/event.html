@@ -4,6 +4,16 @@
 		<div class="header_placeholder">
 			<div class="red_line"></div>
 			<div class="header_space"></div>
+
+			<div onClick="opacity($(this)); go_back();"><img class="header_back"></div>
+			<div><img class="header_divider"></div>
+			<div class="header_title" onClick="opacity($(this)); go_back();">
+				<div class="marquee">
+					{{& item.title}}
+				</div>
+			</div>
+
+<!--
 			{{#is_sub_event}}
 				{{#has_sub_events}}
 					<div onClick="opacity($(this)); load_page(template_lang+'events.html', 'events', trips[EVENT_GROUP], 'fade', false, EVENT_GROUP);"><img class="header_back"></div>
@@ -33,6 +43,7 @@
 					</div>
 				</div>
 			{{/is_sub_event}}
+-->
 			<div class="header_dots" onClick="event_filter_toggle();"></div>
 			<div style="clear:both;"></div>
 			<div class="header_space"></div>
@@ -70,7 +81,7 @@
 			<div style="clear:both;"></div>
 			<div class="ztl_item_content_padding">
 				<div class="ztl_item_buttons">
-					<div id="map_button" class="ztl_red_button ztl_item_left_button" onclick="load_show_map({{item.id}}, EVENT_GROUP, 0)">{{map_button}}</div>
+					<div id="map_button" class="ztl_red_button ztl_item_left_button" onclick="add_to_history('fun--load_show_map--empty'); load_show_map({{item.id}}, EVENT_GROUP, 0)">{{map_button}}</div>
 					<div class="ztl_red_button ztl_item_right_button" onClick="add_to_my_visit({{item.id}},EVENT_GROUP,0,0,0);">MYVISIT</div>
 				</div>
 				<br>

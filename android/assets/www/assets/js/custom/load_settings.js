@@ -386,11 +386,6 @@ function load_tour(id, save_history) {
 function load_single_info(id, save_history) {
 	swipe = 1;
 
-	if (save_history == 1)  {
-		var history_string = "fun--load_single_info--"+id+"__fade__false";
-		add_to_history(history_string);
-	}
-
 	//ko bo osbstajala tabela se popravi query
 	var tmp_query = "SELECT i.* " +
 				"FROM ztl_info i " +

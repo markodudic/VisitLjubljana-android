@@ -267,7 +267,11 @@ var init = function (onSelectFeatureFunction) {
 
     
     function onFeatureSelect(evt) {
-    	if (map.getZoom() < 2) map.zoomTo(2);
+    	if (map.getZoom() < 2) {
+    		map.zoomTo(2);
+    		zoom_direction = -1;
+    		check_current_zoom();
+    	}
         var feature = evt.feature;
         curr_type = feature.attributes.type;
         load_content(feature.attributes.id);
@@ -424,11 +428,11 @@ function load_map_poi_data_success(results) {
 		$("#ztl_distance_value").html(lineDistance( poi_data.coord_x, poi_data.coord_y, current_position_xy[0]-correctionX+myLocationCorrectionX, current_position_xy[1]-correctionY+myLocationCorrectionY ) + " km");
 	}
 	
-    var title = poi_data.title.toUpperCase();
+    var title = poi_data.title;
     var r = /%u([\d\w]{4})/gi;
     title = title.replace(r, function (match, grp) {
         return String.fromCharCode(parseInt(grp, 16)); } );
-    title = unescape(title);
+    title = unescape(title).toUpperCase();
     
     if (title.length>max_dolzina_poi_title) {
 		title=title.substring(0,max_dolzina_poi_title)+"...";
@@ -541,7 +545,7 @@ function back_to_content() {
 }
 
 function check_current_zoom() {
-	//alert(map.getZoom()+":"+map.getMinZoom()+":"+map.getNumZoomLevels());
+	//alert(map.getZoom()+":"+map.getMinZoom()+":"+map.getNumZoomLevels()+":"+zoom_direction);
 	if ((map.getZoom() <= 1) && (zoom_direction == 0)) {
 		opacity($("#minus"));
 		un_opacity($("#plus"));

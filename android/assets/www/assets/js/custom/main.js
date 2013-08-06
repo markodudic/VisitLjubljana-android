@@ -40,6 +40,8 @@ var media_opened  = 0;
 var voice_guide   = 0;
 
 var my_visit_filter = 0;
+var is_poi_filter = 0;
+var is_event_filter = 0;
 
 //history
 var view_main_menu 	= 1;
