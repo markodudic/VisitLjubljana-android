@@ -83,7 +83,6 @@ function go_back() {
 				} else if (go_to[1] == "load_tours") {
 					load_tours(0);
 				} else if (go_to[1] == "load_tour") {
-					//load_tour(params[0], 0);
 					load_page(template_lang+'tours.html', 'tours', trips[TOUR_GROUP], 'fade', false, TOUR_GROUP);
 				} else if (go_to[1] == "load_my_visit") {
 					load_my_visit(0);
@@ -101,7 +100,11 @@ function go_back() {
 				} else if (go_to[1] == "load_guide_buy") {
 					load_guide_buy();
 				} else if (go_to[1] == "load_show_map") {
-					load_show_map();
+					if ((params[0] == undefined) || (params[0] == 'undefined')) {
+						load_show_map();
+					} else {
+						load_show_map(params[0], params[1], params[2]);
+					}
 				} else if (go_to[1] == "load_current_settings") {
 					load_current_settings();
 				} else if (go_to[1] == "load_tours_category") {

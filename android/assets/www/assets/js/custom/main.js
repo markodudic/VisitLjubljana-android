@@ -428,7 +428,7 @@ function load_page(template, div, data, transition, reverse, id_group) {
 	}
 	
 	$('body').css('position','');
-	if ((div == "trips") || (div == "events")) { 
+	if (((div == "trips") && (voice_guide == 0)) || (div == "events")) { 
 		show_spinner();
 		//return;
 	}
