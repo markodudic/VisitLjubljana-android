@@ -31,10 +31,12 @@
 		<div class="black_line"></div>
 
 		<!-- ZAKOMENTIRANO DOKLER SE NE OBJAVI IOS VERZIJA -->
-		<!--li class="ztl_list_li ztl_settings_li">
+		{{#android}}
+		<li class="ztl_list_li ztl_settings_li">
 			<div class="ztl_list_item ztl_list_header ztl_settings_text" onClick="rate();">{{rate}}</div>
 		</li>
-		<div class="black_line"></div-->
+		<div class="black_line"></div>
+		{{/android}}
 
 		<li class="ztl_list_li ztl_settings_li">
 			<div class="ztl_list_item ztl_list_header ztl_settings_text" onClick="add_to_history('fun--main_settings--empty'); about();">{{about}}</div>
