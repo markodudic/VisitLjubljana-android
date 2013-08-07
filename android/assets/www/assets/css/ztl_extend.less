@@ -26,23 +26,6 @@ body {
     width:100%;
 }
 
-.ztl_distance{
-    font-size:@font_size_title;
-    color:#ffffff;
-    font-family: 'roboto_bold';
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    padding:0px 10px @window_height*0.015 0px;
-}
-
-.ztl_distance_poi {
-    font-family: 'roboto_bold';
-    font-size:@font_size_title;
-    padding:0px 10px 0px 0px;
-}
-
-
 .red {
     color:#ed1c24;
     font-size:@font_size_title;
@@ -155,6 +138,28 @@ body {
 	z-index:998;
 }
 
+.ztl_distance{
+    font-size:@font_size_title;
+    color:#ffffff;
+    font-family: 'roboto_bold';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding:0px 10px @window_height*0.015 0px;
+}
+
+.ztl_distance_poi {
+    font-family: 'roboto_bold';
+    font-size:@font_size_title;
+    padding:0px 10px 0px 0px;
+}
+
+.ztl_distance_arrow_img {
+    padding-top: @window_height*0.02 ;
+    padding-right: 25px;
+    height:@window_height*0.035;
+}
+
 .ztl_distance_img {
    float:right;
    height:@window_width*0.10;
@@ -247,11 +252,6 @@ body {
 	height:@window_height*0.02;
 }
 
-.ztl_distance_arrow_img {
-    padding-top: 20px;
-    padding-right: 25px;
-    height:@window_height*0.035;
-}
 
 .sound_img {
     text-align: right;
@@ -796,13 +796,6 @@ ul.footer_list li{
 	width:@window_width * 0.58;	
 }
 
-.my_visit_icons {
-	float:right;
-	width:@window_width * 0.22;
-	margin-right:30px;	
-	margin-top:10px;
-	text-align:right;
-}
 
 .my_visit_title {
 	width: @window_width;
@@ -910,6 +903,15 @@ ul.footer_list li{
 	font-size:@font_size_text;
 }
 
+.my_visit_icons {
+	position: relative;
+    float:right;
+	width:@window_width * 0.22;
+	margin-right:30px;	
+	margin-top:10px;
+	text-align:right;
+}
+
 .my_visit_list_image{
 	height:@window_width*0.07;
 }
@@ -917,6 +919,19 @@ ul.footer_list li{
 .my_visit_list_image_left{
 	height:@window_width*0.07;
 	padding-right:15px;
+}
+
+
+.my_visit_dp{
+	height:@window_width*0.07;
+    width:@window_width*0.09;
+    position: absolute;
+    background: rgba(0, 0, 0, 0);;
+    border: none;
+    outline: none;
+    top:0;
+	left:10px;
+	
 }
 
 .my_visit_event_date_select {

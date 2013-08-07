@@ -22,6 +22,7 @@ var cache_inspired_map;
 var map_selection = 0;
 	
 function load_show_map(id, type, group) {
+	add_to_history('fun--load_show_map--'+id+'__'+type+'__'+group);
 	console.log(id+":"+type+":"+group);
 	curr_id = id;
 	curr_type = type;
