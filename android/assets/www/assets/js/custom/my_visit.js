@@ -118,9 +118,9 @@ function web_login(sync) {
 		$.ajax( {
 			url : url,
 			dataType : 'json',
-			//beforeSend : function(xhr) {
-		    //      xhr.setRequestHeader("Authorization", "Basic RWlqdTN6YW86dXRoMWplaUY=");
-			//},
+			beforeSend : function(xhr) {
+		          xhr.setRequestHeader("Authorization", "Basic RWlqdTN6YW86dXRoMWplaUY=");
+			},
 			error : function(xhr, ajaxOptions, thrownError) {
 				//napaka
 				console.log(" >>>>>>>>>> failed "+url);
