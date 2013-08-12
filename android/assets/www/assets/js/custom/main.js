@@ -1004,7 +1004,6 @@ function dprun(t) {
 			}, function(returnDate) {
 				var date_array = returnDate.split("-");
 				var date_obj   = new Date(date_array[0], date_array[1], date_array[2]);
-
 				navigator.globalization.dateToString(
 					date_obj,
 					function (date) {currentField.val(date.value);},
