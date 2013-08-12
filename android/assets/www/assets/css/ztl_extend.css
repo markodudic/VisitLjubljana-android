@@ -208,12 +208,6 @@ a:active {text-decoration:none; color:#ed1c24; font-size:1.0em;}
 	padding:0;
 }
 
-.map {
-	width: 100%; 
-	background-color:#f2efe9; 
-	z-index:0; 
-}
-
 
 @media (max-width: 320px){
     .ztl_content {

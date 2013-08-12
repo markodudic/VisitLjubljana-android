@@ -15,7 +15,7 @@ var my_visit_date_sql  	= 0;
 
 function add_to_my_visit(id, ztl_group, type, start, end, autmatic) {
 	var tmp_query = "INSERT OR REPLACE INTO ztl_my_visit (id, ztl_group, type, start, end) VALUES ("+id+", "+ztl_group+", "+type+", "+start+", "+end+");";
-	console.log("SQL="+tmp_query);
+	//console.log("SQL="+tmp_query);
 
     db.transaction(function(tx) {
 		 tx.executeSql(tmp_query, [], function(tx, res) {});
