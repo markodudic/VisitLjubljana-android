@@ -9,12 +9,14 @@ function update_db() {
 var updt_finished = 0;
 var updt_running  = 0;
 function is_updt_finished() {
+	console.log("UPADET FINISHED="+updt_finished);
 	updt_finished++;
 	//vsi updejti
 	if (updt_finished == UPDATE_GROUPS) {
 		//vse poije, ki niso na glavnem menuji nastavi na id 230
 		//map_unused_groups();
 	    //all images
+		
 		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFSSuccess, null);
 		
 		var today     = new Date();
@@ -26,9 +28,9 @@ function is_updt_finished() {
 		updt_running  = 0;
 		spinner.stop();
 		
-		if (populateDB == 1) {
-			copyDB();
-		} 
+		//if (populateDB == 1) {
+		//	copyDB();
+		//} 
 		
 		load_current_div();
 		/*
@@ -47,6 +49,7 @@ function check_update_success(results) {
 	if (updt_running  == 1) {
 		return;
 	}
+	updt_finished = 0;
 	updt_running  = 1;
 	
 	show_spinner();
@@ -370,10 +373,11 @@ function update_event(url) {
 			handle_event_deleted(data['deleted']);
 			handle_event_types(data['sets']);
 			handle_event(data['events']);
-		    load_events(0);
+		    //load_events(0);
 		    set_cache();
 		    console.log("XXX >>> events");
-			is_updt_finished();
+		    //prestavljeno yaradi ios verzije v funkcijo handle_event
+			//is_updt_finished();
 		}
 	});	
 }
@@ -449,6 +453,8 @@ function handle_event(data) {
 
 		tx.executeSql('select count(*) as cnt from ztl_event;', [], function(tx, res) {
 			console.log('+11 >>>>>>>>>> ztl_event res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
+			load_events(0);
+
 		});
 		tx.executeSql('select count(*) as cnt from ztl_event_translation;', [], function(tx, res) {
 			console.log('+12 >>>>>>>>>> ztl_event_translation res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
@@ -465,6 +471,7 @@ function handle_event(data) {
 		tx.executeSql('select count(*) as cnt from ztl_event_event_category;', [], function(tx, res) {
 			console.log('+16 >>>>>>>>>> ztl_event_event_category res.rows.item(0).cnt: ' + res.rows.item(0).cnt);
 		});
+
 	});	
 }
 

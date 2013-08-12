@@ -247,6 +247,9 @@ function events_success(results) {
 	trips[EVENT_GROUP].top_events_2 	= res.top_items[2];
 	trips[EVENT_GROUP].top_events_3 	= res.top_items[3];
 	trips[EVENT_GROUP].top_events_4 	= res.top_items[4];
+
+    //zaradi ios-a cakam da se nafila
+    is_updt_finished();
 }
 
 function event_category_success(results) {

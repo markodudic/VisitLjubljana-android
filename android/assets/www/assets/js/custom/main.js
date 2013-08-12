@@ -366,6 +366,7 @@ function onConfirm(buttonIndex) {
 }
  
 function load_current_div(){
+	console.log("CURR="+selected_div);
 	if (selected_div == "events") {
 		load_page(template_lang+'events.html', 'events', trips[EVENT_GROUP], 'fade', false, EVENT_GROUP);
 	} else if (selected_div == "inspired") {
@@ -1019,18 +1020,18 @@ function dprun(t) {
 
 function dpend(t) {
 	if (device.platform == "iOS") {
-		var currentField = $(t).val();
+		var currentField = $(t);
 		var hiddenField  = $("#"+currentField.attr("id")+"_hidden");
-
-		var date_array = currentField.split("-");
+		
+		var date_array = currentField.val().split("-");
 		var date_obj   = new Date(date_array[0], date_array[1], date_array[2]);
-
-		navigator.globalization.dateToString(
+		date_obj = new Date(new Date(date_obj).setMonth(date_obj.getMonth()-1));
+		/*navigator.globalization.dateToString(
 			date_obj,
-			function (date) {currentField.val(date.value);},
-			function () {currentField.val(returnDate);},
+			function (date) {},
+			function () {},
 			{formatLength:'short', selector:'date'}
-		);
+		);*/
 		hiddenField.val(Math.round(date_obj.getTime()/1000));
 	}
 }
