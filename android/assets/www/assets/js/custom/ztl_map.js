@@ -47,7 +47,7 @@ function init_map() {
 	pOld = new Proj4js.Point(0,0);
     
 	//resize
-    $("#map").height($(window).height()-$(".header").height()+$(".footer").height());
+    //$("#map").height($(window).height()-$(".header").height()-$(".footer").height());
 
     init(function(feature) { 
         selectedFeature = feature; 
@@ -220,7 +220,7 @@ var init = function (onSelectFeatureFunction) {
     	}*/
     	
     	var pixel = bounds.getCenterPixel();
-    	map.zoomToExtent(bounds, true);
+    	map.zoomToExtent(bounds, false);
     	//map.zoomOut();
     	zoom_direction = 2;
     	check_current_zoom();
@@ -268,11 +268,11 @@ var init = function (onSelectFeatureFunction) {
 
     
     function onFeatureSelect(evt) {
-    	if (map.getZoom() < 2) {
+    	/*if (map.getZoom() < 2) {
     		map.zoomTo(2);
     		zoom_direction = -1;
     		check_current_zoom();
-    	}
+    	}*/
         var feature = evt.feature;
         curr_type = feature.attributes.type;
         load_content(feature.attributes.id);
@@ -401,7 +401,7 @@ function load_map_coord(results, id, type) {
 function add_point_on_map (row, type) {
     if (row != undefined) {
 		//if ((row.coord_x > x0) && (row.coord_x < x1) && (row.coord_y > y0) && (row.coord_y < y1)) {
-			if (type != undefined) {
+    		if (type != undefined) {
 				points.push(new Array(row.coord_x, row.coord_y, 0, row.id, type));			
 			} else {
 				points.push(new Array(row.coord_x, row.coord_y, 0, row.id, row.type));
@@ -512,7 +512,7 @@ function map_settings_toggle() {
 	
 	$(".map_settings").toggle();
 	
-	$(".map_content").toggle();
+	$(".ztl_content").toggle();
 	$(".header").toggle();
 	$(".footer").toggle();
 }
@@ -536,6 +536,7 @@ function show_system_maps() {
     } else {
 	   var geo = "https://maps.google.com/maps?saddr="+saddr.lat+","+saddr.lon+"&daddr="+daddr.lat+","+daddr.lon+"&sll="+daddr.lat+","+daddr.lon+"&mra=mift&z=17";
     }
+    console.log("GEO="+geo);
     window.open(geo,'_system');
 }
 
