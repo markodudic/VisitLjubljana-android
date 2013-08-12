@@ -61,7 +61,7 @@ OpenLayers.Control.Click = OpenLayers.Class(OpenLayers.Control, {
     defaultHandlerOptions: {
         'single': true,
         'double': false,
-        'pixelTolerance': 0,
+        'pixelTolerance': 10,
         'stopSingle': false,
         'stopDouble': false
     },
@@ -81,9 +81,9 @@ OpenLayers.Control.Click = OpenLayers.Class(OpenLayers.Control, {
     }, 
 
     trigger: function(e) {
-        xy          = e.xy;
+        /*xy          = e.xy;
         var lonlat  = map.getLonLatFromPixel(e.xy);
-        map.panTo(lonlat);
+        map.panTo(lonlat);*/
     }
 });
 
@@ -268,11 +268,6 @@ var init = function (onSelectFeatureFunction) {
 
     
     function onFeatureSelect(evt) {
-    	/*if (map.getZoom() < 2) {
-    		map.zoomTo(2);
-    		zoom_direction = -1;
-    		check_current_zoom();
-    	}*/
         var feature = evt.feature;
         curr_type = feature.attributes.type;
         load_content(feature.attributes.id);
@@ -452,9 +447,24 @@ function load_map_poi_data_success(results) {
     var map_tb = ($(window).height()/2)-$(".txt_popup").height();
     $(".txt_popup").css("margin-top", 0);
     $(".txt_popup").css("margin-left", 0);
-    $(".txt_popup").css("top", map_tb+10); //se malo offseta
+    $(".txt_popup").css("top", map_tb-($(window).height()*0.02));
     $(".txt_popup").css("left", map_lr);
     toltip_visible = 1;
+    
+    //pozicinoiram center na piko
+	if (map.getZoom() < 1) {
+		map.zoomTo(1);
+		zoom_direction = -1;
+		check_current_zoom();
+	} 
+	
+    source = new Proj4js.Proj('EPSG:31469');
+    dest = new Proj4js.Proj('EPSG:900913');
+
+    var p = new Proj4js.Point(parseFloat(poi_data.coord_x)+correctionX, parseFloat(poi_data.coord_y)+correctionY); 
+	Proj4js.transform(source, dest, p);
+    var lonlat = new OpenLayers.LonLat(p.x, p.y); 
+    map.panTo(lonlat);
 }
 
 function __load_my_visit_map() {
