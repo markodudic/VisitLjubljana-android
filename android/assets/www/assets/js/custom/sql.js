@@ -226,7 +226,7 @@ function events_success(results) {
     	}
     	
     	if (results.rows.item(i).featured == "true") {
-    		tmp_date 	= new Date(parseInt(results.rows.item(i).date_first)*1000); 
+    		tmp_date 	= new Date(parseInt(results.rows.item(i).date_last)*1000); 
     		tmp_month 	= tmp_date.getMonth(); 
     		tmp_day		= tmp_date.getDate();
 

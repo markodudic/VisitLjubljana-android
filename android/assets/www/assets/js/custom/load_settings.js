@@ -197,6 +197,25 @@ function load_events(save_history) {
 						"WHERE et.id_language = "+settings.id_lang+" AND e.record_status = 1 AND ett.date_last >=  CAST(strftime('%s','now') as integer) " +
 						"GROUP BY e.id " +
 						"ORDER BY e.featured desc, ett.date_first";
+
+	/*
+	 * 	var tmp_query    = "SELECT e.id, e.featured, e.important, e.sub_events, et.title, ett.venue_id, ett.date, ett.date_first, ett.date_last, p.coord_x, p.coord_y, ett.venue as poi_title, e.image, e.image_w, e.image_h, ett.date_last d2, 999999999999 d1 " +
+						"FROM ztl_event e " +
+						"LEFT JOIN ztl_event_translation et ON et.id_event = e.id " +
+						"LEFT JOIN ztl_event_timetable ett ON ett.id_event = e.id " +
+						"LEFT JOIN ztl_poi p ON p.id = ett.venue_id " +
+						"WHERE et.id_language = "+settings.id_lang+" AND e.record_status = 1 AND ett.date_last >=  CAST(strftime('%s','now') as integer) and e.featured = 'true' " +
+						"GROUP BY e.id " +
+						"UNION " +
+						"SELECT e.id, e.featured, e.important, e.sub_events, et.title, ett.venue_id, ett.date, ett.date_first, ett.date_last, p.coord_x, p.coord_y, ett.venue as poi_title, e.image, e.image_w, e.image_h, 999999999999 d2, ett.date_first d1 " +
+						"FROM ztl_event e " +
+						"LEFT JOIN ztl_event_translation et ON et.id_event = e.id " +
+						"LEFT JOIN ztl_event_timetable ett ON ett.id_event = e.id " +
+						"LEFT JOIN ztl_poi p ON p.id = ett.venue_id " +
+						"WHERE et.id_language = "+settings.id_lang+" AND e.record_status = 1 AND ett.date_last >=  CAST(strftime('%s','now') as integer) and e.featured = 'false' " +
+						"GROUP BY e.id " +
+						"ORDER BY e.featured desc, d2, d1";
+	 */
 	var tmp_callback = "events_success";
     generate_query(tmp_query, tmp_callback);
 }

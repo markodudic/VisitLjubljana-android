@@ -97,21 +97,20 @@ update ztl_poi_translation set sound = '1349057_punto_5.mp3' where id_poi=1818 a
 update ztl_poi_translation set sound = '1349234_punto_12.mp3' where id_poi=1821 and id_language=4;
 update ztl_poi_translation set sound = '1348647_punto_3.mp3' where id_poi=19872 and id_language=4;
 
-
-update ztl_poi_translation set sound = '1349124_tocka_7.mp3' where id_poi=1300 and id_language=5;
-update ztl_poi_translation set sound = '1349124_tocka_7.mp3' where id_poi=1336 and id_language=5;
-update ztl_poi_translation set sound = '1349124_tocka_7.mp3' where id_poi=1365 and id_language=5;
-update ztl_poi_translation set sound = '1349124_tocka_7.mp3' where id_poi=1417 and id_language=5;
-update ztl_poi_translation set sound = '1349124_tocka_7.mp3' where id_poi=1435 and id_language=5;
-update ztl_poi_translation set sound = '1349124_tocka_7.mp3' where id_poi=1455 and id_language=5;
-update ztl_poi_translation set sound = '1349124_tocka_7.mp3' where id_poi=1522 and id_language=5;
-update ztl_poi_translation set sound = '1349124_tocka_7.mp3' where id_poi=1630 and id_language=5;
-update ztl_poi_translation set sound = '1349124_tocka_7.mp3' where id_poi=1705 and id_language=5;
-update ztl_poi_translation set sound = '1349124_tocka_7.mp3' where id_poi=1732 and id_language=5;
-update ztl_poi_translation set sound = '1349124_tocka_7.mp3' where id_poi=1734 and id_language=5;
-update ztl_poi_translation set sound = '1349124_tocka_7.mp3' where id_poi=1818 and id_language=5;
-update ztl_poi_translation set sound = '1349124_tocka_7.mp3' where id_poi=1821 and id_language=5;
-update ztl_poi_translation set sound = '1349124_tocka_7.mp3' where id_poi=19872 and id_language=5;
+update ztl_poi_translation set sound = '1349125_point-7.mp3' where id_poi=1300 and id_language=5;
+update ztl_poi_translation set sound = '1349135_point-9.mp3' where id_poi=1336 and id_language=5;
+update ztl_poi_translation set sound = '1349237_point-13.mp3' where id_poi=1365 and id_language=5;
+update ztl_poi_translation set sound = '1349227_point-11.mp3' where id_poi=1417 and id_language=5;
+update ztl_poi_translation set sound = '1349016_point-4.mp3' where id_poi=1435 and id_language=5;
+update ztl_poi_translation set sound = '1349130_point-8.mp3' where id_poi=1455 and id_language=5;
+update ztl_poi_translation set sound = '1349261_point-15.mp3' where id_poi=1522 and id_language=5;
+update ztl_poi_translation set sound = '1348641_point-2.mp3' where id_poi=1630 and id_language=5;
+update ztl_poi_translation set sound = '1349205_point-10.mp3' where id_poi=1705 and id_language=5;
+update ztl_poi_translation set sound = '1349242_point-14.mp3' where id_poi=1732 and id_language=5;
+update ztl_poi_translation set sound = '1349062_point-6.mp3' where id_poi=1734 and id_language=5;
+update ztl_poi_translation set sound = '1349055_point-5.mp3' where id_poi=1818 and id_language=5;
+update ztl_poi_translation set sound = '1349232_point-12.mp3' where id_poi=1821 and id_language=5;
+update ztl_poi_translation set sound = '1348645_point-3.mp3' where id_poi=19872 and id_language=5;
 
 
 UPDATE `ztl_poi_translation` SET `id_poi` = 1300,`id_language` = 1,`sound` = '1349124_tocka_7.mp3',`media_duration_string` = '6:02',`media_duration_value` = '362' WHERE `ztl_poi_translation`.`id_poi` = 1300 AND `ztl_poi_translation`.`id_language` = 1     ;
@@ -137,7 +136,7 @@ UPDATE `ztl_poi_translation` SET `id_poi` = 1455,`id_language` = 2,`sound` = '13
 UPDATE `ztl_poi_translation` SET `id_poi` = 1522,`id_language` = 2,`sound` = '1349261_point-15.mp3',`media_duration_string` = '2:36',`media_duration_value` = '156' WHERE `ztl_poi_translation`.`id_poi` = 1522 AND `ztl_poi_translation`.`id_language` = 2    ;
 UPDATE `ztl_poi_translation` SET `id_poi` = 1630,`id_language` = 2,`sound` = '1348641_point-2.mp3',`media_duration_string` = '5:11',`media_duration_value` = '311' WHERE `ztl_poi_translation`.`id_poi` = 1630 AND `ztl_poi_translation`.`id_language` = 2     ;
 UPDATE `ztl_poi_translation` SET `id_poi` = 1705,`id_language` = 2,`sound` = '1349205_point-10.mp3',`media_duration_string` = '4:52',`media_duration_value` = '292' WHERE `ztl_poi_translation`.`id_poi` = 1705 AND `ztl_poi_translation`.`id_language` = 2    ;
-UPDATE `ztl_poi_translation` SET `id_poi` = 1732,`id_language` = 2,`sound` = '1349242_point-14.mp3',`media_duration_string` = '4:53',`media_duration_value` = '293' WHERE `ztl_poi_translation`.`id_poi` = 1732 AND `ztl_poi_translation`.`id_language` = 2    ;
+UPDATE `ztl_poi_translation` SET `id_poi` = 1732,`id_language` = 2,`sound` = '1349242_point-14.mp3',`media_duration_string` = '4:44',`media_duration_value` = '284' WHERE `ztl_poi_translation`.`id_poi` = 1732 AND `ztl_poi_translation`.`id_language` = 2    ;
 UPDATE `ztl_poi_translation` SET `id_poi` = 1734,`id_language` = 2,`sound` = '1349062_point-6.mp3',`media_duration_string` = '4:04',`media_duration_value` = '244' WHERE `ztl_poi_translation`.`id_poi` = 1734 AND `ztl_poi_translation`.`id_language` = 2     ;
 UPDATE `ztl_poi_translation` SET `id_poi` = 1818,`id_language` = 2,`sound` = '1349055_point-5.mp3',`media_duration_string` = '2:34',`media_duration_value` = '154' WHERE `ztl_poi_translation`.`id_poi` = 1818 AND `ztl_poi_translation`.`id_language` = 2     ;
 UPDATE `ztl_poi_translation` SET `id_poi` = 1821,`id_language` = 2,`sound` = '1349232_point-11.mp3',`media_duration_string` = '2:30',`media_duration_value` = '150' WHERE `ztl_poi_translation`.`id_poi` = 1821 AND `ztl_poi_translation`.`id_language` = 2    ;
@@ -170,10 +169,24 @@ UPDATE `ztl_poi_translation` SET `id_poi` = 1734,`id_language` = 4,`sound` = '13
 UPDATE `ztl_poi_translation` SET `id_poi` = 1818,`id_language` = 4,`sound` = '1349057_punto_5.mp3',`media_duration_string` = '2:21',`media_duration_value` = '141' WHERE `ztl_poi_translation`.`id_poi` = 1818 AND `ztl_poi_translation`.`id_language` = 4     ;
 UPDATE `ztl_poi_translation` SET `id_poi` = 1821,`id_language` = 4,`sound` = '1349234_punto_12.mp3',`media_duration_string` = '6:50',`media_duration_value` = '410' WHERE `ztl_poi_translation`.`id_poi` = 1821 AND `ztl_poi_translation`.`id_language` = 4    ;
 UPDATE `ztl_poi_translation` SET `id_poi` = 19872,`id_language` = 4,`sound` = '1348647_punto_3.mp3',`media_duration_string` = '5:58',`media_duration_value` = '358' WHERE `ztl_poi_translation`.`id_poi` = 19872 AND `ztl_poi_translation`.`id_language` = 4   ;
+UPDATE `ztl_poi_translation` SET `id_poi` = 1300,`id_language` = 5,`sound` = '1349125_point-7.mp3',`media_duration_string` = '6:05',`media_duration_value` = '365' WHERE `ztl_poi_translation`.`id_poi` = 1300 AND `ztl_poi_translation`.`id_language` = 5     ;
+UPDATE `ztl_poi_translation` SET `id_poi` = 1336,`id_language` = 5,`sound` = '1349135_point-9.mp3',`media_duration_string` = '4:28',`media_duration_value` = '268' WHERE `ztl_poi_translation`.`id_poi` = 1336 AND `ztl_poi_translation`.`id_language` = 5     ;
+UPDATE `ztl_poi_translation` SET `id_poi` = 1365,`id_language` = 5,`sound` = '1349237_point-13.mp3',`media_duration_string` = '3:52',`media_duration_value` = '232' WHERE `ztl_poi_translation`.`id_poi` = 1365 AND `ztl_poi_translation`.`id_language` = 5    ;
+UPDATE `ztl_poi_translation` SET `id_poi` = 1417,`id_language` = 5,`sound` = '1349227_point-11.mp3',`media_duration_string` = '2:30',`media_duration_value` = '150' WHERE `ztl_poi_translation`.`id_poi` = 1417 AND `ztl_poi_translation`.`id_language` = 5    ;
+UPDATE `ztl_poi_translation` SET `id_poi` = 1435,`id_language` = 5,`sound` = '1349016_point-4.mp3',`media_duration_string` = '3:44',`media_duration_value` = '224' WHERE `ztl_poi_translation`.`id_poi` = 1435 AND `ztl_poi_translation`.`id_language` = 5     ;
+UPDATE `ztl_poi_translation` SET `id_poi` = 1455,`id_language` = 5,`sound` = '1349130_point-8.mp3',`media_duration_string` = '4:37',`media_duration_value` = '277' WHERE `ztl_poi_translation`.`id_poi` = 1455 AND `ztl_poi_translation`.`id_language` = 5     ;
+UPDATE `ztl_poi_translation` SET `id_poi` = 1522,`id_language` = 5,`sound` = '1349261_point-15.mp3',`media_duration_string` = '2:36',`media_duration_value` = '156' WHERE `ztl_poi_translation`.`id_poi` = 1522 AND `ztl_poi_translation`.`id_language` = 5    ;
+UPDATE `ztl_poi_translation` SET `id_poi` = 1630,`id_language` = 5,`sound` = '1348641_point-2.mp3',`media_duration_string` = '5:11',`media_duration_value` = '311' WHERE `ztl_poi_translation`.`id_poi` = 1630 AND `ztl_poi_translation`.`id_language` = 5     ;
+UPDATE `ztl_poi_translation` SET `id_poi` = 1705,`id_language` = 5,`sound` = '1349205_point-10.mp3',`media_duration_string` = '4:52',`media_duration_value` = '292' WHERE `ztl_poi_translation`.`id_poi` = 1705 AND `ztl_poi_translation`.`id_language` = 5    ;
+UPDATE `ztl_poi_translation` SET `id_poi` = 1732,`id_language` = 5,`sound` = '1349242_point-14.mp3',`media_duration_string` = '4:53',`media_duration_value` = '293' WHERE `ztl_poi_translation`.`id_poi` = 1732 AND `ztl_poi_translation`.`id_language` = 5    ;
+UPDATE `ztl_poi_translation` SET `id_poi` = 1734,`id_language` = 5,`sound` = '1349062_point-6.mp3',`media_duration_string` = '4:04',`media_duration_value` = '244' WHERE `ztl_poi_translation`.`id_poi` = 1734 AND `ztl_poi_translation`.`id_language` = 5     ;
+UPDATE `ztl_poi_translation` SET `id_poi` = 1818,`id_language` = 5,`sound` = '1349055_point-5.mp3',`media_duration_string` = '2:34',`media_duration_value` = '154' WHERE `ztl_poi_translation`.`id_poi` = 1818 AND `ztl_poi_translation`.`id_language` = 5     ;
+UPDATE `ztl_poi_translation` SET `id_poi` = 1821,`id_language` = 5,`sound` = '1349232_point-11.mp3',`media_duration_string` = '2:30',`media_duration_value` = '150' WHERE `ztl_poi_translation`.`id_poi` = 1821 AND `ztl_poi_translation`.`id_language` = 5    ;
+UPDATE `ztl_poi_translation` SET `id_poi` = 19872,`id_language` = 5,`sound` = '1348645_point-3.mp3',`media_duration_string` = '5:44',`media_duration_value` = '344' WHERE `ztl_poi_translation`.`id_poi` = 19872 AND `ztl_poi_translation`.`id_language` = 5   ;
 
 
 
-//še popravek za image
+//ï¿½e popravek za image
 1417 mestni trg
 ./uploads/images/fmpgtmp_efpudt.jpeg
 334/500

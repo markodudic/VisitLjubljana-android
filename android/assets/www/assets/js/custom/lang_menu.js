@@ -207,11 +207,11 @@ synhronization_button_translation[4]	= "TRASFERIRE I DATI";
 synhronization_button_translation[5]	= "TRANSFÉRER DES DONNÉES";
 
 var navigation_translation = [];
-navigation_translation[1]	= "Navigacija";
-navigation_translation[2]	= "Navigation";
-navigation_translation[3]	= "Navigation";
-navigation_translation[4]	= "Navigazione";
-navigation_translation[5]	= "Navigation";
+navigation_translation[1]	= "Geolokacija onemogočena";
+navigation_translation[2]	= "Location services disabled";
+navigation_translation[3]	= "Standort deaktiviert";
+navigation_translation[4]	= "Servizi di locallizazione disattivati";
+navigation_translation[5]	= "Services de localisation désactivées";
 
 var no_gps_desc_translation = [];
 no_gps_desc_translation[1]	= "Prikaz vaše lokacije ni omogočen. Prosimo, vklopite GPS.";
