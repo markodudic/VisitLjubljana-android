@@ -103,7 +103,7 @@ function filter_events()  {
 							"FROM ztl_event e LEFT JOIN ztl_event_translation et ON et.id_event = e.id " +
 							"LEFT JOIN  ztl_event_timetable ett ON ett.id_event = e.id " +
 							"LEFT JOIN ztl_poi p ON p.id = ett.venue_id " +
-							"WHERE et.id_language = "+settings.id_lang+" AND ','||"+event_type_filter+"||',' like ','||e.types||',' AND e.record_status = 1 AND date_last >= "+event_date_from_sql+" AND date_last <= "+event_date_to_sql+" " +
+							"WHERE et.id_language = "+settings.id_lang+" AND ','||"+event_type_filter+"||',' like ','||e.types||',' AND e.record_status = 1 AND date_last >= "+event_date_from_sql+" AND date_first <= "+event_date_to_sql+" " +
 							"  AND ett.date_last >=  CAST(strftime('%s','now') as integer) " +
 							"GROUP BY e.id  " +
 							"ORDER BY ett.date_first";
@@ -113,7 +113,7 @@ function filter_events()  {
 				    			"LEFT JOIN ztl_event_translation et ON et.id_event = e.id " +
 				    			"LEFT JOIN  ztl_event_timetable ett ON ett.id_event = e.id " +
 				    			"LEFT JOIN ztl_poi p ON p.id = ett.venue_id " +
-				    			"WHERE et.id_language = "+settings.id_lang+" AND e.record_status = 1 AND date_last >= "+event_date_from_sql+" AND date_last <= "+event_date_to_sql+" " +
+				    			"WHERE et.id_language = "+settings.id_lang+" AND e.record_status = 1 AND date_last >= "+event_date_from_sql+" AND date_first <= "+event_date_to_sql+" " +
 				    			"  AND ett.date_last >=  CAST(strftime('%s','now') as integer) " +
 								"GROUP BY e.id " +
 				    			"ORDER BY ett.date_first ";
