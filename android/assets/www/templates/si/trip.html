@@ -64,14 +64,14 @@
 			<img class="close_img" >
 		</div>
 		<div style="position:absolute; width:100%; height:80%; text-align:center; bottom:0;" onClick="media_control_toggle();">
-			<div style="font-size:30px; text-transform:uppercase; color:#ffffff;">{{title}}</div>
+			<div class="media_player_title">{{title}}</div>
 			<br>
-			<canvas id="myCanvas" width="250" height="250" class="player_stop_back"></canvas>
 			<div class="media_player_contorl">
-				<img class="player_control_image" src="assets/css/ztl_images/media_player_play_start.png">
+				<canvas id="myCanvas" width="250" height="250" class="player_stop_back"></canvas>
+				<img class="player_control_image media_player_contorl_button" src="assets/css/ztl_images/media_player_play_start.png">
 			</div>
 			<br>
-			<div style="width:100%; font-size:30px; text-transform:uppercase; color:#ffffff;"><span class="media_player_time" style="color:#ea1b25;">0:00</span>&nbsp/&nbsp;{{media_duration_string}}</div>
+			<div class="media_player_title"><span class="media_player_time" style="color:#ea1b25;">0:00</span>&nbsp/&nbsp;{{media_duration_string}}</div>
 		</div>
 	</div>
 	<div class="ztl_content ztl_content_extra">
