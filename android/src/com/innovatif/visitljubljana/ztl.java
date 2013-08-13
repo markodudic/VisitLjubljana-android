@@ -50,18 +50,7 @@ public class ztl extends DroidGap
         EasyTracker.getInstance().setContext(this);
         EasyTracker.getInstance().activityStart(this); // Add this method.
         
-        //MobPartner
-        MobPartnerAdvertiser ad = new MobPartnerAdvertiser(this);
-        ad.sendMobPartnerAdInfos(getString(R.string.mobpartner_caid), true);
-        System.out.println("mobpartner_caid="+getString(R.string.mobpartner_caid));
-        
-        /*Intent i = new Intent("com.android.vending.INSTALL_REFERRER"); 
-        i.setPackage(this.getPackageName()); 
-        i.putExtra("referrer", "utm_source%3Dmobpartner%26utm_medium%3DPartner%26utm_campaign%3D118"); 
-        sendBroadcast(i);
-        */
-        //skopiram predpripravljeno bazo
-        
+        //skopiram predpripravljeno bazo        
         try
         {
         	String pName = this.getClass().getPackage().getName();
