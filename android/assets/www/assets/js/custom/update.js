@@ -1032,6 +1032,8 @@ function readFilesAudio() {
                     ft.download(url, dlPath, function() {}, onFSError);
 	    		}
 	        }
+	        
+			spinner.stop();
 		});
 	});
 }
