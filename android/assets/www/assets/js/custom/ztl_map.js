@@ -27,7 +27,7 @@ function load_show_map(id, type, group) {
 	curr_id = id;
 	curr_type = type;
 	curr_group = group;
-	if ((group == INSPIRED_GROUP) || (group == POIGROUP_GROUP) || (group == INFO_POI_GROUP)) {
+	if (group == INSPIRED_GROUP) {
 		curr_group = POI_GROUP;
 	}
 
@@ -329,12 +329,21 @@ function get_poi_data() {
 		} else if (curr_type == EVENT_GROUP) {
 		    load_map_coord(trips[EVENT_GROUP], curr_id, EVENT_GROUP);
 		} else if (curr_type == POI_GROUP) {
-		   	//load_map_coord(trips[curr_group], curr_id, POI_GROUP);
-        	load_map_coord(trips[POI_ZAMENITOSTI_GROUP], curr_id, POI_GROUP);
-    		load_map_coord(trips[POI_KULINARIKA_GROUP], curr_id, POI_GROUP);
-    		load_map_coord(trips[POI_NASTANITVE_GROUP], curr_id, POI_GROUP);
-    		load_map_coord(trips[POI_NAKUPOVANJE_GROUP], curr_id, POI_GROUP);
-    		load_map_coord(trips[POI_ZABAVA_GROUP], curr_id, POI_GROUP);
+			if ((curr_group == POIGROUP_GROUP) || (curr_group == INFO_POI_GROUP)) {
+		        var tmp_query = 'SELECT  id, '+curr_type+' as type, coord_x, coord_y '+
+								'FROM ztl_poi  '+
+						        'WHERE id = '+curr_id;
+				
+				var tmp_callback    = "load_map_coords_success";
+		
+				generate_query(tmp_query, tmp_callback);
+			} else {
+				load_map_coord(trips[POI_ZAMENITOSTI_GROUP], curr_id, POI_GROUP);
+	    		load_map_coord(trips[POI_KULINARIKA_GROUP], curr_id, POI_GROUP);
+	    		load_map_coord(trips[POI_NASTANITVE_GROUP], curr_id, POI_GROUP);
+	    		load_map_coord(trips[POI_NAKUPOVANJE_GROUP], curr_id, POI_GROUP);
+	    		load_map_coord(trips[POI_ZABAVA_GROUP], curr_id, POI_GROUP);
+			}
 		} else if (curr_type == TOUR_LIST_GROUP) {
 			load_my_visit_map();
 		} else if (curr_type == INSPIRED_GROUP) {
@@ -366,11 +375,14 @@ function load_content(id) {
     generate_query(tmp_query, tmp_callback);
 }
 
+function load_map_coords_success(results) {
+    for (var i = 0; i<results.rows.length; i++) {
+		add_point_on_map(results.rows.item(i));
+    }
+}
 
 function load_map_coords(results, type) {
-    var len = results.items.length;
-
-	for (var i = 0; i<results.items.length; i++) {
+    for (var i = 0; i<results.items.length; i++) {
 		add_point_on_map(results.items[i], type);
     }
 }

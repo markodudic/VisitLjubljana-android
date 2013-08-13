@@ -1113,7 +1113,7 @@ function show_spinner() {
 			  left: (window.innerWidth-window.innerWidth/3)/2 // Left position relative to parent in px
 			};
 	
-	$(document.createElement('div')).width('100%').height('100%')
+	$(document.createElement('div')).width('120%').height('120%')
 	.css({backgroundColor:'black', opacity:0.8, position:'absolute', zIndex:2e8, left:0, top:0})
     .attr("id","overlay").prependTo($('body'));
 
