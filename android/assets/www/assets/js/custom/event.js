@@ -24,6 +24,12 @@ function event_filter_toggle() {
 		is_event_filter = 0;
 	}
 
+	if (device.platform == "iOS") {
+		$('#ztl_trip_filter_date_from').attr("type", "date");
+		$('#ztl_trip_filter_date_to').attr("type", "date");
+	}
+
+	
 	/*
 	var history = JSON.parse(localStorage.getItem('history'));
 	if (history[history.length-1] == 'main_menu--0') {

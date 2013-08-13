@@ -166,7 +166,6 @@ function sync_my_visit(res) {
 		clear_my_visit();
 
 		for (var i = 0; i<res.length; i++) {
-
 			tmp_group = get_mobile_group(res[i].ref_object_type);
 			add_to_my_visit(res[i].ref_object, tmp_group, res[i].ref_object_date_type, res[i].ref_object_start, res[i].ref_object_end, 1);
 		}

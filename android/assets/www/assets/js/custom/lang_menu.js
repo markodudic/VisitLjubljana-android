@@ -206,6 +206,21 @@ synhronization_button_translation[3]	= "ÜBERTRAGEN VON DATEN";
 synhronization_button_translation[4]	= "TRASFERIRE I DATI";
 synhronization_button_translation[5]	= "TRANSFÉRER DES DONNÉES";
 
+var navigation_translation = [];
+navigation_translation[1]	= "Navigacija";
+navigation_translation[2]	= "Navigation";
+navigation_translation[3]	= "Navigation";
+navigation_translation[4]	= "Navigazione";
+navigation_translation[5]	= "Navigation";
+
+var no_gps_desc_translation = [];
+no_gps_desc_translation[1]	= "Prikaz vaše lokacije ni omogočen. Prosimo, vklopite GPS.";
+no_gps_desc_translation[2]	= "Please turn on GPS to show your location.";
+no_gps_desc_translation[3]	= "Bitte schalten Sie GPS, um Ihren Standort zu zeigen.";
+no_gps_desc_translation[4]	= "Si prega accendere il GPS per mostrare la vostra posizione.";
+no_gps_desc_translation[5]	= "S'il vous plaît tourner sur le GPS pour afficher votre emplacement.";
+
+
 var copy_right_translation = [];
 copy_right_translation[1]	= "©Turizem Ljubljana";
 copy_right_translation[2]	= "©Ljubljana Tourism";
@@ -279,7 +294,7 @@ guide_buy_desc_text_translation[1]	= "Glasovni vodič vam predstavlja 14 zanimiv
 guide_buy_desc_text_translation[2]	= "The audio guide features 14 points of interest in Ljubljana, their locations and different routes to get to them.";
 guide_buy_desc_text_translation[3]	= "Der Audioführer stellt Ihnen 14 interessante Punkte und mehrere mögliche Wege zu ihnen vor.";
 guide_buy_desc_text_translation[4]	= "La guida digitale illustra 14 punti d'interesse e i vari percorsi per raggiungerli.";
-guide_buy_desc_text_translation[5]	= "L'audioguide visuel présente 14 curiosités et plusieurs itinéraires possibles pour arriver jusqu'à elles.";
+guide_buy_desc_text_translation[5]	= "L'audioguide visuel présente 14 curiosités et plusieurs itinéraires possibles pour arriver jusqu'à elles.\n\nLe narrateur vocal intégré n‘est malheureusement pas disponible en français, vous pouvez toutefois l’écouter en anglais.";
 
 
 //prevodi mesecov za top evente

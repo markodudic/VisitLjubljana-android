@@ -54,6 +54,7 @@ function buy_guide() {
 		
 		load_page(template_lang+'guide_buy.html', 'guide_buy', trips[VOICE_GROUP], 'fade', false);		
 	} else {
+		show_spinner();
 		//sinhronizacija v update.js:644
 		update_audio();
 		
@@ -63,6 +64,7 @@ function buy_guide() {
 		audio_guides[settings.id_lang]["purchased"] = lang_has_purchased;
 		audio_guides[settings.id_lang]["stored"]    = lang_has_stored;
 		localStorage.setItem('audio_guides', JSON.stringify(audio_guides));
+		
 		
 		//zrendramo na novo
 		load_guide_buy();

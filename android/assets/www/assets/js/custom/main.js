@@ -477,8 +477,7 @@ function load_page(template, div, data, transition, reverse, id_group) {
 			if (div == 'trips') {
 				extra_div_id 		= "_"+id_group;
 				data.extra_div_id 	= id_group;
-				console.log("data.page_title="+data.items[0].page_title);
-		    	if (id_group != INFO_POI_GROUP) {
+				if (id_group != INFO_POI_GROUP) {
 					data.page_title 	= trips_title[id_group];
 				} else {
 					data.page_title 	= data.items[0].cat_title;

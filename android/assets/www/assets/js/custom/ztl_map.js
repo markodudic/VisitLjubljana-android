@@ -27,7 +27,7 @@ function load_show_map(id, type, group) {
 	curr_id = id;
 	curr_type = type;
 	curr_group = group;
-	if ((group == INSPIRED_GROUP) || (group == POIGROUP_GROUP)) {
+	if ((group == INSPIRED_GROUP) || (group == POIGROUP_GROUP) || (group == INFO_POI_GROUP)) {
 		curr_group = POI_GROUP;
 	}
 
@@ -106,7 +106,16 @@ var init = function (onSelectFeatureFunction) {
     });
     
     $("#my_location").on('click', function(){
-    	showMyLocation(1);
+    	if (current_position_xy != undefined) {
+        	showMyLocation(1);
+        } else {
+    		navigator.notification.confirm(
+    				no_gps_desc_translation[settings.id_lang],
+    				null,
+    				navigation_translation[settings.id_lang],
+    		        ok_translation[settings.id_lang]
+    		    );    		
+    	}
     });
 
     //TODO popravi na nove
@@ -313,7 +322,7 @@ function transform (lon, lat) {
 
 function get_poi_data() {
 	points =  new Array();
-
+	console.log("GET="+curr_id+":"+curr_type);
 	if (curr_id != undefined) {
 		if (curr_type == VOICE_GROUP) {
 			load_map_coords(trips[VOICE_GROUP], VOICE_GROUP);
@@ -528,7 +537,16 @@ function map_settings_toggle() {
 }
 
 function show_system_maps() {
-	if (current_position_xy == undefined) return;
+	if (current_position_xy == undefined) {
+		navigator.notification.confirm(
+				no_gps_desc_translation[settings.id_lang],
+				null,
+				navigation_translation[settings.id_lang],
+		        ok_translation[settings.id_lang]
+		    );
+
+		return;
+	}
 	
 	source = new Proj4js.Proj('EPSG:31469');
     dest = new Proj4js.Proj('EPSG:4326');	//WGS84
