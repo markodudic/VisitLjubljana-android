@@ -226,7 +226,11 @@ function events_success(results) {
     	}
     	
     	if (results.rows.item(i).featured == "true") {
-    		tmp_date 	= new Date(parseInt(results.rows.item(i).date_last)*1000); 
+    		if (parseInt(results.rows.item(i).venue_cnt) > 1) {
+        		tmp_date 	= new Date(parseInt(results.rows.item(i).date_next)*1000); 
+    		} else {
+        		tmp_date 	= new Date(parseInt(results.rows.item(i).date_last)*1000);     			
+    		}
     		tmp_month 	= tmp_date.getMonth(); 
     		tmp_day		= tmp_date.getDate();
 
@@ -414,7 +418,11 @@ function load_event_pricing_success(results) {
     var id_event = tmp_event_data.item.id;
     current 	 = id_event;
 
-	var tmp_query 	 = "SELECT et.venue, et.date, et.timetable_idx as id_time FROM ztl_event_timetable et WHERE et.id_event = "+id_event+" AND et.id_language = "+settings.id_lang+" GROUP BY et.venue, et.date";
+	var tmp_query 	 = "SELECT et.venue, et.date, et.timetable_idx as id_time " +
+						"FROM ztl_event_timetable et " +
+						"WHERE et.id_event = "+id_event+" AND et.id_language = "+settings.id_lang+" AND date_first >=  CAST(strftime('%s','now') as integer) "+
+						"GROUP BY et.venue, et.date "+
+						"ORDER BY et.timetable_idx";
 	var tmp_callback = "load_event_venue_success";
 	generate_query(tmp_query, tmp_callback);
 }
