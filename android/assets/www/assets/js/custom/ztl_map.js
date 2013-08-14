@@ -18,6 +18,7 @@ var current_position_center;
 //query cache
 var cache_my_visit_map;
 var cache_inspired_map;
+var cache_poigroup_tic_map;
 
 var map_selection = 0;
 	
@@ -33,6 +34,17 @@ function load_show_map(id, type, group) {
 
 	//query cache
     __load_my_visit_map();
+    
+    //			
+    if ((curr_group == POIGROUP_GROUP) || (curr_group == INFO_POI_GROUP)) {
+	    var tmp_query = 'SELECT  id, '+curr_type+' as type, coord_x, coord_y '+
+		'FROM ztl_poi  '+
+	    'WHERE id = '+curr_id;
+	
+		var tmp_callback    = "load_map_coords_success";
+		
+		generate_query(tmp_query, tmp_callback);
+	}
 
     load_page(template_lang+'ztl_map.html', 'ztl_map', null, 'fade', false);
 }
@@ -330,13 +342,7 @@ function get_poi_data() {
 		    load_map_coord(trips[EVENT_GROUP], curr_id, EVENT_GROUP);
 		} else if (curr_type == POI_GROUP) {
 			if ((curr_group == POIGROUP_GROUP) || (curr_group == INFO_POI_GROUP)) {
-		        var tmp_query = 'SELECT  id, '+curr_type+' as type, coord_x, coord_y '+
-								'FROM ztl_poi  '+
-						        'WHERE id = '+curr_id;
-				
-				var tmp_callback    = "load_map_coords_success";
-		
-				generate_query(tmp_query, tmp_callback);
+				load_map_coords_poigroup_tic(cache_poigroup_tic_map);
 			} else {
 				load_map_coord(trips[POI_ZAMENITOSTI_GROUP], curr_id, POI_GROUP);
 	    		load_map_coord(trips[POI_KULINARIKA_GROUP], curr_id, POI_GROUP);
@@ -376,6 +382,10 @@ function load_content(id) {
 }
 
 function load_map_coords_success(results) {
+	cache_poigroup_tic_map = results;
+}
+
+function load_map_coords_poigroup_tic(results) {
     for (var i = 0; i<results.rows.length; i++) {
 		add_point_on_map(results.rows.item(i));
     }
