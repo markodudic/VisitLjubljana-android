@@ -175,16 +175,22 @@ function reset_cache() {
 	window.setTimeout(reset_cache_cont,500);
 }
 
+//preverjam ali so izvedene vse cache funkcije zato da sele po tem zapisem local storage in grem naprej
+var CACHE_ITEMS = 12;
+var cache_finished = 0;
+var cache_check = 0;
 function reset_cache_cont() {
-	load_main_menu(); 
+	cache_finished = 0;
+	cache_check = 1;
 	
+	load_main_menu(); 
+
 	//pois
     load_pois(POI_ZAMENITOSTI_GROUP, 3, 0);
     load_pois(POI_KULINARIKA_GROUP, 4, 0);
     load_pois(POI_ZABAVA_GROUP, 8, 0);
     load_pois(POI_NAKUPOVANJE_GROUP, 9, 0);
-	load_pois(POI_NASTANITVE_GROUP, 7, 0);
-	
+	load_pois(POI_NASTANITVE_GROUP, 7, 0);	
 	
     //ostali podatki
 	load_poi_filter();
@@ -195,10 +201,21 @@ function reset_cache_cont() {
     load_inspired(0);
     load_poigroup(0);
     
-    set_cache();
-	
-	select_language_cont();
 }
+
+function is_cache_finished() {
+	if (cache_check == 0) return;
+	
+	console.log("CACHE FINISHED="+cache_finished);
+	cache_finished++;
+	//vsi cachei
+	if (cache_finished == CACHE_ITEMS) {
+		cache_check = 0;
+	    set_cache();
+		select_language_cont();
+	}
+}
+
 
 function set_cache() {
 	window.localStorage.removeItem('trips');
@@ -1118,7 +1135,7 @@ function show_spinner() {
     .attr("id","overlay").prependTo($('body'));
 
 	
-	if ((current_div == 'select_language') || (current_div == 'ztl_synhronization')) {
+	if ((current_div == 'select_language') || (current_div == 'ztl_synhronization') || (current_div == 'guide_buy')) {
 		$('body').css('position','');
 		var target = document.getElementById("body");
 	} else {

@@ -92,6 +92,8 @@ function load_pois_success(results) {
     }
 	
     trips[trips_group] = res;
+    
+    is_cache_finished();
 }
 
 //nalozi poije
@@ -139,6 +141,8 @@ function poi_filter_success(results) {
 
     	poi_filter[i] = results.rows.item(i);
     }
+    
+    is_cache_finished();    
 }
 
 //nalozi poi
@@ -254,6 +258,7 @@ function events_success(results) {
 
     //zaradi ios-a cakam da se nafila
     is_updt_finished();
+    is_cache_finished();
 }
 
 function event_category_success(results) {
@@ -478,7 +483,8 @@ function info_success(results) {
     }
 
     trips[INFO_GROUP] = res;
-    //load_page(template_lang+'infos.html', 'infos', res, 'fade', false);
+    
+    is_cache_finished();
 }
 
 //single_info
@@ -546,6 +552,8 @@ function poigroup_success(results) {
     }
 
     trips[POIGROUP_GROUP] = res;
+    
+    is_cache_finished();
 }
 
 //nalozi poije poigrupe
@@ -627,6 +635,8 @@ function inspired_success(results) {
     }
 
     trips[INSPIRED_GROUP] = res;
+    
+    is_cache_finished();
 }
 
 //touri
@@ -650,6 +660,8 @@ function tour_list_success(results) {
     }
     trips[TOUR_LIST_GROUP] = res;
     trips[TOUR_LIST_GROUP].tours = tours;
+    
+    is_cache_finished();
 }
 
 function tour_success(results) {

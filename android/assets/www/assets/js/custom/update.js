@@ -13,10 +13,7 @@ function is_updt_finished() {
 	updt_finished++;
 	//vsi updejti
 	if (updt_finished == UPDATE_GROUPS) {
-		//vse poije, ki niso na glavnem menuji nastavi na id 230
-		//map_unused_groups();
-	    //all images
-		
+	    //all images		
 		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFSSuccess, null);
 		
 		var today     = new Date();
@@ -26,22 +23,14 @@ function is_updt_finished() {
 		
 		updt_finished = 0;
 		updt_running  = 0;
+		
 		spinner.stop();
 		
-		//if (populateDB == 1) {
-		//	copyDB();
-		//} 
+		if (populateDB == 1) {
+			copyDB();
+		} 
 		
 		load_current_div();
-		/*
-		navigator.notification.confirm(
-			synronization_finished_translation[settings.id_lang],
-	        load_current_div,
-	        synchronization_translation[settings.id_lang],
-	        ok_translation[settings.id_lang]
-		);
-		*/
-		//load_current_settings();		
 	}
 }
 

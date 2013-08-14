@@ -117,7 +117,7 @@ function go_back() {
 					event_call_from_history = 1;
 					filter_events();
 				} else if (go_to[1] == "poi_filter") {
-					poi_filter();
+					filter_poi();
 				} else if (go_to[1] == "load_single_info") {
 					load_single_info(params[0], 0);
 				} else if (go_to[1] == "load_info_pois") {
