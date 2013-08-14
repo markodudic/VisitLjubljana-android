@@ -425,7 +425,7 @@ function load_event_pricing_success(results) {
 
 	var tmp_query 	 = "SELECT et.venue, et.date, et.timetable_idx as id_time " +
 						"FROM ztl_event_timetable et " +
-						"WHERE et.id_event = "+id_event+" AND et.id_language = "+settings.id_lang+" AND date_first >=  CAST(strftime('%s','now') as integer) "+
+						"WHERE et.id_event = "+id_event+" AND et.id_language = "+settings.id_lang+" AND date_last >=  CAST(strftime('%s','now') as integer) "+
 						"GROUP BY et.venue, et.date "+
 						"ORDER BY et.timetable_idx";
 	var tmp_callback = "load_event_venue_success";
