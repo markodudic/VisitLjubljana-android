@@ -104,9 +104,9 @@ var max_dolzina_long_desc 	= 100;
 //regija
 //14.106,45.793 x 15.054,46.269  - staro
 //14.01,45.761 x 15.139,46.328
-var lon0 = 14.01;
-var lat0 = 45.761;
-var lon1 = 15.054;
+var lon0 = 14.11; 
+var lat0 = 45.783;
+var lon1 = 15.04;
 var lat1 = 46.428;
 /* ljubljana
 var lon0 = 14.434;

@@ -86,11 +86,11 @@ function on_device_ready() {
 
 	//prvic napolnimo po izbiri jezika
 	if (localStorage.getItem(localStorage.key('first_run')) != null) {
-		if (device.platform == "iOS") {
-			reset_cache();
-		} else {
+		//if (device.platform == "iOS") {
+		//	reset_cache();
+		//} else {
 			get_cache();
-		}
+		//}
 	}
 
 	poigroups_map[POI_ZAMENITOSTI_GROUP] 	= POI_ZAMENITOSTI_POI_GROUPS;
@@ -102,7 +102,7 @@ function on_device_ready() {
 	document.addEventListener("backbutton", go_back, true);
 
 	//skopiram bazo za backup
-	if (develop==1) copyDB();
+	if (develop==1) copyDB(); 
 	
 	//ponastavim history
 	localStorage.setItem('history', JSON.stringify(tmp_history));
