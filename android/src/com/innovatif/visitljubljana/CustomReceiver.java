@@ -30,11 +30,11 @@ public class CustomReceiver extends BroadcastReceiver {
 		ai = context.getPackageManager().getReceiverInfo(new ComponentName(context, "com.innovatif.visitljubljana.CustomReceiver"), PackageManager.GET_META_DATA); 
 		Bundle extras = intent.getExtras(); 
 		String referrerString = extras.getString("referrer"); 
-		System.out.println("Referrer is: " + referrerString); 
+		System.out.println("GA Referrer is: " + referrerString+":"+context.getString(R.string.mobpartner_cid)+":"+context.getString(R.string.mobpartner_caid)); 
 		if (referrerString.contains("mobpartner")) { 
 			extras.putString(MobPartnerUtils.META_CID, context.getString(R.string.mobpartner_cid)); 
 			extras.putString(MobPartnerUtils.META_CAID, context.getString(R.string.mobpartner_caid)); 
-			intent.putExtras(extras); 
+			intent.putExtras(extras);
 			try { 
 				((BroadcastReceiver) Class.forName( "com.mobpartner.android.advertiser.MobPartnerAdvertiserReceiver").newInstance()).onReceive(context, intent); 
 				} catch (IllegalAccessException e) { e.printStackTrace(); 
