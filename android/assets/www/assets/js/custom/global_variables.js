@@ -1,5 +1,6 @@
 //vedno spremeni to vrednost zato da se po instalaciji prepise cache in po potrebi baza
 var version_code=3;
+var VERSION="1.3.1";
 
 var server_url = 'http://www.visitljubljana.com/';
 var develop = 1;
@@ -105,7 +106,7 @@ var max_dolzina_long_desc 	= 100;
 //14.106,45.793 x 15.054,46.269  - staro
 //14.01,45.761 x 15.139,46.328
 var lon0 = 14.11; 
-var lat0 = 45.783;
+var lat0 = 45.783; 
 var lon1 = 15.04;
 var lat1 = 46.428;
 /* ljubljana
@@ -137,10 +138,10 @@ var UA_android = "UA-4832430-3";
 var UA_ios     = "UA-4832430-4";
 
 //za deploy - ne izpisujejo se komentarji
-/*
+
 var console = {};
 console.log = function(){};
-*/
+
 
 //iOS overrides
 function reinit() {

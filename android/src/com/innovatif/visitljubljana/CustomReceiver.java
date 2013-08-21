@@ -8,10 +8,8 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.google.analytics.tracking.android.CampaignTrackingReceiver;
-import com.mobpartner.android.advertiser.MobPartnerAdvertiser;
 import com.mobpartner.android.advertiser.MobPartnerUtils;
 
 /*
