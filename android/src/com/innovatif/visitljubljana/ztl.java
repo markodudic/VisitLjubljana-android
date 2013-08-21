@@ -46,6 +46,15 @@ public class ztl extends DroidGap
         appView.setVerticalScrollBarEnabled(false);
         appView.setHorizontalScrollBarEnabled(false);
        
+        MobPartnerAdvertiser ad = new MobPartnerAdvertiser(this);
+        ad.sendMobPartnerAdInfos(getString(R.string.mobpartner_caid), true);
+               
+        /*Intent i = new Intent("com.innovatif.visitljubljana.INSTALL_REFERRER"); 
+        i.setPackage(this.getPackageName()); 
+        i.putExtra("referrer", "utm_source=mobpartner%26utm_medium%3DPartner%26utm_campaign%3D118"); 
+        //i.putExtra("referrer", "utm_source=adplatform&utm_medium=cpc&utm_content=android_slo_cpc&utm_campaign=vljapp_htpl");
+        sendBroadcast(i);
+        */
         //analytics
         EasyTracker.getInstance().setContext(this);
         EasyTracker.getInstance().activityStart(this); // Add this method.

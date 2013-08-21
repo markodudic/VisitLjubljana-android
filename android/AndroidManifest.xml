@@ -47,13 +47,7 @@
             </intent-filter>
         </activity>
         
-		<receiver android:name=".CustomReceiver" android:exported="true">
-		  	<intent-filter>
-		    	<action android:name="com.innovatif.visitljubljana.INSTALL_REFERRER" />
-		  	</intent-filter>
-		</receiver>
-        
-		<!-- receiver android:name="com.mobpartner.android.advertiser.MobPartnerAdvertiserReceiver" android:exported="true"> 
+		<receiver android:name="com.mobpartner.android.advertiser.MobPartnerAdvertiserReceiver" android:exported="true"> 
 		    <intent-filter> 
 		        <action android:name="com.android.vending.INSTALL_REFERRER" /> 
 		    </intent-filter> 
@@ -62,12 +56,20 @@
 		    <meta-data android:name="mobpartner_debug" android:value="@string/mobpartner_debug" /> 
     	</receiver> 
     	
-		<service android:name="com.google.analytics.tracking.android.CampaignTrackingService"/>
+		<!-- service android:name="com.google.analytics.tracking.android.CampaignTrackingService"/>
 		<receiver android:name="com.google.analytics.tracking.android.CampaignTrackingReceiver" android:exported="true">
 		  	<intent-filter>
 		    	<action android:name="com.android.vending.INSTALL_REFERRER" />
 		  	</intent-filter>
+		</receiver>
+
+		<receiver android:name=".CustomReceiver" android:exported="true">
+		  	<intent-filter>
+		    	<action android:name="com.android.vending.INSTALL_REFERRER" />
+		  	</intent-filter>
 		</receiver-->
+        
+
     </application>
 
     <uses-sdk android:minSdkVersion="10" android:targetSdkVersion="17"/>
