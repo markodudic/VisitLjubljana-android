@@ -693,7 +693,7 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				data = {};
 				data.about_title	= about_translation[settings.id_lang];
 				data.copy_right 	= copy_right_translation[settings.id_lang];
-				data.version 		= version_translation[settings.id_lang];
+				data.version 		= VERSION;
 				data.about_version 	= about_version_translation[settings.id_lang];
 				data.about_contact 	= about_contact_translation[settings.id_lang];
 				data.about_desc		= about_desc_translation[settings.id_lang];

@@ -5,7 +5,7 @@ Priprava baze z podatki za poi, info, tour in inspired
 - naredi sinhronizacijo za vse jezike
 - zapri in odpri aplikacijo da skopira bazo na sd kartico
 - skopiraj bazo na lokalni disk
-adb pull /mnt/sdcard/Android/data/com.innovatif.visitljubljana/Database.db c:/temp
+adb pull /mnt/sdcard/Android/data/com.innovatif.visitljubljana/Database_3.db c:/temp
 - skopiraj image na lokalni disk v update folder
 adb pull /mnt/sdcard/android/data/com.innovatif.visitljubljana c:/temp/images
 - v bazi popravi poti do imagev (Skript 1)

@@ -235,14 +235,6 @@ about_version_translation[3]	= "VERSION";
 about_version_translation[4]	= "VERSIONE";
 about_version_translation[5]	= "VERSION";
 
-var version_translation = [];
-version_translation[1]	= "1.0";
-version_translation[2]	= "1.0";
-version_translation[3]	= "1.0";
-version_translation[4]	= "1.0";
-version_translation[5]	= "1.0";
-
-
 var about_contact_translation = [];
 about_contact_translation[1]	= "KONTAKT";
 about_contact_translation[2]	= "CONTACT";
