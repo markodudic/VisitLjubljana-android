@@ -543,6 +543,8 @@ function handle_tour(data) {
 		
 				if (data[h].objects[i].image == null) {
 					data[h].objects[i].image = "";
+					data[h].objects[i].image_w = 0;
+					data[h].objects[i].image_h = 0;
 				}
 
 				//for (var j = 0; j < data[i].images.length; j++) {
