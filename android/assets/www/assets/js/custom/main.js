@@ -376,6 +376,7 @@ function synhronization_prompt() {
 
 function onConfirm(buttonIndex) {
 	if (buttonIndex == 2) {
+		synhronize_all = 1;
 		do_synhronization();
 	} else {
 		load_main_screen();
@@ -419,6 +420,7 @@ function synhronization_force() {
 
 function onConfirmForce(buttonIndex) {
 	if (buttonIndex == 2) {
+		synhronize_all = 1;
 		do_synhronization();
 	}
 }
@@ -698,13 +700,7 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				data.about_contact 	= about_contact_translation[settings.id_lang];
 				data.about_desc		= about_desc_translation[settings.id_lang];
 			} else if (div == "my_visit_list") {
-				/*if (my_visit_date_sql == 0) {
-					data.my_visit_date_sql = "";
-				} else {
-					data.my_visit_date_sql = my_visit_date_sql;
-				}*/
- 
-
+				data.reminder 			= reminder_translation[settings.id_lang];
 				data.page_title  		= my_visit_page_title_translation[settings.id_lang];
 				data.select_view 		= select_view_translation[settings.id_lang];
 				data.confirm 	 		= confirm_translation[settings.id_lang];
@@ -874,7 +870,7 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				init_map();
 			}
 			
-			if (div == 'ztl_settings') {
+			if (div == 'my_visit_list') {
 				reminder_toggle();
 			}
 
@@ -1060,13 +1056,15 @@ function start_synhronization() {
 		        ok_translation[settings.id_lang]
 		    );
 	} else {
+		synhronize_all = 0;
 		do_synhronization();
 	}
 }
 
 
 function do_synhronization() {
-	check_updates();
+	//check_updates();
+	update_db();
 }
 
 function sort_by_distance(unsorted) {

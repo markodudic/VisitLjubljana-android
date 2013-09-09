@@ -487,3 +487,19 @@ function my_visit_event_date_select_toggle() {
 	$(".header").toggle();
 	$(".footer").toggle();
 }
+
+
+function reminder_change(sel) {
+	localStorage.setItem('reminder', sel);
+	reminder_toggle();
+}
+
+function reminder_toggle() {
+	if ((localStorage.getItem('reminder') == null) || (localStorage.getItem('reminder') == 0)) {
+		$("#reminder_on").css('display','none');
+		$("#reminder_off").css('display','inline');
+	} else {
+		$("#reminder_on").css('display','inline');
+		$("#reminder_off").css('display','none');		
+	}
+}
