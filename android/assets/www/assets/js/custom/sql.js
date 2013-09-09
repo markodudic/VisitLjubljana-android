@@ -355,7 +355,10 @@ function load_event_success(results) {
 						"LEFT JOIN ztl_event_translation et ON et.id_event = e.id " +
 						"LEFT JOIN  ztl_event_timetable ett ON ett.id_event = e.id " +
 						"LEFT JOIN ztl_poi p ON p.id = ett.venue_id " +
-						"WHERE et.id_language = "+settings.id_lang+" AND e.record_status = 1 and e.id in (" + results.rows.item(0).sub_events + ") " +
+						"WHERE et.id_language = "+settings.id_lang+" AND " +
+						"		e.record_status = 1 and " +
+						"		e.id in (" + results.rows.item(0).sub_events + ") AND " +
+						"  		ett.date_last >=  CAST(strftime('%s','now') as integer) " +
 						"GROUP BY e.id ";
 						"ORDER BY e.featured desc, ett.date_first";
 		var tmp_callback = "sub_events_success";

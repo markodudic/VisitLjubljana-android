@@ -1,26 +1,9 @@
-   			
-
 function load_current_settings() {
 	load_page(template_lang+'ztl_settings.html', 'ztl_settings', settings, 'fade', false);
 }
 
 function choose_language() {
 	load_page('select_language.html', 'select_language', null, 'fade', false, 0);
-}
-
-function reminder_change(sel) {
-	localStorage.setItem('reminder', sel);
-	reminder_toggle();
-}
-
-function reminder_toggle() {
-	if ((localStorage.getItem('reminder') == null) || (localStorage.getItem('reminder') == 0)) {
-		$("#reminder_on").css('display','none');
-		$("#reminder_off").css('display','inline');
-	} else {
-		$("#reminder_on").css('display','inline');
-		$("#reminder_off").css('display','none');		
-	}
 }
 
 function synhronization(){

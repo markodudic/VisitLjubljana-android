@@ -8,6 +8,7 @@ function update_db() {
  
 var updt_finished = 0;
 var updt_running  = 0;
+var synhronize_all = 0;
 function is_updt_finished() {
 	console.log("UPADET FINISHED="+updt_finished);
 	updt_finished++;
@@ -38,7 +39,10 @@ function check_update_success(results) {
 	if (updt_running  == 1) {
 		return;
 	}
-	updt_finished = 0;
+	
+	if (synhronize_all == 0) updt_finished = 0;
+	else updt_finished = UPDATE_GROUPS-1;
+	
 	updt_running  = 1;
 	
 	show_spinner();
@@ -62,17 +66,6 @@ function check_update_success(results) {
 	    update_inspired(server_url+lang_code+'/mobile_app/inspired.json');
 	    update_poigroup(server_url+lang_code+'/mobile_app/poigroup.json');
 	} else {
-		//updatam poi-je
-		var pois = new Array();
-		db.transaction(function(tx) {
-		    tx.executeSql("select id from ztl_poi;", [], function(tx, res) {
-		        for (var i=0; i<res.rows.length; i++) {
-	        		pois[i] = res.rows.item(i).id;
-		        }
-		        update_poi_deleted(server_url+lang_code+'/mobile_app/poi.json?datemodified='+results.rows.item(0).last_update, pois);
-		    });
-		});
-			        
 		//updatam dogodke. prvic vse
 		if (localStorage.getItem('first_synhronization') == 0) {
 			update_event(server_url+lang_code+'/mobile_app/event.json');
@@ -90,22 +83,36 @@ function check_update_success(results) {
 			});
 	    
 		}
-	
-		//updatam oglede. vedno samo nove
-	    var tours = new Array();
-		db.transaction(function(tx) {
-		    tx.executeSql("select id from ztl_tour;", [], function(tx, res) {
-		        for (var i=0; i<res.rows.length; i++) {
-		        	tours[i] = res.rows.item(i).id;
-		        }
-		        update_tour_deleted(server_url+lang_code+'/mobile_app/tour.json?datemodified='+results.rows.item(0).last_update, tours); 
-		    });
-		});
-	
-		//updatam info. vedno vse
-	    update_info(server_url+lang_code+'/mobile_app/info.json');
-	    update_inspired(server_url+lang_code+'/mobile_app/inspired.json');
-	    update_poigroup(server_url+lang_code+'/mobile_app/poigroup.json');
+
+		if (synhronize_all == 0) {
+			//updatam poi-je
+			var pois = new Array();
+			db.transaction(function(tx) {
+			    tx.executeSql("select id from ztl_poi;", [], function(tx, res) {
+			        for (var i=0; i<res.rows.length; i++) {
+		        		pois[i] = res.rows.item(i).id;
+			        }
+			        update_poi_deleted(server_url+lang_code+'/mobile_app/poi.json?datemodified='+results.rows.item(0).last_update, pois);
+			    });
+			});
+				        
+		
+			//updatam oglede. vedno samo nove
+		    var tours = new Array();
+			db.transaction(function(tx) {
+			    tx.executeSql("select id from ztl_tour;", [], function(tx, res) {
+			        for (var i=0; i<res.rows.length; i++) {
+			        	tours[i] = res.rows.item(i).id;
+			        }
+			        update_tour_deleted(server_url+lang_code+'/mobile_app/tour.json?datemodified='+results.rows.item(0).last_update, tours); 
+			    });
+			});
+		
+			//updatam info. vedno vse
+		    update_info(server_url+lang_code+'/mobile_app/info.json');
+		    update_inspired(server_url+lang_code+'/mobile_app/inspired.json');
+		    update_poigroup(server_url+lang_code+'/mobile_app/poigroup.json');
+		}
 	}
 }
 

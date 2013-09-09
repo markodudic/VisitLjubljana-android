@@ -1,6 +1,6 @@
 //vedno spremeni to vrednost zato da se po instalaciji prepise cache in po potrebi baza
-var version_code=6;
-var VERSION="1.3.2";
+var version_code=7;
+var VERSION="1.4";
 
 var server_url = 'http://www.visitljubljana.com/';
 var develop = 1;
@@ -138,10 +138,10 @@ var UA_android = "UA-4832430-3";
 var UA_ios     = "UA-4832430-4";
 
 //za deploy - ne izpisujejo se komentarji
-
+/*
 var console = {};
 console.log = function(){};
-
+*/
 
 //iOS overrides
 function reinit() {
