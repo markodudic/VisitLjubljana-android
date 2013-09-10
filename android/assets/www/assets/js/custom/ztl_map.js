@@ -235,10 +235,10 @@ var init = function (onSelectFeatureFunction) {
     if (curr_type != undefined) {
     	//var point = transform (parseFloat(points[0][0])+correctionX, parseFloat(points[0][1])+correctionY);
     	//var lonLat = new OpenLayers.LonLat(point.lon, point.lat);
-    	/*if (current_position_center != undefined) {
+    	if (current_position_center != undefined) {
     		var lonlat = new OpenLayers.LonLat(current_position_center.lon, current_position_center.lat); 
         	bounds.extendXY(lonlat.lon, lonlat.lat);
-    	}*/
+    	}
     	
     	var pixel = bounds.getCenterPixel();
     	map.zoomToExtent(bounds, false);

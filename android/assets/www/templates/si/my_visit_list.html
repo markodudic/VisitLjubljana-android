@@ -51,6 +51,7 @@
 				</div>
 				<div class="my_visit_list_settings_border"></div>
 
+
 				<div class="my_visit_list my_visit_settings_list">
 					<span onClick="my_visit_filter = 0; my_visit_sync();">{{my_visit_sync}}</span>
 					<input type="hidden" id="my_visit_username" value="{{user.username}}">
@@ -63,6 +64,11 @@
 						<span onClick="my_visit_filter = 0; web_user_logout();">{{logout}}</span>
 					</div>
 					<div class="my_visit_list_settings_border"></div>
+				</div>
+
+				<div class="my_visit_list ztl_list_item ztl_list_header ztl_settings_text">{{reminder}}
+					<img class="checkbox" id="reminder_on" src="assets/css/ztl_images/checkbox-on.png" onclick="reminder_change(0);">
+					<img class="checkbox" id="reminder_off" src="assets/css/ztl_images/checkbox-off.png" onclick="reminder_change(1);">
 				</div>
 			</div>
 		</div>
@@ -169,7 +175,7 @@
 							</div>
 							<div class="my_visit_icons">
 								<!--img onClick="my_visit_item_date({{id}}, POI_GROUP);" src="assets/css/ztl_images/my_visit_calendar.png" class="my_visit_list_image_left"-->
-								<input type="date" id="ztl_my_visit_date" onClick="dprun_myvisit({{id}}, POI_GROUP);" onBlur="dpend_myvisit(this, {{id}}, POI_GROUP)" class="my_visit_dp">
+								<input type="text" id="ztl_my_visit_date" onClick="dprun_myvisit({{id}}, POI_GROUP);" onBlur="dpend_myvisit(this, {{id}}, POI_GROUP)" class="my_visit_dp">
 								<img src="assets/css/ztl_images/my_visit_calendar.png" class="my_visit_list_image_left">
 								<span onClick="delete_from_my_visit({{id}}, POI_GROUP);"><img src="assets/css/ztl_images/my_visit_delete.png" class="my_visit_list_image"></span>
 							</div>
