@@ -277,9 +277,17 @@ function dprun_myvisit(id, group) {
 	}
 }
 
+
+//TODO - preveri an IOS
 function dpend_myvisit(t, id, group) {
 	if (device.platform == "iOS") {
-		set_my_visit_item_date($(t).val(), id, group)
+		//set_my_visit_item_date($(t).val(), id, group)
+		//premaknem datum za en mesec nazaj IOS
+		var date_array = $(t).val().split("-");
+		var date_obj   = new Date(date_array[0], date_array[1], date_array[2]);
+		date_obj = new Date(new Date(date_obj).setMonth(date_obj.getMonth()-1));
+		var newDate = date_obj.getFullYear() + "-" + date_obj.getMonth() + "-" + date_obj.getDay();
+		set_my_visit_item_date(newDate, id, group)
 	}
 }
 
