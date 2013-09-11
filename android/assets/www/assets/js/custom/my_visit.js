@@ -283,10 +283,15 @@ function dpend_myvisit(t, id, group) {
 	if (device.platform == "iOS") {
 		//set_my_visit_item_date($(t).val(), id, group)
 		//premaknem datum za en mesec nazaj IOS
-		var date_array = $(t).val().split("-");
-		var date_obj   = new Date(date_array[0], date_array[1], date_array[2]);
-		date_obj = new Date(new Date(date_obj).setMonth(date_obj.getMonth()-1));
-		var newDate = date_obj.getFullYear() + "-" + date_obj.getMonth() + "-" + date_obj.getDay();
+        
+        var date_array = $(t).val().split("-");
+		var date_obj   = new Date(date_array[0], date_array[1]-1, date_array[2]);
+        var newMonth   = date_obj.getMonth();
+        if (newMonth < 10) {
+            newMonth = "0" + newMonth;
+        }
+     
+		var newDate    = date_obj.getFullYear() + "-" + newMonth + "-" + date_obj.getDate();
 		set_my_visit_item_date(newDate, id, group)
 	}
 }

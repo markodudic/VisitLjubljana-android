@@ -175,7 +175,12 @@
 							</div>
 							<div class="my_visit_icons">
 								<!--img onClick="my_visit_item_date({{id}}, POI_GROUP);" src="assets/css/ztl_images/my_visit_calendar.png" class="my_visit_list_image_left"-->
-								<input type="text" id="ztl_my_visit_date" onClick="dprun_myvisit({{id}}, POI_GROUP);" onBlur="dpend_myvisit(this, {{id}}, POI_GROUP)" class="my_visit_dp">
+                                {{#is_android}}
+                                    <input type="text" id="ztl_my_visit_date" onClick="dprun_myvisit({{id}}, POI_GROUP);" onBlur="dpend_myvisit(this, {{id}}, POI_GROUP)" class="my_visit_dp">
+                                {{/is_android}}
+                                {{^is_android}}
+                                    <input type="date" id="ztl_my_visit_date" onClick="dprun_myvisit({{id}}, POI_GROUP);" onBlur="dpend_myvisit(this, {{id}}, POI_GROUP)" class="my_visit_dp">
+                                {{/is_android}}
 								<img src="assets/css/ztl_images/my_visit_calendar.png" class="my_visit_list_image_left">
 								<span onClick="delete_from_my_visit({{id}}, POI_GROUP);"><img src="assets/css/ztl_images/my_visit_delete.png" class="my_visit_list_image"></span>
 							</div>

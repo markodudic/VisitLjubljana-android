@@ -711,6 +711,7 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				data.default_category 	= default_category_translation[settings.id_lang];
 				data.event_date 		= event_date_translation[settings.id_lang]
 				data.dots 		 		= 1;
+                data.is_android         = is_android; //reinit v global variables
 				voice_guide				= 0;
 				menu_icon				= 1;
 			} else if (div == "guide_buy") {
@@ -1179,8 +1180,3 @@ function opacity(el) {
 function un_opacity(el) {
 	el.css({ opacity: 1 });
 }
-
-
-
-
-
