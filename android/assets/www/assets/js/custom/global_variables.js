@@ -137,6 +137,9 @@ var notification_refresh_time = 60;
 var UA_android = "UA-4832430-3";
 var UA_ios     = "UA-4832430-4";
 
+//device
+var is_android = "android";
+
 //za deploy - ne izpisujejo se komentarji
 /*
 var console = {};
@@ -146,6 +149,7 @@ console.log = function(){};
 //iOS overrides
 function reinit() {
 	if (device.platform == "iOS") {
+        is_android              = ""; //za mustache
 		SETTINGS_FOLDER     	= "com.innovatif.visitljubljana/";
 		ASSETS_FOLDER     		= "/";
 		
