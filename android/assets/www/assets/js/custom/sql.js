@@ -356,10 +356,9 @@ function load_event_success(results) {
 						"LEFT JOIN  ztl_event_timetable ett ON ett.id_event = e.id " +
 						"LEFT JOIN ztl_poi p ON p.id = ett.venue_id " +
 						"WHERE et.id_language = "+settings.id_lang+" AND " +
-						"		e.record_status = 1 and " +
-						"		e.id in (" + results.rows.item(0).sub_events + ") AND " +
-						"  		ett.date_last >=  CAST(strftime('%s','now') as integer) " +
-						"GROUP BY e.id ";
+						"		e.record_status = 1 and e.id in (" + results.rows.item(0).sub_events + ") AND " +
+						"		ett.date_last >=  CAST(strftime('%s',date('now'),'utc') as integer) "+
+						"GROUP BY e.id " +
 						"ORDER BY e.featured desc, ett.date_first";
 		var tmp_callback = "sub_events_success";
 		generate_query(tmp_query, tmp_callback);		
@@ -428,7 +427,9 @@ function load_event_pricing_success(results) {
 
 	var tmp_query 	 = "SELECT et.venue, et.date, et.timetable_idx as id_time " +
 						"FROM ztl_event_timetable et " +
-						"WHERE et.id_event = "+id_event+" AND et.id_language = "+settings.id_lang+" AND date_last >=  CAST(strftime('%s','now') as integer) "+
+						"WHERE et.id_event = "+id_event+" AND " +
+						"	et.id_language = "+settings.id_lang+" AND " +
+						"	date_last >=  CAST(strftime('%s',date('now'),'utc') as integer) "+
 						"GROUP BY et.venue, et.date "+
 						"ORDER BY et.timetable_idx";
 	var tmp_callback = "load_event_venue_success";
