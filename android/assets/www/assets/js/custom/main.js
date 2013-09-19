@@ -930,7 +930,7 @@ function doTouchLogic() {
     var duration  = touchEndTime - touchStartTime;
 
     
-    if (duration > 170 && distance > 120) {
+    if (duration > 250 && distance > 150) {
          if (direction > 0) {
         	 swipe_left_handler();
          } else {
