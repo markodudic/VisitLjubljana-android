@@ -1,6 +1,6 @@
 //vedno spremeni to vrednost zato da se po instalaciji prepise cache in po potrebi baza
-var version_code=7;
-var VERSION="1.4";
+var version_code=8;
+var VERSION="1.4.1";
 
 var server_url = 'http://www.visitljubljana.com/';
 var develop = 1;

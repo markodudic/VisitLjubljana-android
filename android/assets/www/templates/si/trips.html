@@ -32,13 +32,17 @@
 			{{#dots}}
 				<div class="header_dots" onClick="add_to_history('fun--guide_settings--empty'); load_page(template_lang+'ztl_guide_settings.html', 'ztl_guide_settings', null, 'fade', false);"></div>
 			{{/dots}}
+<!--
 			{{#filter}}
 				<div class="header_dots" onClick="poi_filter_toggle();"></div>
 			{{/filter}}
+-->
 			<div style="clear:both;"></div>
 			<div class="header_space"></div>
 		</div>
-		<div class="header_shadow"></div>
+		{{^filter}}
+			<div class="header_shadow"></div>
+		{{/filter}}
 	</div>
 	
 	[[[poi_filter]]]
@@ -48,6 +52,13 @@
 	
 	<div id="verticalWrapper">
 	<div id="verticalScroller">
+
+	{{#filter}}
+		<div class="ztl_red_button_filter" onClick="poi_filter_toggle();">
+			{{filter_label}}
+		</div>
+	{{/filter}}
+
 	{{#items}}
 		<li class="ztl_list_li">
 			<div class="ztl_list_item" id="ztl_trips_item_{{id}}" onClick="load_poi({{id}}, 'fade', true, 1)">
@@ -85,7 +96,8 @@
 	</div>
 	
 	</div>
-	
+
+
 	<div class="footer">
 		<div class="footer_shadow"></div>
 		<div class="header_placeholder">
