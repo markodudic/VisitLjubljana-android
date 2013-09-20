@@ -15,6 +15,7 @@ function event_filter_toggle() {
 	$(".ztl_content").toggle();
 	$(".header").toggle();
 	$(".footer").toggle();
+	$(".ztl_distance_to_footer").toggle();
 
 	if ($('.event_filter').is(':visible')) {
 		swipe = 0;

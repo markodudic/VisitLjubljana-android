@@ -548,3 +548,10 @@ event_date_translation[2] = "Izberi datum dogodka";
 event_date_translation[3] = "Izberi datum dogodka";
 event_date_translation[4] = "Izberi datum dogodka";
 event_date_translation[5] = "Izberi datum dogodka";
+
+var filter_translation = [];
+filter_translation[1] = "Filter";
+filter_translation[2] = "Filter";
+filter_translation[3] = "Filtern";
+filter_translation[4] = "Filtrare";
+filter_translation[5] = "Filtrer";

@@ -188,8 +188,16 @@ function load_events(save_history) {
 	load_event_type();
 
 	trips_title[0] = main_menu['img2'];
-
-	var tmp_query    = "SELECT e.id, e.featured, e.important, e.sub_events, et.title, ett.venue_id, ett.date, ett.date_first, ett.date_last, p.coord_x, p.coord_y, ett.venue as poi_title, e.image, e.image_w, e.image_h, " +
+	console.log("id_lang="+settings.id_lang);
+	
+	var tmp_query    = "SELECT e.id, e.featured, e.important, e.sub_events, et.title, ett.venue_id, " +
+						"	(select date  " +
+						"	from ztl_event_timetable as ztt2,  " +
+						"	    (select min(date_first) as df  " +
+						"	    from ztl_event_timetable  " +
+						"	    where id_event = e.id AND date_last >= CAST(strftime('%s',date('now'),'utc') as integer)) as ett1  " +
+						"	where ztt2.id_event = e.id and ztt2.date_first = ett1.df) as date,  " +
+						"	ett.date, ett.date_first, ett.date_last, p.coord_x, p.coord_y, ett.venue as poi_title, e.image, e.image_w, e.image_h, " +
 						"	(SELECT min(date_first) " +
 						"	FROM ztl_event_timetable et  " +
 						"	WHERE et.id_language = "+settings.id_lang+" AND et.id_event = e.id AND date_first >=  CAST(strftime('%s',date('now'),'utc') as integer)) as date_next, " +

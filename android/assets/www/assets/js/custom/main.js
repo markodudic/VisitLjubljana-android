@@ -269,7 +269,7 @@ function load_main_screen(save_history) {
 }
 
 function swipe_right_handler() {
-	if (swipe == 1) {
+/*	if (swipe == 1) {
 		if (db_type == 1) {
 			var j = 0;
 			if (trips != null) {
@@ -309,11 +309,11 @@ function swipe_right_handler() {
 				}
 			}
 		}
-	}
+	}*/
 }
 
 function swipe_left_handler() {
-	if (swipe == 1) {
+/*	if (swipe == 1) {
 		if (db_type == 1) {
 			var j = 0;
 			if (selected_div == 'tour') {
@@ -351,7 +351,7 @@ function swipe_left_handler() {
 				load_single_poigroup(res.items[j].id);
 			}
 		}
-	}
+	}*/
 }
 
 function synhronization_prompt() {
@@ -496,6 +496,7 @@ function load_page(template, div, data, transition, reverse, id_group) {
 			if (div == 'trips') {
 				extra_div_id 		= "_"+id_group;
 				data.extra_div_id 	= id_group;
+				data.filter_label 		= filter_translation[settings.id_lang].toUpperCase();
 				if (id_group != INFO_POI_GROUP) {
 					data.page_title 	= trips_title[id_group];
 				} else {
@@ -562,6 +563,7 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				data.events_title 	= events_translation[settings.id_lang];
 				data.default_category = default_category_translation[settings.id_lang];
 				data.potrdi_button 	= confirm_translation[settings.id_lang];
+				data.filter_label 		= filter_translation[settings.id_lang].toUpperCase();
 				voice_guide			= 0;
 				$('body').html("");
 			} else if (div == 'filtered_events') {
@@ -591,6 +593,7 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				data.events_title 		= events_translation[settings.id_lang];
 				data.default_category 	= default_category_translation[settings.id_lang];
 				data.potrdi_button 		= confirm_translation[settings.id_lang];
+				data.filter_label 		= filter_translation[settings.id_lang].toUpperCase();
 				$('body').html("");
 			/*} else if (div == 'poi_filter') {
 				var filter_poigroup = poi_filter_poigroup();
