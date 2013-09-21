@@ -248,7 +248,7 @@ function events_success(results) {
     		k++;
     	}
     }
-    
+   
     trips[EVENT_GROUP]					= res;
 	trips[EVENT_GROUP].top_events_0 	= res.top_items[0];
 	trips[EVENT_GROUP].top_events_1 	= res.top_items[1];

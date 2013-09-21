@@ -265,6 +265,7 @@ function load_main_screen(save_history) {
 	}
 
 	swipe = 0;
+	poi_filter_title = "";
 	load_page(template_lang+'main_menu.html', 'main_menu', main_menu, 'fade', false, 0);
 }
 
@@ -521,6 +522,12 @@ function load_page(template, div, data, transition, reverse, id_group) {
 						}	
 					}
 				}
+				if (poi_filter_title.length > 0) {
+					data.poi_filter_title_show = 1;
+				} else { 
+					data.poi_filter_title_show = 0;
+				}
+				data.poi_filter_title = poi_filter_title;
 			} else if (div == 'trip') {
 				data.ztl_item_details_description = description_translation[settings.id_lang];
 				data.map_button 				= map_translation[settings.id_lang];
@@ -984,6 +991,7 @@ function load_template(src, tpl) {
 }
 
 function select_language(id) {
+	poi_filter_title = "";
 	if (settings.id_lang == id) {
 		load_page(template_lang+'main_menu.html', 'main_menu', main_menu, 'fade', false, 0);
 	} else {
