@@ -2,9 +2,9 @@ var poi_filter 	   			= new Array();
 
 var tmp_event_data 			= {};
 var tmp_tours_data 			= {};
-var event_title    			= "";
 
 var poi_filter_curr 	= 0;
+var poi_filter_title 	= "";
 var event_call_from_history = 0;
 
 function poi_filter_toggle() {
@@ -41,8 +41,10 @@ function filter_poi()  {
 	var history_string = "fun--poi_filter--empty";
 	add_to_history(history_string);
 
-	if ($('#poi_filter_sel').val() != undefined)
+	if ($('#poi_filter_sel').val() != undefined) {
 		poi_filter_curr = $('#poi_filter_sel').val();
+		poi_filter_title = $('#poi_filter_sel option:selected').text();
+	}
 	
 	var res = {};
     res.items = [];

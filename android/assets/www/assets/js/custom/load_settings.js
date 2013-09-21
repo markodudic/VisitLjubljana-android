@@ -188,7 +188,6 @@ function load_events(save_history) {
 	load_event_type();
 
 	trips_title[0] = main_menu['img2'];
-	console.log("id_lang="+settings.id_lang);
 	
 	var tmp_query    = "SELECT e.id, e.featured, e.important, e.sub_events, et.title, ett.venue_id, " +
 						"	(select date  " +
@@ -197,7 +196,7 @@ function load_events(save_history) {
 						"	    from ztl_event_timetable  " +
 						"	    where id_event = e.id AND date_last >= CAST(strftime('%s',date('now'),'utc') as integer)) as ett1  " +
 						"	where ztt2.id_event = e.id and ztt2.date_first = ett1.df) as date,  " +
-						"	ett.date, ett.date_first, ett.date_last, p.coord_x, p.coord_y, ett.venue as poi_title, e.image, e.image_w, e.image_h, " +
+						"	ett.date_first, ett.date_last, p.coord_x, p.coord_y, ett.venue as poi_title, e.image, e.image_w, e.image_h, " +
 						"	(SELECT min(date_first) " +
 						"	FROM ztl_event_timetable et  " +
 						"	WHERE et.id_language = "+settings.id_lang+" AND et.id_event = e.id AND date_first >=  CAST(strftime('%s',date('now'),'utc') as integer)) as date_next, " +
@@ -208,7 +207,7 @@ function load_events(save_history) {
 						"LEFT JOIN ztl_event_translation et ON et.id_event = e.id " +
 						"LEFT JOIN ztl_event_timetable ett ON ett.id_event = e.id " +
 						"LEFT JOIN ztl_poi p ON p.id = ett.venue_id " +
-						"WHERE et.id_language = "+settings.id_lang+" AND e.record_status = 1 AND ett.date_last >=  CAST(strftime('%s',date('now'),'utc') as integer) " +
+						"WHERE et.id_language = "+settings.id_lang+" AND ett.id_language = "+settings.id_lang+" AND e.record_status = 1 AND ett.date_last >=  CAST(strftime('%s',date('now'),'utc') as integer) " +
 						"GROUP BY e.id " +
 						"ORDER BY e.featured desc, ett.date_first";
 
