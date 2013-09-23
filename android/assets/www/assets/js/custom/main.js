@@ -265,7 +265,7 @@ function load_main_screen(save_history) {
 	}
 
 	swipe = 0;
-	poi_filter_title = "";
+	title_poi_filter = "";
 	load_page(template_lang+'main_menu.html', 'main_menu', main_menu, 'fade', false, 0);
 }
 
@@ -522,12 +522,12 @@ function load_page(template, div, data, transition, reverse, id_group) {
 						}	
 					}
 				}
-				if (poi_filter_title.length > 0) {
+				if (title_poi_filter.length > 0) {
 					data.poi_filter_title_show = 1;
 				} else { 
 					data.poi_filter_title_show = 0;
 				}
-				data.poi_filter_title = poi_filter_title;
+				data.title_poi_filter = title_poi_filter;
 			} else if (div == 'trip') {
 				data.ztl_item_details_description = description_translation[settings.id_lang];
 				data.map_button 				= map_translation[settings.id_lang];
@@ -810,15 +810,9 @@ function load_page(template, div, data, transition, reverse, id_group) {
 
 			$('body').html(html);
 			
-			if (offsets[div] != undefined) {
-				window.scrollTo(0,offsets[div]);
-			} else {
-				window.scrollTo(0,0);				
-			}
-			
 			if (remove_marquee == 1) $('.marquee').removeClass('marquee');
 
-/*
+
 			if (swipe == 1) {
 				if ((div == "trip") || 
 						(div == "event") || 
@@ -844,7 +838,7 @@ function load_page(template, div, data, transition, reverse, id_group) {
 						swipe_group = 5;
 					}
 
-					$("#"+ts_div).on('touchstart', function(e) {
+					/*$("#"+ts_div).on('touchstart', function(e) {
 					     var d = new Date();
 					     touchStartTime     = d.getTime();
 					     touchStartLocation = e.originalEvent.targetTouches[0].pageX;
@@ -858,14 +852,14 @@ function load_page(template, div, data, transition, reverse, id_group) {
 					     var d = new Date();
 					     touchEndTime       = d.getTime();
 					     doTouchLogic();
-					});
+					});*/
 				}
 			}
 
 			if (swipe == 1) {
 				animate_div(div+extra_div_id, transition, reverse);
 			} 
-*/
+
 			//ce so karte inicializiram skripto. sele po nalaganju 
 			if (div == "ztl_map") {
 				voice_guide=0;
@@ -879,6 +873,12 @@ function load_page(template, div, data, transition, reverse, id_group) {
 
 			
 			$('.icon_'+menu_icon).attr("src","assets/css/ztl_images/icon_"+menu_icon+"_red.png");
+			
+			if (offsets[div] != undefined) {
+				window.scrollTo(0,offsets[div]);
+			} else {
+				window.scrollTo(0,1);				
+			}
 			
 			if ((div == "main_menu") || 
 				(div == "trip") || 
@@ -983,7 +983,7 @@ function load_template(src, tpl) {
 }
 
 function select_language(id) {
-	poi_filter_title = "";
+	title_poi_filter = "";
 	if (settings.id_lang == id) {
 		load_page(template_lang+'main_menu.html', 'main_menu', main_menu, 'fade', false, 0);
 	} else {
