@@ -4,7 +4,7 @@ var tmp_event_data 			= {};
 var tmp_tours_data 			= {};
 
 var poi_filter_curr 	= 0;
-var poi_filter_title 	= "";
+var title_poi_filter 	= "";
 var event_call_from_history = 0;
 
 function poi_filter_toggle() {
@@ -43,7 +43,7 @@ function filter_poi()  {
 
 	if ($('#poi_filter_sel').val() != undefined) {
 		poi_filter_curr = $('#poi_filter_sel').val();
-		poi_filter_title = $('#poi_filter_sel option:selected').text();
+		title_poi_filter = $('#poi_filter_sel option:selected').text();
 	}
 	
 	var res = {};
