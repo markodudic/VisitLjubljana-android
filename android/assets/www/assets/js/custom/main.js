@@ -809,6 +809,7 @@ function load_page(template, div, data, transition, reverse, id_group) {
 			}
 
 			$('body').html(html);
+			
 			if (offsets[div] != undefined) {
 				window.scrollTo(0,offsets[div]);
 			} else {
@@ -816,18 +817,9 @@ function load_page(template, div, data, transition, reverse, id_group) {
 			}
 			
 			if (remove_marquee == 1) $('.marquee').removeClass('marquee');
-			
-			/*$("img").each(function(i, img) {
-			    $(img).css({
-			        position: "relative",
-			        left: ($(img).parent().width()/2) - ($(img).width()/2),
-			        top: ($(img).parent().height()/2) - ($(img).height()/2)});
-			});*/
 
-
-
+/*
 			if (swipe == 1) {
-//				if (div != "main_menu") {
 				if ((div == "trip") || 
 						(div == "event") || 
 						(div == "info") || 
@@ -873,7 +865,7 @@ function load_page(template, div, data, transition, reverse, id_group) {
 			if (swipe == 1) {
 				animate_div(div+extra_div_id, transition, reverse);
 			} 
-
+*/
 			//ce so karte inicializiram skripto. sele po nalaganju 
 			if (div == "ztl_map") {
 				voice_guide=0;
