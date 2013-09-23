@@ -2,6 +2,11 @@
 var version_code=8;
 var VERSION="1.4.1";
 
+//za deploy - ne izpisujejo se komentarji
+/*
+var console = {};
+console.log = function(){};
+*/
 var server_url = 'http://www.visitljubljana.com/';
 var develop = 1;
 var populateDB = 0; 
@@ -139,12 +144,6 @@ var UA_ios     = "UA-4832430-4";
 
 //device
 var is_android = "android";
-
-//za deploy - ne izpisujejo se komentarji
-/*
-var console = {};
-console.log = function(){};
-*/
 
 //iOS overrides
 function reinit() {
