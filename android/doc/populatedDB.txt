@@ -1,5 +1,5 @@
 Priprava baze z podatki za poi, info, tour in inspired
-- v assets skopiraš prazno bazo s pravo strukturo
+- v assets skopiraš prazno bazo iz doc imenika Database_empty.db s pravo strukturo
 - bazo skopiraš na napravo z ztl.java
 - v global_variables nastavi populateDB=1
 - naredi sinhronizacijo za vse jezike
