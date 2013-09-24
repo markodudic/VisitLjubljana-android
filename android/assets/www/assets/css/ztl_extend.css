@@ -56,8 +56,8 @@ body {
     padding:0;
     margin:0;
     font-family:'robotocondensed';
-    /*background-color:#3c3c3c;*/
-    background-color:#222222;
+    background-color:#303030;
+    /*background-color:#222222;*/
 }
 
 
@@ -218,7 +218,7 @@ a:active {text-decoration:none; color:#ed1c24; font-size:1.0em;}
 @media (max-width: 320px){
     .ztl_content {
         padding-top: 44px;
-        padding-bottom: 44px;
+        padding-bottom: 50px;
     }
     
     .ztl_select_language {
@@ -240,7 +240,7 @@ a:active {text-decoration:none; color:#ed1c24; font-size:1.0em;}
 @media (min-width: 321px) and (max-width: 360px){
     .ztl_content {
         padding-top: 48px;
-        padding-bottom: 48px;
+        padding-bottom: 50px;
     }
     
     .ztl_select_language {
@@ -263,7 +263,7 @@ a:active {text-decoration:none; color:#ed1c24; font-size:1.0em;}
 @media (min-width: 361px) and (max-width: 599px) {
     .ztl_content {
         padding-top: 48px;
-        padding-bottom: 48px;
+        padding-bottom: 50px;
     }
     
     .ztl_select_language {
@@ -285,7 +285,7 @@ a:active {text-decoration:none; color:#ed1c24; font-size:1.0em;}
 @media (min-width: 600px){
     .ztl_content {
         padding-top: 48px;
-        padding-bottom: 48px;
+        padding-bottom: 50px;
     }
     
     .ztl_select_language {
