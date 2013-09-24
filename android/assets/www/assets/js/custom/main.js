@@ -819,12 +819,12 @@ function load_page(template, div, data, transition, reverse, id_group) {
 						(div == "info") || 
 						(div == "tour") || 
 						(div == "poigroup")) {
-					var ts_div = "";
+					//var ts_div = "";
 					if (div == 'trip') {
-						ts_div 		= div+"_"+data['id'];
+						//ts_div 		= div+"_"+data['id'];
 						div 		= div+"_"+data['id'];
-						swipe_group = 1;
-					} else if (div == 'event') {
+						//swipe_group = 1;
+					/*} else if (div == 'event') {
 						ts_div  = div+extra_div_id;
 						swipe_group = 2;
 					} else if (div == 'tour') {
@@ -836,7 +836,7 @@ function load_page(template, div, data, transition, reverse, id_group) {
 					} else if (div == 'poigroup') {
 						ts_div  = div+extra_div_id;
 						swipe_group = 5;
-					}
+					*/}
 
 					/*$("#"+ts_div).on('touchstart', function(e) {
 					     var d = new Date();
@@ -856,9 +856,9 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				}
 			}
 
-			if (swipe == 1) {
+			/*if (swipe == 1) {
 				animate_div(div+extra_div_id, transition, reverse);
-			} 
+			} */
 
 			//ce so karte inicializiram skripto. sele po nalaganju 
 			if (div == "ztl_map") {
@@ -874,19 +874,14 @@ function load_page(template, div, data, transition, reverse, id_group) {
 			
 			$('.icon_'+menu_icon).attr("src","assets/css/ztl_images/icon_"+menu_icon+"_red.png");
 			
-			if (offsets[div] != undefined) {
-				window.scrollTo(0,offsets[div]);
-			} else {
-				window.scrollTo(0,1);				
-			}
 			
-			if ((div == "main_menu") || 
+			/*if ((div == "main_menu") || 
 				(div == "trip") || 
 				(div == "event") || 
 				(div == "info") || 
 				(div == "tour")) {
 				i_scroll(div+extra_div_id);
-			}
+			}*/
 			
 			pOld = new Proj4js.Point(0,0);
 			navigator.geolocation.getCurrentPosition(onSuccess_gps, onError_gps);
@@ -907,7 +902,13 @@ function load_page(template, div, data, transition, reverse, id_group) {
 				    window.open(this.href,'_system'); return false;
 				}
 			});
-			
+
+			if (offsets[div] != undefined) {
+				window.scrollTo(0,offsets[div]);
+			} else {
+				window.scrollTo(0,1);				
+			}
+
 		}
 	});
 }
