@@ -8,35 +8,9 @@
 			<div onClick="opacity($(this)); go_back();"><img class="header_back"></div>
 			<div><img class="header_divider"></div>
 			<div class="header_title" onClick="opacity($(this)); go_back();">{{page_title}}</div>
-
-<!--
-			{{#poigroup}}
-				<div onClick="opacity($(this)); load_page(template_lang+'poigroups.html', 'poigroups', trips[POIGROUP_GROUP], 'fade', false, POIGROUP_GROUP);"><img class="header_back"></div>
-				<div><img class="header_divider"></div>
-				<div class="header_title" onClick="opacity($(this)); load_page(template_lang+'poigroups.html', 'poigroups', trips[POIGROUP_GROUP], 'fade', false, POIGROUP_GROUP);">{{page_title}}</div>
-			{{/poigroup}}
-			{{^poigroup}}
-				{{#info_poi}}
-					<div onClick="opacity($(this)); load_page(template_lang+'infos.html', 'infos', trips[INFO_GROUP], 'fade', false, INFO_GROUP);"><img class="header_back"></div>
-					<div><img class="header_divider"></div>
-					<div class="header_title" onClick="opacity($(this)); load_page(template_lang+'infos.html', 'infos', trips[INFO_GROUP], 'fade', false, INFO_GROUP);">{{page_title}}</div>
-				{{/info_poi}}
-				{{^info_poi}}
-					<div onClick="opacity($(this)); go_back();"><img class="header_back"></div>
-					<div><img class="header_divider"></div>
-					<div class="header_title" onClick="opacity($(this)); go_back();">{{page_title}}</div>
-				{{/info_poi}}
-			{{/poigroup}}
--->
-
 			{{#dots}}
 				<div class="header_dots" onClick="add_to_history('fun--guide_settings--empty'); load_page(template_lang+'ztl_guide_settings.html', 'ztl_guide_settings', null, 'fade', false);"></div>
 			{{/dots}}
-<!--
-			{{#filter}}
-				<div class="header_dots" onClick="poi_filter_toggle();"></div>
-			{{/filter}}
--->
 			<div style="clear:both;"></div>
 			{{#title_poi_filter_show}}
 				<div class="events_filter_title">
