@@ -260,7 +260,7 @@ function load_tours(id_tour_category, save_history)  {
     				"LEFT JOIN ztl_tour_tour_category ttc ON ttc.id_tour = t.id " +
     				"LEFT JOIN ztl_tour_category tc ON ttc.id_tour_category = tc.id " +
     				"LEFT JOIN ztl_tour_images ti ON t.id = ti.id_tour " +
-    				"WHERE tt.id_language = "+settings.id_lang+" AND tc.id_language = 1 AND ttc.id_tour_category = "+id_tour_category+" " +
+    				"WHERE tt.id_language = "+settings.id_lang+" AND tc.id_language = 1 AND ttc.id_tour_category = "+id_tour_category+" AND t.record_status = 1 " +
     				"GROUP BY t.id "+
     				"ORDER BY tt.title";
     var tmp_callback   = "tour_success";

@@ -1,12 +1,12 @@
 //vedno spremeni to vrednost zato da se po instalaciji prepise cache in po potrebi baza
-var version_code=8;
-var VERSION="1.4.1";
+var version_code=9;
+var VERSION="1.4.2";
 
 //za deploy - ne izpisujejo se komentarji
-/*
+
 var console = {};
 console.log = function(){};
-*/
+
 var server_url = 'http://www.visitljubljana.com/';
 var develop = 1;
 var populateDB = 0; 

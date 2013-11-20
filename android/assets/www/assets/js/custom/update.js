@@ -38,7 +38,7 @@ function is_updt_finished() {
 function check_update_success(results) {
 	if (updt_running  == 1) {
 		return;
-	}
+	} 
 	
 	if (synhronize_all == 0) updt_finished = 0;
 	else updt_finished = UPDATE_GROUPS-1;
@@ -106,7 +106,7 @@ function check_update_success(results) {
 			        }
 			        update_tour_deleted(server_url+lang_code+'/mobile_app/tour.json?datemodified='+results.rows.item(0).last_update, tours); 
 			    });
-			});
+			}); 
 		
 			//updatam info. vedno vse
 		    update_info(server_url+lang_code+'/mobile_app/info.json');
@@ -346,7 +346,7 @@ function handle_poi_new(data) {
 /*********************** EVENT ***********************/
 
 function update_event_deleted(url, events) {
-	url = url+'&pois='+events.join(",");
+	url = url+'&events='+events.join(",");
 	update_event(url);
 }
 	
@@ -474,7 +474,7 @@ function handle_event(data) {
 /*********************** TOUR ***********************/
 
 function update_tour_deleted(url, tours) {
-	url = url+'&pois='+tours.join(",");
+	url = url+'&tours='+tours.join(",");
 	update_tour(url)
 }
 
