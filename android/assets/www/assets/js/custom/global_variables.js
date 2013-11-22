@@ -8,7 +8,7 @@ var console = {};
 console.log = function(){};
 
 var server_url = 'http://www.visitljubljana.com/';
-var develop = 1;
+var develop = 0;
 var populateDB = 0; 
 	
 //settings
