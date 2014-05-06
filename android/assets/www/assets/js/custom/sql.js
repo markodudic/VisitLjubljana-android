@@ -45,7 +45,7 @@ function load_pois_success(results) {
     var len = results.rows.length;
     var tmp;
     var trips_group;
-    
+   
     var rec = 0;
    
     for (var i=0; i<len; i++){
