@@ -201,7 +201,7 @@ function reset_cache_cont() {
     load_inspired(0);
     load_poigroup(0);
     
-}
+} 
 
 function is_cache_finished() {
 	if (cache_check == 0) return;
@@ -222,6 +222,7 @@ function set_cache() {
     window.localStorage.removeItem('trips_title');
     window.localStorage.removeItem('event_type');
     window.localStorage.removeItem('poi_filter');
+    window.localStorage.clear();
 
     window.localStorage.setItem('trips', JSON.stringify(trips));
     window.localStorage.setItem('trips_title', JSON.stringify(trips_title));

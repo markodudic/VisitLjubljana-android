@@ -284,7 +284,8 @@ function handle_poi_new(data) {
 			sql+= "'"+addslashes(data[i].email)+"', '"+addslashes(data[i].www)+"', '"+data[i].coord.x+"', '"+data[i].coord.y+"', '"+addslashes(data[i].turisticna_kartica)+"', '"+addslashes(data[i].ljubljanaQuality)+"', ";
 			sql+= "'"+data[i].recommended_map+"', '"+data[i].image+"', "+data[i].image_w+", "+data[i].image_h+", '"+data[i].stars+"', '"+data[i].poigroups+"', '"+data[i].cats+"', 1, 0);";
 			tx.executeSql(sql, [], function(tx, res) {});
-				
+			//console.log(sql);
+			
 			var mds = "";
 			var mdv = "";
 			if (data[i].audioGuideLength != null) {

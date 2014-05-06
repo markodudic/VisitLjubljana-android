@@ -14,4 +14,4 @@ v index.html komentiraj/odkomentiraj glede na verzijo
 <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1" />
 <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, target-densitydpi=device-dpi" />
 
-zapakiraj s certifikatom
+zapakiraj s certifikatom "innovatif_ztl". geslo je "visitljubljana"

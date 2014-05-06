@@ -28,7 +28,8 @@ import java.io.OutputStream;
 import org.apache.cordova.Config;
 import org.apache.cordova.DroidGap;
 
-import android.content.Intent;
+import android.content.Context;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 
 import com.google.analytics.tracking.android.EasyTracker;
