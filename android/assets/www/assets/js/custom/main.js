@@ -1139,7 +1139,7 @@ function show_spinner() {
     .attr("id","overlay").prependTo($('body'));
 
 	
-	if ((current_div == 'select_language') || (current_div == 'ztl_synhronization') || (current_div == 'guide_buy')) {
+	if ((current_div == 'select_language') || (current_div == 'ztl_synhronization') || (current_div == 'guide_buy') || (current_div == 'events')) {
 		$('body').css('position','');
 		var target = document.getElementById("body");
 	} else {
